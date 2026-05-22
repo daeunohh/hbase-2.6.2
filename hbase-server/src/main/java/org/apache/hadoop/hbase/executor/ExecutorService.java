@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -84,6 +85,72 @@ public class ExecutorService {
    * @param config Configuration to use for the executor.
    */
   public void startExecutorService(final ExecutorConfig config) {
+if(KnobRuntime.check(java.util.UUID.fromString("e5c81bc3-937a-3b20-abf8-a8d2c75cf005"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("corePoolSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(config));
+    field.set(config, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("597d0180-db39-3652-9cbe-d43f1c1e99fb"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("corePoolSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(config));
+    field.set(config, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a9905f49-d4f5-3e03-bea9-2290f8ed9d0c"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("allowCoreThreadTimeout");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(config);
+    field.set(config, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3206cc02-2753-3658-9c79-3c1e4caee8ba"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("keepAliveTimeMillis");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(config));
+    field.set(config, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eb652e9d-7a24-38e4-894a-b32afa99aad2"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("corePoolSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(config));
+    field.set(config, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("55a8af44-a067-34f9-835f-9d938d81b39a"))) {
+try {
+    java.lang.reflect.Field field = config.getClass().getDeclaredField("corePoolSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(config));
+    field.set(config, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final String name = config.getName();
     Executor hbes = this.executorMap.compute(name, (key, value) -> {
       if (value != null) {
@@ -135,6 +202,61 @@ public class ExecutorService {
   }
 
   public void submit(final EventHandler eh) {
+if(KnobRuntime.check(java.util.UUID.fromString("97d68e99-1d85-33c6-9a98-a56f79970493"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("37394966-e817-35ca-9bb7-c0a7be8483ce"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("360ca4e1-dc48-3ab4-9b25-5296b42a3e22"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("seqid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(eh));
+    field.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c5c77d5f-66e2-3efc-8eb0-c0eda5626932"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eaeab3d0-d43c-3e85-b007-5da98c41bec4"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Executor executor = getExecutor(eh.getEventType().getExecutorServiceType());
     if (executor == null) {
       // This happens only when events are submitted after shutdown() was
@@ -143,6 +265,39 @@ public class ExecutorService {
       LOG.error("Cannot submit [" + eh + "] because the executor is missing."
         + " Is this process shutting down?");
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("7dc14026-7d6b-335a-84d9-85665c931a19"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("seqid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(eh));
+    field.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e0d29638-e2c0-37e0-a132-151fc7f00d78"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e73ba49f-4fa7-31ac-9bea-8a68415f2396"))) {
+try {
+    java.lang.reflect.Field field = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(eh));
+    field.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       executor.submit(eh);
     }
   }

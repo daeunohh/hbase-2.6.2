@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.mob;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class MobFileCache {
       conf.getInt(MobConstants.MOB_FILE_CACHE_SIZE_KEY, MobConstants.DEFAULT_MOB_FILE_CACHE_SIZE);
     isCacheEnabled = (mobFileMaxCacheSize > 0);
     map = new ConcurrentHashMap<>(mobFileMaxCacheSize);
-    if (isCacheEnabled) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("4fc04c91-d228-3223-9883-a150c04c329d"))) ? (!isCacheEnabled) : (isCacheEnabled))) {
       long period = conf.getLong(MobConstants.MOB_CACHE_EVICT_PERIOD,
         MobConstants.DEFAULT_MOB_CACHE_EVICT_PERIOD); // in seconds
       evictRemainRatio = conf.getFloat(MobConstants.MOB_CACHE_EVICT_REMAIN_RATIO,
@@ -110,7 +111,7 @@ public class MobFileCache {
       if (evictRemainRatio < 0.0) {
         evictRemainRatio = 0.0f;
         LOG.warn(MobConstants.MOB_CACHE_EVICT_REMAIN_RATIO + " is less than 0.0, 0.0 is used.");
-      } else if (evictRemainRatio > 1.0) {
+      } else if (((KnobRuntime.check(java.util.UUID.fromString("597370d6-4eaa-3e3c-a84a-7910b85beaf1"))) ? ((evictRemainRatio) > (1.0)) : (((KnobRuntime.check(java.util.UUID.fromString("af84843a-c931-3cc6-a0f1-3a9fa98eb6e9"))) ? ((evictRemainRatio) >= (1.0)) : (((KnobRuntime.check(java.util.UUID.fromString("c32219dd-4fbd-364c-bae1-6e051e1517db"))) ? ((evictRemainRatio) != (1.0)) : (((KnobRuntime.check(java.util.UUID.fromString("3158288d-c038-3ddf-8887-61c72e22ef33"))) ? ((evictRemainRatio) == (1.0)) : (((KnobRuntime.check(java.util.UUID.fromString("cb161d44-be8b-3db1-9848-48c97aaeb099"))) ? ((evictRemainRatio) < (1.0)) : (((KnobRuntime.check(java.util.UUID.fromString("27e18c1e-1136-3308-9b64-3d77576c7838"))) ? ((evictRemainRatio) <= (1.0)) : (evictRemainRatio > 1.0))))))))))))) {
         evictRemainRatio = 1.0f;
         LOG.warn(MobConstants.MOB_CACHE_EVICT_REMAIN_RATIO + " is larger than 1.0, 1.0 is used.");
       }
@@ -258,8 +259,8 @@ public class MobFileCache {
         try {
           Thread.sleep(10);
         } catch (InterruptedException e) {
-          LOG.warn("Interrupted while sleeping");
-          Thread.currentThread().interrupt();
+          if (KnobRuntime.check(java.util.UUID.fromString("f0f72700-5210-35ae-adcc-1e80ab90ebbb"))) { LOG.debug("Interrupted while sleeping"); } else if (KnobRuntime.check(java.util.UUID.fromString("90cd3950-4dae-38c5-a5cc-46d51f4ef822"))) { LOG.info("Interrupted while sleeping"); } else { LOG.warn("Interrupted while sleeping"); }
+          if (KnobRuntime.check(java.util.UUID.fromString("fb1fcd17-ff1f-36bb-a07e-71c6d51ecb07"))) { evict(); } else if (KnobRuntime.check(java.util.UUID.fromString("f6d1191f-6173-38b3-bf4e-beedbc2590d4"))) { printStatistics(); } else { Thread.currentThread().interrupt(); }
           break;
         }
       }

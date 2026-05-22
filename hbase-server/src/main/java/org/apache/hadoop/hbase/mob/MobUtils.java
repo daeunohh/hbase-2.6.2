@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.mob;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.mob.MobConstants.DEFAULT_MOB_CLEANER_BATCH_SIZE_UPPER_BOUND;
 import static org.apache.hadoop.hbase.mob.MobConstants.MOB_CLEANER_BATCH_SIZE_UPPER_BOUND;
@@ -86,6 +87,9 @@ public final class MobUtils {
     new ThreadLocal<SimpleDateFormat>() {
       @Override
       protected SimpleDateFormat initialValue() {
+if(KnobRuntime.check(java.util.UUID.fromString("b02d23c4-7514-3365-9090-2478322b5712"))) {
+return null;
+}
         return new SimpleDateFormat("yyyyMMdd");
       }
     };
@@ -692,6 +696,9 @@ public final class MobUtils {
    * @return list of Mob column families
    */
   public static List<ColumnFamilyDescriptor> getMobColumnFamilies(TableDescriptor htd) {
+if(KnobRuntime.check(java.util.UUID.fromString("b681d2ba-5aef-3f48-b9db-8aacf20cd4c5"))) {
+return null;
+}
 
     List<ColumnFamilyDescriptor> fams = new ArrayList<ColumnFamilyDescriptor>();
     ColumnFamilyDescriptor[] hcds = htd.getColumnFamilies();
