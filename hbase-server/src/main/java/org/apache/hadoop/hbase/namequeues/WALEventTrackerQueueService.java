@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.namequeues;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.waleventtracker.WALEventTrackerTableCreator.WAL_EVENT_TRACKER_ENABLED_DEFAULT;
 import static org.apache.hadoop.hbase.master.waleventtracker.WALEventTrackerTableCreator.WAL_EVENT_TRACKER_ENABLED_KEY;
@@ -71,6 +72,9 @@ public class WALEventTrackerQueueService implements NamedQueueService {
 
   @Override
   public NamedQueuePayload.NamedQueueEvent getEvent() {
+if(KnobRuntime.check(java.util.UUID.fromString("19e13cac-6bbd-355e-8eeb-fbd4248aa606"))) {
+return null;
+}
     return NamedQueuePayload.NamedQueueEvent.WAL_EVENT_TRACKER;
   }
 

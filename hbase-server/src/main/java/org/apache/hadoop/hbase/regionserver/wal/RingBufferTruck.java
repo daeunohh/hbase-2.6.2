@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -46,6 +47,31 @@ final class RingBufferTruck {
    * Load the truck with a {@link FSWALEntry}.
    */
   void load(FSWALEntry entry) {
+if(KnobRuntime.check(java.util.UUID.fromString("4d5d74cb-8154-38ff-b111-7e391988d06d"))) {
+try {
+    java.lang.reflect.Field field = entry.getClass().getDeclaredField("txid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(entry));
+    field.set(entry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("965c927d-902a-3ef7-a83e-921bbaa52133"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3cccc92a-935a-3fdf-8b6f-2b18a9d5d6b0"))) {
+try {
+    java.lang.reflect.Field field = entry.getClass().getDeclaredField("inMemstore");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(entry);
+    field.set(entry, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.entry = entry;
     this.type = Type.APPEND;
   }
@@ -54,12 +80,51 @@ final class RingBufferTruck {
    * Load the truck with a {@link SyncFuture}.
    */
   void load(final SyncFuture syncFuture) {
+if(KnobRuntime.check(java.util.UUID.fromString("f5dfcbac-afc9-3f4e-8cfc-c427a63c07a5"))) {
+try {
+    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("doneTxid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(syncFuture));
+    field.set(syncFuture, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8b95866a-2441-3784-ad7d-9b1f00733c50"))) {
+try {
+    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("forceSync");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(syncFuture);
+    field.set(syncFuture, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3de592f3-c0c5-3ae7-b662-f9da90fe0545"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("05528f14-fcc1-3eba-9843-af747d0ddc66"))) {
+try {
+    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("txid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(syncFuture));
+    field.set(syncFuture, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.sync = syncFuture;
     this.type = Type.SYNC;
   }
 
   /** Returns the type of this truck's payload. */
   Type type() {
+if(KnobRuntime.check(java.util.UUID.fromString("b51ecf4e-fe5c-3c4c-a16c-883a5504b688"))) {
+return null;
+}
     return type;
   }
 
@@ -67,6 +132,9 @@ final class RingBufferTruck {
    * Unload the truck of its {@link FSWALEntry} payload. The internal reference is released.
    */
   FSWALEntry unloadAppend() {
+if(KnobRuntime.check(java.util.UUID.fromString("43a55ab7-4336-3c0c-98e7-28ac8a97764e"))) {
+return null;
+}
     FSWALEntry entry = this.entry;
     this.entry = null;
     this.type = Type.EMPTY;
@@ -77,6 +145,9 @@ final class RingBufferTruck {
    * Unload the truck of its {@link SyncFuture} payload. The internal reference is released.
    */
   SyncFuture unloadSync() {
+if(KnobRuntime.check(java.util.UUID.fromString("93de379c-7399-3586-9f39-9213cbce8ef4"))) {
+return null;
+}
     SyncFuture sync = this.sync;
     this.sync = null;
     this.type = Type.EMPTY;

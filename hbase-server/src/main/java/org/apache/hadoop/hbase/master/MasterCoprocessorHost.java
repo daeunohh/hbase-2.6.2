@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -332,6 +333,12 @@ public class MasterCoprocessorHost
   /* Implementation of hooks for invoking MasterObservers */
 
   public TableDescriptor preCreateTableRegionsInfos(TableDescriptor desc) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c000cea9-19c9-361c-a309-ea1ced9e6cda"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d5969a51-acf2-3865-8664-38e804a893fd"))) {
+return null;
+}
     if (coprocEnvironments.isEmpty()) {
       return desc;
     }
@@ -463,6 +470,56 @@ public class MasterCoprocessorHost
   public TableDescriptor preModifyTable(final TableName tableName,
     final TableDescriptor currentDescriptor, final TableDescriptor newDescriptor)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("0a226cf5-85f1-3076-80d4-d78bd65c5071"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("83d559a8-b2c3-3641-9416-3d41612ecc70"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c68320f0-da96-3ed2-b783-ad670d945b56"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ae11c4f2-19a3-3dab-86e4-c0c6202826f6"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3dc3aa70-56a9-35a9-82a1-53cda4ffabfd"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("211f499f-438b-3d84-a90d-0051a6769c75"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (coprocEnvironments.isEmpty()) {
       return newDescriptor;
     }
@@ -1711,6 +1768,9 @@ public class MasterCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("af86e64b-5a2a-33a1-a5ac-f428b9593f85"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.postEnableReplicationPeer(this, peerId);
       }
     });
@@ -1841,6 +1901,9 @@ public class MasterCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("8a2f4070-2536-3d06-a8c0-63aad6ad33d5"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.postGetClusterMetrics(this, status);
       }
     });
@@ -1898,6 +1961,9 @@ public class MasterCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("d1e17073-858b-3270-9e60-83229279e51a"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.postListDecommissionedRegionServers(this);
       }
     });
@@ -1955,6 +2021,9 @@ public class MasterCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("054c177a-e9e5-3f84-b569-394dcb675dfd"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.postIsRpcThrottleEnabled(this, enabled);
       }
     });
@@ -1964,6 +2033,9 @@ public class MasterCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9cb59eaf-7911-351c-8c1d-134559aba821"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.preSwitchExceedThrottleQuota(this, enable);
       }
     });

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.context.Scope;
@@ -125,7 +126,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
     this.threadWakeFrequency = conf.getLong(HConstants.THREAD_WAKE_FREQUENCY, 10 * 1000);
     this.blockingWaitTime = conf.getInt("hbase.hstore.blockingWaitTime", 90000);
     int handlerCount = 0;
-    if (server != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("276c5fa0-65de-3755-a9ed-3466be98f576"))) ? ((server) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("298bb9c5-9bab-31a5-a023-bf9b01b67082"))) ? ((server) == (null)) : (server != null))))) {
       handlerCount = getHandlerCount(conf);
       LOG.info("globalMemStoreLimit="
         + TraditionalBinaryPrefix
@@ -319,10 +320,13 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
         FlushQueueEntry fqe = null;
         try {
           wakeupPending.set(false); // allow someone to wake us up again
+if(KnobRuntime.check(java.util.UUID.fromString("56cbe28d-2588-354e-afbd-b3ce9bc2346c"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
           fqe = flushQueue.poll(threadWakeFrequency, TimeUnit.MILLISECONDS);
-          if (fqe == null || fqe == WAKEUPFLUSH_INSTANCE) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("67d66c90-ebf4-3da7-b796-ae1d1f6eea2f"))) ? (((fqe) == (null)) || (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("898d7b16-b6ba-368e-a404-122ffbe48b15"))) ? ((fqe == null) && (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("0d7d7df2-53e5-31cd-ac89-89ea692a2d45"))) ? (((fqe) != (null)) || ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("3628c944-b49d-3334-af2c-86a1f791e104"))) ? ((fqe == null) && ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("aaa1a894-8b7c-3a46-a936-769eac90c09f"))) ? (((fqe) != (null)) && ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("8a6a052b-0494-30cb-abba-b0e547cd7d57"))) ? ((fqe == null) || (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("690a4deb-4b36-382b-8e86-1a626d8a1834"))) ? (((fqe) != (null)) && (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("36d3ec8a-986e-3a95-8947-72cf8baddbc1"))) ? ((fqe) == (WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("0187ba9a-804d-3e15-a064-036d680ab6c9"))) ? (((fqe) == (null)) && (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("14407ddc-3996-3392-9a8b-09ede42969f0"))) ? ((fqe) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8710dac3-a089-388b-8cfa-53873d8ccfb6"))) ? (((fqe) == (null)) || ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("032d4992-0157-3e65-a9b2-f70d420d3778"))) ? (fqe == null) : (((KnobRuntime.check(java.util.UUID.fromString("85e1793b-7395-3475-aac7-914d7e33a367"))) ? ((fqe == null) || ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("1300c468-c2c8-3503-8169-0771ccd5a463"))) ? ((fqe) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("82885742-1d1a-36da-bcb6-2aa6fe893c48"))) ? (((fqe) == (null)) || ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("703ed1fb-c7f0-3a22-ad22-2147e8823394"))) ? (((fqe) != (null)) && ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("2560f510-28d6-363b-8cb9-4889be05aefc"))) ? (((fqe) != (null)) || ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("c2c8c4b3-5fb7-35eb-8fe3-b76ea20b7fc0"))) ? ((fqe == null) && ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("5f8dd987-a576-31c5-8774-067403859acf"))) ? ((fqe == null) || ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("4a9b9741-edfe-3184-a355-508e739c5f3f"))) ? (((fqe) != (null)) || (fqe == WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("4b427578-4f5e-314f-8059-12ae4f25d9d7"))) ? (((fqe) == (null)) && ((fqe) == (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("02ca019b-ff97-3e37-912a-ef45f1ec9beb"))) ? ((fqe) != (WAKEUPFLUSH_INSTANCE)) : (((KnobRuntime.check(java.util.UUID.fromString("1d7e4b0a-3fdf-34e7-ad61-b95325754650"))) ? (fqe == WAKEUPFLUSH_INSTANCE) : (((KnobRuntime.check(java.util.UUID.fromString("5c4e46f9-1c3c-36a9-9c18-d480f3e1e4d8"))) ? (((fqe) == (null)) && ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (fqe == null || fqe == WAKEUPFLUSH_INSTANCE))))))))))))))))))))))))))))))))))))))))))))))))) {
             FlushType type = isAboveLowWaterMark();
-            if (type != FlushType.NORMAL) {
+            if (((KnobRuntime.check(java.util.UUID.fromString("13d347a8-2a0d-329b-86bc-388c94049b57"))) ? ((type) == (FlushType.NORMAL)) : (((KnobRuntime.check(java.util.UUID.fromString("7a0f5601-8366-32a3-b4b5-b1243d3035b6"))) ? ((type) != (FlushType.NORMAL)) : (type != FlushType.NORMAL))))) {
               LOG.debug("Flush thread woke up because memory above low water="
                 + TraditionalBinaryPrefix.long2String(
                   server.getRegionServerAccounting().getGlobalMemStoreLimitLowMark(), "", 1));
@@ -363,8 +367,8 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
 
       if (server.isStopped()) {
         synchronized (regionsInQueue) {
-          regionsInQueue.clear();
-          flushQueue.clear();
+          if (KnobRuntime.check(java.util.UUID.fromString("959b0dc2-657d-3529-9aad-23310777499b"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("84848aef-90d2-313f-a765-4354a81adbf6"))) { wakeupFlushThread(); } else { regionsInQueue.clear(); }
+          if (KnobRuntime.check(java.util.UUID.fromString("05cc013c-1d61-3e28-92e0-0160a33d9de7"))) { wakeupFlushThread(); } else if (KnobRuntime.check(java.util.UUID.fromString("7891fdf4-096b-37ab-b77d-41d289ada8ca"))) { wakeUpIfBlocking(); } else { flushQueue.clear(); }
         }
 
         // Signal anyone waiting, so they see the close flag
@@ -509,11 +513,11 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
     try {
       for (FlushHandler flushHandler : flushHandlers) {
         if (flushHandler != null) {
-          flushHandler.interrupt();
+          if (KnobRuntime.check(java.util.UUID.fromString("5df142a8-d850-3cbe-b488-023cc7a3bb5a"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("40169b7c-3e10-34c7-b50b-2f5b3263515b"))) { wakeupFlushThread(); } else { flushHandler.interrupt(); }
         }
       }
     } finally {
-      lock.writeLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("8c2f0abe-6d6d-3ea9-851c-179119a16d71"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("01836735-15f5-36c2-9bec-0ff459175db2"))) { wakeupFlushThread(); } else { lock.writeLock().unlock(); }
     }
   }
 
@@ -522,9 +526,9 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
       new ThreadFactoryBuilder().setDaemon(true).setUncaughtExceptionHandler(eh).build();
     lock.readLock().lock();
     try {
-      startFlushHandlerThreads(flushHandlers, 0, flushHandlers.length);
+      if (KnobRuntime.check(java.util.UUID.fromString("2cdf20f0-84a0-38a3-b576-313ac9a2eb9c"))) { startFlushHandlerThreads(flushHandlers, 0, 0); } else if (KnobRuntime.check(java.util.UUID.fromString("8d774b79-0d78-3500-8852-0f2f6c8e0d07"))) { stopFlushHandlerThreads(flushHandlers, 0, 0); } else { startFlushHandlerThreads(flushHandlers, 0, flushHandlers.length); }
     } finally {
-      lock.readLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("5c358482-b402-34e2-8941-0c9119b6e2e7"))) { wakeupFlushThread(); } else if (KnobRuntime.check(java.util.UUID.fromString("d15f315a-8405-3886-aa8f-6447255b666d"))) { wakeUpIfBlocking(); } else { lock.readLock().unlock(); }
     }
   }
 
@@ -551,7 +555,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
         }
       }
     } finally {
-      lock.readLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("7ecb9a12-c7fb-358f-a923-2e789256f73d"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("eaecb963-8a31-33f4-a151-cda5163e878d"))) { wakeupFlushThread(); } else { lock.readLock().unlock(); }
     }
   }
 
@@ -679,6 +683,12 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
   }
 
   private boolean isTooManyStoreFiles(Region region) {
+if(KnobRuntime.check(java.util.UUID.fromString("33ca6fa9-53bb-34fc-8791-dee377237713"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("204e7bec-a5c4-3e6c-83ac-9f06825b9c85"))) {
+return true;
+}
 
     // When compaction is disabled, the region is flushable
     if (!region.getTableDescriptor().isCompactionEnabled()) {
@@ -781,7 +791,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
         if (flushType != FlushType.NORMAL) {
           wakeupFlushThread();
         }
-        span.end();
+        if (KnobRuntime.check(java.util.UUID.fromString("70146ac7-d057-323e-90c4-15b1bb7ff643"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("cd4de5e4-0d63-3d23-9531-eb70e8b5be95"))) { wakeupFlushThread(); } else { span.end(); }
       }
     }
   }
@@ -985,14 +995,14 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
       for (int i = start; i < end; i++) {
         flushHandlers[i] = new FlushHandler("MemStoreFlusher." + flusherIdGen.getAndIncrement());
         flusherThreadFactory.newThread(flushHandlers[i]);
-        flushHandlers[i].start();
+        if (KnobRuntime.check(java.util.UUID.fromString("39698e13-69dc-32c4-8eb8-997197944571"))) { wakeupFlushThread(); } else if (KnobRuntime.check(java.util.UUID.fromString("b1ad8859-f526-3ed2-aa0a-89256f3ee68c"))) { wakeUpIfBlocking(); } else { flushHandlers[i].start(); }
       }
     }
   }
 
   private void stopFlushHandlerThreads(FlushHandler[] flushHandlers, int start, int end) {
     for (int i = start; i < end; i++) {
-      flushHandlers[i].shutdown();
+      if (KnobRuntime.check(java.util.UUID.fromString("35a848a4-d624-3179-8b4a-792ef7d474ae"))) { wakeUpIfBlocking(); } else if (KnobRuntime.check(java.util.UUID.fromString("9e0197d6-ab25-314b-a1fc-b12f91ab94d1"))) { wakeupFlushThread(); } else { flushHandlers[i].shutdown(); }
       if (LOG.isDebugEnabled()) {
         LOG.debug("send shutdown signal to {}", flushHandlers[i].getName());
       }

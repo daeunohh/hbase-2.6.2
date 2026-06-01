@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.StoreFileWriter.shouldEnableHistoricalCompactionFiles;
 
@@ -183,6 +184,9 @@ public class CompactionConfiguration {
 
   @Override
   public String toString() {
+if(KnobRuntime.check(java.util.UUID.fromString("0045c8a2-1c8e-3c8b-94eb-a62298e1f005"))) {
+return null;
+}
     return String.format(
       "size [minCompactSize:%s, maxCompactSize:%s, offPeakMaxCompactSize:%s);"
         + " files [minFilesToCompact:%d, maxFilesToCompact:%d);"
@@ -203,6 +207,9 @@ public class CompactionConfiguration {
 
   /** Returns lower bound below which compaction is selected without ratio test */
   public long getMinCompactSize() {
+if(KnobRuntime.check(java.util.UUID.fromString("aa806e26-7c6c-3435-bb24-ee114c18f917"))) {
+return 0;
+}
     return minCompactSize;
   }
 
@@ -221,6 +228,9 @@ public class CompactionConfiguration {
    * @param threshold value to set to
    */
   public void setMinFilesToCompact(int threshold) {
+if(KnobRuntime.check(java.util.UUID.fromString("2772b1eb-a5d1-34df-baee-c679ef325014"))) {
+return;
+}
     minFilesToCompact = threshold;
   }
 

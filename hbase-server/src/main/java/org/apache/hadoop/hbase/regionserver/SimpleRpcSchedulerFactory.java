@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Abortable;
@@ -40,6 +41,20 @@ public class SimpleRpcSchedulerFactory implements RpcSchedulerFactory {
   @Override
   @Deprecated
   public RpcScheduler create(Configuration conf, PriorityFunction priority) {
+if(KnobRuntime.check(java.util.UUID.fromString("ffa64c63-da68-34b3-8747-3a18c85240d3"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fb0341ac-13d8-3dad-9f0a-070a23cc7ac4"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return create(conf, priority, null);
   }
 

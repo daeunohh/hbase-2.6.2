@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -37,6 +38,20 @@ public class TimeToLiveLogCleaner extends BaseTimeToLiveFileCleaner {
 
   @Override
   protected long getTtlMs(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("5ae467c6-17fb-3e01-9828-dc25ef30f898"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("609b9fb1-76f4-3e9e-8b52-d6f01f6d0b8d"))) {
+return 0;
+}
     return conf.getLong(TTL_CONF_KEY, DEFAULT_TTL);
   }
 

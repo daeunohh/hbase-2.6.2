@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.SplitLogManager.ResubmitDirective.CHECK;
 import static org.apache.hadoop.hbase.master.SplitLogManager.ResubmitDirective.FORCE;
@@ -119,7 +120,7 @@ public class SplitLogManager {
     // CoordinatedStateManager is non-null if we are running the ZK-based distributed WAL
     // splitting. It is null if we are configured to use procedure-based distributed WAL
     // splitting.
-    if (server.getCoordinatedStateManager() != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("26cf1e17-5c9c-3197-8806-0bf984ff155a"))) ? ((server.getCoordinatedStateManager()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8833279a-48a6-3f98-9fea-437a0abb9aec"))) ? ((server.getCoordinatedStateManager()) != (null)) : (server.getCoordinatedStateManager() != null))))) {
       this.choreService =
         new ChoreService(master.getServerName().toShortString() + ".splitLogManager.");
       SplitLogManagerCoordination coordination = getSplitLogManagerCoordination();
@@ -438,10 +439,13 @@ public class SplitLogManager {
   }
 
   public void stop() {
-    if (choreService != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("f63d24ea-185c-3213-95f8-bd8d227588e9"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("cb938b1a-c35d-3988-9f3b-6a529370155f"))) ? ((choreService) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5c9ad52b-cc21-3cad-a210-c69b888042d3"))) ? ((choreService) == (null)) : (choreService != null))))) {
       choreService.shutdown();
     }
-    if (timeoutMonitor != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d3d55d2f-cb4b-3203-93d6-f6b623883e39"))) ? ((timeoutMonitor) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2b694780-fa13-316b-b125-2c258c831e86"))) ? ((timeoutMonitor) != (null)) : (timeoutMonitor != null))))) {
       timeoutMonitor.shutdown(true);
     }
   }

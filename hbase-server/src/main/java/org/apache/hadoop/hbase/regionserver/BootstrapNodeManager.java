@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class BootstrapNodeManager {
         conn.getLiveRegionServers(() -> masterAddrTracker.getMasterAddress(), maxNodeCount * 2);
     } catch (IOException e) {
       LOG.warn("failed to get live region servers from master", e);
-      if (retryCounter == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("9cbe4777-5086-304f-8d7f-4678587b61af"))) ? ((retryCounter) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2a72d2ae-f012-34a9-92de-a64737ecb809"))) ? ((retryCounter) == (null)) : (retryCounter == null))))) {
         retryCounter = retryCounterFactory.create();
       }
       executor.schedule(this::getFromMaster, retryCounter.getBackoffTimeAndIncrementAttempts(),
@@ -148,7 +149,7 @@ public class BootstrapNodeManager {
     retryCounter = null;
     lastRequestMasterTime = EnvironmentEdgeManager.currentTime();
     this.nodes = Collections.unmodifiableList(liveRegionServers);
-    if (liveRegionServers.size() < maxNodeCount) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("42e4a0cd-18d2-366e-9963-80c615fbf30a"))) ? ((liveRegionServers.size()) > (maxNodeCount)) : (((KnobRuntime.check(java.util.UUID.fromString("6ad3232d-9ee8-3500-952e-867fc566926c"))) ? ((liveRegionServers.size()) <= (maxNodeCount)) : (((KnobRuntime.check(java.util.UUID.fromString("e79a3b48-6d99-3a9f-861b-bc35594635b6"))) ? ((liveRegionServers.size()) < (2)) : (((KnobRuntime.check(java.util.UUID.fromString("33257c2f-d25e-349a-be6d-fa7256e84f23"))) ? ((liveRegionServers.size()) >= (2)) : (((KnobRuntime.check(java.util.UUID.fromString("51725cba-4b6a-38f3-88dc-34d27af41ffc"))) ? ((liveRegionServers.size()) >= (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("c68322bc-1c4e-3ff7-b501-b892827b82fb"))) ? ((liveRegionServers.size()) >= (maxNodeCount)) : (((KnobRuntime.check(java.util.UUID.fromString("9deab7b2-5d94-3d02-af80-b4cfbfff7d9e"))) ? ((liveRegionServers.size()) < (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("6afa98b0-6221-317d-88c1-e1da71b45734"))) ? ((liveRegionServers.size()) < (maxNodeCount)) : (((KnobRuntime.check(java.util.UUID.fromString("56c40da8-3608-378b-ad85-44e0f3aef74a"))) ? ((liveRegionServers.size()) > (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("28150511-a3a6-37f4-b5eb-b5bf449a3c8f"))) ? ((liveRegionServers.size()) != (maxNodeCount)) : (((KnobRuntime.check(java.util.UUID.fromString("4378b6c3-4b71-3d62-837c-2f4cc3edb8e8"))) ? ((liveRegionServers.size()) == (2)) : (((KnobRuntime.check(java.util.UUID.fromString("8f9870cf-809c-3dcb-a5cb-27b164649aa0"))) ? ((liveRegionServers.size()) > (2)) : (((KnobRuntime.check(java.util.UUID.fromString("f27f7a75-2555-358f-928e-127986a3deec"))) ? ((liveRegionServers.size()) == (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("884f6674-281c-3872-805c-dfc38693f4eb"))) ? ((liveRegionServers.size()) != (2)) : (((KnobRuntime.check(java.util.UUID.fromString("b32f12df-7f80-3b1b-959d-4df73ef33ae4"))) ? ((liveRegionServers.size()) != (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("76f2332e-28ed-3b19-b065-1e146f9a599f"))) ? ((liveRegionServers.size()) <= (maxNodeCount * 2)) : (((KnobRuntime.check(java.util.UUID.fromString("0eb4c9e4-496d-3c8c-b185-1b6c287a3e26"))) ? ((liveRegionServers.size()) <= (2)) : (((KnobRuntime.check(java.util.UUID.fromString("b7bd0cdb-5d9b-3f09-a66a-02998a52dfbd"))) ? ((liveRegionServers.size()) == (maxNodeCount)) : (liveRegionServers.size() < maxNodeCount))))))))))))))))))))))))))))))))))))) {
       // If the number of live region servers is small, it means the cluster is small, so requesting
       // master with a higher frequency will not be a big problem, so here we will always request
       // master to get the live region servers as bootstrap nodes.

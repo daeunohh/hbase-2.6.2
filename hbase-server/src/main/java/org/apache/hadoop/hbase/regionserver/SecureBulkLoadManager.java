@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -113,13 +114,58 @@ public class SecureBulkLoadManager {
   }
 
   public void start() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9d90cbeb-033c-3804-b8f1-84ba895c59e2"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d26a29b5-cccf-308e-87bd-3f2a1da61342"))) {
+throw new java.io.IOException("Injected exception");
+}
     random = new SecureRandom();
+if(KnobRuntime.check(java.util.UUID.fromString("536e33bd-a007-38f8-9935-e1374814a4a2"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     userProvider = UserProvider.instantiate(conf);
     ugiReferenceCounter = new ConcurrentHashMap<>();
+if(KnobRuntime.check(java.util.UUID.fromString("56ad47c5-fa7b-39cf-b9aa-06dec76f4f07"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1a4cdc86-8915-31d4-ba65-1566b6ddf321"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     fs = FileSystem.get(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("ad1e80c4-d46d-35fc-a2b0-4d38f2a81137"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0271639d-0fa9-3b6a-a873-d7ac344d4914"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     baseStagingDir = new Path(CommonFSUtils.getRootDir(conf), HConstants.BULKLOAD_STAGING_DIR_NAME);
 
-    if (conf.get("hbase.bulkload.staging.dir") != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("260f6c53-6e03-3021-b049-3e272aed33bd"))) ? ((conf.get("hbase.bulkload.staging.dir")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ee96f58e-9f2b-3d89-8576-9e5643a5a5b0"))) ? ((conf.get("hbase.bulkload.staging.dir")) == (null)) : (conf.get("hbase.bulkload.staging.dir") != null))))) {
       LOG.warn("hbase.bulkload.staging.dir " + " is deprecated. Bulkload staging directory is "
         + baseStagingDir);
     }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -169,11 +170,17 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
       conf.getLong(HFILE_DELETE_THREAD_TIMEOUT_MSEC, DEFAULT_HFILE_DELETE_THREAD_TIMEOUT_MSEC);
     cleanerThreadCheckIntervalMsec = conf.getLong(HFILE_DELETE_THREAD_CHECK_INTERVAL_MSEC,
       DEFAULT_HFILE_DELETE_THREAD_CHECK_INTERVAL_MSEC);
-    startHFileDeleteThreads();
+    if (KnobRuntime.check(java.util.UUID.fromString("82defe1e-1706-301c-b38b-b51d0c10cd64"))) { stopHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("068a4771-edc2-38a3-8c8f-06c304648873"))) { notify(); } else { startHFileDeleteThreads(); }
   }
 
   @Override
   protected boolean validate(Path file) {
+if(KnobRuntime.check(java.util.UUID.fromString("b8dd93a7-f311-3a30-a3a7-7142c42713c9"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7d12c4e6-5a36-3834-b05c-311640747cdd"))) {
+return true;
+}
     return HFileLink.isBackReferencesDir(file) || HFileLink.isBackReferencesDir(file.getParent())
       || StoreFileInfo.validateStoreFileName(file.getName())
       || file.getName().endsWith(MasterRegionFactory.ARCHIVED_HFILE_SUFFIX);
@@ -188,6 +195,9 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
 
   @Override
   public int deleteFiles(Iterable<FileStatus> filesToDelete) {
+if(KnobRuntime.check(java.util.UUID.fromString("4231af14-22d2-3360-9973-0fd10da663f3"))) {
+return 0;
+}
     int deletedFiles = 0;
     List<HFileDeleteTask> tasks = new ArrayList<HFileDeleteTask>();
     // construct delete tasks and add into relative queue
@@ -236,14 +246,20 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
 
   @Override
   public synchronized void cleanup() {
-    super.cleanup();
-    stopHFileDeleteThreads();
+if(KnobRuntime.check(java.util.UUID.fromString("5c232858-7f66-35ec-b6c7-4e65b1e292ef"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7df3d686-4318-3abc-bf49-98388a055a79"))) { stopHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("8dbbd36a-7228-359e-b22b-6e0bd28bb324"))) { startHFileDeleteThreads(); } else { super.cleanup(); }
+    if (KnobRuntime.check(java.util.UUID.fromString("73ced384-f936-3537-b0a7-aa4546ce7f97"))) { notify(); } else if (KnobRuntime.check(java.util.UUID.fromString("f669e11d-a995-39b2-9914-7f2ddb1de67f"))) { startHFileDeleteThreads(); } else { stopHFileDeleteThreads(); }
   }
 
   /**
    * Start threads for hfile deletion
    */
   private void startHFileDeleteThreads() {
+if(KnobRuntime.check(java.util.UUID.fromString("cb0f8ffe-090a-30c7-a4b8-a813672ecbcf"))) {
+return;
+}
     final String n = Thread.currentThread().getName();
     running = true;
     // start thread for large file deletion
@@ -251,13 +267,16 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
       Thread large = new Thread() {
         @Override
         public void run() {
+if(KnobRuntime.check(java.util.UUID.fromString("30e51eef-8862-3961-ba47-dcfc1fe07480"))) {
+return;
+}
           consumerLoop(largeFileQueue);
         }
       };
       large.setDaemon(true);
-      large.setName(n + "-HFileCleaner.large." + i + "-" + EnvironmentEdgeManager.currentTime());
-      large.start();
-      LOG.debug("Starting for large file={}", large);
+      if (KnobRuntime.check(java.util.UUID.fromString("13be8420-cb46-3c00-9701-ca4cb1babfb7"))) { large.setName(((n + "-HFileCleaner.large." + i) + ("-")) + (System.nanoTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("2e9afbf6-0726-35c7-b45e-7883308e4cbb"))) { large.setName((n + "-HFileCleaner.large." + i + "-") + (System.nanoTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("c2594dbc-cb9f-3eff-b4da-6235ada3c464"))) { large.setName(((n + "-HFileCleaner.large." + i) + ("-")) + (EnvironmentEdgeManager.currentTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("688667b0-3089-331c-9aeb-850bae97b7a9"))) { large.setName((n + "-HFileCleaner.large." + i + "-") + (EnvironmentEdgeManager.currentTime())); } else { large.setName(n + "-HFileCleaner.large." + i + "-" + EnvironmentEdgeManager.currentTime()); }
+      if (KnobRuntime.check(java.util.UUID.fromString("31c39580-cc85-3aaf-8220-37494173ef79"))) { startHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("4a2f3e4b-3db7-3aa8-b1cd-25c96e87b951"))) { stopHFileDeleteThreads(); } else { large.start(); }
+      if (KnobRuntime.check(java.util.UUID.fromString("1c0997c6-dfe3-3968-afde-ddee780c04d0"))) { LOG.trace("Starting for large file={}", large); } else { LOG.debug("Starting for large file={}", large); }
       threads.add(large);
     }
 
@@ -270,21 +289,21 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
         }
       };
       small.setDaemon(true);
-      small.setName(n + "-HFileCleaner.small." + i + "-" + EnvironmentEdgeManager.currentTime());
-      small.start();
-      LOG.debug("Starting for small files={}", small);
+      if (KnobRuntime.check(java.util.UUID.fromString("6317c681-4912-37b9-8e4c-59f5a81e0013"))) { small.setName((n + "-HFileCleaner.small." + i + "-") + (System.nanoTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("8deec7d4-7eea-352e-8909-6b7fb9990774"))) { small.setName(((n + "-HFileCleaner.small." + i) + ("-")) + (EnvironmentEdgeManager.currentTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("80f8acd6-e042-3720-a3d5-0c0e2bc09ede"))) { small.setName((n + "-HFileCleaner.small." + i + "-") + (EnvironmentEdgeManager.currentTime())); } else if (KnobRuntime.check(java.util.UUID.fromString("a96b74cf-6464-3258-9130-aee72f4d31e0"))) { small.setName(((n + "-HFileCleaner.small." + i) + ("-")) + (System.nanoTime())); } else { small.setName(n + "-HFileCleaner.small." + i + "-" + EnvironmentEdgeManager.currentTime()); }
+      if (KnobRuntime.check(java.util.UUID.fromString("7f5fb653-6f63-303d-8c5e-31d1d8770541"))) { stopHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("386ef589-63b1-3222-96b9-fe27af29347b"))) { startHFileDeleteThreads(); } else { small.start(); }
+      if (KnobRuntime.check(java.util.UUID.fromString("abe667c8-33ab-3185-b762-fc655944fa26"))) { LOG.trace("Starting for small files={}", small); } else { LOG.debug("Starting for small files={}", small); }
       threads.add(small);
     }
   }
 
   protected void consumerLoop(BlockingQueue<HFileDeleteTask> queue) {
     try {
-      while (running) {
+      while (((KnobRuntime.check(java.util.UUID.fromString("9ba726fd-57e7-3c0d-91cd-805eccb5c00e"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("8a30b96e-efab-3971-a914-23be36ed7197"))) ? (!running) : (running))))) {
         HFileDeleteTask task = null;
         try {
           task = queue.take();
         } catch (InterruptedException e) {
-          LOG.trace("Interrupted while trying to take a task from queue", e);
+          if (KnobRuntime.check(java.util.UUID.fromString("4790d0f8-4148-34f2-be6f-9c57acbd4b39"))) { LOG.warn("Interrupted while trying to take a task from queue", e); } else { LOG.trace("Interrupted while trying to take a task from queue", e); }
           break;
         }
         if (task != null) {
@@ -303,7 +322,7 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
         }
       }
     } finally {
-      LOG.debug("Exit {}", Thread.currentThread());
+      if (KnobRuntime.check(java.util.UUID.fromString("29c74810-6aa6-3cf4-b034-197cccef93b2"))) { LOG.trace("Exit {}", Thread.currentThread()); } else { LOG.debug("Exit {}", Thread.currentThread()); }
     }
   }
 
@@ -331,10 +350,13 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
    * Stop threads for hfile deletion
    */
   private void stopHFileDeleteThreads() {
+if(KnobRuntime.check(java.util.UUID.fromString("ea1c89b0-ce45-3d30-8286-cafef7ce06f0"))) {
+return;
+}
     running = false;
-    LOG.debug("Stopping file delete threads");
+    if (KnobRuntime.check(java.util.UUID.fromString("6e9531ef-4736-364c-8822-a86ab9a631fa"))) { LOG.trace("Stopping file delete threads"); } else { LOG.debug("Stopping file delete threads"); }
     for (Thread thread : threads) {
-      thread.interrupt();
+      if (KnobRuntime.check(java.util.UUID.fromString("e2bcaead-334d-3d3a-b494-b00f65e3b5e1"))) { startHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("987ab5ed-8635-3cd7-8e87-8d69e30dcfd4"))) { stopHFileDeleteThreads(); } else { thread.interrupt(); }
     }
   }
 
@@ -516,9 +538,18 @@ public class HFileCleaner extends CleanerChore<BaseHFileCleanerDelegate>
 
   @Override
   public synchronized void cancel(boolean mayInterruptIfRunning) {
-    super.cancel(mayInterruptIfRunning);
+if(KnobRuntime.check(java.util.UUID.fromString("cb0308cb-f1b2-330d-b964-b363a7f011b8"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f80c33d2-4cf0-37f4-9c38-c8ec80887ca1"))) {
+mayInterruptIfRunning = false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d66fb9c3-53ea-3fb2-8312-86e30b9c8806"))) {
+mayInterruptIfRunning = true;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("8695b73d-f44d-38b8-b892-310e7f666ee1"))) { super.cancel(!mayInterruptIfRunning); } else { super.cancel(mayInterruptIfRunning); }
     for (Thread t : this.threads) {
-      t.interrupt();
+      if (KnobRuntime.check(java.util.UUID.fromString("a22b2088-e922-311e-910e-7025d215b0b4"))) { startHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("f91c6238-571c-3920-9353-7769e5fbad8a"))) { stopHFileDeleteThreads(); } else if (KnobRuntime.check(java.util.UUID.fromString("44059b1e-0c49-3f13-acf0-5c306583253c"))) { notify(); } else { t.interrupt(); }
     }
   }
 }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -90,6 +91,27 @@ public class ProcedureCoordinator {
    * @param opThreads the maximum number of threads to allow in the pool
    */
   public static ThreadPoolExecutor defaultPool(String coordName, int opThreads) {
+if(KnobRuntime.check(java.util.UUID.fromString("f7b29013-2e35-3304-b9c5-277c85fdf15d"))) {
+opThreads *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ced22050-72a8-3e0d-ace8-22784d682389"))) {
+opThreads = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e003bdde-1404-3363-b7ce-38d24b3063dd"))) {
+opThreads -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cbfca24b-ac9d-39d8-b197-8dbbea875c5a"))) {
+opThreads = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cdb6abf2-70a1-3f02-b37b-e26eb42d9ad7"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ff6c55be-181e-39d6-b28f-6b172782ce7d"))) {
+opThreads += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e9b23ebb-3cf4-31eb-b259-c5cc022570c6"))) {
+opThreads /= 2;
+}
     return defaultPool(coordName, opThreads, KEEP_ALIVE_MILLIS_DEFAULT);
   }
 
@@ -100,6 +122,9 @@ public class ProcedureCoordinator {
    */
   public static ThreadPoolExecutor defaultPool(String coordName, int opThreads,
     long keepAliveMillis) {
+if(KnobRuntime.check(java.util.UUID.fromString("b33b1cd6-2338-3c97-af47-37f29d9c894e"))) {
+return null;
+}
     return new ThreadPoolExecutor(1, opThreads, keepAliveMillis, TimeUnit.MILLISECONDS,
       new SynchronousQueue<>(),
       new ThreadFactoryBuilder().setNameFormat("(" + coordName + ")-proc-coordinator-pool-%d")
@@ -112,6 +137,9 @@ public class ProcedureCoordinator {
   public void close() throws IOException {
     // have to use shutdown now to break any latch waiting
     pool.shutdownNow();
+if(KnobRuntime.check(java.util.UUID.fromString("7959e0fe-c0af-35cc-8c00-da86fb2ca1fd"))) {
+throw new java.io.IOException("Injected exception");
+}
     rpcs.close();
   }
 

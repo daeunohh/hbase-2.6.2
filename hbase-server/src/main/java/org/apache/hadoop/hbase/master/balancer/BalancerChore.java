@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.balancer;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HConstants;
@@ -36,7 +37,7 @@ public class BalancerChore extends ScheduledChore {
   private final HMaster master;
 
   public BalancerChore(HMaster master) {
-    super(master.getServerName() + "-BalancerChore", master, master.getConfiguration()
+    super(((KnobRuntime.check(java.util.UUID.fromString("58c7dfb9-834c-3cc4-8384-8292abf9feb9"))) ? ((master.getServerName()) + ("-BalancerChore")) : (((KnobRuntime.check(java.util.UUID.fromString("1561c0a2-689d-3b7f-9fdd-615b8c7060cb"))) ? ("-BalancerChore") : (master.getServerName() + "-BalancerChore")))), master, master.getConfiguration()
       .getInt(HConstants.HBASE_BALANCER_PERIOD, HConstants.DEFAULT_HBASE_BALANCER_PERIOD));
     this.master = master;
   }

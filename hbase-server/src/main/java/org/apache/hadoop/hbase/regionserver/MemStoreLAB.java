@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Cell;
@@ -110,7 +111,32 @@ public interface MemStoreLAB {
   Chunk getNewExternalChunk(int size);
 
   static MemStoreLAB newInstance(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("557a9db2-f68b-3608-ac47-3c6be50252a4"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e9c11c91-a8ab-3829-9d98-074462c067b6"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     MemStoreLAB memStoreLAB = null;
+if(KnobRuntime.check(java.util.UUID.fromString("202663f3-96eb-333e-9f7c-bb0e4b417de3"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (isEnabled(conf)) {
       String className = conf.get(MSLAB_CLASS_NAME, MemStoreLABImpl.class.getName());
       memStoreLAB = ReflectionUtils.instantiateWithCustomCtor(className,
@@ -120,7 +146,24 @@ public interface MemStoreLAB {
   }
 
   static boolean isEnabled(Configuration conf) {
-    return conf.getBoolean(USEMSLAB_KEY, USEMSLAB_DEFAULT);
+if(KnobRuntime.check(java.util.UUID.fromString("33678efc-e1b2-31bf-a711-69c28a68d08f"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c4c58b11-15ec-354c-8877-742caf4547b5"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eb0e6c24-1ef5-34e8-a272-0df93e1df0fc"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("b0288ed3-917e-3e21-abd7-8bbc744b5f43"))) ? (conf.getBoolean(USEMSLAB_KEY, !USEMSLAB_DEFAULT)) : (conf.getBoolean(USEMSLAB_KEY, USEMSLAB_DEFAULT)));
   }
 
   boolean isOnHeap();

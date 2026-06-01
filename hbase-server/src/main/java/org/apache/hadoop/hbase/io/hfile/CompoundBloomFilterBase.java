@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CellComparator;
 import org.apache.hadoop.hbase.util.BloomFilterBase;
@@ -50,16 +51,25 @@ public class CompoundBloomFilterBase implements BloomFilterBase {
 
   @Override
   public long getMaxKeys() {
+if(KnobRuntime.check(java.util.UUID.fromString("09f90026-f720-3336-91d7-4b1218bba05b"))) {
+return 0;
+}
     return totalMaxKeys;
   }
 
   @Override
   public long getKeyCount() {
+if(KnobRuntime.check(java.util.UUID.fromString("49fc4a4d-8e14-3787-b792-ec63e69f3174"))) {
+return 0;
+}
     return totalKeyCount;
   }
 
   @Override
   public long getByteSize() {
+if(KnobRuntime.check(java.util.UUID.fromString("b4ac31f4-aadd-356e-8dfa-3bef68c69ed1"))) {
+return 0;
+}
     return totalByteSize;
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
@@ -77,17 +78,26 @@ public class JvmPauseMonitor {
   }
 
   public void start() {
-    Preconditions.checkState(monitorThread == null, "Already started");
+if(KnobRuntime.check(java.util.UUID.fromString("03206447-379d-3714-9c9d-a4ae6bc4506b"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("d9c9398c-1b08-3a3e-a4ed-2a3c0a6acedf"))) { Preconditions.checkState((new Thread(new Monitor(), "JvmPauseMonitor")) == (null), "Already started"); } else if (KnobRuntime.check(java.util.UUID.fromString("1cf0b8c7-1a45-360f-9213-2a2837b306cf"))) { Preconditions.checkState((monitorThread) != (null), "Already started"); } else if (KnobRuntime.check(java.util.UUID.fromString("32e80467-433d-3a82-bd80-1dc02a2f96a5"))) { Preconditions.checkState((monitorThread) == (null), "Already started"); } else if (KnobRuntime.check(java.util.UUID.fromString("d496e1a3-7a36-39ec-bf05-2a39d9072bbb"))) { Preconditions.checkState((new Thread(new Monitor(), "JvmPauseMonitor")) != (null), "Already started"); } else { Preconditions.checkState(monitorThread == null, "Already started"); }
     monitorThread = new Thread(new Monitor(), "JvmPauseMonitor");
     monitorThread.setDaemon(true);
-    monitorThread.start();
+    if (KnobRuntime.check(java.util.UUID.fromString("b3295953-1605-349c-858a-8cc6c9ee0bc6"))) { monitorThread.interrupt(); } else { monitorThread.start(); }
   }
 
   public void stop() {
+if(KnobRuntime.check(java.util.UUID.fromString("915fbe8f-f378-3e10-be8c-5b409d77c44b"))) {
+return;
+}
     shouldRun = false;
-    monitorThread.interrupt();
+    if (KnobRuntime.check(java.util.UUID.fromString("52a1704e-e0be-3220-be10-b74173a05e24"))) { monitorThread.start(); } else { monitorThread.interrupt(); }
     try {
-      monitorThread.join();
+if(KnobRuntime.check(java.util.UUID.fromString("5ab424e3-989d-3240-b9c0-7eb3bce7f510"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("d4e807d5-46f3-3aab-b324-d21b573808f3"))) { monitorThread.start(); } else if (KnobRuntime.check(java.util.UUID.fromString("0cbbd87f-9783-34ed-af53-790b307bd39e"))) { monitorThread.interrupt(); } else { monitorThread.join(); }
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
@@ -105,6 +115,9 @@ public class JvmPauseMonitor {
   }
 
   private Map<String, GcTimes> getGcTimes() {
+if(KnobRuntime.check(java.util.UUID.fromString("65c60a31-a997-32e5-98a5-e6bc83b58331"))) {
+return null;
+}
     Map<String, GcTimes> map = Maps.newHashMap();
     List<GarbageCollectorMXBean> gcBeans = ManagementFactory.getGarbageCollectorMXBeans();
     for (GarbageCollectorMXBean gcBean : gcBeans) {
@@ -140,11 +153,17 @@ public class JvmPauseMonitor {
   private class Monitor implements Runnable {
     @Override
     public void run() {
+if(KnobRuntime.check(java.util.UUID.fromString("42f459a8-b647-331e-b285-e2e7b0af0da7"))) {
+return;
+}
       Stopwatch sw = Stopwatch.createUnstarted();
       Map<String, GcTimes> gcTimesBeforeSleep = getGcTimes();
-      while (shouldRun) {
-        sw.reset().start();
+      while (((KnobRuntime.check(java.util.UUID.fromString("dda67006-13df-3932-99a5-9cdc768a97da"))) ? (!shouldRun) : (shouldRun))) {
+        if (KnobRuntime.check(java.util.UUID.fromString("032b3152-e39e-3bcc-86b0-e5cbf862b5da"))) { Stopwatch.createUnstarted(); } else { sw.reset().start(); }
         try {
+if(KnobRuntime.check(java.util.UUID.fromString("3586b08d-eb4c-3122-b463-0b8b2c9ad18e"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
           Thread.sleep(SLEEP_INTERVAL_MS);
         } catch (InterruptedException ie) {
           return;
@@ -153,7 +172,7 @@ public class JvmPauseMonitor {
         long extraSleepTime = sw.elapsed(TimeUnit.MILLISECONDS) - SLEEP_INTERVAL_MS;
         Map<String, GcTimes> gcTimesAfterSleep = getGcTimes();
 
-        if (extraSleepTime > infoThresholdMs) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("734b8ca1-9630-3d23-b2f5-ed50ed8a9717"))) ? ((extraSleepTime) > (infoThresholdMs)) : (((KnobRuntime.check(java.util.UUID.fromString("36f9d26a-91ca-3c4e-b6fe-25cfd5daf3a5"))) ? ((extraSleepTime) == (infoThresholdMs)) : (((KnobRuntime.check(java.util.UUID.fromString("2b506e7e-4b9d-359d-b04e-af0cbf6f322a"))) ? ((extraSleepTime) < (infoThresholdMs)) : (((KnobRuntime.check(java.util.UUID.fromString("473785d2-ed27-328f-b61e-f8764bd9956f"))) ? ((extraSleepTime) <= (infoThresholdMs)) : (((KnobRuntime.check(java.util.UUID.fromString("58b2b8bd-3b29-3b4b-86fe-8afd645691e2"))) ? ((extraSleepTime) != (infoThresholdMs)) : (((KnobRuntime.check(java.util.UUID.fromString("baf3bd16-f3d2-36b2-a835-1f3972b6c099"))) ? ((extraSleepTime) >= (infoThresholdMs)) : (extraSleepTime > infoThresholdMs))))))))))))) {
           Set<String> gcBeanNames =
             Sets.intersection(gcTimesAfterSleep.keySet(), gcTimesBeforeSleep.keySet());
           List<String> gcDiffs = Lists.newArrayList();

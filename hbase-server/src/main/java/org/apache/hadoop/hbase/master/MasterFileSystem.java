@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -110,7 +111,7 @@ public class MasterFileSystem {
     this.isSecurityEnabled = "kerberos".equalsIgnoreCase(conf.get("hbase.security.authentication"));
     // setup the filesystem variable
     createInitialFileSystemLayout();
-    HFileSystem.addLocationsOrderInterceptor(conf);
+    if (KnobRuntime.check(java.util.UUID.fromString("f743c44e-e608-3287-bd1d-de6e5a450277"))) { SnapshotScannerHDFSAclHelper.isAclSyncToHdfsEnabled(conf); } else { HFileSystem.addLocationsOrderInterceptor(conf); }
   }
 
   /**
@@ -137,6 +138,9 @@ public class MasterFileSystem {
     // Check the directories under rootdir.
     checkTempDir(this.tempdir, conf, this.fs);
     for (String subDir : protectedSubDirs) {
+if(KnobRuntime.check(java.util.UUID.fromString("e4d28b19-f7db-33cd-bed6-6f51b7a2f6ad"))) {
+throw new java.io.IOException("Injected exception");
+}
       checkSubDir(new Path(this.rootdir, subDir), HBASE_DIR_PERMS);
     }
 
@@ -147,6 +151,9 @@ public class MasterFileSystem {
       perms = HBASE_DIR_PERMS;
     }
     for (String subDir : protectedSubLogDirs) {
+if(KnobRuntime.check(java.util.UUID.fromString("c3d424f7-c871-31ec-a0cc-96b5fe829d9e"))) {
+throw new java.io.IOException("Injected exception");
+}
       checkSubDir(new Path(this.walRootDir, subDir), perms);
     }
 
@@ -155,6 +162,9 @@ public class MasterFileSystem {
     // Handle the last few special files and set the final rootDir permissions
     // rootDir needs 'x' for all to support bulk load staging dir
     if (isSecurityEnabled) {
+if(KnobRuntime.check(java.util.UUID.fromString("9237351f-1831-325f-8aa9-9cf66a254756"))) {
+throw new java.io.IOException("Injected exception");
+}
       fs.setPermission(new Path(rootdir, HConstants.VERSION_FILE_NAME), secureRootFilePerms);
       fs.setPermission(new Path(rootdir, HConstants.CLUSTER_ID_FILE_NAME), secureRootFilePerms);
     }
@@ -262,7 +272,31 @@ public class MasterFileSystem {
     }
     // Make sure cluster ID exists
     if (!FSUtils.checkClusterIdExists(fs, rd, threadWakeFrequency)) {
-      FSUtils.setClusterId(fs, rd, new ClusterId(), threadWakeFrequency);
+if(KnobRuntime.check(java.util.UUID.fromString("ccc1112a-7272-3623-a25a-1fce3e877ef0"))) {
+threadWakeFrequency += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f67c935c-d5b7-3472-9fee-1abea4b17fa0"))) {
+threadWakeFrequency = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e3a0da8f-256e-3634-bad6-894c47143acd"))) {
+threadWakeFrequency *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d4aaa1b5-21b0-3b92-a812-353872dfeda8"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b5d4984a-e561-38b7-b926-56ef6544b092"))) {
+threadWakeFrequency = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1e77958b-3a9b-35e7-8424-150a9934f3ab"))) {
+threadWakeFrequency -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a84a9041-d966-3c2c-ae05-d3b0850e6e49"))) {
+threadWakeFrequency /= 2;
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("759246f0-dea6-3948-9003-e4ec41bc1968"))) { FSUtils.setClusterId(fs, rd, new ClusterId(), 10); } else if (KnobRuntime.check(java.util.UUID.fromString("9647016f-1f3f-341e-acce-18eb9aa39109"))) { FSUtils.setClusterId(fs, rd, new ClusterId(), 1000); } else if (KnobRuntime.check(java.util.UUID.fromString("51be352d-a4e5-3b87-95fb-f86c8d5fa2fd"))) { FSUtils.setClusterId(fs, rd, new ClusterId(), 10 * 1000); } else { FSUtils.setClusterId(fs, rd, new ClusterId(), threadWakeFrequency); }
+if(KnobRuntime.check(java.util.UUID.fromString("2e90c367-e458-3596-97c2-d821ad396272"))) {
+throw new java.io.IOException("Injected exception");
+}
     }
     clusterId = FSUtils.getClusterId(fs, rd);
   }
@@ -278,6 +312,9 @@ public class MasterFileSystem {
       // Archive table in temp, maybe left over from failed deletion,
       // if not the cleaner will take care of them.
       for (Path tableDir : FSUtils.getTableDirs(fs, tmpdir)) {
+if(KnobRuntime.check(java.util.UUID.fromString("5c7e64bf-f705-3f4b-a076-f14a3bd1a7df"))) {
+throw new java.io.IOException("Injected exception");
+}
         HFileArchiver.archiveRegions(c, fs, this.rootdir, tableDir,
           FSUtils.getRegionDirs(fs, tableDir));
         if (!FSUtils.getRegionDirs(fs, tableDir).isEmpty()) {
@@ -292,7 +329,10 @@ public class MasterFileSystem {
 
     // Create the temp directory
     if (!fs.exists(tmpdir)) {
-      if (isSecurityEnabled) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("c25f9e21-5ee1-3e35-9271-e7ebba671b35"))) ? (!isSecurityEnabled) : (((KnobRuntime.check(java.util.UUID.fromString("babf1154-cf50-365e-b159-b51afd9ad01f"))) ? (true) : (isSecurityEnabled))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("c15ed220-17b8-31a5-8dc9-b2eb56f22e84"))) {
+throw new java.io.IOException("Injected exception");
+}
         if (!fs.mkdirs(tmpdir, secureRootSubDirPerms)) {
           throw new IOException("HBase temp directory '" + tmpdir + "' creation failure.");
         }
@@ -311,7 +351,10 @@ public class MasterFileSystem {
     FileSystem fs = p.getFileSystem(conf);
     FsPermission dirPerms = new FsPermission(conf.get(dirPermsConfName, "700"));
     if (!fs.exists(p)) {
-      if (isSecurityEnabled) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("08eb8896-c157-3182-9eef-2a4f2d801ba4"))) ? (!isSecurityEnabled) : (isSecurityEnabled))) {
+if(KnobRuntime.check(java.util.UUID.fromString("0bda9887-3f3b-3a1f-8715-b5172e269e8e"))) {
+throw new java.io.IOException("Injected exception");
+}
         if (!fs.mkdirs(p, secureRootSubDirPerms)) {
           throw new IOException("HBase directory '" + p + "' creation failure.");
         }
@@ -341,6 +384,9 @@ public class MasterFileSystem {
     try {
       if (!this.fs.exists(p)) {
         if (!this.fs.mkdirs(p, HiddenDirPerms)) {
+if(KnobRuntime.check(java.util.UUID.fromString("99dfd429-7bc0-3756-8015-341a15af5478"))) {
+throw new java.io.IOException("Injected exception");
+}
           throw new IOException("Failed to create staging directory " + p.toString());
         }
       }

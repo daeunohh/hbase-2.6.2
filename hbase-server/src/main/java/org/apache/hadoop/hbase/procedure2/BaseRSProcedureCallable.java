@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure2;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.regionserver.HRegionServer;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -29,7 +30,10 @@ public abstract class BaseRSProcedureCallable implements RSProcedureCallable {
 
   @Override
   public final Void call() throws Exception {
-    if (initError != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("0d5deb7c-244a-3715-b13e-4dc799e7f348"))) {
+return null;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("9d2a81ae-adc6-3083-9d0d-95d9adf2d1a5"))) ? ((initError) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6182c433-819d-3423-9121-c6e21c6834d1"))) ? ((initError) != (null)) : (initError != null))))) {
       throw initError;
     }
     doCall();

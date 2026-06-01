@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.TableName;
@@ -54,6 +55,9 @@ public abstract class AbstractStateMachineRegionProcedure<TState>
 
   /** Returns The RegionInfo of the region we are operating on. */
   public RegionInfo getRegion() {
+if(KnobRuntime.check(java.util.UUID.fromString("d23cd4e3-8cff-3e8e-a2cc-9a5143ed76a2"))) {
+return null;
+}
     return this.hri;
   }
 
@@ -66,7 +70,10 @@ public abstract class AbstractStateMachineRegionProcedure<TState>
 
   @Override
   public TableName getTableName() {
-    return getRegion().getTable();
+if(KnobRuntime.check(java.util.UUID.fromString("47ed3dd2-63c9-3a25-80d9-d9846053ae5a"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("60cce93c-4f36-3ba8-8c01-750895e346bd"))) ? (getTableName()) : (getRegion().getTable()));
   }
 
   @Override
@@ -74,17 +81,29 @@ public abstract class AbstractStateMachineRegionProcedure<TState>
 
   @Override
   public void toStringClassDetails(final StringBuilder sb) {
+if(KnobRuntime.check(java.util.UUID.fromString("f7d67f66-42e3-3905-a34f-c9408e8bb2ac"))) {
+return;
+}
     super.toStringClassDetails(sb);
     sb.append(", region=").append(getRegion().getShortNameToLog());
   }
 
   @Override
   protected boolean holdLock(MasterProcedureEnv env) {
+if(KnobRuntime.check(java.util.UUID.fromString("2e3ec74c-92a2-3ca2-ae42-c4af252cefd0"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1b423259-b597-3737-9c0f-0479836968f9"))) {
+return true;
+}
     return true;
   }
 
   @Override
   protected LockState acquireLock(final MasterProcedureEnv env) {
+if(KnobRuntime.check(java.util.UUID.fromString("17b81626-3751-3946-94bc-a7155be1d0d7"))) {
+return null;
+}
     if (env.getProcedureScheduler().waitRegions(this, getTableName(), getRegion())) {
       return LockState.LOCK_EVENT_WAIT;
     }
@@ -93,6 +112,9 @@ public abstract class AbstractStateMachineRegionProcedure<TState>
 
   @Override
   protected void releaseLock(final MasterProcedureEnv env) {
+if(KnobRuntime.check(java.util.UUID.fromString("c9d4bcfc-4389-3964-a3de-78b2a6cb6384"))) {
+return;
+}
     env.getProcedureScheduler().wakeRegions(this, getTableName(), getRegion());
   }
 
@@ -102,7 +124,16 @@ public abstract class AbstractStateMachineRegionProcedure<TState>
 
   @Override
   protected void serializeStateData(ProcedureStateSerializer serializer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("bd8d9bbd-8b75-308d-9909-881c4ca475d8"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8fd6da23-34ce-3c12-b70b-e5eaf7a44688"))) {
+return;
+}
     super.serializeStateData(serializer);
+if(KnobRuntime.check(java.util.UUID.fromString("e9a14299-5eb2-3d17-aad6-3984e26bac85"))) {
+throw new java.io.IOException("Injected exception");
+}
     serializer.serialize(ProtobufUtil.toRegionInfo(getRegion()));
   }
 

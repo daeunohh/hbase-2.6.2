@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -41,7 +42,32 @@ public final class FlushThroughputControllerFactory {
   }
 
   public static ThroughputController create(RegionServerServices server, Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("642551ac-6518-3620-a04d-af0507f22904"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("36f035a8-02b4-3f33-8e3e-2f15f9e3490b"))) {
+return null;
+}
     Class<? extends ThroughputController> clazz = getThroughputControllerClass(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("a5a37bb0-08ff-36ba-bf87-92ca5ddabf85"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     ThroughputController controller = ReflectionUtils.newInstance(clazz, conf);
     controller.setup(server);
     return controller;
@@ -49,9 +75,26 @@ public final class FlushThroughputControllerFactory {
 
   public static Class<? extends ThroughputController>
     getThroughputControllerClass(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("926827b6-8980-365d-a334-8ca5d6b1b7d2"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b73de101-3d78-3cf2-b2d8-edc613eaf4bf"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String className = conf.get(HBASE_FLUSH_THROUGHPUT_CONTROLLER_KEY,
       DEFAULT_FLUSH_THROUGHPUT_CONTROLLER_CLASS.getName());
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("527acf30-1b5a-31f6-b7c9-5ab17a482baa"))) {
+throw new java.lang.ClassNotFoundException("Injected exception");
+}
       return Class.forName(className).asSubclass(ThroughputController.class);
     } catch (Exception e) {
       LOG.warn("Unable to load configured flush throughput controller '" + className

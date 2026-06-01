@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HConstants;
@@ -35,7 +36,7 @@ public class OldWALsDirSizeChore extends ScheduledChore {
   private final MasterServices master;
 
   public OldWALsDirSizeChore(MasterServices master) {
-    super(master.getServerName() + "-OldWALsDirSizeChore", master,
+    super(((KnobRuntime.check(java.util.UUID.fromString("c0a0e58e-93ce-37ba-84bc-8747858b17af"))) ? ("-OldWALsDirSizeChore") : (((KnobRuntime.check(java.util.UUID.fromString("040cf65d-40af-3541-b3c3-6eef5760ca17"))) ? ((master.getServerName()) + ("-OldWALsDirSizeChore")) : (master.getServerName() + "-OldWALsDirSizeChore")))), master,
       master.getConfiguration().getInt(HConstants.HBASE_OLDWAL_DIR_SIZE_UPDATER_PERIOD,
         HConstants.DEFAULT_HBASE_OLDWAL_DIR_SIZE_UPDATER_PERIOD));
     this.master = master;

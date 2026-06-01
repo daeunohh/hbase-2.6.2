@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -226,6 +227,9 @@ public class StoreFileInfo implements Configurable {
 
   @Override
   public Configuration getConf() {
+if(KnobRuntime.check(java.util.UUID.fromString("75afdc53-4f49-3d7c-b64b-dcd3092f109e"))) {
+return null;
+}
     return conf;
   }
 
@@ -289,9 +293,15 @@ public class StoreFileInfo implements Configurable {
 
   ReaderContext createReaderContext(boolean doDropBehind, long readahead, ReaderType type)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("97e9a09d-987c-37dd-8942-7158b202cd1f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("64dfdd98-4898-3362-a183-b8ef52433206"))) {
+return null;
+}
     FSDataInputStreamWrapper in;
     FileStatus status;
-    if (this.link != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d1de91a2-4258-37fa-9e82-ec3abf3864a5"))) ? ((this.link) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d08c8570-0460-3d8d-8834-b7b1aa7683b8"))) ? ((this.link) == (null)) : (this.link != null))))) {
       // HFileLink
       in = new FSDataInputStreamWrapper(fs, this.link, doDropBehind, readahead);
       status = this.link.getFileStatus(fs);
@@ -305,7 +315,7 @@ public class StoreFileInfo implements Configurable {
         // exception just complains about some random file -- operator doesn't realize it
         // other end of a Reference
         FileNotFoundException newFnfe = new FileNotFoundException(toString());
-        newFnfe.initCause(fnfe);
+        if (KnobRuntime.check(java.util.UUID.fromString("f7f49c4a-ccbf-3f7f-bbb9-534dc85703cc"))) { newFnfe.initCause(new FileNotFoundException(toString())); } else { newFnfe.initCause(fnfe); }
         throw newFnfe;
       }
       status = fs.getFileStatus(referencePath);
@@ -317,7 +327,7 @@ public class StoreFileInfo implements Configurable {
     ReaderContextBuilder contextBuilder =
       new ReaderContextBuilder().withInputStreamWrapper(in).withFileSize(length)
         .withPrimaryReplicaReader(this.primaryReplica).withReaderType(type).withFileSystem(fs);
-    if (this.reference != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("5fe99b49-b2e8-3a3d-8c5e-1368b05a9b0a"))) ? ((this.reference) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e87785fd-d3cb-396b-94ef-4d27ce1dbff3"))) ? ((this.reference) != (null)) : (this.reference != null))))) {
       contextBuilder.withFilePath(this.getPath());
     } else {
       contextBuilder.withFilePath(status.getPath());
@@ -344,7 +354,10 @@ public class StoreFileInfo implements Configurable {
       }
       throw exToThrow;
     } else {
-      return computeHDFSBlocksDistributionInternal(fs);
+if(KnobRuntime.check(java.util.UUID.fromString("27eb6223-42c7-3d4e-ac95-daacdda2a97a"))) {
+throw new java.io.IOException("Injected exception");
+}
+      return ((KnobRuntime.check(java.util.UUID.fromString("7950b90f-764c-3256-96b9-6c645b45d343"))) ? (computeHDFSBlocksDistribution(fs)) : (computeHDFSBlocksDistributionInternal(fs)));
     }
   }
 
@@ -365,7 +378,7 @@ public class StoreFileInfo implements Configurable {
    */
   public FileStatus getReferencedFileStatus(final FileSystem fs) throws IOException {
     FileStatus status;
-    if (this.reference != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d436d74c-944d-37dc-bb5f-721b0a5c6306"))) ? ((this.reference) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5e34169e-1862-3df4-b75f-b2041cac947c"))) ? ((this.reference) != (null)) : (this.reference != null))))) {
       if (this.link != null) {
         FileNotFoundException exToThrow = null;
         for (int i = 0; i < this.link.getLocations().length; i++) {
@@ -397,6 +410,9 @@ public class StoreFileInfo implements Configurable {
         }
         throw exToThrow;
       } else {
+if(KnobRuntime.check(java.util.UUID.fromString("0ffd1b2c-6945-3d0e-b6de-6eecdea96db8"))) {
+throw new java.io.IOException("Injected exception");
+}
         status = fs.getFileStatus(initialPath);
       }
     }
@@ -455,7 +471,7 @@ public class StoreFileInfo implements Configurable {
   public static OptionalLong getBulkloadSeqId(final Path path) {
     String fileName = path.getName();
     int startPos = fileName.indexOf(SEQ_ID_MARKER);
-    if (startPos != -1) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("90437cf1-076d-3957-ad0f-4f5672773c1d"))) ? ((-1) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("f01ac465-fb96-3de5-85f7-c291f517d1cc"))) ? ((-1) != (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("b1b05777-75a3-3fc8-af2c-5e0d7089db5a"))) ? ((startPos) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("52e72c63-7957-3b9a-b4bf-d75ec67bd6cc"))) ? ((1) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("f9074bc7-e3f7-3066-9648-bdcc68222be9"))) ? ((1) != (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("36dbf62f-e448-309d-ab8c-7b389ed14589"))) ? ((startPos) != (-1)) : (startPos != -1))))))))))))) {
       String strVal = fileName.substring(startPos + SEQ_ID_MARKER_LENGTH,
         fileName.indexOf('_', startPos + SEQ_ID_MARKER_LENGTH));
       return OptionalLong.of(Long.parseLong(strVal));
@@ -493,7 +509,7 @@ public class StoreFileInfo implements Configurable {
   public static boolean isMobFile(final Path path) {
     String fileName = path.getName();
     String[] parts = fileName.split(MobUtils.SEP);
-    if (parts.length != 2) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a06ff9e3-4b41-3cc5-a87f-980fdd737ded"))) ? ((parts.length) == (2)) : (((KnobRuntime.check(java.util.UUID.fromString("2385c6ef-05f9-3883-bd23-f548da24e6de"))) ? ((parts.length) != (2)) : (parts.length != 2))))) {
       return false;
     }
     Matcher m = HFILE_NAME_PATTERN.matcher(parts[0]);
@@ -557,6 +573,9 @@ public class StoreFileInfo implements Configurable {
    * @throws IllegalArgumentException when path regex fails to match.
    */
   public static Path getReferredToFile(final Path p) {
+if(KnobRuntime.check(java.util.UUID.fromString("628ba1d8-aede-371b-a198-ec4cbd092e4a"))) {
+return null;
+}
     Matcher m = REF_NAME_PATTERN.matcher(p.getName());
     if (m == null || !m.matches()) {
       LOG.warn("Failed match of store file name {}", p.toString());
@@ -568,7 +587,7 @@ public class StoreFileInfo implements Configurable {
     // Tabledir is up two directories from where Reference was written.
     Path tableDir = p.getParent().getParent().getParent();
     String nameStrippedOfSuffix = m.group(1);
-    LOG.trace("reference {} to region={} hfile={}", p, otherRegion, nameStrippedOfSuffix);
+    if (KnobRuntime.check(java.util.UUID.fromString("3548d1ad-3079-33b8-8594-32ca6638d1bd"))) { LOG.trace("reference {} to region={} hfile={}", p.getParent(), otherRegion, nameStrippedOfSuffix); } else if (KnobRuntime.check(java.util.UUID.fromString("d1c1c66f-3b6c-3167-a482-bb35165a4912"))) { LOG.trace("reference {} to region={} hfile={}", p.getParent().getParent().getParent(), otherRegion, nameStrippedOfSuffix); } else if (KnobRuntime.check(java.util.UUID.fromString("2a4c29eb-f416-34cb-8d6b-fb97e8f84a7e"))) { LOG.trace("reference {} to region={} hfile={}", p.getParent().getParent(), otherRegion, nameStrippedOfSuffix); } else { LOG.trace("reference {} to region={} hfile={}", p, otherRegion, nameStrippedOfSuffix); }
 
     // Build up new path with the referenced region in place of our current
     // region in the reference path. Also strip regionname suffix from name.
@@ -583,6 +602,9 @@ public class StoreFileInfo implements Configurable {
    * @throws IllegalArgumentException when referenceFile regex fails to match.
    */
   public static Pair<String, String> getReferredToRegionAndFile(final String referenceFile) {
+if(KnobRuntime.check(java.util.UUID.fromString("52a80eaf-2288-3f42-ab73-5e46644159b3"))) {
+return null;
+}
     Matcher m = REF_NAME_PATTERN.matcher(referenceFile);
     if (m == null || !m.matches()) {
       LOG.warn("Failed match of store file name {}", referenceFile);
@@ -658,10 +680,16 @@ public class StoreFileInfo implements Configurable {
 
   @Override
   public boolean equals(Object that) {
-    if (this == that) {
+if(KnobRuntime.check(java.util.UUID.fromString("a1f12129-0d49-33ba-94a2-4b9a8ae6f289"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ea491f34-aefa-304b-ae81-84099cbaba9b"))) {
+return false;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("5c0e41ce-66a5-3a52-9dbc-f5bd9b2865b1"))) ? ((this) == (that)) : (((KnobRuntime.check(java.util.UUID.fromString("59971c92-a131-369a-9912-166dcdb56b4d"))) ? ((this) != (that)) : (this == that))))) {
       return true;
     }
-    if (that == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("5e211439-34d5-3eb5-8c48-ea40f2a2c01a"))) ? ((that) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2710d442-eec5-3267-a616-4179669fa646"))) ? ((that) != (null)) : (that == null))))) {
       return false;
     }
 
@@ -746,7 +774,7 @@ public class StoreFileInfo implements Configurable {
   StoreFileReader postStoreFileReaderOpen(ReaderContext context, CacheConfig cacheConf,
     StoreFileReader reader) throws IOException {
     StoreFileReader res = reader;
-    if (this.coprocessorHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("41975fca-b009-3c10-af03-1a0306a38318"))) ? ((this.coprocessorHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1de4e39f-1783-3090-b88c-05f64a40aad7"))) ? ((this.coprocessorHost) != (null)) : (this.coprocessorHost != null))))) {
       res = this.coprocessorHost.postStoreFileReaderOpen(fs, this.getPath(),
         context.getInputStreamWrapper(), context.getFileSize(), cacheConf, reference, reader);
     }
@@ -754,6 +782,45 @@ public class StoreFileInfo implements Configurable {
   }
 
   public void initHFileInfo(ReaderContext context) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c92387e4-cf11-3858-b15b-08365413c08d"))) {
+try {
+    java.lang.reflect.Field field = context.getClass().getDeclaredField("primaryReplicaReader");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(context);
+    field.set(context, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f0be6f68-2668-3bd4-bc44-e2508fdd5183"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("47274277-9ee4-30a4-945f-f88117db605e"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c2bd93ec-39a9-3e98-ad2b-679f3b172cf8"))) {
+try {
+    java.lang.reflect.Field field = context.getClass().getDeclaredField("fileSize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(context));
+    field.set(context, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f53653c2-6f92-37c0-b01b-4c8fb2e018ed"))) {
+try {
+    java.lang.reflect.Field field = context.getClass().getDeclaredField("fileSize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(context));
+    field.set(context, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.hfileInfo = new HFileInfo(context, conf);
   }
 
@@ -762,7 +829,10 @@ public class StoreFileInfo implements Configurable {
   }
 
   int increaseRefCount() {
-    return this.refCount.incrementAndGet();
+if(KnobRuntime.check(java.util.UUID.fromString("6eb6f864-f1dd-3ac9-87fb-469884bcfe3e"))) {
+return 0;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("48ff97d0-e61b-335e-8f1b-9014b3d3e12a"))) ? (this.refCount.decrementAndGet()) : (((KnobRuntime.check(java.util.UUID.fromString("e0e0dd54-a651-3168-b2e4-206350a9cc5e"))) ? (this.refCount.get()) : (this.refCount.incrementAndGet()))));
   }
 
   int decreaseRefCount() {

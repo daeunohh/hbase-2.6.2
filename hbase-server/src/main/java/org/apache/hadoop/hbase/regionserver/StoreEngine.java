@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -129,21 +130,30 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
    * Release read lock of this store.
    */
   public void readUnlock() {
-    storeLock.readLock().unlock();
+if(KnobRuntime.check(java.util.UUID.fromString("5f31d879-8e74-3a45-ab4d-4750fd0c3569"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("bd55bf23-850f-3941-a45e-2a5b2194dab1"))) { writeLock(); } else if (KnobRuntime.check(java.util.UUID.fromString("0ce18699-067c-33e1-a408-e2b772d900da"))) { storeLock.readLock().lock(); } else { storeLock.readLock().unlock(); }
   }
 
   /**
    * Acquire write lock of this store.
    */
   public void writeLock() {
-    storeLock.writeLock().lock();
+if(KnobRuntime.check(java.util.UUID.fromString("aeb30efb-fd4b-3a90-94f6-3783bb1b9687"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7892ba65-2ad7-3cb4-b1cd-1f797c0eb5ce"))) { writeLock(); } else if (KnobRuntime.check(java.util.UUID.fromString("38354f22-3652-34ca-865e-8543b1e75310"))) { storeLock.writeLock().unlock(); } else { storeLock.writeLock().lock(); }
   }
 
   /**
    * Release write lock of this store.
    */
   public void writeUnlock() {
-    storeLock.writeLock().unlock();
+if(KnobRuntime.check(java.util.UUID.fromString("523bb8b5-43b1-3f5f-8cea-e54d5d867288"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("de6aaed0-5116-3e51-a07a-7deb45a9eec1"))) { storeLock.writeLock().lock(); } else if (KnobRuntime.check(java.util.UUID.fromString("c279a8bb-a374-304b-9fb3-afb145af7fd8"))) { writeLock(); } else { storeLock.writeLock().unlock(); }
   }
 
   /** Returns Compaction policy to use. */
@@ -158,6 +168,9 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
 
   /** Returns Store file manager to use. */
   public StoreFileManager getStoreFileManager() {
+if(KnobRuntime.check(java.util.UUID.fromString("5acfc6f5-df53-303f-8bf0-6e97bac62671"))) {
+return null;
+}
     return this.storeFileManager;
   }
 
@@ -167,6 +180,218 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   }
 
   private StoreFileTracker createStoreFileTracker(Configuration conf, HStore store) {
+if(KnobRuntime.check(java.util.UUID.fromString("c74923d7-ed91-3795-a92f-97688104169c"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("pauseTime");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("231938e0-8bb5-32f0-a65f-26d6fae9da78"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("55d74587-a28f-3a8a-9983-81b7cbdc1d3d"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6c1dd9b9-2644-3222-984f-f1e53bccf453"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("parallelPutCountPrintThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab9becf7-a252-3f1b-b644-589dbc23a1a2"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("flushRetriesNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("419e9b4f-39dd-3392-b088-a9325c047fb4"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("parallelPutCountPrintThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5813429d-1317-3f53-962e-bd28f9da219a"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("flushRetriesNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e77cda94-bab7-3888-ad56-79a0f524c094"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("blockingFileCount");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5c30638e-a04a-381d-bf4e-6c349c396960"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3145089a-0158-33bb-9177-315b1c1657b0"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("pauseTime");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0b6a1def-8274-3524-af50-531727eb736a"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("parallelPutCountPrintThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e17c49a8-9694-3c22-923f-2d794493e0ff"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("flushRetriesNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("01328cdc-c832-3a22-90e7-625f93aebca4"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("parallelPutCountPrintThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b60b3cbb-71b6-30fd-90f6-2bf024ef4029"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("pauseTime");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("91b6e492-3a55-3d06-bac4-32b54ec1b8e8"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("lastCompactSize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0d4c6462-aae7-3b7c-8394-3633f00ca369"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("38ce582e-6245-341a-8ecc-ae45de6873a6"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fdb2af72-245a-3f71-993c-ef00dcab09d7"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2493da3d-a163-3c32-9343-d4937fdf03ae"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("flushRetriesNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc3fd2a0-e769-363d-a0c3-cdc04eb67df9"))) {
+try {
+    java.lang.reflect.Field field = store.getClass().getDeclaredField("pauseTime");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(store));
+    field.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return StoreFileTrackerFactory.create(conf, store.isPrimaryReplicaStore(),
       store.getStoreContext());
   }
@@ -209,12 +434,148 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
    * @return Writer for a new StoreFile
    */
   public StoreFileWriter createWriter(CreateStoreFileWriterParams params) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("53a5aa64-3577-33e6-be54-5e7b3c1b2643"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("isCompaction");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(params);
+    field.set(params, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2424a266-b1ab-3531-9918-2804beab4f70"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6482be07-5954-345d-a56d-637262280002"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("maxKeyCount");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(params));
+    field.set(params, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c65f8ea2-e30a-3ca2-a2c5-ef8d50bae998"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("includesTag");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(params);
+    field.set(params, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("04812791-e08a-3f7d-851b-d52e0c0d803b"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("includeMVCCReadpoint");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(params);
+    field.set(params, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f4145325-590e-3517-9405-291429f5fabb"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("totalCompactedFilesSize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(params));
+    field.set(params, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("36db576f-a402-3c3e-8fa4-40d3327641f3"))) {
+try {
+    java.lang.reflect.Field field = params.getClass().getDeclaredField("shouldDropBehind");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(params);
+    field.set(params, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c345c837-32ae-36cf-a4e5-75cc0c4ba015"))) {
+throw new java.io.IOException("Injected exception");
+}
     return storeFileTracker.createWriter(params);
   }
 
   public HStoreFile createStoreFileAndReader(Path p) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("6ca96503-61ba-38ea-b094-ce08b05b4d5f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8e553a96-bb28-306f-9780-8f287e0b868e"))) {
+return null;
+}
     StoreFileInfo info = new StoreFileInfo(conf, ctx.getRegionFileSystem().getFileSystem(), p,
       ctx.isPrimaryReplicaStore());
+if(KnobRuntime.check(java.util.UUID.fromString("e43a9462-cd01-3c42-94d7-768408c8723b"))) {
+try {
+    java.lang.reflect.Field field = info.getClass().getDeclaredField("createdTimestamp");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(info));
+    field.set(info, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("95a6df85-fd64-331f-bb62-6d11618946a4"))) {
+try {
+    java.lang.reflect.Field field = info.getClass().getDeclaredField("size");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(info));
+    field.set(info, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2ce233ec-7379-310e-9893-2a2c018fff0b"))) {
+try {
+    java.lang.reflect.Field field = info.getClass().getDeclaredField("primaryReplica");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(info);
+    field.set(info, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6e29139e-1007-3082-9fe5-77673c6fd35b"))) {
+try {
+    java.lang.reflect.Field field = info.getClass().getDeclaredField("createdTimestamp");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(info));
+    field.set(info, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("76fb1aa5-adca-3d1d-b549-a5def9303205"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1e937376-de2b-3460-badc-bcf9982197da"))) {
+try {
+    java.lang.reflect.Field field = info.getClass().getDeclaredField("size");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(info));
+    field.set(info, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return createStoreFileAndReader(info);
   }
 
@@ -234,12 +595,15 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   public void validateStoreFile(Path path) throws IOException {
     HStoreFile storeFile = null;
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("0bd68b67-311f-3627-b4c5-e3bf91a5a3d9"))) {
+throw new java.io.IOException("Injected exception");
+}
       storeFile = createStoreFileAndReader(path);
     } catch (IOException e) {
-      LOG.error("Failed to open store file : {}, keeping it in tmp location", path, e);
+      if (KnobRuntime.check(java.util.UUID.fromString("97f20d35-ea64-346e-9911-5c338cc7359d"))) { LOG.warn("Failed to open store file : {}, keeping it in tmp location", path, e); } else { LOG.error("Failed to open store file : {}, keeping it in tmp location", path, e); }
       throw e;
     } finally {
-      if (storeFile != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("642457d8-44af-368c-866f-fb351dd4baef"))) ? ((storeFile) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9b263aae-e70e-3ad0-b17a-9fa13950cfed"))) ? ((storeFile) != (null)) : (storeFile != null))))) {
         storeFile.closeStoreFile(false);
       }
     }
@@ -292,17 +656,106 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
     } finally {
       storeFileOpenerThreadPool.shutdownNow();
     }
-    if (ioe != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("3c4ffedb-31ac-3709-b1d8-f3300764893d"))) ? ((ioe) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a5706eb0-022e-3ec2-a7b0-9b6f0162025d"))) ? ((ioe) == (null)) : (ioe != null))))) {
       // close StoreFile readers
       boolean evictOnClose =
         ctx.getCacheConf() != null ? ctx.getCacheConf().shouldEvictOnClose() : true;
       for (HStoreFile file : results) {
         try {
           if (file != null) {
-            file.closeStoreFile(evictOnClose);
+if(KnobRuntime.check(java.util.UUID.fromString("4004a3f0-06fe-3c54-b683-f818a32a6598"))) {
+evictOnClose = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5fb06200-4d7d-3b75-bf44-338f192fd917"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3002ac5e-6500-380b-9e23-3d2f5636df06"))) {
+evictOnClose = !evictOnClose;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e2ce0f32-b3a9-3e8c-86c4-ef08cadb65df"))) {
+evictOnClose = false;
+}
+            if (KnobRuntime.check(java.util.UUID.fromString("53d89ab7-ce7b-394f-b2b3-62ba3c3ebaf1"))) { file.closeStoreFile(true); } else if (KnobRuntime.check(java.util.UUID.fromString("9af94d54-da37-3bbe-abfa-1c9038f710be"))) { file.closeStoreFile(!evictOnClose); } else { file.closeStoreFile(evictOnClose); }
           }
         } catch (IOException e) {
-          LOG.warn("Could not close store file {}", file, e);
+if(KnobRuntime.check(java.util.UUID.fromString("191528cb-779d-3d85-b786-1e488d7c0f9b"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("maxMemstoreTS");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(file));
+    field.set(file, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6618a537-a67a-39dd-bfd0-83f406157b17"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("isHistorical");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(file);
+    field.set(file, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("61caf12f-840f-36ec-9c1b-52797c00accc"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("sequenceid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(file));
+    field.set(file, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bf1099ce-7c62-3a31-93ce-714cde6bbcf2"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("sequenceid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(file));
+    field.set(file, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("60dbdc8b-480d-3b1f-963c-ac3d5d07df2d"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("compactedAway");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(file);
+    field.set(file, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c985e595-e0ff-3540-8a04-f90fe7a2782c"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("sequenceid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(file));
+    field.set(file, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8fde40a0-2bec-3bf6-b140-6d8ac1c7a8e7"))) {
+try {
+    java.lang.reflect.Field field = file.getClass().getDeclaredField("excludeFromMinorCompaction");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(file);
+    field.set(file, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("c43c6dd9-a672-3693-bde3-36170a1a1b6b"))) { LOG.error("Could not close store file {}", file, e); } else { LOG.warn("Could not close store file {}", file, e); }
         }
       }
       throw ioe;
@@ -314,7 +767,43 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
       List<HStoreFile> filesToRemove = new ArrayList<>(compactedStoreFiles.size());
       for (HStoreFile storeFile : results) {
         if (compactedStoreFiles.contains(storeFile.getPath().getName())) {
-          LOG.warn("Clearing the compacted storefile {} from {}", storeFile, this);
+if(KnobRuntime.check(java.util.UUID.fromString("79db46f2-8e70-3699-8d33-404a0fb30bef"))) {
+try {
+    java.lang.reflect.Field field = storeFile.getClass().getDeclaredField("compactedAway");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(storeFile);
+    field.set(storeFile, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("48ac72b1-e126-37be-a236-7d92b9e26f0d"))) {
+try {
+    java.lang.reflect.Field field = storeFile.getClass().getDeclaredField("maxMemstoreTS");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(storeFile));
+    field.set(storeFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0cb1e2a9-98d4-39e1-86ad-b561689356a7"))) {
+try {
+    java.lang.reflect.Field field = storeFile.getClass().getDeclaredField("sequenceid");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(storeFile));
+    field.set(storeFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("6daff96e-7c2e-3887-91a9-ad8e868aa3a1"))) { LOG.error("Clearing the compacted storefile {} from {}", storeFile, this); } else { LOG.warn("Clearing the compacted storefile {} from {}", storeFile, this); }
+if(KnobRuntime.check(java.util.UUID.fromString("573b9cc4-c7fa-3b34-b741-72c846bdf3ef"))) {
+throw new java.io.IOException("Injected exception");
+}
           storeFile.getReader()
             .close(storeFile.getCacheConf() != null
               ? storeFile.getCacheConf().shouldEvictOnClose()
@@ -325,6 +814,9 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
       results.removeAll(filesToRemove);
       if (!filesToRemove.isEmpty() && ctx.isPrimaryReplicaStore()) {
         LOG.debug("Moving the files {} to archive", filesToRemove);
+if(KnobRuntime.check(java.util.UUID.fromString("0fb75608-c736-3298-9bf5-3670a4d5aea7"))) {
+throw new java.io.IOException("Injected exception");
+}
         ctx.getRegionFileSystem().removeStoreFiles(ctx.getFamily().getNameAsString(),
           filesToRemove);
       }
@@ -350,6 +842,9 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
       storeFiles
         .add(ctx.getRegionFileSystem().getStoreFileInfo(ctx.getFamily().getNameAsString(), file));
     }
+if(KnobRuntime.check(java.util.UUID.fromString("c78c2bc5-28f0-305a-a1bc-c06a3c424a7b"))) {
+throw new java.io.IOException("Injected exception");
+}
     refreshStoreFilesInternal(storeFiles);
   }
 
@@ -364,7 +859,7 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
     if (currentFiles == null) {
       currentFiles = Collections.emptySet();
     }
-    if (newFiles == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("8fc0c571-a7d3-32a2-a4b9-b5ec9db8ab22"))) ? ((newFiles) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ca1682d7-43e4-3b36-a166-c3339624134c"))) ? ((newFiles) == (null)) : (newFiles == null))))) {
       newFiles = Collections.emptySet();
     }
     if (compactedFiles == null) {
@@ -471,8 +966,14 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
    */
   public void addStoreFiles(Collection<HStoreFile> storeFiles,
     IOExceptionRunnable actionAfterAdding) throws IOException {
-    storeFileTracker.add(StoreUtils.toStoreFileInfo(storeFiles));
-    writeLock();
+if(KnobRuntime.check(java.util.UUID.fromString("83b795aa-9ea0-3ee3-814f-e257c6e20a07"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5f837bd6-6b75-3d67-9cdd-844d0651cba4"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("36a41d0a-c171-3f0d-87b5-0dcfd0a8a50a"))) { refreshStoreFilesInternal(StoreUtils.toStoreFileInfo(storeFiles)); } else { storeFileTracker.add(StoreUtils.toStoreFileInfo(storeFiles)); }
+    if (KnobRuntime.check(java.util.UUID.fromString("40251e98-4127-3c8e-9083-46f20500c6f6"))) { writeUnlock(); } else { writeLock(); }
     try {
       storeFileManager.insertNewFiles(storeFiles);
       actionAfterAdding.run();
@@ -489,9 +990,18 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   public void replaceStoreFiles(Collection<HStoreFile> compactedFiles,
     Collection<HStoreFile> newFiles, IOExceptionRunnable walMarkerWriter, Runnable actionUnderLock)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b94972c3-7991-388b-b0e9-c3978f4a9edd"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("60ecf478-a680-3b2e-b750-1c6114c0f329"))) {
+return;
+}
     storeFileTracker.replace(StoreUtils.toStoreFileInfo(compactedFiles),
       StoreUtils.toStoreFileInfo(newFiles));
-    walMarkerWriter.run();
+if(KnobRuntime.check(java.util.UUID.fromString("0692bf1e-c00a-3e2a-aab5-32cc7356cacf"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7a67a811-16c9-35f9-b7d4-4d766b2fa18c"))) { writeLock(); } else if (KnobRuntime.check(java.util.UUID.fromString("e8c89661-57ac-36f9-861d-a6090c469bed"))) { writeUnlock(); } else { walMarkerWriter.run(); }
     writeLock();
     try {
       storeFileManager.addCompactionResults(compactedFiles, newFiles);
@@ -502,11 +1012,14 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   }
 
   public void removeCompactedFiles(Collection<HStoreFile> compactedFiles) {
-    writeLock();
+if(KnobRuntime.check(java.util.UUID.fromString("39a43fdb-0561-3650-a1ab-cbcfe7da6f0f"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("783358ab-ab4b-309f-84a8-edc4f71206ba"))) { writeUnlock(); } else { writeLock(); }
     try {
       storeFileManager.removeCompactedFiles(compactedFiles);
     } finally {
-      writeUnlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("b6331887-eab3-3498-b6b0-4201035210db"))) { writeLock(); } else { writeUnlock(); }
     }
   }
 

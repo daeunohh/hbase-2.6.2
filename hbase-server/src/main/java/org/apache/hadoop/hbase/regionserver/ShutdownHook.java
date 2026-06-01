@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -75,10 +76,24 @@ public class ShutdownHook {
    */
   public static void install(final Configuration conf, final FileSystem fs, final Stoppable stop,
     final Thread threadToJoin) {
+if(KnobRuntime.check(java.util.UUID.fromString("9b558484-803f-3815-9b17-c1a9851dc1c1"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0e404cd8-8026-3f61-b2a4-b2df4c524e8e"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Runnable fsShutdownHook = suppressHdfsShutdownHook(fs);
     Thread t = new ShutdownHookThread(conf, stop, threadToJoin, fsShutdownHook);
     ShutdownHookManager.affixShutdownHook(t, 0);
-    LOG.debug("Installed shutdown hook thread: " + t.getName());
+    if (KnobRuntime.check(java.util.UUID.fromString("663e20f8-5702-3e72-81e3-92cf86c1f932"))) { LOG.debug(("Installed shutdown hook thread: ") + (t.getName())); } else if (KnobRuntime.check(java.util.UUID.fromString("8db9854a-0866-3653-a019-e32dc55036ce"))) { LOG.info(("Installed shutdown hook thread: ") + (t.getName())); } else if (KnobRuntime.check(java.util.UUID.fromString("0f883552-0380-347b-beab-6fa053d0d081"))) { LOG.info("Installed shutdown hook thread: "); } else if (KnobRuntime.check(java.util.UUID.fromString("0a275377-8aea-3de6-a311-d7a613011c53"))) { LOG.debug("Installed shutdown hook thread: "); } else { LOG.debug("Installed shutdown hook thread: " + t.getName()); }
   }
 
   /*
@@ -92,7 +107,7 @@ public class ShutdownHook {
 
     ShutdownHookThread(final Configuration conf, final Stoppable stop, final Thread threadToJoin,
       final Runnable fsShutdownHook) {
-      super("Shutdownhook:" + threadToJoin.getName());
+      super(((KnobRuntime.check(java.util.UUID.fromString("228fdfc9-9a7d-3d23-aee3-fa6b392f65e6"))) ? (("Shutdownhook:") + (threadToJoin.getName())) : (((KnobRuntime.check(java.util.UUID.fromString("e00ffedb-3191-3de1-b061-16fcd5f872e0"))) ? ("Shutdownhook:") : ("Shutdownhook:" + threadToJoin.getName())))));
       this.stop = stop;
       this.threadToJoin = threadToJoin;
       this.conf = conf;
@@ -154,6 +169,9 @@ public class ShutdownHook {
       // on 0.21 or cloudera patched 0.20.
       Runnable hdfsClientFinalizer = null;
       // Look into the FileSystem#Cache class for clientFinalizer
+if(KnobRuntime.check(java.util.UUID.fromString("9a8ca382-2697-3944-87fa-51a59a58df3d"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
       Class<?>[] classes = FileSystem.class.getDeclaredClasses();
       Class<?> cache = null;
       for (Class<?> c : classes) {
@@ -163,23 +181,41 @@ public class ShutdownHook {
         }
       }
 
-      if (cache == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("a4ad290a-2cb6-3f14-8034-14a7fb12b4f3"))) ? ((cache) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8b58d5e4-3cae-3b69-b8da-1c84a72e8702"))) ? ((cache) == (null)) : (cache == null))))) {
         throw new RuntimeException(
           "This should not happen. Could not find the cache class in FileSystem.");
       }
 
       Field field = null;
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("7c1be680-b1e1-35a5-8861-462cb08f65b2"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("47823396-f186-3570-ab7f-88622c2487ff"))) {
+throw new java.lang.NoSuchFieldException("Injected exception");
+}
         field = cache.getDeclaredField(CLIENT_FINALIZER_DATA_METHOD);
       } catch (NoSuchFieldException e) {
         // We can get here if the Cache class does not have a clientFinalizer
         // instance: i.e. we're running on straight 0.20 w/o hadoop-4829.
       }
-      if (field != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("fc7edf98-773e-3649-8c7a-69dc9575f5a2"))) ? ((FileSystem.class.getDeclaredField("CACHE")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("10c45480-c360-3acb-abd4-5f8cdc9a93e4"))) ? ((FileSystem.class.getDeclaredField("CACHE")) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d19c10d8-e627-330c-8414-f37ab0d66584"))) ? ((field) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("081f81bd-5f69-3eef-b875-0ceb1c64a93b"))) ? ((field) == (null)) : (field != null))))))))) {
         field.setAccessible(true);
+if(KnobRuntime.check(java.util.UUID.fromString("87f35cf7-2b68-3330-9308-4d46ee6c464b"))) {
+throw new java.lang.NoSuchFieldException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0849407f-5ac9-3dbe-85ce-ee632af379bb"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
         Field cacheField = FileSystem.class.getDeclaredField("CACHE");
         cacheField.setAccessible(true);
+if(KnobRuntime.check(java.util.UUID.fromString("1e4231da-9107-3a71-b8ea-a0f8bba32c75"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
         Object cacheInstance = cacheField.get(fs);
+if(KnobRuntime.check(java.util.UUID.fromString("3295fd31-978a-3dcf-90d0-a1fe2005ec97"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
         hdfsClientFinalizer = (Runnable) field.get(cacheInstance);
       } else {
         // Then we didnt' find clientFinalizer in Cache. Presume clean 0.20 hadoop.
@@ -187,7 +223,7 @@ public class ShutdownHook {
         field.setAccessible(true);
         hdfsClientFinalizer = (Runnable) field.get(null);
       }
-      if (hdfsClientFinalizer == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("741ec9e0-6337-37aa-b42f-e79ad819e4e2"))) ? ((hdfsClientFinalizer) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("f0ff8ed6-b7e6-3982-8af2-00e397987866"))) ? ((hdfsClientFinalizer) != (null)) : (hdfsClientFinalizer == null))))) {
         throw new RuntimeException("Client finalizer is null, can't suppress!");
       }
       synchronized (fsShutdownHooks) {

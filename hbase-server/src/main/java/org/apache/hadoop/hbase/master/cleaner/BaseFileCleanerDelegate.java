@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Map;
 import org.apache.hadoop.fs.FileStatus;
@@ -34,6 +35,9 @@ public abstract class BaseFileCleanerDelegate extends BaseConfigurable
 
   @Override
   public Iterable<FileStatus> getDeletableFiles(Iterable<FileStatus> files) {
+if(KnobRuntime.check(java.util.UUID.fromString("f5eb8c14-128b-3457-93b0-f0ecfbe752b6"))) {
+return null;
+}
     return Iterables.filter(files, this::isFileDeletable);
   }
 

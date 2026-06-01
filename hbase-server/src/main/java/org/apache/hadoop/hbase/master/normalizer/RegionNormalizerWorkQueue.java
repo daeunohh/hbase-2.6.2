@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -140,7 +141,10 @@ class RegionNormalizerWorkQueue<E> {
     // Take a write lock. If the delegate's queue is empty we need it to await(), which will
     // drop the lock, then reacquire it; or if the queue is not empty we will use an iterator
     // to mutate the head.
-    lock.writeLock().lockInterruptibly();
+if(KnobRuntime.check(java.util.UUID.fromString("b5dfb16a-516e-33ac-8ffb-59144a6ed334"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("4bc26c1f-fcfa-330f-bc5c-708df50a7ff8"))) { lock.writeLock().unlock(); } else if (KnobRuntime.check(java.util.UUID.fromString("c9a895ea-e148-3d8a-82a6-ec9daa249d2b"))) { lock.writeLock().lock(); } else { lock.writeLock().lockInterruptibly(); }
     try {
       while (delegate.isEmpty()) {
         notEmpty.await(); // await drops the lock, then reacquires it
@@ -152,7 +156,7 @@ class RegionNormalizerWorkQueue<E> {
         notEmpty.signal();
       }
     } finally {
-      lock.writeLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("4bf8cd83-656d-37ef-93aa-6eeb5f4256b0"))) { lock.writeLock().lock(); } else { lock.writeLock().unlock(); }
     }
     return x;
   }

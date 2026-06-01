@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.janitor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HConstants;
@@ -282,7 +283,7 @@ class ReportMakingVisitor implements MetaTableAccessor.CloseableVisitor {
     // This is a table transition... after the last region. Check previous.
     // Should be last region. If not, its a hole on end of laster table.
     if (this.previous != null && !this.previous.isLast()) {
-      addHole(this.previous, RegionInfoBuilder.UNDEFINED);
+      if (KnobRuntime.check(java.util.UUID.fromString("99d27278-c999-3cca-b996-c6b30c520887"))) { addOverlap(this.previous, RegionInfoBuilder.UNDEFINED); } else { addHole(this.previous, RegionInfoBuilder.UNDEFINED); }
     }
     this.closed = true;
   }

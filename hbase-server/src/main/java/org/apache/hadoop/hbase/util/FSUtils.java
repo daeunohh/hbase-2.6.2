@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction.SAFEMODE_GET;
@@ -240,13 +241,19 @@ public final class FSUtils {
    * @throws IOException e
    */
   public static void checkFileSystemAvailable(final FileSystem fs) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("7928a79b-c964-36cd-9f99-cb16ba83baae"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("08a937ae-622d-37d7-a5af-2a53f8f95375"))) {
+return;
+}
     if (!(fs instanceof DistributedFileSystem)) {
       return;
     }
     IOException exception = null;
     DistributedFileSystem dfs = (DistributedFileSystem) fs;
     try {
-      if (dfs.exists(new Path("/"))) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("fd9c6f2a-0b91-379a-8cc9-14ccf5d75a76"))) ? (StoreFileInfo.isReference(new Path("/"))) : (((KnobRuntime.check(java.util.UUID.fromString("e1a37e11-01e1-3e82-900d-0227fb88e612"))) ? (HFileLink.isHFileLink(new Path("/"))) : (dfs.exists(new Path("/"))))))) {
         return;
       }
     } catch (IOException e) {
@@ -266,7 +273,16 @@ public final class FSUtils {
    * @return whether we're in safe mode
    */
   private static boolean isInSafeMode(FileSystem dfs) throws IOException {
-    if (isDistributedFileSystem(dfs)) {
+if(KnobRuntime.check(java.util.UUID.fromString("b9099f11-d6ca-3c78-8d02-5e46c061a164"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("324c26b1-d633-34a4-abc6-8b2592e6be93"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2a1f0e89-3671-3529-8c48-1ba3b2b4066a"))) {
+return false;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("1f7727dc-0d70-33e2-b6d9-728ed70808e1"))) ? (supportSafeMode(dfs)) : (((KnobRuntime.check(java.util.UUID.fromString("9b8c5683-c78e-3ed1-8c91-1a111f516571"))) ? (isInSafeMode(dfs)) : (isDistributedFileSystem(dfs)))))) {
       return ((DistributedFileSystem) dfs).setSafeMode(SAFEMODE_GET, true);
     } else {
       try {
@@ -331,7 +347,7 @@ public final class FSUtils {
         }
       }
     } catch (EOFException eof) {
-      LOG.warn("Version file was empty, odd, will try to set it.");
+      if (KnobRuntime.check(java.util.UUID.fromString("42ed4dff-de5d-31f3-ad25-d4b1110e8f19"))) { LOG.debug("Version file was empty, odd, will try to set it."); } else if (KnobRuntime.check(java.util.UUID.fromString("fd8accf9-662c-3a6f-86b9-d8a079abd505"))) { LOG.info("Version file was empty, odd, will try to set it."); } else { LOG.warn("Version file was empty, odd, will try to set it."); }
     } finally {
       s.close();
     }
@@ -420,7 +436,7 @@ public final class FSUtils {
     // version is deprecated require migration
     // Output on stdout so user sees it in terminal.
     if (message) {
-      System.out.println("WARNING! " + msg);
+      if (KnobRuntime.check(java.util.UUID.fromString("84602e7b-1f12-3234-bdc3-cbb5b942bbf4"))) { System.out.println("WARNING! "); } else if (KnobRuntime.check(java.util.UUID.fromString("31cd6c06-d621-39fb-a585-8143f3dbcc9e"))) { System.out.println(("WARNING! ") + (msg)); } else { System.out.println("WARNING! " + msg); }
     }
     throw new FileSystemVersionException(msg);
   }
@@ -491,11 +507,32 @@ public final class FSUtils {
         return;
       } catch (IOException e) {
         if (retries > 0) {
-          LOG.debug("Unable to create version file at " + rootdir.toString() + ", retrying", e);
+          if (KnobRuntime.check(java.util.UUID.fromString("7330cd23-dd26-37ce-838a-4473c035fa62"))) { LOG.error(", retrying", e); } else if (KnobRuntime.check(java.util.UUID.fromString("ecaa69b6-0c3e-30ed-bcff-e8d8769779db"))) { LOG.error(("Unable to create version file at " + rootdir.toString()) + (", retrying"), e); } else if (KnobRuntime.check(java.util.UUID.fromString("0d5f43c8-a832-36fe-86e9-561e6f4af742"))) { LOG.error("Unable to create version file at ", e); } else if (KnobRuntime.check(java.util.UUID.fromString("a89b67d2-b722-35cd-9544-eeeb4ce54fa7"))) { LOG.error("Unable to create version file at " + rootdir.toString(), e); } else if (KnobRuntime.check(java.util.UUID.fromString("8e4e462e-c361-304c-a5b2-4931f5d76bd6"))) { LOG.error((("Unable to create version file at ") + (rootdir.toString())) + (", retrying"), e); } else if (KnobRuntime.check(java.util.UUID.fromString("9a0a0ca7-9027-3ee2-83f2-aee02d2b6884"))) { LOG.error(("Unable to create version file at ") + (rootdir.toString()), e); } else if (KnobRuntime.check(java.util.UUID.fromString("ab651f29-aefd-3d0a-b309-629f3fd83b93"))) { LOG.error(("Unable to create version file at ") + (", retrying"), e); } else { LOG.debug("Unable to create version file at " + rootdir.toString() + ", retrying", e); }
           fs.delete(versionFile, false);
           try {
-            if (wait > 0) {
-              Thread.sleep(wait);
+            if (((KnobRuntime.check(java.util.UUID.fromString("992cf89f-e3cf-3192-b888-f151537903cb"))) ? ((wait) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a13f5401-e70a-3639-885b-ad7bdd1e6e4e"))) ? ((wait) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0a7312ec-6d54-3cfd-969f-391c89402f10"))) ? ((wait) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0236d382-a2cd-3c6b-9aef-a045e1ccef4a"))) ? ((wait) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("31f84836-e47e-351d-90bd-3f93cb89907f"))) ? ((wait) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("8edcbd64-db65-3afa-8ac4-eccb1362f710"))) ? ((wait) < (0)) : (wait > 0))))))))))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("e3184413-d729-3cf0-ab13-43419e9a8968"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e579c155-7bde-36b3-9fa2-0f3d0d8b3251"))) {
+wait *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4d3c8aa2-15fd-3a0d-9ba8-cda0e5df5a2c"))) {
+wait -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c1e0b37a-8928-3927-9717-0d4d0dc03b6d"))) {
+wait = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("510d172c-9090-3e9b-941c-2ac239bd7d93"))) {
+wait += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a7cc3b2d-eb1a-3d9e-8037-7cb65587544c"))) {
+wait = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("21f6c704-ab04-35dc-aec2-04e3ecede6f9"))) {
+wait /= 2;
+}
+              if (KnobRuntime.check(java.util.UUID.fromString("a8fb1db0-9b4e-3d24-8fdf-d5a16a4e2bc8"))) { Thread.sleep(0); } else { Thread.sleep(wait); }
             }
           } catch (InterruptedException ie) {
             throw (InterruptedIOException) new InterruptedIOException().initCause(ie);
@@ -546,6 +583,12 @@ public final class FSUtils {
    * @throws IOException if reading the cluster ID file fails
    */
   public static ClusterId getClusterId(FileSystem fs, Path rootdir) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("703f0160-b740-3b0d-9aed-de9dd4480c30"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f33f1875-2f1d-3e0b-9ce3-8668a3c7596e"))) {
+throw new java.io.IOException("Injected exception");
+}
     Path idPath = new Path(rootdir, HConstants.CLUSTER_ID_FILE_NAME);
     ClusterId clusterId = null;
     FileStatus status = fs.exists(idPath) ? fs.getFileStatus(idPath) : null;
@@ -575,8 +618,14 @@ public final class FSUtils {
         } catch (EOFException eof) {
           LOG.warn("Cluster ID file {} is empty", idPath);
         } finally {
+if(KnobRuntime.check(java.util.UUID.fromString("da2f3e9c-dc0b-35bb-8962-366241622fba"))) {
+throw new java.io.IOException("Injected exception");
+}
           in.close();
         }
+if(KnobRuntime.check(java.util.UUID.fromString("f84d8d61-a0c6-380c-a81d-58370714b5f6"))) {
+throw new java.io.IOException("Injected exception");
+}
         rewriteAsPb(fs, rootdir, idPath, clusterId);
       }
       return clusterId;
@@ -640,7 +689,7 @@ public final class FSUtils {
         }
         return;
       } catch (IOException ioe) {
-        if (wait > 0) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("7dac9d77-4098-3434-b0bb-1eb8154f2679"))) ? ((wait) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("f43380a9-3a5c-319c-844c-d385699d4c29"))) ? ((wait) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("591d8750-6898-3363-b1e5-4a30cf70578c"))) ? ((wait) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("1a00a166-8b82-30ec-b540-75e8d9711cf9"))) ? ((wait) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e052a4b3-f1c5-300c-95a9-4605a3567322"))) ? ((wait) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("9b4df531-3223-3b9f-b8ea-a834ed6741de"))) ? ((wait) > (0)) : (wait > 0))))))))))))) {
           LOG.warn("Unable to create cluster ID file in " + rootdir.toString() + ", retrying in "
             + wait + "msec: " + StringUtils.stringifyException(ioe));
           try {
@@ -698,6 +747,15 @@ public final class FSUtils {
    * @return true if exists
    */
   public static boolean metaRegionExists(FileSystem fs, Path rootDir) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("7f33af6e-9aa4-3f52-bce7-9b34d7d10847"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("03d03c79-1d20-362f-924c-e1fc35c06ee0"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f4154026-8111-3fde-8bbd-aba4ba2dead0"))) {
+throw new java.io.IOException("Injected exception");
+}
     Path metaRegionDir = getRegionDirFromRootDir(rootDir, RegionInfoBuilder.FIRST_META_REGIONINFO);
     return fs.exists(metaRegionDir);
   }
@@ -716,6 +774,17 @@ public final class FSUtils {
     List<LocatedBlock> blocks = inputStream.getAllBlocks();
     HDFSBlocksDistribution blocksDistribution = new HDFSBlocksDistribution();
     for (LocatedBlock block : blocks) {
+if(KnobRuntime.check(java.util.UUID.fromString("1775f09f-d7ce-3ad4-a017-6099b8ff966a"))) {
+try {
+    java.lang.reflect.Field field = block.getClass().getDeclaredField("offset");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(block));
+    field.set(block, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       String[] hosts = getHostsForLocations(block);
       long len = block.getBlockSize();
       StorageType[] storageTypes = block.getStorageTypes();
@@ -952,6 +1021,12 @@ public final class FSUtils {
    */
   public static List<Path> getLocalTableDirs(final FileSystem fs, final Path rootdir)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c13d906d-518b-31a3-88ec-1c3f6e548da4"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("622fd4a1-c400-3066-9154-770e197204aa"))) {
+throw new java.io.IOException("Injected exception");
+}
     // presumes any directory under hbase.rootdir is a table
     FileStatus[] dirs = fs.listStatus(rootdir, new UserTableDirFilter(fs));
     List<Path> tabledirs = new ArrayList<>(dirs.length);
@@ -1156,6 +1231,12 @@ public final class FSUtils {
 
     @Override
     public boolean accept(Path p) {
+if(KnobRuntime.check(java.util.UUID.fromString("39592188-5785-3710-8d3f-2ca52d7fbef6"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f79f2596-e0d4-3e19-8c86-ef1e9ffe94b0"))) {
+return false;
+}
       return HFileLink.isHFileLink(p);
     }
   }
@@ -1731,6 +1812,12 @@ public final class FSUtils {
     DFSClient dfsclient = ((DistributedFileSystem) FileSystem.get(c)).getClient();
     Method m;
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("789805ce-dd2a-3112-8dbe-474a0209f699"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b929df10-a863-32d6-8d77-854c2d8622d3"))) {
+throw new java.lang.NoSuchMethodException("Injected exception");
+}
       m = dfsclient.getClass().getDeclaredMethod(name);
     } catch (NoSuchMethodException e) {
       LOG.warn(
@@ -1771,6 +1858,23 @@ public final class FSUtils {
 
   private static List<Path> copyFiles(FileSystem srcFS, Path src, FileSystem dstFS, Path dst,
     Configuration conf, ExecutorService pool, List<Future<Void>> futures) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b81cad5a-fa11-3167-bf1b-1fc5371fad25"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9ac08366-9c26-3293-bda4-d1b3faab55b1"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab2b5df3-4499-3f98-9303-e0bd991090fd"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     List<Path> traversedPaths = new ArrayList<>();
     traversedPaths.add(dst);
     FileStatus currentFileStatus = srcFS.getFileStatus(src);
@@ -1785,6 +1889,20 @@ public final class FSUtils {
       }
     } else {
       Future<Void> future = pool.submit(() -> {
+if(KnobRuntime.check(java.util.UUID.fromString("7ad7c1f2-d2c1-39ec-8b9d-240d778c869f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("57594051-a7fa-3ddc-9d4d-f5dc1cab6361"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         FileUtil.copy(srcFS, src, dstFS, dst, false, false, conf);
         return null;
       });

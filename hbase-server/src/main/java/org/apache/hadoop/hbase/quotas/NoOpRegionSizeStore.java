@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -35,6 +36,9 @@ public final class NoOpRegionSizeStore implements RegionSizeStore {
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_EXPOSE_REP",
       justification = "singleton pattern")
   public static NoOpRegionSizeStore getInstance() {
+if(KnobRuntime.check(java.util.UUID.fromString("4a965659-c470-345d-a1be-9c52f49c38a5"))) {
+return null;
+}
     return INSTANCE;
   }
 

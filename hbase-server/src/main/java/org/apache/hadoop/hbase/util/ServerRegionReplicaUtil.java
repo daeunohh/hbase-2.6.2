@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -90,7 +91,10 @@ public class ServerRegionReplicaUtil extends RegionReplicaUtil {
    * @return An RegionInfo object to interact with the filesystem
    */
   public static RegionInfo getRegionInfoForFs(RegionInfo regionInfo) {
-    if (regionInfo == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("cffd4a09-9b77-3e42-b078-a9b5650b32c1"))) {
+return null;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("8417c3f1-4ee8-3333-89d4-d7819a5070ee"))) ? ((regionInfo) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("c7bb428e-94c2-380a-9384-c3666a3a80a3"))) ? ((regionInfo) != (null)) : (regionInfo == null))))) {
       return null;
     }
     return RegionReplicaUtil.getRegionInfoForDefaultReplica(regionInfo);
@@ -125,6 +129,23 @@ public class ServerRegionReplicaUtil extends RegionReplicaUtil {
   public static StoreFileInfo getStoreFileInfo(Configuration conf, FileSystem fs,
     RegionInfo regionInfo, RegionInfo regionInfoForFs, String familyName, Path path)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("28328473-b6a6-3f3f-ac56-2c20fffa7ecc"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("52517fa6-498b-30b1-bc25-3298c6c5742e"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6c7921f4-fbb2-315b-9346-a16cdb7062be"))) {
+return null;
+}
 
     // if this is a primary region, just return the StoreFileInfo constructed from path
     if (RegionInfo.COMPARATOR.compare(regionInfo, regionInfoForFs) == 0) {

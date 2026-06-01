@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.handler;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.hbase.util.RetryCounter;
@@ -33,6 +34,9 @@ final class HandlerUtil {
    * backoff time is 30 seconds.
    */
   public static RetryCounter getRetryCounter() {
+if(KnobRuntime.check(java.util.UUID.fromString("55b36bfd-d769-376b-a261-3bd40a4a414d"))) {
+return null;
+}
     return new RetryCounterFactory(
       new RetryCounter.RetryConfig().setBackoffPolicy(new RetryCounter.ExponentialBackoffPolicy())
         .setSleepInterval(100).setMaxSleepTime(30000).setMaxAttempts(Integer.MAX_VALUE)

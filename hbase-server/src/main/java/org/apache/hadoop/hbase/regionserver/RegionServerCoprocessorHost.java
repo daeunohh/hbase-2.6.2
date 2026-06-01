@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -64,7 +65,7 @@ public class RegionServerCoprocessorHost
       conf.getBoolean(COPROCESSORS_ENABLED_CONF_KEY, DEFAULT_COPROCESSORS_ENABLED);
     boolean tableCoprocessorsEnabled =
       conf.getBoolean(USER_COPROCESSORS_ENABLED_CONF_KEY, DEFAULT_USER_COPROCESSORS_ENABLED);
-    LOG.info("System coprocessor loading is " + (coprocessorsEnabled ? "enabled" : "disabled"));
+    if (KnobRuntime.check(java.util.UUID.fromString("8866a461-573b-3310-9e9c-7f279df83d77"))) { LOG.info((coprocessorsEnabled ? "enabled" : "disabled")); } else if (KnobRuntime.check(java.util.UUID.fromString("133ccdf6-899e-3b30-a177-502553386ce0"))) { LOG.info(("System coprocessor loading is ") + ((coprocessorsEnabled ? "enabled" : "disabled"))); } else if (KnobRuntime.check(java.util.UUID.fromString("d8cefa86-c08e-3006-897e-fcd3a52ef128"))) { LOG.info("System coprocessor loading is "); } else { LOG.info("System coprocessor loading is " + (coprocessorsEnabled ? "enabled" : "disabled")); }
     LOG.info("Table coprocessor loading is "
       + ((coprocessorsEnabled && tableCoprocessorsEnabled) ? "enabled" : "disabled"));
     loadSystemCoprocessors(conf, REGIONSERVER_COPROCESSOR_CONF_KEY);
@@ -172,6 +173,9 @@ public class RegionServerCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("d5d08ad6-898f-3a2f-8ef9-6f3c80e4294d"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.postReplicateLogEntries(this);
       }
     });
@@ -182,6 +186,108 @@ public class RegionServerCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("99f268a3-2d71-35dd-a1a2-97084906d24d"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("32aa0ba3-b3a9-3ff8-9d79-c1b011e16db1"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1b5a2869-80d7-30bd-a603-6649c1dfa9da"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3b07d2d0-e155-3507-bc9c-dff65f6df80e"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a3a4fc1d-411e-3c0d-a7d9-f99f2acb0f2b"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("17ec4daa-c327-3af9-adcf-36d06df653db"))) {
+try {
+    java.lang.reflect.Field field = mutation.getClass().getDeclaredField("ts");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(mutation));
+    field.set(mutation, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b2d0bf8c-eb51-3891-8c70-3018748cc1b6"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cd681d0d-ea0d-3bcc-9404-8094f386c80a"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2fceb967-56bb-3510-b295-941770648015"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9204bbcc-d321-3a5a-87c1-cfc49fa477a6"))) {
+throw new java.io.IOException("Injected exception");
+}
         observer.preReplicationSinkBatchMutate(this, walEntry, mutation);
       }
     });
@@ -192,6 +298,108 @@ public class RegionServerCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9301e74c-4cca-3a45-b75e-d79f33fb4dea"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5d0438bc-558e-3d17-9f5e-52bf3508ddcc"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0e9d622b-7514-3eb5-85a3-26bc9c4f5393"))) {
+try {
+    java.lang.reflect.Field field = mutation.getClass().getDeclaredField("ts");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(mutation));
+    field.set(mutation, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0812c4b9-61e3-3653-979d-45b6a39ae898"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("921e02cc-bf5b-35a4-aaa4-08d554430592"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8e51c07f-0258-37d9-baa5-ff99dd1665e7"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0aba4998-4245-3064-beec-02d3ce479c24"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a7ec3c90-f9f2-37ba-b10a-f695fb5a1aa1"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3ee43324-7de0-37fa-bd1f-b56a32d53bd3"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("757bafd3-820a-3441-b550-ff7ef09d7b53"))) {
+try {
+    java.lang.reflect.Field field = walEntry.getClass().getDeclaredField("associatedCellCount_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(walEntry));
+    field.set(walEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         observer.postReplicationSinkBatchMutate(this, walEntry, mutation);
       }
     });

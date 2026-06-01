@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import java.util.Map;
@@ -89,6 +90,20 @@ public class StoreHotnessProtector {
   }
 
   public void init(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("cc67807a-f355-379f-a280-ce4a05abb685"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00d44421-7d64-330b-bc4e-38ae1486e932"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.parallelPutToStoreThreadLimit =
       conf.getInt(PARALLEL_PUT_STORE_THREADS_LIMIT, DEFAULT_PARALLEL_PUT_STORE_THREADS_LIMIT);
     this.parallelPreparePutToStoreThreadLimit = conf.getInt(PARALLEL_PREPARE_PUT_STORE_MULTIPLIER,
@@ -108,6 +123,9 @@ public class StoreHotnessProtector {
    * The goal is just to draw attention to this feature if debugging overload due to heavy writes.
    */
   private static void logDisabledMessageOnce() {
+if(KnobRuntime.check(java.util.UUID.fromString("be0d8134-6062-361c-9c33-dab24fd0117e"))) {
+return;
+}
     if (!loggedDisableMessage) {
       LOG.info(
         "StoreHotnessProtector is disabled. Set {} > 0 to enable, "
@@ -124,6 +142,9 @@ public class StoreHotnessProtector {
   }
 
   public void start(Map<byte[], List<Cell>> familyMaps) throws RegionTooBusyException {
+if(KnobRuntime.check(java.util.UUID.fromString("fabda7cc-1a85-3284-8919-45785a5bf223"))) {
+return;
+}
     if (!isEnable()) {
       return;
     }
@@ -202,6 +223,9 @@ public class StoreHotnessProtector {
   }
 
   public String toString() {
+if(KnobRuntime.check(java.util.UUID.fromString("c1101fdc-3ec4-3d13-94a2-3e61666c2815"))) {
+return null;
+}
     return "StoreHotnessProtector, parallelPutToStoreThreadLimit="
       + this.parallelPutToStoreThreadLimit + " ; minColumnNum="
       + this.parallelPutToStoreThreadLimitCheckMinColumnCount + " ; preparePutThreadLimit="
@@ -211,7 +235,7 @@ public class StoreHotnessProtector {
 
   public boolean isEnable() {
     // feature is enabled when parallelPutToStoreThreadLimit > 0
-    return this.parallelPutToStoreThreadLimit > 0;
+    return ((KnobRuntime.check(java.util.UUID.fromString("046b8bc8-9bb4-32b0-a39c-f1e9eab9cd64"))) ? ((this.parallelPutToStoreThreadLimit) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("483bd4f5-81e1-3370-a97a-bb6de7fc18b4"))) ? ((this.parallelPutToStoreThreadLimit) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7c1a3754-5236-345d-9692-8dfce713279d"))) ? ((this.parallelPutToStoreThreadLimit) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("420d5e0d-5dc0-34ee-b4b6-b13ed39f01be"))) ? ((this.parallelPutToStoreThreadLimit) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e34e6138-6f24-37d7-8e88-a8874d6085f1"))) ? ((this.parallelPutToStoreThreadLimit) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3bafe9cf-7276-3829-a670-5c7eb14e4baa"))) ? ((this.parallelPutToStoreThreadLimit) < (0)) : (this.parallelPutToStoreThreadLimit > 0))))))))))));
   }
 
   Map<byte[], AtomicInteger> getPreparePutToStoreMap() {

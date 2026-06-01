@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.janitor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,9 @@ public class CatalogJanitorReport {
   }
 
   public List<Pair<RegionInfo, RegionInfo>> getHoles() {
+if(KnobRuntime.check(java.util.UUID.fromString("27b4196f-2897-32a7-8aa3-2f313b62226b"))) {
+return null;
+}
     return this.holes;
   }
 
@@ -70,6 +74,9 @@ public class CatalogJanitorReport {
    *      call.
    */
   public List<Pair<RegionInfo, RegionInfo>> getOverlaps() {
+if(KnobRuntime.check(java.util.UUID.fromString("5d568710-ef15-3c22-848c-83660e50877c"))) {
+return null;
+}
     return this.overlaps;
   }
 
@@ -78,21 +85,36 @@ public class CatalogJanitorReport {
   }
 
   public List<Pair<RegionInfo, ServerName>> getUnknownServers() {
+if(KnobRuntime.check(java.util.UUID.fromString("9611ca3b-d15d-311e-be4a-33a069eb2dc1"))) {
+return null;
+}
     return unknownServers;
   }
 
   public List<byte[]> getEmptyRegionInfo() {
+if(KnobRuntime.check(java.util.UUID.fromString("1dd11bb7-2a6e-3c9f-a0fb-c7d7e88dca74"))) {
+return null;
+}
     return emptyRegionInfo;
   }
 
   /** Returns True if an 'empty' lastReport -- no problems found. */
   public boolean isEmpty() {
+if(KnobRuntime.check(java.util.UUID.fromString("494de4f9-75d3-374c-925a-9ab5902ac95e"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e0f1bc2e-688d-3ee3-b0aa-d31fff7c8bac"))) {
+return true;
+}
     return this.holes.isEmpty() && this.overlaps.isEmpty() && this.unknownServers.isEmpty()
       && this.emptyRegionInfo.isEmpty();
   }
 
   @Override
   public String toString() {
+if(KnobRuntime.check(java.util.UUID.fromString("c1e1ec84-b1ec-3c47-b8e5-508ea35ccb3f"))) {
+return null;
+}
     StringBuilder sb = new StringBuilder();
     for (Pair<RegionInfo, RegionInfo> p : this.holes) {
       if (sb.length() > 0) {

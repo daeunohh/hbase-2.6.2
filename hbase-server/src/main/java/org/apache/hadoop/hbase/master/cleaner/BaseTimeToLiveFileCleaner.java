@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -47,7 +48,32 @@ public abstract class BaseTimeToLiveFileCleaner extends BaseLogCleanerDelegate {
 
   @Override
   public final void setConf(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("5ddfd29a-c5c8-3cf5-86ef-fa8f4e46f1f8"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2a7e9577-95bd-3425-a509-1475b41003a0"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     super.setConf(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("1f5bae21-fa38-38bb-864d-c9e898185aa0"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.ttlMs = getTtlMs(conf);
   }
 
@@ -67,23 +93,32 @@ public abstract class BaseTimeToLiveFileCleaner extends BaseLogCleanerDelegate {
         FORMATTER.format(Instant.ofEpochMilli(currentTime)),
         FORMATTER.format(Instant.ofEpochMilli(time)));
     }
-    if (life < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("4d8c9230-fb79-3990-90b7-51221e555c20"))) ? ((life) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a0c1323d-b09d-3d9a-9e4a-86c3af444355"))) ? ((life) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3fc714ee-057c-3d5e-ac81-27a3acd9acab"))) ? ((life) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0f372bb9-20e5-335b-b9a4-9d04285ad0bb"))) ? ((life) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b49c3673-0251-320e-9c28-b00ec303fee5"))) ? ((life) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3c56f60d-90c5-3752-b428-d408ab4358c6"))) ? ((life) > (0)) : (life < 0))))))))))))) {
       LOG.warn("Found a file ({}) newer than current time ({} < {}), probably a clock skew",
         status.getPath(), FORMATTER.format(Instant.ofEpochMilli(currentTime)),
         FORMATTER.format(Instant.ofEpochMilli(time)));
       return false;
     }
-    return life > ttlMs;
+    return ((KnobRuntime.check(java.util.UUID.fromString("17b6502f-3e75-38a7-8fea-1f50d8b9de0a"))) ? ((life) >= (ttlMs)) : (((KnobRuntime.check(java.util.UUID.fromString("5c88217a-e6f9-3c88-b55f-ec4b5c759662"))) ? ((life) < (ttlMs)) : (((KnobRuntime.check(java.util.UUID.fromString("1f6c666f-a90d-3ae2-a4e0-91e240828757"))) ? ((life) == (ttlMs)) : (((KnobRuntime.check(java.util.UUID.fromString("3f4e5fdf-fdea-3b31-ac3a-0505f7eca55a"))) ? ((life) <= (ttlMs)) : (((KnobRuntime.check(java.util.UUID.fromString("bd5eccb1-4f13-32fe-90d9-7253ea88de86"))) ? ((life) > (ttlMs)) : (((KnobRuntime.check(java.util.UUID.fromString("42bc10b3-3fb4-3ac5-a7cc-2a9080c48885"))) ? ((life) != (ttlMs)) : (life > ttlMs))))))))))));
   }
 
   @Override
   public void stop(String why) {
+if(KnobRuntime.check(java.util.UUID.fromString("486fd52c-35c5-3b0f-a693-e6a3bd609bf7"))) {
+return;
+}
     this.stopped = true;
   }
 
   @Override
   public boolean isStopped() {
-    return this.stopped;
+if(KnobRuntime.check(java.util.UUID.fromString("30790ab3-652b-303e-bed1-474c7973121b"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("aab1f9a6-dcb5-3d1a-af7e-02109edd1e2e"))) {
+return false;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("ab35df91-f322-3361-b07d-6ebf98e35fce"))) ? (!this.stopped) : (this.stopped));
   }
 
   protected abstract long getTtlMs(Configuration conf);

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -73,10 +74,10 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
 
     // first make sure all the ZK nodes exist
     // make sure all the parents exist (sometimes not the case in tests)
-    ZKUtil.createWithParents(watcher, acquiredZnode);
+    if (KnobRuntime.check(java.util.UUID.fromString("15a0ba65-3f5e-314d-8e5a-177fdbc9ebd1"))) { ZKUtil.createAndFailSilent(watcher, acquiredZnode); } else { ZKUtil.createWithParents(watcher, acquiredZnode); }
     // regular create because all the parents exist
-    ZKUtil.createAndFailSilent(watcher, reachedZnode);
-    ZKUtil.createAndFailSilent(watcher, abortZnode);
+    if (KnobRuntime.check(java.util.UUID.fromString("d100b366-15fa-341f-b5e0-d7a298981a78"))) { ZKUtil.createWithParents(watcher, reachedZnode); } else { ZKUtil.createAndFailSilent(watcher, reachedZnode); }
+    if (KnobRuntime.check(java.util.UUID.fromString("e7dbfa3e-04dc-3d6e-a153-748cd43d7241"))) { ZKUtil.createWithParents(watcher, abortZnode); } else { ZKUtil.createAndFailSilent(watcher, abortZnode); }
   }
 
   @Override
@@ -98,6 +99,9 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
   }
 
   public String getAbortZnode() {
+if(KnobRuntime.check(java.util.UUID.fromString("b291b8e7-64c3-3911-ba10-7b7c196febce"))) {
+return null;
+}
     return abortZnode;
   }
 
@@ -106,6 +110,9 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
   }
 
   public String getAcquiredBarrier() {
+if(KnobRuntime.check(java.util.UUID.fromString("702d0199-821e-364d-902d-3634de9c70ad"))) {
+return null;
+}
     return acquiredZnode;
   }
 
@@ -144,6 +151,9 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
 
   @Override
   public ZKWatcher getWatcher() {
+if(KnobRuntime.check(java.util.UUID.fromString("a86453f2-12c5-3403-9e8c-c2fc943f1b4d"))) {
+return null;
+}
     return watcher;
   }
 
@@ -248,15 +258,29 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
   }
 
   public void clearChildZNodes() throws KeeperException {
+if(KnobRuntime.check(java.util.UUID.fromString("d50b8c07-0a76-3c4a-b23b-c90026d0e9be"))) {
+return;
+}
     LOG.debug("Clearing all znodes {}, {}, {}", acquiredZnode, reachedZnode, abortZnode);
 
     // If the coordinator was shutdown mid-procedure, then we are going to lose
     // an procedure that was previously started by cleaning out all the previous state. Its much
     // harder to figure out how to keep an procedure going and the subject of HBASE-5487.
+if(KnobRuntime.check(java.util.UUID.fromString("ee816004-9d52-3e39-b04b-3bf157c6129b"))) {
+try {
+    java.lang.reflect.Field field = watcher.getClass().getDeclaredField("zkSyncTimeout");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(watcher));
+    field.set(watcher, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     ZKUtil.deleteChildrenRecursivelyMultiOrSequential(watcher, true, acquiredZnode, reachedZnode,
       abortZnode);
 
-    if (LOG.isTraceEnabled()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d1efc407-32de-33ee-8a9a-07a2231cec9d"))) ? (LOG.isDebugEnabled()) : (LOG.isTraceEnabled()))) {
       logZKTree(this.baseZNode);
     }
   }

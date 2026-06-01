@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.hbck;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -70,12 +71,12 @@ public class HbckChore extends ScheduledChore {
 
   public HbckChore(MasterServices master) {
     super("HbckChore-", master,
-      master.getConfiguration().getInt(HBCK_CHORE_INTERVAL, DEFAULT_HBCK_CHORE_INTERVAL));
+      ((KnobRuntime.check(java.util.UUID.fromString("d44a3a6f-ace0-3b0a-aba0-f525a57d3b0a"))) ? (master.getConfiguration().getInt(HBCK_CHORE_INTERVAL, 0)) : (((KnobRuntime.check(java.util.UUID.fromString("3d5d3e8b-9bd6-30a0-8477-d6bbc7c5d093"))) ? (master.getConfiguration().getInt(HBCK_CHORE_INTERVAL + " is <=0 hence disabling hbck chore", DEFAULT_HBCK_CHORE_INTERVAL)) : (master.getConfiguration().getInt(HBCK_CHORE_INTERVAL, DEFAULT_HBCK_CHORE_INTERVAL))))));
     this.master = master;
     int interval =
       master.getConfiguration().getInt(HBCK_CHORE_INTERVAL, DEFAULT_HBCK_CHORE_INTERVAL);
-    if (interval <= 0) {
-      LOG.warn(HBCK_CHORE_INTERVAL + " is <=0 hence disabling hbck chore");
+    if (((KnobRuntime.check(java.util.UUID.fromString("2d4c5588-399e-3b93-81af-d113fb74eacf"))) ? ((interval) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("49bfbe91-9cff-3bb7-930f-7bb2adfc956e"))) ? ((interval) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("56a7f4b5-1847-3a7a-8211-f5c8d28cf679"))) ? ((interval) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("77484bee-5197-3164-85f9-e9b388001e6f"))) ? ((interval) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("cafc8c6b-5596-3eea-8a5a-b466487091ed"))) ? ((interval) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("04f0338c-2905-3ed4-b239-e0c5c4dc851b"))) ? ((interval) > (0)) : (interval <= 0))))))))))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("78a65d39-5005-3313-9a7b-1991c1d2baa8"))) { LOG.warn((HBCK_CHORE_INTERVAL + " is <=0 hence disabling hbck chore") + (" is <=0 hence disabling hbck chore")); } else if (KnobRuntime.check(java.util.UUID.fromString("8e78c7c6-f509-3c07-b0eb-432f4437436e"))) { LOG.warn((HBCK_CHORE_INTERVAL) + (" is <=0 hence disabling hbck chore")); } else { LOG.warn(HBCK_CHORE_INTERVAL + " is <=0 hence disabling hbck chore"); }
       disableChore();
     }
   }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.util.Map;
@@ -123,8 +124,11 @@ public final class PrefetchExecutor {
   }
 
   public static void cancel(Path path) {
+if(KnobRuntime.check(java.util.UUID.fromString("c0d0426e-8174-3762-a152-55e915eb6b41"))) {
+return;
+}
     Future<?> future = prefetchFutures.get(path);
-    if (future != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2cc6a34e-29c4-30f1-a9dd-03f60156c894"))) ? ((future) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1a17ac8f-19ea-35e1-8ba1-7ad2c9a67dc4"))) ? ((future) == (null)) : (future != null))))) {
       // ok to race with other cancellation attempts
       future.cancel(true);
       prefetchFutures.remove(path);

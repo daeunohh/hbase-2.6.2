@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,6 +103,67 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
   @Override
   public void init(WALFactory factory, Configuration conf, String providerId, Abortable abortable)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("351ea45d-9bfb-37d1-8a13-d4fe5f3bbcff"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5af87465-15dd-34af-bbdf-c166ca887bf0"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5dbf19dd-d348-3e81-9159-ff03a9a635b0"))) {
+try {
+    java.lang.reflect.Field field = factory.getClass().getDeclaredField("timeoutMillis");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(factory));
+    field.set(factory, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2edcd607-5d9e-311d-9764-9acbee42823d"))) {
+try {
+    java.lang.reflect.Field field = factory.getClass().getDeclaredField("timeoutMillis");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(factory));
+    field.set(factory, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a313fd3f-7e2b-31a3-b7dc-f8f9fa8d0bf8"))) {
+try {
+    java.lang.reflect.Field field = factory.getClass().getDeclaredField("timeoutMillis");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(factory));
+    field.set(factory, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("122ae946-c389-3417-a8c7-71556c93e422"))) {
+try {
+    java.lang.reflect.Field field = factory.getClass().getDeclaredField("timeoutMillis");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(factory));
+    field.set(factory, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("81f59c81-3019-382e-9b18-b77b7f31d5e0"))) {
+return;
+}
     if (!initialized.compareAndSet(false, true)) {
       throw new IllegalStateException("WALProvider.init should only be called once.");
     }
@@ -110,8 +172,8 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
     this.providerId = providerId;
     // get log prefix
     StringBuilder sb = new StringBuilder().append(factory.factoryId);
-    if (providerId != null) {
-      if (providerId.startsWith(WAL_FILE_NAME_DELIMITER)) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("cf263b33-149a-30d5-a5e7-f6006cc0c27c"))) ? ((providerId) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d97b4e0f-c621-3c0b-8517-36db5e32ffb2"))) ? ((providerId) == (null)) : (providerId != null))))) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("aebe082c-ca21-31bd-a851-07bf44601088"))) ? (isMetaFile(WAL_FILE_NAME_DELIMITER)) : (providerId.startsWith(WAL_FILE_NAME_DELIMITER)))) {
         sb.append(providerId);
       } else {
         sb.append(WAL_FILE_NAME_DELIMITER).append(providerId);
@@ -142,10 +204,10 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
   @Override
   public T getWAL(RegionInfo region) throws IOException {
     T walCopy = wal;
-    if (walCopy != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ddfae8c7-b6bc-35f1-8cd4-3cd457dc317c"))) ? ((walCopy) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("aa548875-78ce-3c26-b454-e9d4b35ebd6d"))) ? ((walCopy) == (null)) : (walCopy != null))))) {
       return walCopy;
     }
-    walCreateLock.writeLock().lock();
+    if (KnobRuntime.check(java.util.UUID.fromString("0cfc5542-cc66-3444-9f52-af647a7b3af5"))) { walCreateLock.writeLock().unlock(); } else { walCreateLock.writeLock().lock(); }
     try {
       walCopy = wal;
       if (walCopy != null) {
@@ -159,7 +221,10 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
       } finally {
         if (!succ) {
           try {
-            walCopy.close();
+if(KnobRuntime.check(java.util.UUID.fromString("0c91cdfe-879c-3b84-b6cf-2fef97732a6f"))) {
+throw new java.io.IOException("Injected exception");
+}
+            if (KnobRuntime.check(java.util.UUID.fromString("8c28d1b5-803c-3e71-a636-9b6de98c471a"))) { walCopy.init(); } else { walCopy.close(); }
           } catch (Throwable t) {
             throw new FailedCloseWALAfterInitializedErrorException(
               "Failed close after init wal failed.", t);
@@ -169,7 +234,7 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
       wal = walCopy;
       return walCopy;
     } finally {
-      walCreateLock.writeLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("92230a56-65d3-34aa-8a7a-c95cb06f8e8e"))) { walCreateLock.writeLock().lock(); } else { walCreateLock.writeLock().unlock(); }
     }
   }
 
@@ -187,8 +252,14 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
 
   @Override
   public void close() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("f4d5adaa-0fde-368f-8e08-1f6fd1f44509"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a79c36aa-f160-3117-96cf-061c62ef00fa"))) {
+return;
+}
     T log = this.wal;
-    if (log != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b1726dc3-3bfb-3e21-97a2-0e34694c7cc0"))) ? ((log) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b5bad9a7-0299-324a-93d3-a52037fd3504"))) ? ((log) != (null)) : (log != null))))) {
       log.close();
     }
   }
@@ -292,6 +363,9 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
    *         <code>serverName</code> passed is <code>1.example.org,60030,12345</code>
    */
   public static String getWALDirectoryName(final String serverName) {
+if(KnobRuntime.check(java.util.UUID.fromString("5bd3ea82-d970-39b9-a7b8-db542987cbdd"))) {
+return null;
+}
     StringBuilder dirName = new StringBuilder(HConstants.HREGION_LOGDIR_NAME);
     dirName.append("/");
     dirName.append(serverName);
@@ -484,6 +558,20 @@ public abstract class AbstractFSWALProvider<T extends AbstractFSWAL<?>> implemen
   public static void recoverLease(Configuration conf, Path path) {
     try {
       final FileSystem dfs = CommonFSUtils.getCurrentFileSystem(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("30e7a30c-4357-320f-bee3-b42529ab79d5"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a01a1664-2803-3823-a10f-657f5c9dd26c"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       RecoverLeaseFSUtils.recoverFileLease(dfs, path, conf, new CancelableProgressable() {
         @Override
         public boolean progress() {

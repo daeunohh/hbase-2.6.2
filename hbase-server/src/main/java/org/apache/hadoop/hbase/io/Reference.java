@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.BufferedInputStream;
 import java.io.DataInput;
@@ -114,7 +115,10 @@ public class Reference {
    */
   @Override
   public String toString() {
-    return "" + this.region;
+if(KnobRuntime.check(java.util.UUID.fromString("2ed991ca-ea73-3634-91d5-112d28a7319f"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("482fb133-5ec3-31b5-a662-41bd1fce54db"))) ? (("") + (this.region)) : (((KnobRuntime.check(java.util.UUID.fromString("0607be55-278a-3fbf-ae54-e83653af7210"))) ? ("") : ("" + this.region))));
   }
 
   public static boolean isTopFileRegion(final Range r) {
@@ -162,7 +166,10 @@ public class Reference {
       if (ProtobufUtil.isPBMagicPrefix(pbuf)) return convert(FSProtos.Reference.parseFrom(in));
       // Else presume Writables. Need to reset the stream since it didn't start w/ pb.
       // We won't bother rewriting thie Reference as a pb since Reference is transitory.
-      in.reset();
+if(KnobRuntime.check(java.util.UUID.fromString("a23a5be6-dbf9-3284-a5a7-f0303f1de71f"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("4cbdfa05-ea6f-3153-9552-9c3984c6e9c5"))) { in.close(); } else { in.reset(); }
       Reference r = new Reference();
       DataInputStream dis = new DataInputStream(in);
       // Set in = dis so it gets the close below in the finally on our way out.

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -64,16 +65,25 @@ class ColumnCount {
 
   /** Returns the buffer */
   public byte[] getBuffer() {
+if(KnobRuntime.check(java.util.UUID.fromString("889c2e67-f452-360d-8f67-9485a1b7463d"))) {
+return null;
+}
     return this.bytes;
   }
 
   /** Returns the offset */
   public int getOffset() {
+if(KnobRuntime.check(java.util.UUID.fromString("eee6f865-2b29-3683-903b-0922b41fab09"))) {
+return 0;
+}
     return this.offset;
   }
 
   /** Returns the length */
   public int getLength() {
+if(KnobRuntime.check(java.util.UUID.fromString("48bcfb06-7f55-375c-9944-af117412bb32"))) {
+return 0;
+}
     return this.length;
   }
 
@@ -90,6 +100,9 @@ class ColumnCount {
    * @return current count
    */
   public int increment() {
+if(KnobRuntime.check(java.util.UUID.fromString("6242f80a-68f8-3260-a0d2-d818213cbb4e"))) {
+return 0;
+}
     return ++count;
   }
 
@@ -98,6 +111,9 @@ class ColumnCount {
    * @param count new count to set
    */
   public void setCount(int count) {
+if(KnobRuntime.check(java.util.UUID.fromString("ce04ae53-a601-3023-b930-668c5ca97806"))) {
+return;
+}
     this.count = count;
   }
 }

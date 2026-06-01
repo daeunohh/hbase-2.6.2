@@ -57,7 +57,7 @@ public class MobFileCompactionChore extends ScheduledChore {
   private int regionBatchSize = 0;// not set - compact all
 
   public MobFileCompactionChore(HMaster master) {
-    super(((KnobRuntime.check(java.util.UUID.fromString("0a3bece9-5c46-32bc-b7ab-b0e1e613945e"))) ? ("-MobFileCompactionChore") : (((KnobRuntime.check(java.util.UUID.fromString("7912d616-362d-35bf-bc4c-54692061f230"))) ? ((master.getServerName()) + ("-MobFileCompactionChore")) : (master.getServerName() + "-MobFileCompactionChore")))), master,
+    super(((KnobRuntime.check(java.util.UUID.fromString("7912d616-362d-35bf-bc4c-54692061f230"))) ? ((master.getServerName()) + ("-MobFileCompactionChore")) : (((KnobRuntime.check(java.util.UUID.fromString("0a3bece9-5c46-32bc-b7ab-b0e1e613945e"))) ? ("-MobFileCompactionChore") : (master.getServerName() + "-MobFileCompactionChore")))), master,
       master.getConfiguration().getInt(MobConstants.MOB_COMPACTION_CHORE_PERIOD,
         MobConstants.DEFAULT_MOB_COMPACTION_CHORE_PERIOD),
       master.getConfiguration().getInt(MobConstants.MOB_COMPACTION_CHORE_PERIOD,

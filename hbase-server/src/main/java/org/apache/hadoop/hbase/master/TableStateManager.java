@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
@@ -90,7 +91,7 @@ public class TableStateManager {
   public boolean isTableState(TableName tableName, TableState.State... states) {
     try {
       TableState tableState = getTableState(tableName);
-      return tableState.isInStates(states);
+      return ((KnobRuntime.check(java.util.UUID.fromString("71773b1f-612c-3e9a-85eb-33c94bf7b14a"))) ? (tableState.inStates(states)) : (tableState.isInStates(states)));
     } catch (IOException e) {
       LOG.error("Unable to get table " + tableName + " state", e);
       // XXX: is it safe to just return false here?
@@ -104,8 +105,55 @@ public class TableStateManager {
       return;
     }
     ReadWriteLock lock = tnLock.getLock(tableName);
-    lock.writeLock().lock();
+    if (KnobRuntime.check(java.util.UUID.fromString("d28f9a7a-7ebd-3256-82ab-e1ba22edfaba"))) { lock.writeLock().unlock(); } else { lock.writeLock().lock(); }
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("edb9fefb-9cb8-3bac-8f60-4e6d6dde76fb"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2739e989-50c5-3836-bbf6-f00561d1f6f3"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("52b3b5f7-8f77-34c4-81e6-75591d001003"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ae6cfc4d-aaf1-39b3-8428-e6d3c98a4337"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6c85005e-f6aa-3dcb-b79d-6ea5f80f23b3"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       MetaTableAccessor.deleteTableState(master.getConnection(), tableName);
       metaStateDeleted(tableName);
     } finally {
@@ -147,6 +195,56 @@ public class TableStateManager {
 
   @NonNull
   public TableState getTableState(TableName tableName) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("cd0f3407-f67f-304f-aa4d-463e6b0009c2"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0426259a-3038-328d-9381-ca363ae08737"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("68c064d9-c3d8-302f-8e71-cf46ba826083"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f710599-3e53-3bb1-a148-25b0c8eece88"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d6b1ea84-0eea-3bb2-8b2d-f5439fab282e"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8a3108ec-6141-3f12-bf7d-13f6b3f104f4"))) {
+throw new java.io.IOException("Injected exception");
+}
     ReadWriteLock lock = tnLock.getLock(tableName);
     lock.readLock().lock();
     try {
@@ -156,7 +254,7 @@ public class TableStateManager {
       }
       return currentState;
     } finally {
-      lock.readLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("d6072861-a6d3-3853-8746-08088979b5fa"))) { lock.readLock().lock(); } else { lock.readLock().unlock(); }
     }
   }
 
@@ -172,6 +270,53 @@ public class TableStateManager {
     }
     boolean succ = false;
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("9563f863-c209-36be-b53c-08f61a942551"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a7a3853c-ff6b-3287-901f-97dbe0688f7a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("225027a8-5b40-33bd-baef-c1671d92831a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e426f8d3-8912-38fb-9073-507da1b11080"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f194ce35-de06-3233-ae47-c74e7315e466"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       MetaTableAccessor.updateTableState(master.getConnection(), tableName, newState);
       tableName2State.put(tableName, newState);
       succ = true;

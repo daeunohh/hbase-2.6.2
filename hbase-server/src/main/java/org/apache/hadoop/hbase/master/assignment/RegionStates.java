@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -107,6 +108,9 @@ public class RegionStates {
    * Called on stop of AssignmentManager.
    */
   public void clear() {
+if(KnobRuntime.check(java.util.UUID.fromString("594b9f9d-9fad-3e33-b505-384b01f26996"))) {
+return;
+}
     regionsMap.clear();
     encodedRegionsMap.clear();
     regionInTransition.clear();
@@ -141,21 +145,30 @@ public class RegionStates {
   }
 
   public RegionStateNode getRegionStateNodeFromName(byte[] regionName) {
-    return regionsMap.get(regionName);
+if(KnobRuntime.check(java.util.UUID.fromString("8ab28482-6d6a-3f2b-a367-a7ef0b25f8a0"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("14afbd4b-9eea-3599-beff-a287e020720a"))) ? (regionsMap.remove(regionName)) : (regionsMap.get(regionName)));
   }
 
   public RegionStateNode getRegionStateNodeFromEncodedRegionName(final String encodedRegionName) {
-    return encodedRegionsMap.get(encodedRegionName);
+if(KnobRuntime.check(java.util.UUID.fromString("57839d5a-c8d2-3548-b10e-5098046653d3"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("9a70d679-1780-3209-a75c-cd1c433c84cf"))) ? (encodedRegionsMap.remove(encodedRegionName)) : (encodedRegionsMap.get(encodedRegionName)));
   }
 
   public RegionStateNode getRegionStateNode(RegionInfo regionInfo) {
+if(KnobRuntime.check(java.util.UUID.fromString("2c521928-23c2-3ad4-8e6e-f327fc8d7fe9"))) {
+return null;
+}
     return getRegionStateNodeFromName(regionInfo.getRegionName());
   }
 
   public void deleteRegion(final RegionInfo regionInfo) {
     synchronized (regionsMapLock) {
-      regionsMap.remove(regionInfo.getRegionName());
-      encodedRegionsMap.remove(regionInfo.getEncodedName());
+      if (KnobRuntime.check(java.util.UUID.fromString("f961c1f6-0c70-32a8-a151-63682b356eb0"))) { regionsMap.get(regionInfo.getRegionName()); } else { regionsMap.remove(regionInfo.getRegionName()); }
+      if (KnobRuntime.check(java.util.UUID.fromString("ed5b966a-2a65-394f-b6c3-0a40c37c0fd6"))) { encodedRegionsMap.get(regionInfo.getEncodedName()); } else { encodedRegionsMap.remove(regionInfo.getEncodedName()); }
     }
     // See HBASE-20860
     // After master restarts, merged regions' RIT state may not be cleaned,
@@ -178,9 +191,42 @@ public class RegionStates {
     final ArrayList<RegionStateNode> regions = new ArrayList<RegionStateNode>();
     for (RegionStateNode node : regionsMap.tailMap(tableName.getName()).values()) {
       if (!node.getTable().equals(tableName)) break;
+if(KnobRuntime.check(java.util.UUID.fromString("e98ab2c1-e119-344d-8a72-bab267ecf3c4"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("lastUpdate");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fc4ed5ec-2b11-3dd2-ac3c-dba936f25c81"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("84ab450f-0da4-3b67-b73b-267f7ad25c7f"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       regions.add(node);
     }
-    return regions;
+    return ((KnobRuntime.check(java.util.UUID.fromString("14c3c7e3-1ab0-39ba-bc67-34264b20807e"))) ? (new ArrayList<RegionStateNode>()) : (regions));
   }
 
   ArrayList<RegionState> getTableRegionStates(final TableName tableName) {
@@ -189,16 +235,60 @@ public class RegionStates {
       if (!node.getTable().equals(tableName)) break;
       regions.add(node.toRegionState());
     }
-    return regions;
+    return ((KnobRuntime.check(java.util.UUID.fromString("9967d468-03a3-3c5b-a3b2-851497af1ebd"))) ? (new ArrayList<RegionState>()) : (regions));
   }
 
   ArrayList<RegionInfo> getTableRegionsInfo(final TableName tableName) {
     final ArrayList<RegionInfo> regions = new ArrayList<RegionInfo>();
     for (RegionStateNode node : regionsMap.tailMap(tableName.getName()).values()) {
+if(KnobRuntime.check(java.util.UUID.fromString("efcf3662-c1cd-3250-bf20-202a8b312f43"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("19819776-da5e-3dcd-805a-08113e5896d0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7b7408be-079d-3ad8-86f6-e87b627c3372"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4c33fb29-a1b7-3f3d-a16f-01effcfa5c9b"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (!node.getTable().equals(tableName)) break;
       regions.add(node.getRegionInfo());
     }
-    return regions;
+    return ((KnobRuntime.check(java.util.UUID.fromString("cfc47924-7ac2-384c-aea8-4de6a7ac120b"))) ? (new ArrayList<RegionInfo>()) : (regions));
   }
 
   /** Returns A view of region state nodes for all the regions. */
@@ -272,6 +362,53 @@ public class RegionStates {
    * {@link State#OPENING}. And for regions in other states we do not need reopen them.
    */
   public List<HRegionLocation> getRegionsOfTableForReopen(TableName tableName) {
+if(KnobRuntime.check(java.util.UUID.fromString("41e3b4b7-e878-3d50-a2ff-864570833aef"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab2d5a40-ba0d-32d1-a701-a8a9571a3d12"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b5ccae4e-f4ff-36d5-9541-3e3429111290"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("828cbece-4f39-3ccd-80a7-3a8956e10a92"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("988de6e7-1f75-3971-b390-e3c188bd5f44"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return getTableRegionStateNodes(tableName).stream().map(this::createRegionForReopen)
       .filter(r -> r != null).collect(Collectors.toList());
   }
@@ -432,6 +569,20 @@ public class RegionStates {
    * @see #logSplit(ServerName)
    */
   public void logSplitting(final ServerName serverName) {
+if(KnobRuntime.check(java.util.UUID.fromString("4acb876b-c7c6-39f1-8bfd-f288a1630366"))) {
+try {
+    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(serverName));
+    field.set(serverName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d81948ab-02bf-3de2-a668-5e4b664735be"))) {
+return;
+}
     setServerState(serverName, ServerState.SPLITTING);
   }
 
@@ -467,8 +618,14 @@ public class RegionStates {
   }
 
   public boolean isRegionInState(RegionInfo regionInfo, State... state) {
+if(KnobRuntime.check(java.util.UUID.fromString("9d6af414-a34f-3257-8881-6c40bfed089a"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("741d4455-62e2-323b-a626-94d5eddfad1d"))) {
+return true;
+}
     RegionStateNode regionNode = getRegionStateNode(regionInfo);
-    if (regionNode != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ca7eb3be-67b0-32a1-9b02-e01b8ed91875"))) ? ((regionNode) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b2dc241c-5a88-34be-a454-a470a79b0986"))) ? ((regionNode) == (null)) : (regionNode != null))))) {
       regionNode.lock();
       try {
         return regionNode.isInState(state);
@@ -504,6 +661,39 @@ public class RegionStates {
         if (node == null) {
           continue;
         }
+if(KnobRuntime.check(java.util.UUID.fromString("683c8199-bd27-3ec1-a786-01ef1cfdc28d"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("lastUpdate");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fa42160a-fde9-3660-be45-24d67d7aabb4"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("065eeb55-7b71-361a-bdad-224eb4d1add6"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         createSnapshot(node, result);
       }
     }
@@ -511,14 +701,61 @@ public class RegionStates {
   }
 
   private void createSnapshot(RegionStateNode node, Map<ServerName, List<RegionInfo>> result) {
+if(KnobRuntime.check(java.util.UUID.fromString("5c82f864-b259-3927-b6cf-401084dfc32f"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bda5ea68-c4fe-3fe3-a2b6-bc41066620b8"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("04f77129-7c5b-344f-abd0-2a5a5167e9a8"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("454d8579-bb2b-3ac1-aa48-e86434a63a9c"))) {
+try {
+    java.lang.reflect.Field field = node.getClass().getDeclaredField("lastUpdate");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(node));
+    field.set(node, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final ServerName serverName = node.getRegionLocation();
-    if (serverName == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("cd8f7ac2-cec5-3b3f-87ed-b1ee5b8e7310"))) ? ((serverName) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5997e200-c968-3917-9904-f677de9140d5"))) ? ((serverName) != (null)) : (serverName == null))))) {
       return;
     }
 
     List<RegionInfo> serverRegions = result.get(serverName);
     if (serverRegions == null) {
       serverRegions = new ArrayList<RegionInfo>();
+if(KnobRuntime.check(java.util.UUID.fromString("55b1e804-7c7d-31d5-945e-9d2b2d5977d3"))) {
+try {
+    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(serverName));
+    field.set(serverName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       result.put(serverName, serverRegions);
     }
     serverRegions.add(node.getRegionInfo());
@@ -698,10 +935,16 @@ public class RegionStates {
     }
 
     public RegionInfo getRegionInfo() {
+if(KnobRuntime.check(java.util.UUID.fromString("f93c89d2-a22f-39b4-8597-ec0c5d4a79ff"))) {
+return null;
+}
       return regionNode.getRegionInfo();
     }
 
     public int incrementAndGetRetries() {
+if(KnobRuntime.check(java.util.UUID.fromString("639944c8-07c3-3fe7-af54-8062d2f79162"))) {
+return 0;
+}
       return this.retries.incrementAndGet();
     }
 
@@ -710,6 +953,9 @@ public class RegionStates {
     }
 
     public void setException(final Exception exception) {
+if(KnobRuntime.check(java.util.UUID.fromString("f4dfcb78-92bb-361b-a194-5a818a53b96c"))) {
+return;
+}
       this.exception = exception;
     }
 

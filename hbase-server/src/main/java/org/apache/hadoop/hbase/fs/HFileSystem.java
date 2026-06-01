@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.fs;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 
@@ -89,8 +90,8 @@ public class HFileSystem extends FilterFileSystem {
 
     // disable checksum verification for local fileSystem, see HBASE-11218
     if (fs instanceof LocalFileSystem) {
-      fs.setWriteChecksum(false);
-      fs.setVerifyChecksum(false);
+      if (KnobRuntime.check(java.util.UUID.fromString("20802b62-56d5-3a58-ab72-283ffa328574"))) { fs.setVerifyChecksum(false); } else { fs.setWriteChecksum(false); }
+      if (KnobRuntime.check(java.util.UUID.fromString("206ffd0c-3a44-38c0-8e2b-0ff32266af40"))) { fs.setWriteChecksum(false); } else { fs.setVerifyChecksum(false); }
     }
 
     addLocationsOrderInterceptor(conf);
@@ -241,7 +242,7 @@ public class HFileSystem extends FilterFileSystem {
     URI uri = FileSystem.getDefaultUri(conf);
     FileSystem fs = null;
     Class<?> clazz = conf.getClass("fs." + uri.getScheme() + ".impl", null);
-    if (clazz != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("fe08662f-d647-3b2e-9793-af861e0df6e5"))) ? ((clazz) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d81420c6-1551-38a1-bf84-834d02e27303"))) ? ((clazz) == (null)) : (clazz != null))))) {
       // This will be true for Hadoop 1.0, or 0.20.
       fs = (FileSystem) org.apache.hadoop.util.ReflectionUtils.newInstance(clazz, conf);
       fs.initialize(uri, conf);
@@ -250,7 +251,10 @@ public class HFileSystem extends FilterFileSystem {
       // implementation to be loaded by the service loader in case it has not
       // been loaded yet.
       Configuration clone = new Configuration(conf);
-      clone.setBoolean("fs." + uri.getScheme() + ".impl.disable.cache", true);
+      if (KnobRuntime.check(java.util.UUID.fromString("2cadebbe-2345-3605-9732-fc616f26dd09"))) { clone.setBoolean(("fs." + uri.getScheme()) + (".impl.disable.cache"), true); } else if (KnobRuntime.check(java.util.UUID.fromString("de5632ea-f7e1-3a45-9452-83611f16d6ea"))) { clone.setBoolean(".impl.disable.cache", true); } else if (KnobRuntime.check(java.util.UUID.fromString("a503e37d-626a-3c3d-ac35-d31823e5d5a0"))) { clone.setBoolean((("fs.") + (uri.getScheme())) + (".impl.disable.cache"), true); } else if (KnobRuntime.check(java.util.UUID.fromString("9fa7a639-dd60-3c93-b396-39987bc0960d"))) { clone.setBoolean(("fs.") + (uri.getScheme()), true); } else if (KnobRuntime.check(java.util.UUID.fromString("fcc1fab9-b5e3-36a6-a45a-83e893664b10"))) { clone.setBoolean("fs.", true); } else if (KnobRuntime.check(java.util.UUID.fromString("f0765fe7-1eba-35bc-94e3-0c0c1fa34458"))) { clone.setBoolean(("fs.") + (".impl.disable.cache"), true); } else if (KnobRuntime.check(java.util.UUID.fromString("b6df6ced-55cf-3767-9655-d97b795ffbef"))) { clone.setBoolean("fs." + uri.getScheme(), true); } else { clone.setBoolean("fs." + uri.getScheme() + ".impl.disable.cache", true); }
+if(KnobRuntime.check(java.util.UUID.fromString("0affb53f-baba-3c02-9c64-bc71a785c267"))) {
+throw new java.io.IOException("Injected exception");
+}
       fs = FileSystem.get(uri, clone);
     }
     if (fs == null) {
@@ -271,7 +275,30 @@ public class HFileSystem extends FilterFileSystem {
   private FileSystem maybeWrapFileSystem(FileSystem base, Configuration conf) {
     try {
       Class<?> clazz = conf.getClass("hbase.fs.wrapper", null);
-      if (clazz != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("075369a0-01b3-3392-92dc-49a172f8c2e0"))) ? ((clazz) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2270b097-1290-3895-b543-fbc287ee47b7"))) ? ((clazz) != (null)) : (clazz != null))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("a6393ddc-9bd9-33a0-844a-1d3e6c20973d"))) {
+throw new java.lang.NoSuchMethodException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("22b816b0-f053-3616-83e7-73a0a2e2f3ab"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c76e1d53-b667-3af1-8fc6-9fbc74bbec90"))) {
+throw new java.lang.InstantiationException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c456caf6-5b05-3d7e-89e3-84bbc258da31"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4cea9217-359d-3764-9327-634d7715fa48"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         return (FileSystem) clazz.getConstructor(FileSystem.class, Configuration.class)
           .newInstance(base, conf);
       }
@@ -294,7 +321,7 @@ public class HFileSystem extends FilterFileSystem {
    */
   static boolean addLocationsOrderInterceptor(Configuration conf, final ReorderBlocks lrb) {
     if (!conf.getBoolean("hbase.filesystem.reorder.blocks", true)) { // activated by default
-      LOG.debug("addLocationsOrderInterceptor configured to false");
+      if (KnobRuntime.check(java.util.UUID.fromString("6ae1c95a-b688-3012-8ca3-1fe18fc3e7ac"))) { LOG.error("addLocationsOrderInterceptor configured to false"); } else { LOG.debug("addLocationsOrderInterceptor configured to false"); }
       return false;
     }
 
@@ -314,7 +341,7 @@ public class HFileSystem extends FilterFileSystem {
 
     DistributedFileSystem dfs = (DistributedFileSystem) fs;
     DFSClient dfsc = dfs.getClient();
-    if (dfsc == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("8240a426-c422-3962-9cda-38c9065d6be1"))) ? ((dfsc) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1c952e02-6090-37c2-9063-aedd17821b55"))) ? ((dfsc) != (null)) : (dfsc == null))))) {
       LOG.warn("The DistributedFileSystem does not contain a DFSClient. Can't add the location "
         + "block reordering interceptor. Continuing, but this is unexpected.");
       return false;
@@ -323,6 +350,12 @@ public class HFileSystem extends FilterFileSystem {
     try {
       Field nf = DFSClient.class.getDeclaredField("namenode");
       nf.setAccessible(true);
+if(KnobRuntime.check(java.util.UUID.fromString("93e9ed9d-7999-3eb7-9f0f-4a836dc3dfa2"))) {
+throw new java.lang.NoSuchFieldException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("16fd7b10-6a28-33ac-9085-2174c3f39ffa"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
       Field modifiersField = ReflectionUtils.getModifiersField();
       modifiersField.setAccessible(true);
       modifiersField.setInt(nf, nf.getModifiers() & ~Modifier.FINAL);
@@ -339,7 +372,7 @@ public class HFileSystem extends FilterFileSystem {
       LOG.info("Added intercepting call to namenode#getBlockLocations so can do block reordering"
         + " using class " + lrb.getClass().getName());
     } catch (NoSuchFieldException e) {
-      LOG.warn("Can't modify the DFSClient#namenode field to add the location reorder.", e);
+      if (KnobRuntime.check(java.util.UUID.fromString("190786af-6565-3a6f-8bee-77cd63415a3f"))) { LOG.trace("Can't modify the DFSClient#namenode field to add the location reorder.", e); } else { LOG.warn("Can't modify the DFSClient#namenode field to add the location reorder.", e); }
       return false;
     } catch (IllegalAccessException e) {
       LOG.warn("Can't modify the DFSClient#namenode field to add the location reorder.", e);

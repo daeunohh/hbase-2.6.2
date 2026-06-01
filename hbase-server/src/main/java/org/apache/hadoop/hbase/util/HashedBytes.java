@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -43,6 +44,9 @@ public class HashedBytes {
 
   @Override
   public int hashCode() {
+if(KnobRuntime.check(java.util.UUID.fromString("3aef2060-5fcb-35e3-bdd7-1397af7f07d8"))) {
+return 0;
+}
     return hashCode;
   }
 

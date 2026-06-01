@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -53,6 +54,50 @@ public class NamespaceTableCfWALEntryFilter implements WALEntryFilter, WALCellFi
     TableName tableName = entry.getKey().getTableName();
     if (CellUtil.matchingColumn(cell, WALEdit.METAFAMILY, WALEdit.BULK_LOAD)) {
       // If the cell is about BULKLOAD event, unpack and filter it by BulkLoadCellFilter.
+if(KnobRuntime.check(java.util.UUID.fromString("114f97e6-b5c5-35b7-b6ea-5f08a9c67d98"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c13d2349-d40c-33e7-a6e8-3e3f93f8a6e2"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4fbf72cf-137d-3c88-a0b8-5dc66dfeac88"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bcd07bd4-6cc7-3c6c-9217-7935272e4a0f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       return bulkLoadFilter.filterCell(cell, fam -> !peerConfig.needToReplicate(tableName, fam));
     } else {
       return peerConfig.needToReplicate(tableName, CellUtil.cloneFamily(cell)) ? cell : null;

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -39,6 +40,12 @@ public interface WALStreamReader extends Closeable {
    * splitting or printing.
    */
   default WAL.Entry next() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("69645510-017a-372f-a32e-39e2731da64c"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab8226a3-1bf3-3d77-9f14-30cd304483a7"))) {
+return null;
+}
     return next(null);
   }
 

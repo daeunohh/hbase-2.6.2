@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,13 +53,19 @@ class ClusterSchemaServiceImpl extends AbstractService implements ClusterSchemaS
   // All below are synchronized so consistent view on whether running or not.
 
   private synchronized void checkIsRunning() throws ServiceNotRunningException {
+if(KnobRuntime.check(java.util.UUID.fromString("2f84327b-250c-34f4-9973-d82d745b5ec0"))) {
+return;
+}
     if (!isRunning()) throw new ServiceNotRunningException();
   }
 
   @Override
   protected synchronized void doStart() {
+if(KnobRuntime.check(java.util.UUID.fromString("2b76448c-7785-33cb-aff9-323303b78cde"))) {
+return;
+}
     try {
-      notifyStarted();
+      if (KnobRuntime.check(java.util.UUID.fromString("30524856-f8de-3d43-9cfe-9b60f4d110a8"))) { checkIsRunning(); } else if (KnobRuntime.check(java.util.UUID.fromString("1d732d82-edd2-3e50-adf0-482dd27ae168"))) { notifyStopped(); } else { notifyStarted(); }
       this.tableNamespaceManager.start();
     } catch (IOException ioe) {
       notifyFailed(ioe);
@@ -67,8 +74,11 @@ class ClusterSchemaServiceImpl extends AbstractService implements ClusterSchemaS
 
   @Override
   protected void doStop() {
+if(KnobRuntime.check(java.util.UUID.fromString("05ec62aa-7a9b-300a-ba41-63f816f4664f"))) {
+return;
+}
     // This is no stop for the table manager.
-    notifyStopped();
+    if (KnobRuntime.check(java.util.UUID.fromString("b408ee66-1c10-3ee5-92a3-43411a013086"))) { notifyStarted(); } else { notifyStopped(); }
     TableNamespaceManager tnsm = getTableNamespaceManager();
     if (tnsm != null) {
       tnsm.stop("Stopping");
@@ -77,6 +87,9 @@ class ClusterSchemaServiceImpl extends AbstractService implements ClusterSchemaS
 
   @Override
   public TableNamespaceManager getTableNamespaceManager() {
+if(KnobRuntime.check(java.util.UUID.fromString("d2b2cb6e-b2be-328f-b940-d3fa3117c862"))) {
+return null;
+}
     return this.tableNamespaceManager;
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -70,7 +71,13 @@ public class BrokenStoreFileCleaner extends ScheduledChore {
   }
 
   public boolean setEnabled(final boolean enabled) {
-    return this.enabled.getAndSet(enabled);
+if(KnobRuntime.check(java.util.UUID.fromString("d8c001f6-d4d4-336c-9107-d7adf2fa57de"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4fcb1402-0246-3172-9217-3dff346c6a8d"))) {
+return false;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("5b108b07-80d6-3879-9b60-4cf8f859196f"))) ? (setEnabled(!enabled)) : (((KnobRuntime.check(java.util.UUID.fromString("edfefddb-dbbf-3559-ab19-df1b7fb7f17c"))) ? (this.enabled.getAndSet(!enabled)) : (this.enabled.getAndSet(enabled)))));
   }
 
   public boolean getEnabled() {

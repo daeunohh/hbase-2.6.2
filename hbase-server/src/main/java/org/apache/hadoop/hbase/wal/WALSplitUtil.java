@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -242,16 +243,53 @@ public final class WALSplitUtil {
     Path regionDir = FSUtils.getRegionDirFromRootDir(CommonFSUtils.getRootDir(conf), regionInfo);
     Path wrongRegionWALDir =
       CommonFSUtils.getWrongWALRegionDir(conf, regionInfo.getTable(), regionInfo.getEncodedName());
+if(KnobRuntime.check(java.util.UUID.fromString("bfabd4db-28d9-34c4-9f73-dbdea6d785f8"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fd6c6389-e0c4-3d87-9e4c-cfde231402ef"))) {
+throw new java.io.IOException("Injected exception");
+}
     FileSystem walFs = CommonFSUtils.getWALFileSystem(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("16176456-95f3-3b03-8daa-b50fd5dcea2e"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7fa8b154-9751-368e-877f-2af8caff9239"))) {
+throw new java.io.IOException("Injected exception");
+}
     FileSystem rootFs = CommonFSUtils.getRootDirFileSystem(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("5a80d3df-e04a-3130-ba81-58a5dcb05f75"))) {
+throw new java.io.IOException("Injected exception");
+}
     NavigableSet<Path> files = getSplitEditFilesSorted(walFs, regionWALDir);
     if (!files.isEmpty()) {
       return true;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("515969a1-7612-34fb-82f4-480153788792"))) {
+throw new java.io.IOException("Injected exception");
+}
     files = getSplitEditFilesSorted(rootFs, regionDir);
     if (!files.isEmpty()) {
       return true;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("cf5f7a7a-4b83-39f2-b314-b861814fb6d1"))) {
+throw new java.io.IOException("Injected exception");
+}
     files = getSplitEditFilesSorted(walFs, wrongRegionWALDir);
     return !files.isEmpty();
   }
@@ -274,12 +312,44 @@ public final class WALSplitUtil {
     Path regionWALDir =
       CommonFSUtils.getWALRegionDir(conf, region.getTable(), region.getEncodedName());
     // This is the old place where we store max sequence id file
+if(KnobRuntime.check(java.util.UUID.fromString("b4b7317c-984f-3c22-aa94-f17a37aa19c3"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c57e2bab-50ae-332a-9fd4-bd99fa28a756"))) {
+throw new java.io.IOException("Injected exception");
+}
     Path regionDir = FSUtils.getRegionDirFromRootDir(CommonFSUtils.getRootDir(conf), region);
     // This is for HBASE-20734, where we use a wrong directory, see HBASE-22617 for more details.
     Path wrongRegionWALDir =
       CommonFSUtils.getWrongWALRegionDir(conf, region.getTable(), region.getEncodedName());
+if(KnobRuntime.check(java.util.UUID.fromString("f4b8a1d6-8aef-304f-ab1a-0a049b6eb7e3"))) {
+throw new java.io.IOException("Injected exception");
+}
     long maxSeqId = getMaxRegionSequenceId(walFs, regionWALDir);
     maxSeqId = Math.max(maxSeqId, getMaxRegionSequenceId(rootFs, regionDir));
+if(KnobRuntime.check(java.util.UUID.fromString("c5fe31db-d368-33b9-b79f-d6753dd44e71"))) {
+maxSeqId = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("32b61d20-6bdf-327e-991d-b3f53c65dd43"))) {
+maxSeqId = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6abbe220-c86c-3f56-b12b-9cb6dce3b3fe"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("979edc36-01ce-334a-bbc5-f86a86db0a3d"))) {
+maxSeqId += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d92a8fff-144a-3f97-9e96-b782e4b8293f"))) {
+maxSeqId -= 1;
+}
     maxSeqId = Math.max(maxSeqId, getMaxRegionSequenceId(walFs, wrongRegionWALDir));
     return maxSeqId;
   }
@@ -297,6 +367,9 @@ public final class WALSplitUtil {
     if (!walFS.exists(editsdir)) {
       return filesSorted;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("2389fda7-6ea1-31ff-8b4c-9c89cc186e0a"))) {
+throw new java.io.IOException("Injected exception");
+}
     FileStatus[] files = CommonFSUtils.listStatus(walFS, editsdir, new PathFilter() {
       @Override
       public boolean accept(Path p) {
@@ -371,6 +444,21 @@ public final class WALSplitUtil {
     for (FileStatus file : files) {
       String fileName = file.getPath().getName();
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("b7f0cf23-c2a9-3d6a-a719-79a606403d53"))) {
+maxSeqId -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ea9dd273-0c5b-3ad8-ab3e-89c64702fb9d"))) {
+throw new java.lang.NumberFormatException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8f1d2fe6-d491-3ffd-aa22-2e3e9fd36666"))) {
+maxSeqId = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b4ad208b-546d-3ff2-8bfd-45d2aab4f6c3"))) {
+maxSeqId = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("979a3b3e-6bf2-3e72-9f66-aed181af2acd"))) {
+maxSeqId += 1;
+}
         maxSeqId = Math.max(maxSeqId, Long
           .parseLong(fileName.substring(0, fileName.length() - SEQUENCE_ID_FILE_SUFFIX_LENGTH)));
       } catch (NumberFormatException ex) {
@@ -403,7 +491,7 @@ public final class WALSplitUtil {
       new Path(getRegionDirRecoveredEditsDir(regionDir), newMaxSeqId + SEQUENCE_ID_FILE_SUFFIX);
     if (newMaxSeqId != maxSeqId) {
       try {
-        if (!walFS.createNewFile(newSeqIdFile) && !walFS.exists(newSeqIdFile)) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("bdea3521-6233-3452-bde0-0b665cac87bb"))) ? ((!walFS.createNewFile(newSeqIdFile)) || (!walFS.exists(newSeqIdFile))) : (((KnobRuntime.check(java.util.UUID.fromString("95e9a682-2720-35e2-a43e-6c12f23eef24"))) ? (!walFS.exists(newSeqIdFile)) : (((KnobRuntime.check(java.util.UUID.fromString("fec61d81-24ee-334f-a5ba-831df7d46aa7"))) ? (!walFS.createNewFile(newSeqIdFile)) : (((KnobRuntime.check(java.util.UUID.fromString("a808c5e2-6f24-3a8a-8962-572db4927746"))) ? ((!walFS.createNewFile(newSeqIdFile)) && (!walFS.exists(newSeqIdFile))) : (!walFS.createNewFile(newSeqIdFile) && !walFS.exists(newSeqIdFile)))))))))) {
           throw new IOException("Failed to create SeqId file:" + newSeqIdFile);
         }
         LOG.debug("Wrote file={}, newMaxSeqId={}, maxSeqId={}", newSeqIdFile, newMaxSeqId,

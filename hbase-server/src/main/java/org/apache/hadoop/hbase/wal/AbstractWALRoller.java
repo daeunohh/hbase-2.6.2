@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -91,7 +92,7 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
     }
     // this is to avoid race between addWAL and requestRollAll.
     synchronized (this) {
-      if (wals.putIfAbsent(wal, new RollController(wal)) == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("43b5849c-0859-3820-808f-781d2ce963e8"))) ? ((wals.putIfAbsent(wal, new RollController(wal))) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("cdc98f00-bb94-3c79-90b8-7b3543c11954"))) ? ((wals.putIfAbsent(wal, new RollController(wal))) == (null)) : (wals.putIfAbsent(wal, new RollController(wal)) == null))))) {
         wal.registerWALActionsListener(new WALActionsListener() {
           @Override
           public void logRollRequested(WALActionsListener.RollRequestReason reason) {
@@ -115,9 +116,9 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
   public void requestRollAll() {
     synchronized (this) {
       for (RollController controller : wals.values()) {
-        controller.requestRoll();
+        if (KnobRuntime.check(java.util.UUID.fromString("25e6a8ea-1b55-3611-917d-e2231b3bac6e"))) { notifyAll(); } else { controller.requestRoll(); }
       }
-      notifyAll();
+      if (KnobRuntime.check(java.util.UUID.fromString("d2829cd0-6591-3070-be38-00b136e96fb3"))) { interrupt(); } else { notifyAll(); }
     }
   }
 
@@ -140,8 +141,20 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
     try {
       for (Entry<WAL, RollController> entry : wals.entrySet()) {
         WAL wal = entry.getKey();
+if(KnobRuntime.check(java.util.UUID.fromString("a8e8229d-7bbf-316a-a56e-3ed65a475bde"))) {
+now -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5e52f0b3-845c-30a1-acba-baadb9f47888"))) {
+now = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("93f905a1-35cf-3ca8-a986-515e1bb33b7b"))) {
+now = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("571bc741-b65f-37d9-be39-dda1281b3863"))) {
+now += 1;
+}
         boolean needRollAlready = entry.getValue().needsRoll(now);
-        if (needRollAlready || !(wal instanceof AbstractFSWAL)) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("afe24fc1-6bab-36ee-9d85-67729baa180f"))) ? (!(wal instanceof AbstractFSWAL)) : (((KnobRuntime.check(java.util.UUID.fromString("d2b233d9-2ac0-3aae-8436-c0e4969d21c6"))) ? ((!needRollAlready) || (!(wal instanceof AbstractFSWAL))) : (((KnobRuntime.check(java.util.UUID.fromString("3baed541-89b4-385b-b2d4-dad716d8bd8b"))) ? ((needRollAlready) && (!(wal instanceof AbstractFSWAL))) : (((KnobRuntime.check(java.util.UUID.fromString("f3ba5c94-da3d-33d4-b023-f4528997e8c8"))) ? (needRollAlready) : (((KnobRuntime.check(java.util.UUID.fromString("f5287b34-046c-3c34-9c49-06e032f35f8e"))) ? ((!needRollAlready) && (!(wal instanceof AbstractFSWAL))) : (((KnobRuntime.check(java.util.UUID.fromString("b9554bbb-c61d-3f3f-8341-f05713f7198f"))) ? (!needRollAlready) : (((KnobRuntime.check(java.util.UUID.fromString("daa03f69-4a14-38de-9ca8-aef9af2bcfd1"))) ? ((needRollAlready) || (!(wal instanceof AbstractFSWAL))) : (needRollAlready || !(wal instanceof AbstractFSWAL)))))))))))))))) {
           continue;
         }
         ((AbstractFSWAL<?>) wal).checkLogLowReplication(checkLowReplicationInterval);
@@ -192,7 +205,7 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
           Entry<WAL, RollController> entry = iter.next();
           WAL wal = entry.getKey();
           RollController controller = entry.getValue();
-          if (controller.isRollRequested()) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("6bc84cbe-9336-3a4a-9d71-8dce882f92ef"))) ? (walRollFinished()) : (((KnobRuntime.check(java.util.UUID.fromString("60d83b2d-3d7c-3bbb-b688-14f1b47c2b06"))) ? (isWaiting()) : (controller.isRollRequested()))))) {
             // WAL roll requested, fall through
             LOG.debug("WAL {} roll requested", wal);
           } else if (controller.needsPeriodicRoll(now)) {
@@ -259,6 +272,12 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
 
   /** Returns true if all WAL roll finished */
   public boolean walRollFinished() {
+if(KnobRuntime.check(java.util.UUID.fromString("03f1e3a1-c995-3e6c-80a8-cd7ca2d3ac9e"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("498292a8-beec-3088-b9a3-a2d25df6de12"))) {
+return false;
+}
     // TODO add a status field of roll in RollController
     return wals.values().stream()
       .noneMatch(rc -> rc.needsRoll(EnvironmentEdgeManager.currentTime())) && isWaiting();
@@ -275,6 +294,9 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
 
   @Override
   public void close() {
+if(KnobRuntime.check(java.util.UUID.fromString("07b9cd85-5cf5-3c96-ad06-9586f64576db"))) {
+return;
+}
     running = false;
     interrupt();
   }
@@ -295,6 +317,9 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
     }
 
     public void requestRoll() {
+if(KnobRuntime.check(java.util.UUID.fromString("f16fc751-f90b-306d-a18c-cbcad4c77896"))) {
+return;
+}
       this.rollRequest.set(true);
     }
 
@@ -302,6 +327,9 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
       this.lastRollTime = now;
       // reset the flag in front to avoid missing roll request before we return from rollWriter.
       this.rollRequest.set(false);
+if(KnobRuntime.check(java.util.UUID.fromString("283b9220-8aa2-328e-9572-3859b232cf15"))) {
+throw new java.io.IOException("Injected exception");
+}
       return wal.rollWriter(true);
     }
 

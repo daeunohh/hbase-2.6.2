@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -59,8 +60,64 @@ public class BlockCacheUtil {
 
       @Override
       public void write(JsonWriter out, FastLongHistogram value) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("3e1cb717-09a0-319e-ba3e-53fabc7fe35b"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1f87d1f8-eec8-3b73-a20a-2c3848a325d7"))) {
+try {
+    java.lang.reflect.Field field = out.getClass().getDeclaredField("stackSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(out));
+    field.set(out, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8f5b371d-cf24-3ac9-be44-e8a007e928ae"))) {
+try {
+    java.lang.reflect.Field field = out.getClass().getDeclaredField("stackSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(out));
+    field.set(out, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("872bc5a9-6563-3fa5-b7da-c0695f4b8c0c"))) {
+try {
+    java.lang.reflect.Field field = out.getClass().getDeclaredField("stackSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(out));
+    field.set(out, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("24caa77c-13f8-3481-8186-d17211d0cccf"))) {
+try {
+    java.lang.reflect.Field field = out.getClass().getDeclaredField("stackSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(out));
+    field.set(out, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("47e3d0be-d5f6-3460-bcfe-5ec5bef8e741"))) {
+return;
+}
         AgeSnapshot snapshot = new AgeSnapshot(value);
+if(KnobRuntime.check(java.util.UUID.fromString("d319c6fa-ebc5-382f-a1c9-2fef19389d23"))) {
+throw new java.io.IOException("Injected exception");
+}
         out.beginObject();
+if(KnobRuntime.check(java.util.UUID.fromString("845b3e8c-c0d2-329d-8235-e12b6f80b6d0"))) {
+throw new java.io.IOException("Injected exception");
+}
         out.name("mean").value(snapshot.getMean());
         out.name("min").value(snapshot.getMin());
         out.name("max").value(snapshot.getMax());
@@ -293,9 +350,15 @@ public class BlockCacheUtil {
 
     /** Returns True if full.... if we won't be adding any more. */
     public boolean update(final CachedBlock cb) {
+if(KnobRuntime.check(java.util.UUID.fromString("9b3d3e55-364a-374f-94a5-7622340254cb"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("55749f8f-e977-363a-b0b8-3a7c50218810"))) {
+return false;
+}
       if (isFull()) return true;
       NavigableSet<CachedBlock> set = this.cachedBlockByFile.get(cb.getFilename());
-      if (set == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e16f4236-002c-3508-abb5-db46a6f5840d"))) ? ((set) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b4f7ff05-87c0-3447-9aad-3fc05d16068a"))) ? ((set) == (null)) : (set == null))))) {
         set = new ConcurrentSkipListSet<>();
         this.cachedBlockByFile.put(cb.getFilename(), set);
       }

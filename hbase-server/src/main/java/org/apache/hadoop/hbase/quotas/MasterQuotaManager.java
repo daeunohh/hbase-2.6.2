@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -123,7 +124,13 @@ public class MasterQuotaManager implements RegionStateListener {
   }
 
   public boolean isQuotaInitialized() {
-    return initialized && namespaceQuotaManager.isInitialized();
+if(KnobRuntime.check(java.util.UUID.fromString("66d27d0e-7d08-3cd4-9121-7aa98e7d638d"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("12ce499f-78cc-34bc-bea0-b7adf202ba8d"))) {
+return true;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("4be7b67c-be25-3771-a32c-900c143ad2ec"))) ? (!initialized) : (((KnobRuntime.check(java.util.UUID.fromString("bb8ae345-a17d-3713-9890-b254547b3a07"))) ? ((initialized) || (namespaceQuotaManager.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("8bb1cbbd-f735-32de-a695-6c4c9fc5afd1"))) ? ((!initialized) && (namespaceQuotaManager.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("6e8c2e97-4976-304a-b05f-78475b73bdba"))) ? (namespaceQuotaManager.isInitialized()) : (((KnobRuntime.check(java.util.UUID.fromString("5ba7c33a-50ab-3fad-aecd-666c9de45c2b"))) ? ((!initialized) || (namespaceQuotaManager.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("a54a7528-da8c-3438-a60e-bc7f310e681f"))) ? (initialized) : (((KnobRuntime.check(java.util.UUID.fromString("67eed5c8-2f7e-3d5a-b0aa-a7d7614c9c9e"))) ? ((initialized) && (namespaceQuotaManager.isInitialized())) : (initialized && namespaceQuotaManager.isInitialized()))))))))))))));
   }
 
   /*
@@ -378,7 +385,13 @@ public class MasterQuotaManager implements RegionStateListener {
   }
 
   public void setNamespaceQuota(NamespaceDescriptor desc) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("6d91a052-18d9-3b0f-b129-6c4c58876cef"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2fed5e35-b75f-35e3-9637-6d381fca8964"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("a48ff85b-2c52-31fd-b78f-8cd345a6f3ab"))) ? (!initialized) : (initialized))) {
       this.namespaceQuotaManager.addNamespace(desc);
     }
   }
@@ -512,20 +525,170 @@ public class MasterQuotaManager implements RegionStateListener {
   }
 
   public void checkNamespaceTableAndRegionQuota(TableName tName, int regions) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("a9465a14-0235-3c57-a42f-80ddee99fdf5"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5d2572c3-65c4-3b80-9a02-8cb219f415b2"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4dcfacf2-ae18-34a3-bb31-4d6aa4cc4e7b"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("364fd1e2-d6a0-3fb2-aaae-08cad0ab330e"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("183ee5dc-8048-33c7-b2d1-94ac5581af2a"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("63c6f406-bb03-3f8a-b3c4-cc33d5a2f422"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("be77c56f-29d2-3868-9cd4-d0cc645eafef"))) ? (!initialized) : (initialized))) {
       namespaceQuotaManager.checkQuotaToCreateTable(tName, regions);
     }
   }
 
   public void checkAndUpdateNamespaceRegionQuota(TableName tName, int regions) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("aee75ad0-1bd6-35fa-9b30-328f5634514d"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("401e27c7-eb49-3e09-b130-e3f7db933b15"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("19584ab8-9b6f-33b8-8e6c-4b399f696b1f"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b08c57b6-2bd5-311d-bb26-9c49360a058f"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("238936e0-00fd-3dce-ad0e-d2a01077f5dd"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("070ed7e1-ae42-3c13-8a5f-8517462daa3b"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("526cb761-d3b1-34d9-8eb3-7310620197c8"))) ? (!initialized) : (initialized))) {
       namespaceQuotaManager.checkQuotaToUpdateRegion(tName, regions);
     }
   }
 
   /** Returns cached region count, or -1 if quota manager is disabled or table status not found */
   public int getRegionCountOfTable(TableName tName) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("46334e91-e8b6-3aec-87d5-ab592fd79c64"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f1fb615e-17ef-32bf-b293-8ff13cf9a01c"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("afef4cc0-62bf-3970-9fcc-28dda2d2c72e"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1d17088c-0b41-3072-9873-37be5aef93b7"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f67bed27-f92b-3ba3-8785-02f9f0b6a98a"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5938e2ab-a062-32ed-8e92-364de9cb433c"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("2e772183-052a-3f26-bce6-46abb29684ed"))) ? (!initialized) : (initialized))) {
       return namespaceQuotaManager.getRegionCountOfTable(tName);
     }
     return -1;
@@ -540,7 +703,13 @@ public class MasterQuotaManager implements RegionStateListener {
 
   @Override
   public void onRegionSplit(RegionInfo hri) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("894e9ca0-d19e-3b7c-9110-9e3013dfbb2c"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9cdd190f-a9fa-3446-9e8c-f5fc9c306504"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("4806a5f4-6a0b-37ab-b529-bdaaa9201fdd"))) ? (!initialized) : (initialized))) {
       namespaceQuotaManager.checkQuotaToSplitRegion(hri);
     }
   }
@@ -551,7 +720,57 @@ public class MasterQuotaManager implements RegionStateListener {
    * @throws IOException Signals that an I/O exception has occurred.
    */
   public void removeTableFromNamespaceQuota(TableName tName) throws IOException {
-    if (initialized) {
+if(KnobRuntime.check(java.util.UUID.fromString("a293d53f-9a6f-3f8e-a317-f4543dcebe11"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f2bb92d6-9ab8-3878-b5f5-d12c1536ce89"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c2939d17-f4e7-3cf0-a9ae-b80a4a28a43e"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("50524c92-c4f5-3dd8-8e91-8452eb18c34a"))) {
+try {
+    java.lang.reflect.Field field = tName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tName));
+    field.set(tName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dfdec7e4-d6d0-30ea-aaa1-c381bed94975"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("55379a20-91dc-3e72-8d33-c0386344e91e"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("52c75f43-909f-31be-b0c2-c1197c6ffc6f"))) ? (!initialized) : (initialized))) {
       namespaceQuotaManager.removeFromNamespaceUsage(tName);
     }
   }

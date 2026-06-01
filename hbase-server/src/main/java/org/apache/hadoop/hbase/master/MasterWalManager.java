@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -203,6 +204,9 @@ public class MasterWalManager {
    */
   public FileStatus[] getWALDirPaths(final PathFilter filter) throws IOException {
     Path walDirPath = new Path(CommonFSUtils.getWALRootDir(conf), HConstants.HREGION_LOGDIR_NAME);
+if(KnobRuntime.check(java.util.UUID.fromString("f4a1d543-a174-3fe8-8295-e21b762fa0ac"))) {
+throw new java.io.IOException("Injected exception");
+}
     FileStatus[] walDirForServerNames = CommonFSUtils.listStatus(fs, walDirPath, filter);
     return walDirForServerNames == null ? new FileStatus[0] : walDirForServerNames;
   }

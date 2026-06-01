@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.util.EnvironmentEdgeManager;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -39,7 +40,7 @@ public class ReplicationThrottler {
   public ReplicationThrottler(final double bandwidth) {
     this.bandwidth = bandwidth;
     this.enabled = this.bandwidth > 0;
-    if (this.enabled) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f7e4310a-d10f-3bc8-a267-3914e91aa225"))) ? (!this.enabled) : (this.enabled))) {
       this.cyclePushSize = 0;
       this.cycleStartTick = EnvironmentEdgeManager.currentTime();
     }
@@ -50,7 +51,13 @@ public class ReplicationThrottler {
    * @return true if throttling is enabled
    */
   public boolean isEnabled() {
-    return this.enabled;
+if(KnobRuntime.check(java.util.UUID.fromString("7d40922f-6e1c-3473-8deb-3d5d78de8b0f"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0458d7f3-09dd-311f-b96e-a3c647f877e6"))) {
+return true;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("a1ee4530-3061-3565-8391-bfdfa87c3ce2"))) ? (!this.enabled) : (this.enabled));
   }
 
   /**

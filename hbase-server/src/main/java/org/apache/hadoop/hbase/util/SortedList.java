@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,6 +78,9 @@ public class SortedList<E> implements List<E>, RandomAccess {
    * over using the RandomAccess pattern.
    */
   public List<E> get() { // FindBugs: UG_SYNC_SET_UNSYNC_GET complaint. Fix!!
+if(KnobRuntime.check(java.util.UUID.fromString("61da546a-305a-37fc-bbc1-f0960e5f7d02"))) {
+return null;
+}
     return list;
   }
 
@@ -87,6 +91,12 @@ public class SortedList<E> implements List<E>, RandomAccess {
 
   @Override
   public boolean isEmpty() {
+if(KnobRuntime.check(java.util.UUID.fromString("2f47ab76-eed8-3e56-a4f4-e920698d9655"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("88714be1-6bad-3dbf-a8ac-14f193a2630a"))) {
+return true;
+}
     return list.isEmpty();
   }
 
@@ -97,6 +107,9 @@ public class SortedList<E> implements List<E>, RandomAccess {
 
   @Override
   public Iterator<E> iterator() {
+if(KnobRuntime.check(java.util.UUID.fromString("e57a9d9e-acc9-3db0-bbcc-107f7e47fa64"))) {
+return null;
+}
     return list.iterator();
   }
 
@@ -137,13 +150,19 @@ public class SortedList<E> implements List<E>, RandomAccess {
 
   @Override
   public synchronized boolean addAll(Collection<? extends E> c) {
+if(KnobRuntime.check(java.util.UUID.fromString("e7dc5b22-8262-3a03-8066-2512bb9a983f"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("37141b79-e0c2-3fe7-94b6-6d487d461986"))) {
+return false;
+}
     ArrayList<E> newList = new ArrayList<>(list);
     boolean changed = newList.addAll(c);
-    if (changed) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("1de47dd9-46df-391d-a1e0-aa466452027c"))) ? (!changed) : (changed))) {
       Collections.sort(newList, comparator);
     }
     list = Collections.unmodifiableList(newList);
-    return changed;
+    return ((KnobRuntime.check(java.util.UUID.fromString("82ebb115-b6c0-3d5f-b5d0-2cb004c11f79"))) ? (!changed) : (changed));
   }
 
   @Override

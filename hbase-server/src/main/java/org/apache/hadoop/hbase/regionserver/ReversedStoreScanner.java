@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,11 +65,17 @@ public class ReversedStoreScanner extends StoreScanner implements KeyValueScanne
     // key does not exist, then to the start of the previous matching Row).
     if (CellUtil.matchingRows(seekKey, HConstants.EMPTY_START_ROW)) {
       for (KeyValueScanner scanner : scanners) {
-        scanner.seekToLastRow();
+if(KnobRuntime.check(java.util.UUID.fromString("b89ef9b5-b03e-39be-b47c-00254cfcfe4a"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("65e6e34c-984d-3518-b115-99f90c117de5"))) { checkFlushed(); } else if (KnobRuntime.check(java.util.UUID.fromString("c00354fb-1a18-3379-8017-dbb27d41e8dd"))) { reopenAfterFlush(); } else { scanner.seekToLastRow(); }
       }
     } else {
       for (KeyValueScanner scanner : scanners) {
-        scanner.backwardSeek(seekKey);
+if(KnobRuntime.check(java.util.UUID.fromString("0d60da92-1ce5-3aa2-9ac0-0366b1f299fb"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("c317dbb0-29ea-3984-a07b-1ecca8f05e2b"))) { backwardSeek(seekKey); } else if (KnobRuntime.check(java.util.UUID.fromString("f101ac89-7cf5-3c77-81b4-ca832a963f73"))) { seekToPreviousRow(seekKey); } else { scanner.backwardSeek(seekKey); }
       }
     }
   }
@@ -110,7 +117,10 @@ public class ReversedStoreScanner extends StoreScanner implements KeyValueScanne
   @Override
   public boolean seekToPreviousRow(Cell key) throws IOException {
     if (checkFlushed()) {
-      reopenAfterFlush();
+if(KnobRuntime.check(java.util.UUID.fromString("469fc162-bc52-3413-ad86-980592e6e5a1"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("c397d703-1a67-3113-a72c-e9d527a7591c"))) { checkFlushed(); } else { reopenAfterFlush(); }
     }
     return this.heap.seekToPreviousRow(key);
   }
@@ -118,7 +128,10 @@ public class ReversedStoreScanner extends StoreScanner implements KeyValueScanne
   @Override
   public boolean backwardSeek(Cell key) throws IOException {
     if (checkFlushed()) {
-      reopenAfterFlush();
+if(KnobRuntime.check(java.util.UUID.fromString("ab418994-d4c2-370e-94f8-c15d9dffbfaa"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("fc218bd3-65db-32d3-a438-ef94bd8cf9e7"))) { checkFlushed(); } else { reopenAfterFlush(); }
     }
     return this.heap.backwardSeek(key);
   }

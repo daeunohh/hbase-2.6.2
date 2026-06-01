@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.hadoop.hbase.ServerName;
@@ -42,7 +43,10 @@ public class ScannerIdGenerator {
   }
 
   public long generateNewScannerId() {
-    return (scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL) | serverNameHash;
+if(KnobRuntime.check(java.util.UUID.fromString("973e814d-b5eb-3bb6-a72f-5c10a6ee749c"))) {
+return 0;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("4fea8099-7864-3639-8284-ca142ff2fdbb"))) ? (0x00000000FFFFFFFFL) : (((KnobRuntime.check(java.util.UUID.fromString("981c1b6b-b066-3935-a205-27bd1f2fd469"))) ? ((scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL)) : (((KnobRuntime.check(java.util.UUID.fromString("35be91ad-0f57-3742-af9f-5b4474ab841d"))) ? (((scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL)) | (0x00000000FFFFFFFFL)) : (((KnobRuntime.check(java.util.UUID.fromString("7d1a1058-3c1c-3e87-abf4-17979e0afb9e"))) ? (((scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL)) | (serverNameHash)) : (((KnobRuntime.check(java.util.UUID.fromString("27fc530b-c4d8-3234-8f1a-365a4f5dfc5b"))) ? (serverNameHash) : ((scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL) | serverNameHash))))))))));
   }
 
   public static void main(final String[] args) {

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.NO_NONCE;
 
@@ -84,6 +85,23 @@ public final class ReplicationSinkTrackerTableCreator {
    */
   public static void createIfNeededAndNotExists(Configuration conf, MasterServices masterServices)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c1b403c6-eab1-3919-bd61-504f3d27040b"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c1f5ced3-3610-32da-ae2b-41b3c200d00f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1eda45d5-d143-3b35-ab87-9e73217e5689"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     boolean replicationSinkTrackerEnabled = conf.getBoolean(REPLICATION_SINK_TRACKER_ENABLED_KEY,
       REPLICATION_SINK_TRACKER_ENABLED_DEFAULT);
     if (!replicationSinkTrackerEnabled) {

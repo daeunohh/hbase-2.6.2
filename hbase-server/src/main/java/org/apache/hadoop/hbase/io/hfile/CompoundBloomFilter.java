@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataInput;
 import java.io.IOException;
@@ -77,7 +78,7 @@ public class CompoundBloomFilter extends CompoundBloomFilterBase implements Bloo
     }
 
     hash = Hash.getInstance(hashType);
-    if (hash == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("1c3b4741-7c72-3c38-bd4b-ad8c1bce0f3b"))) ? ((hash) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5f73c928-c2fa-33af-bbe1-a8b4b9407dcd"))) ? ((hash) != (null)) : (hash == null))))) {
       throw new IllegalArgumentException("Invalid hash type: " + hashType);
     }
     // We will pass null for ROW block

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.metrics.MetricRegistries;
 import org.apache.hadoop.hbase.metrics.MetricRegistry;
@@ -62,6 +63,9 @@ public class MetricsCoprocessor {
     "RegionServer,sub=" + WAL_COPROC_METRICS_NAME;
 
   private static String suffix(String metricName, String cpName) {
+if(KnobRuntime.check(java.util.UUID.fromString("d7b3a94d-24c1-3d2f-801e-32b58ef830d3"))) {
+return null;
+}
     return new StringBuilder(metricName).append(".").append("CP_").append(cpName).toString();
   }
 
@@ -86,13 +90,19 @@ public class MetricsCoprocessor {
   }
 
   public static MetricRegistryInfo createRegistryInfoForRegionCoprocessor(String clazz) {
+if(KnobRuntime.check(java.util.UUID.fromString("0af26404-60f9-3e00-8674-f99d59f29784"))) {
+return null;
+}
     return new MetricRegistryInfo(suffix(REGION_COPROC_METRICS_NAME, clazz),
       REGION_COPROC_METRICS_DESCRIPTION, suffix(REGION_COPROC_METRICS_JMX_CONTEXT, clazz),
       REGION_COPROC_METRICS_CONTEXT, false);
   }
 
   public static MetricRegistry createRegistryForRegionCoprocessor(String clazz) {
-    return MetricRegistries.global().create(createRegistryInfoForRegionCoprocessor(clazz));
+if(KnobRuntime.check(java.util.UUID.fromString("15d1abc4-6bdf-3e53-8ba7-37c0da7b3f08"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("59291e80-8a84-3518-bd6d-6e5e16960e90"))) ? (MetricRegistries.global().create(createRegistryInfoForMasterCoprocessor(clazz))) : (((KnobRuntime.check(java.util.UUID.fromString("a9eac875-b7c3-3ece-b1a7-6c5ec8e2ecd8"))) ? (MetricRegistries.global().create(createRegistryInfoForRSCoprocessor(clazz))) : (MetricRegistries.global().create(createRegistryInfoForRegionCoprocessor(clazz))))));
   }
 
   public static MetricRegistryInfo createRegistryInfoForWALCoprocessor(String clazz) {
@@ -106,7 +116,10 @@ public class MetricsCoprocessor {
   }
 
   public static void removeRegistry(MetricRegistry registry) {
-    if (registry == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("389da39d-fd37-3475-8a1f-5ea6001b771a"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("11796932-245e-37f6-b839-e9ba43bd51db"))) ? ((registry) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("918b1972-8184-347e-bb46-2c112aed9e8e"))) ? ((registry) == (null)) : (registry == null))))) {
       return;
     }
     MetricRegistries.global().remove(registry.getMetricRegistryInfo());

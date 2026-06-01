@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -44,9 +45,9 @@ public class MutableSegment extends Segment {
   protected MutableSegment(CellSet cellSet, CellComparator comparator, MemStoreLAB memStoreLAB,
     MemStoreSizing memstoreSizing) {
     super(cellSet, comparator, memStoreLAB, TimeRangeTracker.create(TimeRangeTracker.Type.SYNC));
-    incMemStoreSize(0, DEEP_OVERHEAD, 0, 0); // update the mutable segment metadata
-    if (memstoreSizing != null) {
-      memstoreSizing.incMemStoreSize(0, DEEP_OVERHEAD, 0, 0);
+    if (KnobRuntime.check(java.util.UUID.fromString("f2cb4f8d-ca72-3c0c-9d7e-4368ac6173d5"))) { incMemStoreSize(0, incMemStoreSize(0, DEEP_OVERHEAD, 0, 0), 0, 0); } else { incMemStoreSize(0, DEEP_OVERHEAD, 0, 0); } // update the mutable segment metadata
+    if (((KnobRuntime.check(java.util.UUID.fromString("23076669-6133-3c38-a0a4-ba53f3ae9704"))) ? ((memstoreSizing) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8581ae5c-1145-3532-873e-81a84d3006ab"))) ? ((memstoreSizing) == (null)) : (memstoreSizing != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("f03d1a94-55c1-3a73-91d0-152c932be528"))) { memstoreSizing.incMemStoreSize(0, incMemStoreSize(0, DEEP_OVERHEAD, 0, 0), 0, 0); } else if (KnobRuntime.check(java.util.UUID.fromString("b13ddd9e-1888-3ad6-bcab-cfa25bda9d80"))) { incMemStoreSize(0, incMemStoreSize(0, DEEP_OVERHEAD, 0, 0), 0, 0); } else { memstoreSizing.incMemStoreSize(0, DEEP_OVERHEAD, 0, 0); }
     }
   }
 
@@ -57,7 +58,25 @@ public class MutableSegment extends Segment {
    */
   public void add(Cell cell, boolean mslabUsed, MemStoreSizing memStoreSizing,
     boolean sizeAddedPreOperation) {
-    internalAdd(cell, mslabUsed, memStoreSizing, sizeAddedPreOperation);
+if(KnobRuntime.check(java.util.UUID.fromString("0719833f-8802-3bfa-944a-3e545378f8e5"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c9c33293-7f38-36e9-a4b3-d44bdba23a70"))) {
+mslabUsed = !mslabUsed;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("17af52c5-9c31-3bd4-82de-100d4167920d"))) {
+mslabUsed = false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("317c7963-186f-3e08-908c-a0c4234bafb8"))) {
+sizeAddedPreOperation = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f9f787b6-89bc-372c-8deb-8a3e4d7deec4"))) {
+mslabUsed = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("57bf6eb2-f30c-3d11-bf48-4d5d236113ad"))) {
+sizeAddedPreOperation = false;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7d227bd3-2108-3541-ae91-cf1d461f4bdf"))) { internalAdd(cell, mslabUsed, memStoreSizing, !sizeAddedPreOperation); } else if (KnobRuntime.check(java.util.UUID.fromString("ebe254cf-5a93-354c-b7cf-03c76f3c479b"))) { internalAdd(cell, !mslabUsed, memStoreSizing, sizeAddedPreOperation); } else { internalAdd(cell, mslabUsed, memStoreSizing, sizeAddedPreOperation); }
   }
 
   public void upsert(Cell cell, long readpoint, MemStoreSizing memStoreSizing,

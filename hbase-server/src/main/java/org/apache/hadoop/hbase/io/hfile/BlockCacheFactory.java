@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.BUCKET_CACHE_IOENGINE_KEY;
 import static org.apache.hadoop.hbase.HConstants.BUCKET_CACHE_PERSISTENT_PATH_KEY;
@@ -110,10 +111,27 @@ public final class BlockCacheFactory {
   }
 
   public static BlockCache createBlockCache(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("6a184e7d-2c19-30f0-aba3-51373eaa74e4"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00328f72-5ae5-35ef-b7ae-81c4dbe01dae"))) {
+return null;
+}
     return createBlockCache(conf, null);
   }
 
   private static FirstLevelBlockCache createFirstLevelCache(final Configuration c) {
+if(KnobRuntime.check(java.util.UUID.fromString("90c5e76c-c9b2-3169-9d92-a8965fbf6387"))) {
+return null;
+}
     final long cacheSize = MemorySizeUtil.getOnHeapCacheSize(c);
     if (cacheSize < 0) {
       return null;
@@ -213,6 +231,9 @@ public final class BlockCacheFactory {
     if (configuredBucketSizes != null) {
       bucketSizes = new int[configuredBucketSizes.length];
       for (int i = 0; i < configuredBucketSizes.length; i++) {
+if(KnobRuntime.check(java.util.UUID.fromString("dec6244d-d1f1-3361-a311-a969784573c1"))) {
+throw new java.lang.NumberFormatException("Injected exception");
+}
         int bucketSize = Integer.parseInt(configuredBucketSizes[i].trim());
         if (bucketSize % 256 != 0) {
           // We need all the bucket sizes to be multiples of 256. Having all the configured bucket

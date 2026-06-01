@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HFILE_BLOCK_CACHE_MEMORY_SIZE_KEY;
 import static org.apache.hadoop.hbase.HConstants.HFILE_BLOCK_CACHE_SIZE_KEY;
@@ -91,7 +92,7 @@ public class HeapMemoryManager {
     long tempMaxHeap = -1L;
     try {
       final MemoryUsage usage = MemorySizeUtil.safeGetHeapMemoryUsage();
-      if (usage != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("21cc2afd-c9e3-3fbe-a083-26d03f086f56"))) ? ((usage) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("09a9f768-3de8-3da9-90a7-836d40ce13fd"))) ? ((usage) == (null)) : (usage != null))))) {
         tempMaxHeap = usage.getMax();
       }
     } finally {
@@ -129,14 +130,36 @@ public class HeapMemoryManager {
   private boolean doInit(Configuration conf) {
     boolean tuningEnabled = true;
     globalMemStorePercent = MemorySizeUtil.getGlobalMemStoreHeapPercent(conf, false);
+if(KnobRuntime.check(java.util.UUID.fromString("f2d96bb2-b6a6-380a-a993-86a156bcad1a"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     blockCachePercent = MemorySizeUtil.getBlockCacheHeapPercent(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("bddd4b40-e43d-3cfe-935d-12685b983f27"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     MemorySizeUtil.checkForClusterFreeHeapMemoryLimit(conf);
     // Initialize max and min range for memstore heap space
     globalMemStorePercentMinRange =
       conf.getFloat(MEMSTORE_SIZE_MIN_RANGE_KEY, globalMemStorePercent);
     globalMemStorePercentMaxRange =
       conf.getFloat(MEMSTORE_SIZE_MAX_RANGE_KEY, globalMemStorePercent);
-    if (globalMemStorePercent < globalMemStorePercentMinRange) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("025ea8ba-30bc-30d5-9d6c-ad1c282f7164"))) ? ((globalMemStorePercent) != (globalMemStorePercentMinRange)) : (((KnobRuntime.check(java.util.UUID.fromString("14a00bca-4e45-33a5-94d1-8873d96934e8"))) ? ((globalMemStorePercent) <= (globalMemStorePercentMinRange)) : (((KnobRuntime.check(java.util.UUID.fromString("f4d8fb62-2b0b-3570-8bb5-b4996aef541e"))) ? ((globalMemStorePercent) >= (globalMemStorePercentMinRange)) : (((KnobRuntime.check(java.util.UUID.fromString("f7ebfd9f-c839-3e88-8d68-4946fa2776eb"))) ? ((globalMemStorePercent) > (globalMemStorePercentMinRange)) : (((KnobRuntime.check(java.util.UUID.fromString("eedfbebf-6627-3639-8a85-a01f9665f3ec"))) ? ((globalMemStorePercent) == (globalMemStorePercentMinRange)) : (((KnobRuntime.check(java.util.UUID.fromString("aa1ecd0b-deb0-3d74-8047-9b110405e738"))) ? ((globalMemStorePercent) < (globalMemStorePercentMinRange)) : (globalMemStorePercent < globalMemStorePercentMinRange))))))))))))) {
       LOG.warn("Setting " + MEMSTORE_SIZE_MIN_RANGE_KEY + " to " + globalMemStorePercent
         + ", same value as " + MemorySizeUtil.MEMSTORE_SIZE_KEY
         + " because supplied value greater than initial memstore size value.");
@@ -206,13 +229,49 @@ public class HeapMemoryManager {
         + globalMemStorePercentMinRange + " and " + BLOCK_CACHE_SIZE_MAX_RANGE_KEY + " is "
         + blockCachePercentMaxRange);
     }
-    return tuningEnabled;
+    return ((KnobRuntime.check(java.util.UUID.fromString("719a4687-0290-3644-ae42-79b129df1d75"))) ? (!tuningEnabled) : (((KnobRuntime.check(java.util.UUID.fromString("06de5d9a-ef34-321c-a6b1-fd5f2efe52ce"))) ? (true) : (((KnobRuntime.check(java.util.UUID.fromString("1a591d45-4587-3564-bdc2-de660a760016"))) ? (false) : (tuningEnabled))))));
   }
 
   public void start(ChoreService service) {
-    LOG.info("Starting, tuneOn={}", this.tunerOn);
+if(KnobRuntime.check(java.util.UUID.fromString("0c1df2d8-a141-3e68-99f7-f64d97972ca3"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("11c66eaa-aac6-39c1-b0df-88b721571e73"))) { LOG.info("Starting, tuneOn={}", !this.tunerOn); } else { LOG.info("Starting, tuneOn={}", this.tunerOn); }
     this.heapMemTunerChore = new HeapMemoryTunerChore();
-    service.scheduleChore(heapMemTunerChore);
+if(KnobRuntime.check(java.util.UUID.fromString("6c8b9bc1-6b82-374e-b25f-ebedc181e9b0"))) {
+try {
+    java.lang.reflect.Field field = heapMemTunerChore.getClass().getDeclaredField("cacheMissCount");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(heapMemTunerChore));
+    field.set(heapMemTunerChore, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dfe9664f-d343-36c1-9fd8-af7eb8b34aa6"))) {
+try {
+    java.lang.reflect.Field field = heapMemTunerChore.getClass().getDeclaredField("evictCount");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(heapMemTunerChore));
+    field.set(heapMemTunerChore, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e5ac6db5-8333-34e8-951d-1eba8f919318"))) {
+try {
+    java.lang.reflect.Field field = heapMemTunerChore.getClass().getDeclaredField("alarming");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(heapMemTunerChore);
+    field.set(heapMemTunerChore, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("68a94295-5dbe-3887-bba9-5a8aeac1a1b1"))) { service.scheduleChore(new HeapMemoryTunerChore()); } else { service.scheduleChore(heapMemTunerChore); }
     if (tunerOn) {
       // Register HeapMemoryTuner as a memstore flush listener
       memStoreFlusher.registerFlushRequestListener(heapMemTunerChore);
@@ -236,6 +295,9 @@ public class HeapMemoryManager {
 
   /** Returns heap occupancy percentage, 0 &lt;= n &lt;= 1. or -0.0 for error asking JVM */
   public float getHeapOccupancyPercent() {
+if(KnobRuntime.check(java.util.UUID.fromString("cb0824e2-85da-38d5-b8c5-8b7a4ce9a003"))) {
+return 0.0f;
+}
     return this.heapOccupancyPercent == Float.MAX_VALUE
       ? HEAP_OCCUPANCY_ERROR_VALUE
       : this.heapOccupancyPercent;
@@ -260,9 +322,12 @@ public class HeapMemoryManager {
 
     @Override
     protected void chore() {
+if(KnobRuntime.check(java.util.UUID.fromString("e8892c7d-60ca-346b-b43d-2661dc353a20"))) {
+return;
+}
       // Sample heap occupancy
       final MemoryUsage usage = MemorySizeUtil.safeGetHeapMemoryUsage();
-      if (usage != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("0617b833-4df0-30fd-bcc1-8673597e0761"))) ? ((usage) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("cf69e7dd-4cd6-3bee-8e27-ad91bf252af1"))) ? ((usage) == (null)) : (usage != null))))) {
         heapOccupancyPercent = (float) usage.getUsed() / (float) usage.getCommitted();
       } else {
         // previously, an exception would have meant death for the tuning chore
@@ -537,6 +602,9 @@ public class HeapMemoryManager {
     }
 
     public void setBlockCacheSize(float blockCacheSize) {
+if(KnobRuntime.check(java.util.UUID.fromString("9a109bc8-2250-3067-869c-961735b035b5"))) {
+return;
+}
       this.blockCacheSize = blockCacheSize;
     }
 

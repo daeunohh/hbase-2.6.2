@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -255,6 +256,9 @@ public class WALEdit implements HeapSize {
   }
 
   public ArrayList<Cell> getCells() {
+if(KnobRuntime.check(java.util.UUID.fromString("e4b701d1-ba10-318c-8a19-521580160373"))) {
+return null;
+}
     return cells;
   }
 
@@ -265,6 +269,9 @@ public class WALEdit implements HeapSize {
    */
   // Used by replay.
   public void setCells(ArrayList<Cell> cells) {
+if(KnobRuntime.check(java.util.UUID.fromString("cbafec47-4845-363f-ac7d-c2740deaf23b"))) {
+return;
+}
     this.cells = cells;
     this.families = null;
   }
@@ -279,7 +286,7 @@ public class WALEdit implements HeapSize {
     cells.clear();
     cells.ensureCapacity(expectedCount);
     while (cells.size() < expectedCount && cellDecoder.advance()) {
-      add(cellDecoder.current());
+      if (KnobRuntime.check(java.util.UUID.fromString("449a5aaa-b4cb-3df6-9cdc-28911b1d3996"))) { addCell(cellDecoder.current()); } else { add(cellDecoder.current()); }
     }
     return cells.size();
   }
@@ -321,6 +328,12 @@ public class WALEdit implements HeapSize {
   }
 
   public static FlushDescriptor getFlushDescriptor(Cell cell) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("e4423a4e-164f-3628-abd2-91f467c86840"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b7456e56-0e6a-354f-8b15-464fbf66a67a"))) {
+return null;
+}
     return CellUtil.matchingColumn(cell, METAFAMILY, FLUSH)
       ? FlushDescriptor.parseFrom(CellUtil.cloneValue(cell))
       : null;
@@ -335,12 +348,216 @@ public class WALEdit implements HeapSize {
    */
   public static WALEdit createRegionEventWALEdit(RegionInfo hri,
     RegionEventDescriptor regionEventDesc) {
+if(KnobRuntime.check(java.util.UUID.fromString("1e9e3ba7-bdf6-338a-8b96-610c5a663537"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("logSequenceNumber_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("170e72de-4bbd-3275-be93-10c8c97dd8b9"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("25deefde-33ff-360e-8246-d662bc480c62"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7c8985d6-624c-31e0-97ed-cf0181ffa2f6"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("77c9fb01-a6f7-3e42-916b-fec07f438b5e"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f5c1a43f-d569-3777-8c0a-13dd6f6b395e"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc3cb292-f362-3ac2-84b7-b4c9f59b5073"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a52feed9-5350-3d8a-b2ce-4e2381c92ed6"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ebc0c3dd-a0e8-35a2-abf2-a05d2735f03c"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d5d80485-cfea-3912-9b9a-e3bfddf6d16f"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return createRegionEventWALEdit(getRowForRegion(hri), regionEventDesc);
   }
 
   @InterfaceAudience.Private
   public static WALEdit createRegionEventWALEdit(byte[] rowForRegion,
     RegionEventDescriptor regionEventDesc) {
+if(KnobRuntime.check(java.util.UUID.fromString("d2fc4c49-cb30-35e1-ac82-a05a5c0f38ac"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3decac98-569a-347e-a0a5-ecedeba80ddc"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("448fab84-acad-3aa6-99ac-027ee3991c7d"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ff0880bd-9791-3a92-9cb5-edcf5cc5f5e1"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c42d741d-fe0b-396b-88cc-c6b0777cadf5"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fcdb4657-e817-3776-ba97-203a53f3e7e7"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bf05df14-45e8-3402-a3d5-9f17ca6d7283"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("eventType_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e1413064-db44-3001-95b3-1d6214fd235e"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("logSequenceNumber_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3e94c56c-4151-3ae9-9d1a-2084e3552d76"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1969ddd5-5924-353d-8bfe-5ce8e7e6f212"))) {
+try {
+    java.lang.reflect.Field field = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionEventDesc));
+    field.set(regionEventDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     KeyValue kv = new KeyValue(rowForRegion, METAFAMILY,
       createRegionEventDescriptorQualifier(regionEventDesc.getEventType()),
       EnvironmentEdgeManager.currentTime(), regionEventDesc.toByteArray());
@@ -353,7 +570,54 @@ public class WALEdit implements HeapSize {
    */
   @InterfaceAudience.Private
   public static byte[] createRegionEventDescriptorQualifier(RegionEventDescriptor.EventType t) {
-    return Bytes.toBytes(REGION_EVENT_PREFIX_STR + t.toString());
+if(KnobRuntime.check(java.util.UUID.fromString("0944a271-9daa-35a5-b858-79d77f8dfdb2"))) {
+try {
+    java.lang.reflect.Field field = t.getClass().getDeclaredField("value");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(t));
+    field.set(t, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f7a35953-aba4-3370-9e38-5c32c8da408e"))) {
+try {
+    java.lang.reflect.Field field = t.getClass().getDeclaredField("value");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(t));
+    field.set(t, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e3227085-098a-3120-99d2-7ae28ec0202d"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("26d6703e-5abb-32e6-8a2e-afae637feb10"))) {
+try {
+    java.lang.reflect.Field field = t.getClass().getDeclaredField("value");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(t));
+    field.set(t, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("42305104-e866-3f42-a008-12feb1fbd272"))) {
+try {
+    java.lang.reflect.Field field = t.getClass().getDeclaredField("value");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(t));
+    field.set(t, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("98f684e0-538a-3caa-83a6-76043f005bed"))) ? (Bytes.toBytes((REGION_EVENT_PREFIX_STR) + (t.toString()))) : (Bytes.toBytes(REGION_EVENT_PREFIX_STR + t.toString())));
   }
 
   /**
@@ -361,6 +625,12 @@ public class WALEdit implements HeapSize {
    * @return True if this is a Marker Edit and it is a RegionClose type.
    */
   public boolean isRegionCloseMarker() {
+if(KnobRuntime.check(java.util.UUID.fromString("2429cbfe-1b25-3cbd-b4e3-c738c167fc06"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f29507d-7446-38c0-be02-b8b9a595ca61"))) {
+return true;
+}
     return isMetaEdit() && PrivateCellUtil.matchingQualifier(this.cells.get(0), REGION_EVENT_CLOSE,
       0, REGION_EVENT_CLOSE.length);
   }
@@ -380,6 +650,105 @@ public class WALEdit implements HeapSize {
     byte[] pbbytes = c.toByteArray();
     KeyValue kv = new KeyValue(getRowForRegion(hri), METAFAMILY, COMPACTION,
       EnvironmentEdgeManager.currentTime(), pbbytes);
+if(KnobRuntime.check(java.util.UUID.fromString("fca588d8-708d-3a0d-93ac-218223f71c46"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("offset");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4c67298d-4e7c-3c62-a15c-a6c965af2d87"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("offset");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4f657203-d858-3557-af12-6fec94b369ca"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("length");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4ecce71f-4fb3-34d7-b318-8a4d8714113b"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("offset");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("06868bcf-71fb-3c97-9061-2fc56f1fba58"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("length");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4412fb7d-2ea6-37e5-a0f6-be2981182e47"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("length");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("39e63c59-edb0-3959-8b17-d150240d61f1"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("offset");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("79b329fa-852b-38da-a7ae-78c4aeeeffc5"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("length");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(kv));
+    field.set(kv, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a4f0fe5a-f68b-3913-af17-9668195a067c"))) {
+try {
+    java.lang.reflect.Field field = kv.getClass().getDeclaredField("seqId");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(kv));
+    field.set(kv, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new WALEdit().add(kv, METAFAMILY); // replication scope null so this won't be replicated
   }
 
@@ -429,6 +798,12 @@ public class WALEdit implements HeapSize {
    * @return deserialized BulkLoadDescriptor or null.
    */
   public static WALProtos.BulkLoadDescriptor getBulkLoadDescriptor(Cell cell) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b041d903-6a66-31e9-b93f-30870981906e"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6ac20ce8-b0c9-3052-b055-c3e7eb0ed444"))) {
+return null;
+}
     return CellUtil.matchingColumn(cell, METAFAMILY, BULK_LOAD)
       ? WALProtos.BulkLoadDescriptor.parseFrom(CellUtil.cloneValue(cell))
       : null;

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
   public Set<String> getCoprocessors() {
     Set<String> returnValue = new TreeSet<>();
     for (E e : coprocEnvironments) {
-      returnValue.add(e.getInstance().getClass().getSimpleName());
+      if (KnobRuntime.check(java.util.UUID.fromString("fb5b650e-2bf6-382d-9f2b-2ff41340b9a5"))) { returnValue.add(e.getInstance().getClass().getName()); } else { returnValue.add(e.getInstance().getClass().getSimpleName()); }
     }
     return returnValue;
   }
@@ -256,6 +257,41 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
 
   public void load(Class<? extends C> implClass, int priority, Configuration conf)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("1854769f-3758-39f8-9268-88e380539178"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0c20e0eb-731d-3378-87f8-6f9565693210"))) {
+priority /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("54062c88-bf37-3c51-96b1-f30ba8d02f71"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("907dff86-fe35-3fc3-abc7-fc1873de8d8f"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("430872b5-a84a-3b0b-8abf-71f8a14c36bb"))) {
+priority -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cc286544-d7d2-30fa-bd4d-f6f28f609d28"))) {
+priority = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("64127169-e6ce-3b48-9fed-0dd7afe93fa6"))) {
+priority *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7359a834-1458-332b-8e2a-d3ef326aa9e2"))) {
+priority += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("23549bbe-8986-3e3c-83f2-40c0f3c4f828"))) {
+priority = 0;
+}
     E env = checkAndLoadInstance(implClass, priority, conf);
     coprocEnvironments.add(env);
   }
@@ -606,6 +642,12 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
    */
   protected <O, R> R execOperationWithResult(
     final ObserverOperationWithResult<O, R> observerOperation) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c838f836-8fc4-3d07-a8fa-89971da31aa4"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1eeebef3-ecc2-31f6-bc09-7ecf2f631224"))) {
+throw new java.io.IOException("Injected exception");
+}
     boolean bypass = execOperation(observerOperation);
     R result = observerOperation.getResult();
     return bypass == observerOperation.isBypassable() ? result : null;
@@ -630,13 +672,16 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
         currentThread.setContextClassLoader(env.getClassLoader());
         observerOperation.callObserver();
       } catch (Throwable e) {
-        handleCoprocessorThrowable(env, e);
+if(KnobRuntime.check(java.util.UUID.fromString("f846f8ed-2821-3e61-a373-7e4567664596"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("207911de-3528-30f6-8fea-e17df3196d44"))) { abortServer(env, e); } else { handleCoprocessorThrowable(env, e); }
       } finally {
         currentThread.setContextClassLoader(cl);
       }
       // Internal to shouldBypass, it checks if obeserverOperation#isBypassable().
       bypass |= observerOperation.shouldBypass();
-      observerOperation.postEnvCall();
+      if (KnobRuntime.check(java.util.UUID.fromString("b10ea1d6-df05-3eae-9c70-ac2abd6ee317"))) { observerOperation.callObserver(); } else { observerOperation.postEnvCall(); }
       if (bypass) {
         // If CP says bypass, skip out w/o calling any following CPs; they might ruin our response.
         // In hbase1, this used to be called 'complete'. In hbase2, we unite bypass and 'complete'.
@@ -664,12 +709,15 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
     List<E> envs = coprocEnvironments.get();
     // Iterate the coprocessors and execute ObserverOperation's call()
     for (E env : envs) {
-      observerOperation.prepare(env);
+      if (KnobRuntime.check(java.util.UUID.fromString("047b2714-ba27-30cd-94f6-46731877fda5"))) { shutdown(env); } else { observerOperation.prepare(env); }
       Thread currentThread = Thread.currentThread();
       ClassLoader cl = currentThread.getContextClassLoader();
       try {
         currentThread.setContextClassLoader(env.getClassLoader());
-        observerOperation.callObserver();
+if(KnobRuntime.check(java.util.UUID.fromString("7add2bed-aba4-36b1-b098-4396ad00687f"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("2e1fcc01-f8cb-3df8-9206-4157deef1754"))) { observerOperation.postEnvCall(); } else { observerOperation.callObserver(); }
       } catch (Throwable e) {
         handleCoprocessorThrowable(env, e);
       } finally {
@@ -680,8 +728,8 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
 
     // Iterate the coprocessors and execute ObserverOperation's postEnvCall()
     for (E env : envs) {
-      observerOperation.prepare(env);
-      observerOperation.postEnvCall();
+      if (KnobRuntime.check(java.util.UUID.fromString("d93da4eb-9964-3274-9e6c-59ab7571dfc0"))) { shutdown(env); } else { observerOperation.prepare(env); }
+      if (KnobRuntime.check(java.util.UUID.fromString("2ea87545-0afa-3325-be37-275d21c0de4d"))) { observerOperation.callObserver(); } else { observerOperation.postEnvCall(); }
     }
     return bypass;
   }

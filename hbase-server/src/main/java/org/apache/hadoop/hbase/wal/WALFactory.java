@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -145,6 +146,9 @@ public class WALFactory {
   }
 
   Providers getDefaultProvider() {
+if(KnobRuntime.check(java.util.UUID.fromString("dcb35457-c1b9-3b87-9ae7-534a283aecb5"))) {
+return null;
+}
     return Providers.defaultProvider;
   }
 
@@ -260,16 +264,28 @@ public class WALFactory {
    * if you can as it will try to leave things as tidy as possible.
    */
   public void shutdown() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("812f93db-a2ea-3826-9702-0229eb365830"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d3e7a34b-77d1-3a7b-bbd9-56263cf63f2d"))) {
+throw new java.io.IOException("Injected exception");
+}
     IOException exception = null;
     final WALProvider metaProvider = this.metaProvider.get();
-    if (null != metaProvider) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f05a7c39-93e3-3e09-96ee-32bac732030a"))) ? ((null) != (metaProvider)) : (((KnobRuntime.check(java.util.UUID.fromString("fc27fbfc-c382-30a4-a855-e65ee1d365ae"))) ? ((null) == (metaProvider)) : (null != metaProvider))))) {
       try {
-        metaProvider.shutdown();
+if(KnobRuntime.check(java.util.UUID.fromString("33cb49bc-bc09-3c98-88f3-af42215c44e7"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("ec7efa2d-75d8-39ea-b105-3fbd9115cbb9"))) { metaProvider.close(); } else { metaProvider.shutdown(); }
       } catch (IOException ioe) {
         exception = ioe;
       }
     }
-    provider.shutdown();
+if(KnobRuntime.check(java.util.UUID.fromString("c31afa7a-5710-35b8-82cb-7f7940e10c9b"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("74f19def-fc91-35d0-ba8e-05a56eaaf57d"))) { provider.close(); } else { provider.shutdown(); }
     if (null != exception) {
       throw exception;
     }
@@ -287,7 +303,7 @@ public class WALFactory {
   public WALProvider getMetaProvider() throws IOException {
     for (;;) {
       WALProvider provider = this.metaProvider.get();
-      if (provider != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("563e33aa-1f4b-35dc-a814-dbda642faa53"))) ? ((provider) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("36dd287c-b250-33f5-9e46-5d9d5e73a29e"))) ? ((provider) == (null)) : (provider != null))))) {
         return provider;
       }
       Class<? extends WALProvider> clz = null;
@@ -298,15 +314,21 @@ public class WALFactory {
           // the WAL provider should be an enum. Proceed
         }
       }
-      if (clz == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("27a52a58-13c2-3775-9f01-590f82191d78"))) ? ((clz) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("faf8eb8e-8e97-365b-bf46-52a3c949b797"))) ? ((clz) != (null)) : (clz == null))))) {
         clz = getProviderClass(META_WAL_PROVIDER, conf.get(WAL_PROVIDER, DEFAULT_WAL_PROVIDER));
       }
+if(KnobRuntime.check(java.util.UUID.fromString("f9440ad0-bfb0-33ef-bc7e-0a00030f71fd"))) {
+throw new java.io.IOException("Injected exception");
+}
       provider = createProvider(clz, AbstractFSWALProvider.META_WAL_PROVIDER_ID);
       if (metaProvider.compareAndSet(null, provider)) {
         return provider;
       } else {
         // someone is ahead of us, close and try again.
-        provider.close();
+if(KnobRuntime.check(java.util.UUID.fromString("0ef70b09-e010-3348-80ba-37a7376c112f"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("d54e2c28-b6c9-3aa4-a5f6-e85c6662c628"))) { provider.shutdown(); } else { provider.close(); }
       }
     }
   }
@@ -315,13 +337,25 @@ public class WALFactory {
    * @param region the region which we want to get a WAL for. Could be null.
    */
   public WAL getWAL(RegionInfo region) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b0345c94-6e65-380b-8111-4d66fa6b261e"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("86692762-4d51-3da5-815a-98db14c59cc9"))) {
+throw new java.io.IOException("Injected exception");
+}
     // Use different WAL for hbase:meta. Instantiates the meta WALProvider if not already up.
     if (
       region != null && region.isMetaRegion()
         && region.getReplicaId() == RegionInfo.DEFAULT_REPLICA_ID
     ) {
+if(KnobRuntime.check(java.util.UUID.fromString("4a444ac2-3530-3f1f-9caa-397848f871f7"))) {
+throw new java.io.IOException("Injected exception");
+}
       return getMetaProvider().getWAL(region);
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("8ba19f1b-4cd3-3837-876d-23fae3a68920"))) {
+throw new java.io.IOException("Injected exception");
+}
       return provider.getWAL(region);
     }
   }
@@ -356,6 +390,18 @@ public class WALFactory {
       WALStreamReader reader = null;
       while (true) {
         try {
+if(KnobRuntime.check(java.util.UUID.fromString("4f93c88a-7cf1-322c-96e0-166dc252b473"))) {
+throw new java.lang.NoSuchMethodException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bf699782-69c0-365c-84bc-d66e741458fc"))) {
+throw new java.lang.SecurityException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4f31da17-b715-3266-80f7-42d85bda4fda"))) {
+throw new java.lang.InstantiationException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eb9badce-d34f-308c-a6b9-016102a5d13c"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
           reader = walStreamReaderClass.getDeclaredConstructor().newInstance();
           ((AbstractFSWALProvider.Initializer) reader).init(fs, path, conf, startPosition);
           return reader;
@@ -425,6 +471,23 @@ public class WALFactory {
    */
   public Writer createRecoveredEditsWriter(final FileSystem fs, final Path path)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("6b0b9bb6-28de-38c5-9307-05d660afd622"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a6c694c1-756e-311c-a587-fc24a07ac7fb"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("68d9727c-c209-3eb7-8c14-862e187d945a"))) {
+throw new java.io.IOException("Injected exception");
+}
     return FSHLogProvider.createWriter(conf, fs, path, true);
   }
 
@@ -513,6 +576,9 @@ public class WALFactory {
    * @see #getMetaProvider()
    */
   public WALProvider getMetaWALProvider() {
+if(KnobRuntime.check(java.util.UUID.fromString("549075f7-3184-3639-b9b1-34714a33d951"))) {
+return null;
+}
     return this.metaProvider.get();
   }
 

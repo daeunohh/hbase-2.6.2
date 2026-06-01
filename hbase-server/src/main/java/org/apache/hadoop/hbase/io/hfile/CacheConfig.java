@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Optional;
 import org.apache.hadoop.conf.Configuration;
@@ -246,11 +247,23 @@ public class CacheConfig implements ConfigurationObserver {
    * @return true if blocks should be cached on read, false if not
    */
   public boolean shouldCacheDataOnRead() {
-    return cacheDataOnRead;
+if(KnobRuntime.check(java.util.UUID.fromString("34121557-e469-3a6f-8c0f-41c3a1711dcf"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9f2afb22-8b48-3c3d-94ef-aa690320fbfa"))) {
+return false;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("902c4a2b-9561-3b93-9399-f68ff8b807d4"))) ? (!cacheDataOnRead) : (cacheDataOnRead));
   }
 
   public boolean shouldDropBehindCompaction() {
-    return dropBehindCompaction;
+if(KnobRuntime.check(java.util.UUID.fromString("ee7f6188-4af3-3b9f-9b17-86a7d226a1fd"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c63f9a6f-bd76-3376-9bd3-758aa2c39c34"))) {
+return false;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("0cb6e1c5-6e3d-3231-a3ac-5f26a9088d78"))) ? (!dropBehindCompaction) : (dropBehindCompaction));
   }
 
   /**
@@ -258,13 +271,25 @@ public class CacheConfig implements ConfigurationObserver {
    * index blocks, as long as the block cache is available.
    */
   public boolean shouldCacheBlockOnRead(BlockCategory category) {
+if(KnobRuntime.check(java.util.UUID.fromString("102a01e5-7892-3794-bcf5-c6d391e580bd"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3d6e07f3-69ae-399d-8e3f-9e7735e2149f"))) {
+return true;
+}
     return cacheDataOnRead || category == BlockCategory.INDEX || category == BlockCategory.BLOOM
       || (prefetchOnOpen && (category != BlockCategory.META && category != BlockCategory.UNKNOWN));
   }
 
   /** Returns true if blocks in this file should be flagged as in-memory */
   public boolean isInMemory() {
-    return this.inMemory;
+if(KnobRuntime.check(java.util.UUID.fromString("7cfd9df8-6fd2-3967-b9ff-e46a65b9da1f"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e1aacb73-198c-3405-aa40-fd54a478b0b2"))) {
+return false;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("7433e4d2-498d-3b7a-91fd-4072f54500df"))) ? (!this.inMemory) : (this.inMemory));
   }
 
   /**
@@ -366,7 +391,13 @@ public class CacheConfig implements ConfigurationObserver {
    * configuration.
    */
   public boolean shouldReadBlockFromCache(BlockType blockType) {
-    if (cacheDataOnRead) {
+if(KnobRuntime.check(java.util.UUID.fromString("238fce7c-ebdc-389d-8f36-c9fc437e775a"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("658b9ec0-82a1-3a3b-990d-e20b917a8307"))) {
+return true;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("77d7df36-350c-3890-81db-ca4a50d8d755"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("42c55e4e-e2fe-3544-8a25-67df82424318"))) ? (!cacheDataOnRead) : (((KnobRuntime.check(java.util.UUID.fromString("4fee21ee-b5b9-3b4a-a252-67fd3f3205eb"))) ? (true) : (cacheDataOnRead))))))) {
       return true;
     }
     if (prefetchOnOpen) {
@@ -419,7 +450,7 @@ public class CacheConfig implements ConfigurationObserver {
       conf.getLong(CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD_KEY,
         DEFAULT_CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD);
 
-    if (cacheCompactedBlocksOnWriteThreshold < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("5cc481f4-fbb2-3d1a-a515-d992562ff784"))) ? ((cacheCompactedBlocksOnWriteThreshold) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("f2edd5bc-7046-308b-beec-4d1e7cb7b5cf"))) ? ((cacheCompactedBlocksOnWriteThreshold) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4bc469aa-789c-3474-adf5-9260e9d3688f"))) ? ((cacheCompactedBlocksOnWriteThreshold) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7b7e3a0b-4ec7-3b1c-b223-7cc118574b49"))) ? ((cacheCompactedBlocksOnWriteThreshold) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("950bf395-5433-3472-9110-0e8bba3d9391"))) ? ((cacheCompactedBlocksOnWriteThreshold) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("fbb04a8f-1fb4-3943-bf30-5855e70dc78c"))) ? ((cacheCompactedBlocksOnWriteThreshold) >= (0)) : (cacheCompactedBlocksOnWriteThreshold < 0))))))))))))) {
       LOG.warn(
         "cacheCompactedBlocksOnWriteThreshold value : {} is less than 0, resetting it to: {}",
         cacheCompactedBlocksOnWriteThreshold, DEFAULT_CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD);

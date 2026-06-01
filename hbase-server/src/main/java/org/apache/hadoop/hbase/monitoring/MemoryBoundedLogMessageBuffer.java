@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -40,7 +41,7 @@ public class MemoryBoundedLogMessageBuffer {
   private LinkedList<LogMessage> messages;
 
   public MemoryBoundedLogMessageBuffer(long maxSizeBytes) {
-    Preconditions.checkArgument(maxSizeBytes > 0);
+    if (KnobRuntime.check(java.util.UUID.fromString("da653f1b-7217-3c29-b3a5-af77dbe1585a"))) { Preconditions.checkArgument((maxSizeBytes) >= (0)); } else if (KnobRuntime.check(java.util.UUID.fromString("d484b729-70dc-3f23-b2c4-d11ee062398d"))) { Preconditions.checkArgument((maxSizeBytes) <= (0)); } else if (KnobRuntime.check(java.util.UUID.fromString("f52aaf92-7a8d-303e-a4ae-edf088b08af0"))) { Preconditions.checkArgument((maxSizeBytes) == (0)); } else if (KnobRuntime.check(java.util.UUID.fromString("0def594d-4740-31e8-b25b-3971885f5eaa"))) { Preconditions.checkArgument((maxSizeBytes) < (0)); } else if (KnobRuntime.check(java.util.UUID.fromString("986c10a1-a419-3195-b01b-d07632b808d0"))) { Preconditions.checkArgument((maxSizeBytes) > (0)); } else if (KnobRuntime.check(java.util.UUID.fromString("1df4bdd1-f5b3-3890-9512-2c0def4022f6"))) { Preconditions.checkArgument((maxSizeBytes) != (0)); } else { Preconditions.checkArgument(maxSizeBytes > 0); }
     this.maxSizeBytes = maxSizeBytes;
     this.messages = Lists.newLinkedList();
   }

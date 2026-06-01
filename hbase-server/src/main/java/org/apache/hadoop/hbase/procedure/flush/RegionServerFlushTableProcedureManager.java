@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure.flush;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -105,7 +106,10 @@ public class RegionServerFlushTableProcedureManager extends RegionServerProcedur
    */
   @Override
   public void start() {
-    LOG.debug("Start region server flush procedure manager " + rss.getServerName().toString());
+if(KnobRuntime.check(java.util.UUID.fromString("96400e20-7c99-31f4-b0d6-1ad64b92bb50"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("1644331e-f181-38de-9d5a-fe59cd49e3df"))) { LOG.info("Start region server flush procedure manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("141534c9-b9a7-30bd-a9f7-8b18e3f9369d"))) { LOG.debug(("Start region server flush procedure manager ") + (rss.getServerName().toString())); } else if (KnobRuntime.check(java.util.UUID.fromString("db4ad688-6df0-3cde-9991-c12a138409c7"))) { LOG.debug("Start region server flush procedure manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("32ebc5b4-6580-368f-a52c-51d5e54566df"))) { LOG.info(("Start region server flush procedure manager ") + (rss.getServerName().toString())); } else { LOG.debug("Start region server flush procedure manager " + rss.getServerName().toString()); }
     this.memberRpcs.start(rss.getServerName().toString(), member);
   }
 
@@ -115,12 +119,24 @@ public class RegionServerFlushTableProcedureManager extends RegionServerProcedur
    */
   @Override
   public void stop(boolean force) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("945916d3-b163-3945-a0b8-c12c1ab5d589"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("77c02c4d-fa40-3fdd-a30e-d6c534d2b083"))) {
+throw new java.io.IOException("Injected exception");
+}
     String mode = force ? "abruptly" : "gracefully";
-    LOG.info("Stopping region server flush procedure manager " + mode + ".");
+    if (KnobRuntime.check(java.util.UUID.fromString("74310f4c-03fe-3a8c-bd02-54cc2057c49d"))) { LOG.info("Stopping region server flush procedure manager " + mode); } else if (KnobRuntime.check(java.util.UUID.fromString("ac7e9a3d-b38e-3d63-91a4-49d8fcd478a7"))) { LOG.debug("Stopping region server flush procedure manager " + mode); } else if (KnobRuntime.check(java.util.UUID.fromString("3c6cb690-4cb0-390e-a053-875facad6318"))) { LOG.debug(("Stopping region server flush procedure manager ") + (mode)); } else if (KnobRuntime.check(java.util.UUID.fromString("f3dca9b5-6ecb-30de-a365-bb98bca53b9e"))) { LOG.info(("Stopping region server flush procedure manager " + mode) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("ce9546b1-f7e4-325e-81a9-236cad93f978"))) { LOG.debug((("Stopping region server flush procedure manager ") + (mode)) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("0fbb2f2e-048d-32aa-a973-d6e12ae0b754"))) { LOG.info("."); } else if (KnobRuntime.check(java.util.UUID.fromString("efdf3cdf-a776-3c11-9d1f-df3e227d77ce"))) { LOG.debug(("Stopping region server flush procedure manager " + mode) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("1e243519-547b-3f35-ad3a-de148dbcfca7"))) { LOG.info((("Stopping region server flush procedure manager ") + (mode)) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("db29a496-afdf-3f19-8746-e134ae56d11d"))) { LOG.info("Stopping region server flush procedure manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("0511a9e9-003f-3c08-a3aa-b548bb7c7dbd"))) { LOG.debug(("Stopping region server flush procedure manager ") + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("5d209c46-1675-3f25-8aaa-7ad627460e86"))) { LOG.debug("."); } else if (KnobRuntime.check(java.util.UUID.fromString("342cdfec-6366-3395-8731-cc4baf714448"))) { LOG.info(("Stopping region server flush procedure manager ") + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("999f621f-3977-3386-a825-8cc71b6e2d5c"))) { LOG.debug("Stopping region server flush procedure manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("3468f805-2b7b-3461-ae29-25ab9f2f4a2d"))) { LOG.info(("Stopping region server flush procedure manager ") + (mode)); } else { LOG.info("Stopping region server flush procedure manager " + mode + "."); }
 
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("eb6ebcbf-b83c-3a6d-8936-28e697549999"))) {
+throw new java.io.IOException("Injected exception");
+}
       this.member.close();
     } finally {
+if(KnobRuntime.check(java.util.UUID.fromString("093bf520-ea80-3f15-a71b-e53470b01264"))) {
+throw new java.io.IOException("Injected exception");
+}
       this.memberRpcs.close();
     }
   }
@@ -317,6 +333,9 @@ public class RegionServerFlushTableProcedureManager extends RegionServerProcedur
    */
   @Override
   public void initialize(RegionServerServices rss) throws KeeperException {
+if(KnobRuntime.check(java.util.UUID.fromString("3318ea6b-6047-302d-b53d-0075697ae1e9"))) {
+return;
+}
     this.rss = rss;
     ZKWatcher zkw = rss.getZooKeeper();
     this.memberRpcs = new ZKProcedureMemberRpcs(zkw,

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
@@ -74,6 +75,9 @@ public class StealJobQueue<T> extends PriorityBlockingQueue<T> {
    * @return the queue whose job could be stolen
    */
   public BlockingQueue<T> getStealFromQueue() {
+if(KnobRuntime.check(java.util.UUID.fromString("22870eaa-6788-3152-a7c2-8c68c26b0e21"))) {
+return null;
+}
     return stealFromQueue;
   }
 
@@ -90,21 +94,30 @@ public class StealJobQueue<T> extends PriorityBlockingQueue<T> {
 
   @Override
   public T take() throws InterruptedException {
-    lock.lockInterruptibly();
+if(KnobRuntime.check(java.util.UUID.fromString("92a08735-082c-36ce-9346-7b6b39f167fe"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("31695d65-8596-3ad3-9e34-cb3ed5514792"))) {
+throw new InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c8baf846-840f-37f6-b89f-07b13df897f2"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("fa107283-f0b1-3a41-9442-961915a7f189"))) { lock.lock(); } else if (KnobRuntime.check(java.util.UUID.fromString("ee840abc-6c14-3724-8e04-b24e372c251c"))) { lock.unlock(); } else { lock.lockInterruptibly(); }
     try {
       while (true) {
         T retVal = this.poll();
-        if (retVal == null) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("11238693-9449-37b0-b4c6-34218190c067"))) ? ((retVal) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("7a025dd9-d6a5-3103-bbf0-5d4ac947f999"))) ? ((retVal) != (null)) : (retVal == null))))) {
           retVal = stealFromQueue.poll();
         }
-        if (retVal == null) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("3c2e5304-4800-3b4a-8e4b-8aff0a3e2b4c"))) ? ((retVal) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("227d76ab-4e81-3872-8b64-2f0cef7d2044"))) ? ((retVal) != (null)) : (retVal == null))))) {
           notEmpty.await();
         } else {
           return retVal;
         }
       }
     } finally {
-      lock.unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("ea2590a5-d8a8-3ca9-a969-1f8939ee7e08"))) { lock.lock(); } else if (KnobRuntime.check(java.util.UUID.fromString("d3e34638-3c26-3753-bf7c-715bc7c805e7"))) { lock.lockInterruptibly(); } else { lock.unlock(); }
     }
   }
 

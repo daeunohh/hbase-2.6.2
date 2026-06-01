@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.slowlog;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -53,6 +54,12 @@ public class SlowLogMasterService {
   }
 
   public void init() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("725332b8-9432-33be-b243-661b7e1c6b94"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b60c0c87-c9fc-3912-9a43-8487cd861e6b"))) {
+throw new java.io.IOException("Injected exception");
+}
     if (!slowlogTableEnabled) {
       LOG.info("Slow/Large requests logging to system table hbase:slowlog is disabled. Quitting.");
       return;

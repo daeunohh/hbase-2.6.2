@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import org.apache.hadoop.hbase.Cell;
@@ -39,6 +40,9 @@ class NoopOperationQuota implements OperationQuota {
   }
 
   public static OperationQuota get() {
+if(KnobRuntime.check(java.util.UUID.fromString("c1d82862-25de-3579-8617-d0de86b1ebe7"))) {
+return null;
+}
     return instance;
   }
 

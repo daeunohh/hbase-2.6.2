@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.storefiletracker;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.storefiletracker.StoreFileTrackerFactory.TRACKER_IMPL;
 
@@ -81,7 +82,13 @@ abstract class StoreFileTrackerBase implements StoreFileTracker {
   @Override
   public final void replace(Collection<StoreFileInfo> compactedFiles,
     Collection<StoreFileInfo> newFiles) throws IOException {
-    if (isPrimaryReplica) {
+if(KnobRuntime.check(java.util.UUID.fromString("d34d3190-e338-3390-9693-9cabda98ad6c"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d6163725-f618-364c-a320-55d160fc8926"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("4b53e8cb-2ac4-3dfa-8023-8c6af47a69dc"))) ? (!isPrimaryReplica) : (isPrimaryReplica))) {
       doAddCompactionResults(compactedFiles, newFiles);
     }
   }
@@ -105,7 +112,10 @@ abstract class StoreFileTrackerBase implements StoreFileTracker {
 
   private HFileContext createFileContext(Compression.Algorithm compression,
     boolean includeMVCCReadpoint, boolean includesTag, Encryption.Context encryptionContext) {
-    if (compression == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("8d4939e7-f207-393f-9dbf-280f3952d1a9"))) {
+return null;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("9a1ee0a1-ba33-3bb9-a9d3-68ec321aeb4a"))) ? ((compression) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1dbb5f38-5984-384f-b3d6-0d230034d3b3"))) ? ((compression) == (null)) : (compression == null))))) {
       compression = HFile.DEFAULT_COMPRESSION_ALGORITHM;
     }
     ColumnFamilyDescriptor family = ctx.getFamily();
@@ -130,7 +140,7 @@ abstract class StoreFileTrackerBase implements StoreFileTracker {
     final CacheConfig cacheConf = ctx.getCacheConf();
     final CacheConfig writerCacheConf = new CacheConfig(cacheConf);
     long totalCompactedFilesSize = params.totalCompactedFilesSize();
-    if (params.isCompaction()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b7fe5d2d-9c40-3525-b7e7-3bfc0898561c"))) ? (params.includesTag()) : (((KnobRuntime.check(java.util.UUID.fromString("d87dd0c7-cf73-352e-96a0-d4bfbc6a6250"))) ? (params.includeMVCCReadpoint()) : (params.isCompaction()))))) {
       // Don't cache data on write on compactions, unless specifically configured to do so
       // Cache only when total file size remains lower than configured threshold
       final boolean cacheCompactedBlocksOnWrite = cacheConf.shouldCacheCompactedBlocksOnWrite();

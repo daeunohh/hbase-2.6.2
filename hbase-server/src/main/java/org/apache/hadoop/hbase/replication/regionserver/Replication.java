@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class Replication
       new ThreadFactoryBuilder()
         .setNameFormat(server.getServerName().toShortString() + "Replication Statistics #%d")
         .setDaemon(true).build());
-    if (this.isReplicationForBulkLoadDataEnabled) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("c196bf0e-5669-3631-aedd-dc1b1062166f"))) ? (!this.isReplicationForBulkLoadDataEnabled) : (this.isReplicationForBulkLoadDataEnabled))) {
       if (
         conf.get(HConstants.REPLICATION_CLUSTER_ID) == null
           || conf.get(HConstants.REPLICATION_CLUSTER_ID).isEmpty()
@@ -137,7 +138,7 @@ public class Replication
         .addWALActionsListener(new ReplicationSourceWALActionListener(conf, replicationManager));
     }
     this.statsThreadPeriod = this.conf.getInt("replication.stats.thread.period.seconds", 5 * 60);
-    LOG.debug("Replication stats-in-log period={} seconds", this.statsThreadPeriod);
+    if (KnobRuntime.check(java.util.UUID.fromString("012580fe-32ab-338b-a578-891c6dfd3c3b"))) { LOG.info("Replication stats-in-log period={} seconds", this.statsThreadPeriod); } else { LOG.debug("Replication stats-in-log period={} seconds", this.statsThreadPeriod); }
     this.replicationLoad = new ReplicationLoad();
 
     this.peerProcedureHandler = new PeerProcedureHandlerImpl(replicationManager);
@@ -145,6 +146,9 @@ public class Replication
 
   @Override
   public PeerProcedureHandler getPeerProcedureHandler() {
+if(KnobRuntime.check(java.util.UUID.fromString("fab4ea84-5afd-36c5-b892-45725a723097"))) {
+return null;
+}
     return peerProcedureHandler;
   }
 
@@ -201,7 +205,7 @@ public class Replication
     this.scheduleThreadPool.scheduleAtFixedRate(
       new ReplicationStatisticsTask(this.replicationSink, this.replicationManager),
       statsThreadPeriod, statsThreadPeriod, TimeUnit.SECONDS);
-    LOG.info("{} started", this.server.toString());
+    if (KnobRuntime.check(java.util.UUID.fromString("db9bacf9-0611-36de-b83a-de7a8628a52a"))) { LOG.debug("{} started", this.server.toString()); } else { LOG.info("{} started", this.server.toString()); }
   }
 
   /**

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.DEFAULT_HBASE_SPLIT_COORDINATED_BY_ZK;
 import static org.apache.hadoop.hbase.HConstants.HBASE_MASTER_LOGCLEANER_PLUGINS;
@@ -527,14 +528,14 @@ public class HMaster extends HRegionServer implements MasterServices {
           ClusterStatusPublisher.DEFAULT_STATUS_PUBLISHER_CLASS,
           ClusterStatusPublisher.Publisher.class);
 
-      if (shouldPublish) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("a5701f6e-c07d-391d-905e-db5dc668fd18"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("463bba95-1989-3cbf-9358-70d9fac772b3"))) ? (!shouldPublish) : (((KnobRuntime.check(java.util.UUID.fromString("f0625a95-8d1a-31dc-933b-fc3d165c24e0"))) ? (true) : (shouldPublish))))))) {
         if (publisherClass == null) {
           LOG.warn(HConstants.STATUS_PUBLISHED + " is true, but "
             + ClusterStatusPublisher.DEFAULT_STATUS_PUBLISHER_CLASS
             + " is not set - not publishing status");
         } else {
           clusterStatusPublisherChore = new ClusterStatusPublisher(this, conf, publisherClass);
-          LOG.debug("Created {}", this.clusterStatusPublisherChore);
+          if (KnobRuntime.check(java.util.UUID.fromString("946e6e6b-6bd9-367e-8d6e-48eaa2129e5e"))) { LOG.info("Created {}", this.clusterStatusPublisherChore); } else { LOG.debug("Created {}", this.clusterStatusPublisherChore); }
           getChoreService().scheduleChore(clusterStatusPublisherChore);
         }
       }
@@ -562,11 +563,53 @@ public class HMaster extends HRegionServer implements MasterServices {
    */
   protected ActiveMasterManager createActiveMasterManager(ZKWatcher zk, ServerName sn,
     org.apache.hadoop.hbase.Server server) throws InterruptedIOException {
+if(KnobRuntime.check(java.util.UUID.fromString("09442861-7756-3279-b4bd-1b13c2f886ed"))) {
+try {
+    java.lang.reflect.Field field = zk.getClass().getDeclaredField("zkSyncTimeout");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(zk));
+    field.set(zk, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a73d80df-4733-35f4-87f7-076487288cd7"))) {
+throw new InterruptedIOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f936f820-d133-36d0-bee4-8b454a31c229"))) {
+try {
+    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(sn));
+    field.set(sn, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6e474d3c-2ac0-312d-baf1-0fc6d1be41f5"))) {
+return null;
+}
     return new ActiveMasterManager(zk, sn, server);
   }
 
   @Override
   protected String getUseThisHostnameInstead(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("b3e4b080-6ed0-3c72-9b6f-f00ae15200d7"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9cc3122d-248b-32fd-b60a-dff390fc6048"))) {
+return null;
+}
     return conf.get(MASTER_HOSTNAME_KEY);
   }
 
@@ -578,7 +621,21 @@ public class HMaster extends HRegionServer implements MasterServices {
   @Override
   protected void preUpdateConfiguration() throws IOException {
     if (cpHost != null) {
-      cpHost.preUpdateConfiguration(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("51d762b4-cd50-3e9b-8897-03239bdc6da1"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("73ba3107-23f2-3246-aab1-60487cb63897"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("c735ff9b-db59-3e03-8a54-7533599daab5"))) { decorateMasterConfiguration(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("7dbc5bee-d930-306a-bf3b-0e3c07acd877"))) { cpHost.postUpdateConfiguration(conf); } else { cpHost.preUpdateConfiguration(conf); }
     }
   }
 
@@ -611,7 +668,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       }, "HMaster.becomeActiveMaster")), getName() + ":becomeActiveMaster");
       // Fall in here even if we have been aborted. Need to run the shutdown services and
       // the super run call will do this for us.
-      super.run();
+      if (KnobRuntime.check(java.util.UUID.fromString("fec0d231-8644-3999-b7e2-5b6efc2d9c5d"))) { super.configureInfoServer(); } else if (KnobRuntime.check(java.util.UUID.fromString("c4ef8d3d-4306-3582-84b7-79b23dbc3c39"))) { registerConfigurationObservers(); } else { super.run(); }
     } finally {
       final Span span = TraceUtil.createSpan("HMaster exiting main loop");
       try (Scope ignored = span.makeCurrent()) {
@@ -619,11 +676,14 @@ public class HMaster extends HRegionServer implements MasterServices {
           // If on way out, then we are no longer active master.
           this.clusterSchemaService.stopAsync();
           try {
+if(KnobRuntime.check(java.util.UUID.fromString("5c781f0a-fa9d-3d21-8d6e-14ca5d577ed9"))) {
+throw new java.util.concurrent.TimeoutException("Injected exception");
+}
             this.clusterSchemaService
               .awaitTerminated(getConfiguration().getInt(HBASE_MASTER_WAIT_ON_SERVICE_IN_SECONDS,
                 DEFAULT_HBASE_MASTER_WAIT_ON_SERVICE_IN_SECONDS), TimeUnit.SECONDS);
           } catch (TimeoutException te) {
-            LOG.warn("Failed shutdown of clusterSchemaService", te);
+            if (KnobRuntime.check(java.util.UUID.fromString("7207af78-a7b7-3b98-8318-bf54a936c54d"))) { LOG.error("Failed shutdown of clusterSchemaService", te); } else if (KnobRuntime.check(java.util.UUID.fromString("8a116dfc-d193-3e6a-8dd2-43feb04fde7b"))) { abort("Failed shutdown of clusterSchemaService", te); } else { LOG.warn("Failed shutdown of clusterSchemaService", te); }
           }
         }
         this.activeMaster = false;
@@ -642,19 +702,19 @@ public class HMaster extends HRegionServer implements MasterServices {
     final int infoPort =
       conf.getInt("hbase.master.info.port.orig", HConstants.DEFAULT_MASTER_INFOPORT);
     // -1 is for disabling info server, so no redirecting
-    if (infoPort < 0 || infoServer == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a322cecf-28ee-3bf3-b876-13cafb247d9d"))) ? ((infoPort < 0) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("8885e16f-6bdc-3cb1-afe2-fe2964488bf9"))) ? (((-1) > (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("0bcc00c4-5b95-3375-83df-30dd07ca3f06"))) ? (((-1) == (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("42ce8ebf-3cc9-30ec-ae97-3f4572047be6"))) ? (((-1) >= (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("fa1a5ef9-da34-3ffb-b24b-c22853b76e48"))) ? (((-1) != (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("c209fc5a-0481-3606-9cfe-fd38818a60f6"))) ? (((-1) > (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("67d24986-3feb-3839-88aa-5d699a9b4094"))) ? (((-1) < (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("a5b70e88-2579-3771-9412-9359f78dcafa"))) ? (((-1) >= (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("33b0331f-f5bd-3cfc-b8e0-f1b1afe642bf"))) ? (((-1) < (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("c822cc43-0c8e-3073-b1d8-0808db1d541b"))) ? (((infoPort) != (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("dbbd2308-6187-3311-a6dd-c68d9bc8c396"))) ? (((infoPort) < (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("cd6c3d4b-7bfd-33f6-b147-5602ca2c8127"))) ? ((infoPort) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("64adb9ec-15a6-37c3-8e43-3f7191edc2e6"))) ? (((-1) > (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("0f894aba-0f9a-30f4-adef-14a69ecef759"))) ? (((infoPort) < (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f635a29f-b989-3536-9e38-16525399635e"))) ? ((infoPort) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("de6d6823-fb94-337a-ab0f-e06a080db793"))) ? (((infoPort) == (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("94974774-1fce-3558-b3e2-858bac5e53c2"))) ? ((infoPort < 0) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("5b44fa61-d4f0-3d49-9747-4d00a65de2ba"))) ? (((infoPort) > (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("6f903ff5-431c-3ad4-8880-58b0edcf91f3"))) ? (((infoPort) != (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("1c06236b-f533-3cd2-a34c-a1ec00dc9ed1"))) ? (((infoPort) < (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("718a7fb0-eed5-3ac9-85d9-a1fe8a6daf6b"))) ? (((-1) != (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("93e4d072-07c4-3556-8f43-d3d270dd2bcb"))) ? (((infoPort) >= (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("0375f11d-5477-36b1-9ff4-ed05f1e629cc"))) ? (((-1) == (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("0b1c89a5-1ee7-3693-87e0-6be31d4a9418"))) ? (((-1) < (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("7b24b395-a7d9-375e-9de7-ca1c0e95dc34"))) ? (infoServer == null) : (((KnobRuntime.check(java.util.UUID.fromString("f9409024-6088-3101-9945-18f072348fb7"))) ? (((infoPort) == (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("a18d0e9e-d659-3606-bf53-7f11d3b60e23"))) ? ((-1) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("40c5141b-fe7e-3a92-ac83-38570061dd89"))) ? (((infoPort) <= (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("9980f283-43af-32ff-b511-861dcc2ca455"))) ? (((-1) != (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("c2172953-3337-38b4-8435-4b26869a2518"))) ? (((-1) == (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("336c2f95-76a7-300f-9d24-66fab01c0906"))) ? ((infoPort) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6dc7d7fb-701b-3593-9b0d-7c3baad65d28"))) ? ((infoPort < 0) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("6b0d6e66-7550-393b-9043-14b1e8090135"))) ? (((infoPort) == (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("e8fda93f-51e5-3aea-9f78-5a26f169ea1f"))) ? (((-1) == (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("75ecfff4-54dc-360b-84a5-63ac19837f0f"))) ? (((-1) >= (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("e7701d2f-4472-32b1-a897-37f3a865e2ec"))) ? (((infoPort) <= (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("201d6e60-d049-3d55-8051-9526c6a8b208"))) ? ((-1) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e75dd7e2-12cc-3333-b77e-eed4c476f96e"))) ? ((-1) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("bcf77eff-4e48-3ed8-9b7b-8d8e122773ff"))) ? (((-1) >= (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("2a186fea-ea56-3e2a-a961-f9ed3a14666b"))) ? (infoPort < 0) : (((KnobRuntime.check(java.util.UUID.fromString("7e701ed0-4da6-3d35-9f15-d173d009be36"))) ? (((-1) <= (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("520c8689-05ff-3739-9604-7bb53297dad0"))) ? (((-1) >= (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("7ff8191c-67a3-3503-91f7-efada2fd8e7e"))) ? (((infoPort) <= (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("777c81a7-1164-39b2-a916-f648ba828027"))) ? (((infoPort) != (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("3c717709-c2e8-3348-83f5-a45eac656b4d"))) ? (((infoPort) > (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("a691ca56-281e-3e41-82fa-154a9f708020"))) ? ((infoPort) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a312d2bd-82ec-36f7-b64e-6c05592477d1"))) ? (((-1) <= (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("925e822e-5175-3111-8791-5e2ecce55609"))) ? (((-1) > (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("573a7d10-f2dd-39b0-8f36-cf71db01d54e"))) ? (((infoPort) > (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("a8d6ca30-4f21-3b5e-818e-1747b141fd1e"))) ? (((-1) != (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("31a54323-f5ad-3dec-a040-3492bdab6744"))) ? (((infoPort) != (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("17640d4b-5111-31c8-b148-7dfe70c17521"))) ? (((-1) > (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("9cdf8200-85c2-3854-af62-acd8b75dfca4"))) ? (((-1) < (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("42c9e3b1-6dda-3e04-b4c5-01b83b411d22"))) ? (((infoPort) <= (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f165981f-0fdd-3f81-9017-6eb8b7936b93"))) ? (((infoPort) < (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("464bf082-2fdd-3b21-9944-cc9b5cd3fb4e"))) ? ((infoServer) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d66994ed-ed1e-3fbc-b712-e9f3e737462e"))) ? (((-1) <= (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("c0d588a9-d43b-354a-897a-ea4e88171a73"))) ? (((infoPort) == (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("4ae4abc9-00f7-36cd-af56-6bdbbe0d9983"))) ? (((-1) <= (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bcef8ee5-6230-3899-8d34-b93197e4dead"))) ? (((infoPort) != (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("92ca7287-c109-304b-bcc2-dafa4cea899d"))) ? (((-1) == (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("69d390c4-6f42-3ecb-9b2e-bb719b08ef20"))) ? (((infoPort) == (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("99e75e65-295a-32f4-8a3d-fe87cce45a7f"))) ? ((infoPort) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("22e32dae-0f7a-38ba-8289-382f6abeaf10"))) ? (((infoPort) >= (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("3190cf04-894e-3d05-a8bf-ae150ae54393"))) ? (((infoPort) >= (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("0a0052cb-2e5c-35e5-8da3-8b733ec35b01"))) ? ((infoPort < 0) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("c25172de-e30e-3132-92dc-6e2f34e30dc2"))) ? (((infoPort) < (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("c8414373-cdc0-3724-8379-a915f0a32dfc"))) ? (((infoPort) >= (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("7de3d536-2b9b-378a-9168-78a145409328"))) ? (((infoPort) > (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bb794890-ac70-3163-9fc4-3c858963ed1a"))) ? (((-1) != (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("38526bca-0dfd-302b-8918-8ad4027fa94a"))) ? (((infoPort) > (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("86cbc010-7126-3239-ab59-db790c823e27"))) ? ((-1) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("17a0f79e-c19a-30d0-8886-11197fdacc68"))) ? (((infoPort) <= (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("4c3b5556-77fc-3dd9-b7a6-b5dc5143e0e3"))) ? ((-1) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("f1fb8e0d-fac1-3c0f-8b6d-820c8ce6fa88"))) ? (((-1) <= (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("1ec45c41-86c6-3616-a846-60b699b53a82"))) ? (((infoPort) != (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bf834e25-0bdc-30db-b2ae-cf2fe4ce86c4"))) ? ((infoPort < 0) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("fd0a2c5c-23cd-3ac1-bf68-429a7d436e91"))) ? (((-1) < (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("ee1822bb-6d59-3b41-a803-028d25ff503d"))) ? ((-1) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("83771f39-8e51-31b8-8bd2-e8544293d703"))) ? (((-1) == (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("dc7615a3-4fa6-3d20-a3e9-283744d011c3"))) ? (((infoPort) > (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("cd106db1-14b9-3ef0-bb94-e10eff72d84c"))) ? ((infoPort) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("ba721e33-5a53-3a34-aa5e-2c6af7ebe5d2"))) ? (((-1) > (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("02bf5bc9-815e-3934-bda7-147c9744f6c5"))) ? ((infoServer) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("39847d83-1d81-374e-b96b-d33a9cd7b8b6"))) ? (((infoPort) <= (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("59c8eeb1-94e4-3b17-acce-54bb2fb1e786"))) ? (((infoPort) >= (0)) && ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("304e1b6a-c670-3de2-9c56-7b355681385b"))) ? (((infoPort) == (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("71b08c85-d260-396a-8fa5-99c1410ddb65"))) ? (((infoPort) < (0)) || (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("22a38151-6100-3138-8cc5-fc2fa989787f"))) ? ((infoPort < 0) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("b42a4793-6686-3dcb-bc00-118d300e77ea"))) ? (((-1) >= (0)) && (infoServer == null)) : (((KnobRuntime.check(java.util.UUID.fromString("905a7523-f074-3055-9fba-8136d0512a9f"))) ? (((infoPort) >= (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("af8decfc-ce49-3210-8c2e-9b5306848576"))) ? (((-1) != (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("52b2dc9c-56c8-3dab-87a4-732c3e6a19dc"))) ? (((-1) < (0)) && ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("2de6798e-6d83-3bc5-9871-7c563f131b22"))) ? (((-1) <= (0)) || (infoServer == null)) : (infoPort < 0 || infoServer == null))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
       return -1;
     }
-    if (infoPort == infoServer.getPort()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ea8fa7d9-7350-3788-9c12-de7717f146c1"))) ? ((1) == (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("e0566f46-8aef-3dbd-9370-59c795e15c91"))) ? ((1) == (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("0efd3709-b035-3480-9bef-f70c23345f39"))) ? ((0) != (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("0195e444-e5e5-3237-8731-237f36bb60c2"))) ? ((infoPort) == (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("f40d00b6-520f-37a0-981d-4d11c2f61446"))) ? ((1) != (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("61255a76-be73-3da1-993d-ba21d9b18f82"))) ? ((0) == (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("6f3ad153-3c4a-3e00-b0f6-fdc9168b507b"))) ? ((-1) != (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("9e4b25d7-0afb-3ac7-b7b9-6da65d1a10f1"))) ? ((-1) != (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("b1b78374-c895-3b7d-9f08-297347234007"))) ? ((infoPort) != (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("de150c1d-e7f2-3bd7-ba66-7cf60060f474"))) ? ((0) != (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("46d57e8f-33a9-3bd5-97d1-1f34f64dd95f"))) ? ((0) == (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("ed1997fc-22b2-3f35-9c68-a823e82b808c"))) ? ((infoPort) == (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("99eeab9b-d258-388b-bc1a-fad61dce1435"))) ? ((-1) != (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("38abc1ab-f99c-324e-97dd-e7a6eadb458b"))) ? ((1) == (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("9ed63ac1-9a5f-36cd-b936-c7122c681aa5"))) ? ((-1) == (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("2c08774c-981b-3ce3-bd94-729923a68569"))) ? ((infoPort) == (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("69fe791f-2a31-3cdc-a574-901da86a2e77"))) ? ((0) == (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("ed9f724d-bcac-386c-8cca-2430cf665097"))) ? ((infoPort) != (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("90e5d528-fac0-33d7-8fcf-8430578cd011"))) ? ((1) != (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("935008bc-9489-3ba3-adc6-9136e27be0b0"))) ? ((-1) == (getMaxBalancingTime())) : (((KnobRuntime.check(java.util.UUID.fromString("cab43a1e-243f-38bc-8e7c-e986bcd8db8a"))) ? ((infoPort) != (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("ee2ea673-7074-3565-bdac-ebb660734b62"))) ? ((-1) == (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("f5d4f328-62e2-3d3c-9beb-83c3eca1186b"))) ? ((1) != (putUpJettyServer())) : (((KnobRuntime.check(java.util.UUID.fromString("ff36ca72-ba62-38ac-a07f-98aaf684eddf"))) ? ((0) != (getMaxBalancingTime())) : (infoPort == infoServer.getPort()))))))))))))))))))))))))))))))))))))))))))))))))) {
       // server is already running
-      return infoPort;
+      return ((KnobRuntime.check(java.util.UUID.fromString("811055e5-b681-3af8-acab-942c92faab42"))) ? (0) : (((KnobRuntime.check(java.util.UUID.fromString("37896505-d328-374e-b0d1-61ccdbee01b4"))) ? (-1) : (((KnobRuntime.check(java.util.UUID.fromString("9ab50e65-01f1-340a-b2ca-ad0360586bc3"))) ? (1) : (infoPort))))));
     }
     final String addr = conf.get("hbase.master.info.bindAddress", "0.0.0.0");
     if (!Addressing.isLocalAddress(InetAddress.getByName(addr))) {
       String msg = "Failed to start redirecting jetty server. Address " + addr
         + " does not belong to this host. Correct configuration parameter: "
         + "hbase.master.info.bindAddress";
-      LOG.error(msg);
+      if (KnobRuntime.check(java.util.UUID.fromString("e70b20a1-fedb-3d21-b5ba-9475b2aefe76"))) { LOG.info(msg); } else if (KnobRuntime.check(java.util.UUID.fromString("1f4d8047-a562-3e6c-916c-5245b3c85d44"))) { LOG.warn(msg); } else { LOG.error(msg); }
       throw new IOException(msg);
     }
 
@@ -663,8 +723,206 @@ public class HMaster extends HRegionServer implements MasterServices {
     // a second entire stack here.
     masterJettyServer = new Server();
     final ServerConnector connector = new ServerConnector(masterJettyServer);
-    connector.setHost(addr);
+    if (KnobRuntime.check(java.util.UUID.fromString("b570ad07-a5bd-3a17-8373-e17ef11d79c6"))) { stop(addr); } else { connector.setHost(addr); }
     connector.setPort(infoPort);
+if(KnobRuntime.check(java.util.UUID.fromString("1fa527cf-1f62-3968-9c87-aa2248ba2658"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_localPort");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("88cd2824-bc8b-31fe-9075-299e59d38295"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedSendBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f944b28d-704d-36b2-aad6-6fde2f3af50d"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedSendBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e7acad03-7b5b-3cad-bbf4-0d306376a144"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptQueueSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("353cdfe7-2b14-3723-a7ab-11199f60ba71"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_localPort");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("42857ce7-464c-335b-8c8f-8e98c2db6859"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedReceiveBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("77e370b7-f0d9-3403-9216-2d0e3786d19a"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptQueueSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5cdc86d0-2959-334e-8830-d91c8778c44a"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedReceiveBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("36feb2ad-2e4b-30fa-beff-1a03b5ee8019"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedReceiveBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("33ea617d-9a74-3d3f-9015-59a235a97a47"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptQueueSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d6f6c189-d670-3861-8274-2c6aeaf6c444"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptQueueSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("81f0e769-744f-3788-ab7d-87da4a50f29d"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedReceiveBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("33a4c537-cdb5-345e-a361-a3d4e7fb0e45"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_localPort");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1f9fdabf-3751-3aee-a713-e89774f74f9c"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedSendBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5a119193-d75e-3a8e-abb1-f6545da34e7c"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_localPort");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fba9d3cf-99ae-352c-804c-d3b62640132e"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_inheritChannel");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(connector);
+    field.set(connector, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1889eb5a-667a-3d61-8cce-c2f1aca42a87"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_acceptedSendBufferSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(connector));
+    field.set(connector, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d9ace038-6aa1-39bf-8976-11e66a42c549"))) {
+try {
+    java.lang.reflect.Field field = connector.getClass().getDeclaredField("_reuseAddress");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(connector);
+    field.set(connector, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     masterJettyServer.addConnector(connector);
     masterJettyServer.setStopAtShutdown(true);
     masterJettyServer.setHandler(HttpServer.buildGzipHandler(masterJettyServer.getHandler()));
@@ -676,7 +934,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     final WebAppContext context =
       new WebAppContext(null, "/", null, null, null, null, WebAppContext.NO_SESSIONS);
     context.addServlet(new ServletHolder(redirect), "/*");
-    context.setServer(masterJettyServer);
+    if (KnobRuntime.check(java.util.UUID.fromString("12303a9d-fd74-3917-9f61-f5ece501efb1"))) { context.setServer(new Server()); } else { context.setServer(masterJettyServer); }
 
     try {
       masterJettyServer.start();
@@ -725,11 +983,20 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   protected String getProcessName() {
+if(KnobRuntime.check(java.util.UUID.fromString("ab0b826c-bcb9-3b16-a287-00459a3ba588"))) {
+return null;
+}
     return MASTER;
   }
 
   @Override
   protected boolean canCreateBaseZNode() {
+if(KnobRuntime.check(java.util.UUID.fromString("10095aaf-d1e9-36c4-9cad-e9a190ffce54"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("09f9d6b0-c5f3-3aea-8c43-aaea4209621c"))) {
+return false;
+}
     return true;
   }
 
@@ -815,7 +1082,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     String clientQuorumServers = conf.get(HConstants.CLIENT_ZOOKEEPER_QUORUM);
     boolean clientZkObserverMode = conf.getBoolean(HConstants.CLIENT_ZOOKEEPER_OBSERVER_MODE,
       HConstants.DEFAULT_CLIENT_ZOOKEEPER_OBSERVER_MODE);
-    if (clientQuorumServers != null && !clientZkObserverMode) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("e9645743-219d-30c4-a8d2-bc6294b80d88"))) ? ((getProcessName()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("4bc8bc4d-f94a-3616-8ba2-717a4a9932c1"))) ? ((clientQuorumServers != null) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("5d553ac3-886d-3108-8143-37d752db6122"))) ? ((getProcessName() + ":") == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5b41d3b0-4ab0-35cb-8f05-e60820c08212"))) ? (((getProcessName()) != (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("1616c0e3-9db4-3ee5-929e-78a38695ac77"))) ? ((getProcessName() + ":") != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a1147dcd-5ece-3abb-893f-304b4fed8621"))) ? ((clientQuorumServers != null) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("4a4998a8-5f11-3221-9947-e506fcb2ddac"))) ? ((clientQuorumServers) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e4ce312a-bec5-3a00-ad1a-1c7bab8efa47"))) ? (((getProcessName() + ":") != (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("e543cf9e-a6ad-3931-8feb-cb4dffcbe315"))) ? (((clientQuorumServers) != (null)) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("19a33bb2-601e-38e4-a61f-3f656618ade9"))) ? (((getProcessName()) == (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("3affffba-1f03-303e-9f27-9ef3de0d188e"))) ? ((clientQuorumServers) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("7a92927e-75a2-3b8d-b586-149295cac6c7"))) ? (((clientQuorumServers) != (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("ff7e592b-de7a-3be4-ad6f-26c7df82f517"))) ? ((getProcessName()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ac120ccf-eff9-3545-b440-0564a6823081"))) ? (!clientZkObserverMode) : (((KnobRuntime.check(java.util.UUID.fromString("655e364f-7181-3c21-bd5b-800a281992aa"))) ? (((getProcessName() + ":") == (null)) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("c4724f1d-1650-33ee-95f5-934be7be0bb8"))) ? (((getProcessName() + ":") == (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("13f5583e-647d-394a-b8ef-127301e43d42"))) ? (((clientQuorumServers) == (null)) && (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("701be7d0-7587-3716-9aee-0dc38bd0c7a4"))) ? (((clientQuorumServers) == (null)) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("7dd69c04-0417-36a2-819a-dab26cbd39b1"))) ? (((getProcessName()) != (null)) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("4ce7081d-f1fa-3d3e-b2e3-84e2900200de"))) ? (clientQuorumServers != null) : (((KnobRuntime.check(java.util.UUID.fromString("7eae51a5-a441-3d5c-b39f-df4c73435fe7"))) ? (((getProcessName() + ":") != (null)) || (!clientZkObserverMode)) : (((KnobRuntime.check(java.util.UUID.fromString("0ef7950d-70eb-32a9-9fb7-6a4d7889d866"))) ? (((getProcessName()) == (null)) || (!clientZkObserverMode)) : (clientQuorumServers != null && !clientZkObserverMode))))))))))))))))))))))))))))))))))))))))))))) {
       // we need to take care of the ZK information synchronization
       // if given client ZK are not observer nodes
       ZKWatcher clientZkWatcher = new ZKWatcher(conf,
@@ -824,7 +1091,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       this.metaLocationSyncer = new MetaLocationSyncer(zooKeeper, clientZkWatcher, this);
       this.metaLocationSyncer.start();
       this.masterAddressSyncer = new MasterAddressSyncer(zooKeeper, clientZkWatcher, this);
-      this.masterAddressSyncer.start();
+      if (KnobRuntime.check(java.util.UUID.fromString("857a3514-02af-3d9a-85b6-fafba4bd9ffc"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("d9b02da4-38c9-3775-8e2d-6d7ee957b3e3"))) { initializeMemStoreChunkCreator(); } else { this.masterAddressSyncer.start(); }
       // set cluster id is a one-go effort
       ZKClusterId.setClusterId(clientZkWatcher, fileSystemManager.getClusterId());
     }
@@ -844,6 +1111,12 @@ public class HMaster extends HRegionServer implements MasterServices {
     this.mpmHost.register(this.snapshotManager);
     this.mpmHost.register(new MasterFlushTableProcedureManager());
     this.mpmHost.loadProcedures(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("554bd845-30f3-32e2-a2bc-8a4de5c4053b"))) {
+throw new java.lang.UnsupportedOperationException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("39f8d567-18cb-3714-8d7c-13a049d7148f"))) {
+throw new java.io.IOException("Injected exception");
+}
     this.mpmHost.initialize(this, this.metricsMaster);
   }
 
@@ -874,9 +1147,74 @@ public class HMaster extends HRegionServer implements MasterServices {
     StringBuilder info = new StringBuilder("Migrating meta locations:");
     for (String metaReplicaNode : metaReplicaNodes) {
       int replicaId = zooKeeper.getZNodePaths().getMetaReplicaIdFromZNode(metaReplicaNode);
+if(KnobRuntime.check(java.util.UUID.fromString("11d269b7-a3de-3f49-9261-ecb000abcf1c"))) {
+replicaId = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f329c9cd-a4cf-3597-b00c-f95843607842"))) {
+replicaId /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c49c0196-ae4c-357c-a1de-ff58abf771a5"))) {
+replicaId *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("91c0fa83-eacd-3e58-af95-595a300a20fc"))) {
+try {
+    java.lang.reflect.Field field = zooKeeper.getClass().getDeclaredField("zkSyncTimeout");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(zooKeeper));
+    field.set(zooKeeper, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ff4677df-a1b8-38e4-bfad-fdadab802f22"))) {
+replicaId = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("153655f8-66d1-397a-9033-b402150ea58d"))) {
+replicaId -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("56047c6d-7acd-329e-bd4b-5ef61a0ec2fa"))) {
+replicaId += 1;
+}
       RegionState state = MetaTableLocator.getMetaRegionState(zooKeeper, replicaId);
+if(KnobRuntime.check(java.util.UUID.fromString("09be70ec-1f52-3392-b20e-2bbb8d29cd43"))) {
+try {
+    java.lang.reflect.Field field = state.getClass().getDeclaredField("stamp");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(state));
+    field.set(state, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3c6d21be-fc04-37a2-9196-74c0f55f7598"))) {
+try {
+    java.lang.reflect.Field field = state.getClass().getDeclaredField("stamp");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(state));
+    field.set(state, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b42af187-59a5-34ce-94c0-18b2f2473d17"))) {
+try {
+    java.lang.reflect.Field field = state.getClass().getDeclaredField("ritDuration");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(state));
+    field.set(state, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       info.append(" ").append(state);
-      put.setTimestamp(state.getStamp());
+      if (KnobRuntime.check(java.util.UUID.fromString("4543bfe4-7bd3-3d6f-adc2-6c452a000b1d"))) { put.setTimestamp(EnvironmentEdgeManager.currentTime()); } else { put.setTimestamp(state.getStamp()); }
+if(KnobRuntime.check(java.util.UUID.fromString("10f54bb3-70e5-3f12-8469-a68df19a3f8d"))) {
+throw new java.io.IOException("Injected exception");
+}
       MetaTableAccessor.addRegionInfo(put, state.getRegion());
       if (state.getServerName() != null) {
         MetaTableAccessor.addLocation(put, state.getServerName(), HConstants.NO_SEQNUM, replicaId);
@@ -888,9 +1226,12 @@ public class HMaster extends HRegionServer implements MasterServices {
     }
     if (!put.isEmpty()) {
       LOG.info(info.toString());
+if(KnobRuntime.check(java.util.UUID.fromString("b3f2b47c-0455-3084-b52c-6e520a7d7018"))) {
+throw new java.io.IOException("Injected exception");
+}
       masterRegion.update(r -> r.put(put));
     } else {
-      LOG.info("No meta location available on zookeeper, skip migrating...");
+      if (KnobRuntime.check(java.util.UUID.fromString("2acadee8-c4af-308c-843e-738fa5b70efa"))) { LOG.error("No meta location available on zookeeper, skip migrating..."); } else if (KnobRuntime.check(java.util.UUID.fromString("4ff9d234-6a6c-3a40-a00d-933e42a858d2"))) { LOG.warn("No meta location available on zookeeper, skip migrating..."); } else { LOG.info("No meta location available on zookeeper, skip migrating..."); }
     }
   }
 
@@ -971,7 +1312,7 @@ public class HMaster extends HRegionServer implements MasterServices {
         result = HBaseFsck.checkAndMarkRunningHbck(this.conf,
           HBaseFsck.createLockRetryCounterFactory(this.conf).create());
       } finally {
-        if (result != null) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("04e07f70-dd90-3fc0-af83-cb402932bad6"))) ? ((result) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6ed46183-8389-3c52-bf6b-e2e922a1354e"))) ? ((result) != (null)) : (result != null))))) {
           Closeables.close(result.getSecond(), true);
         }
       }
@@ -981,6 +1322,9 @@ public class HMaster extends HRegionServer implements MasterServices {
     // The below two managers must be created before loading procedures, as they will be used during
     // loading.
     // initialize master local region
+if(KnobRuntime.check(java.util.UUID.fromString("c2f94e40-1bbd-37d3-9970-2888889e24e0"))) {
+throw new java.io.IOException("Injected exception");
+}
     masterRegion = MasterRegionFactory.create(this);
     rsListStorage = new MasterRegionServerList(masterRegion, this);
 
@@ -1017,6 +1361,9 @@ public class HMaster extends HRegionServer implements MasterServices {
     // filesystem that COULD BE 'alive' (we'll schedule SCPs for each and let SCP figure it out).
     // We also pass dirs that are already 'splitting'... so we can do some checks down in tracker.
     // TODO: Generate the splitting and live Set in one pass instead of two as we currently do.
+if(KnobRuntime.check(java.util.UUID.fromString("773515b8-e253-3132-bab1-88a762ebd9b3"))) {
+throw new java.io.IOException("Injected exception");
+}
     this.regionServerTracker.upgrade(
       procsByType.getOrDefault(ServerCrashProcedure.class, Collections.emptyList()).stream()
         .map(p -> (ServerCrashProcedure) p).map(p -> p.getServerName()).collect(Collectors.toSet()),
@@ -1031,7 +1378,10 @@ public class HMaster extends HRegionServer implements MasterServices {
         : new TableStateManager(this);
 
     startupTaskGroup.addTask("Initializing ZK system trackers");
-    initializeZKBasedSystemTrackers();
+if(KnobRuntime.check(java.util.UUID.fromString("2c36c2d3-1a50-36ab-b007-1d75f7575c2d"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("474ee5fb-e6c3-3130-9287-4940fbf8e9f9"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("1aba7404-20c9-3a13-9eaf-e8db4dc514da"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("f5b20c2b-2f64-3c00-be13-5d91208b81f4"))) { registerConfigurationObservers(); } else { initializeZKBasedSystemTrackers(); }
 
     // Set ourselves as active Master now our claim has succeeded up in zk.
     this.activeMaster = true;
@@ -1039,8 +1389,8 @@ public class HMaster extends HRegionServer implements MasterServices {
     // Start the Zombie master detector after setting master as active, see HBASE-21535
     Thread zombieDetector = new Thread(new MasterInitializationMonitor(this),
       "ActiveMasterInitializationMonitor-" + EnvironmentEdgeManager.currentTime());
-    zombieDetector.setDaemon(true);
-    zombieDetector.start();
+    if (KnobRuntime.check(java.util.UUID.fromString("aea3086a-e258-3adf-9075-d6d601998f90"))) { switchSnapshotCleanup(true); } else if (KnobRuntime.check(java.util.UUID.fromString("700b69b9-d41c-3f4a-8470-cc832ef59a25"))) { setInitialized(true); } else { zombieDetector.setDaemon(true); }
+    if (KnobRuntime.check(java.util.UUID.fromString("97a83f1e-7a62-3aae-98d4-54281c8c7a2d"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("e457a24b-d65f-3bfd-ba7b-ae0b8a3e9eb0"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("fc8a663e-defa-30cd-bdd5-66ada95a9551"))) { registerConfigurationObservers(); } else { zombieDetector.start(); }
 
     // This is for backwards compatibility
     // See HBASE-11393
@@ -1051,8 +1401,30 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     if (!maintenanceMode) {
       startupTaskGroup.addTask("Initializing master coprocessors");
-      setQuotasObserver(conf);
-      initializeCoprocessorHost(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("3bdf993c-96bf-3e8d-9819-af3a1233c0c5"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("ab6df678-ab40-3a79-ad9a-a690db67b998"))) { decorateMasterConfiguration(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("baed4f56-9345-3a38-a8f5-dffdc8257df3"))) { initializeCoprocessorHost(conf); } else { setQuotasObserver(conf); }
+if(KnobRuntime.check(java.util.UUID.fromString("787ef659-e287-3d64-a562-342ab9b82fb6"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("1c3b1ab0-b11a-3dc1-b210-2cb726dd5e3b"))) { decorateMasterConfiguration(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("fbd866d4-9c2c-3374-8a28-4fe5c1e498e3"))) { setQuotasObserver(conf); } else { initializeCoprocessorHost(conf); }
     }
 
     // Checking if meta needs initializing.
@@ -1075,12 +1447,15 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     // initialize load balancer
     this.balancer.setMasterServices(this);
-    this.balancer.initialize();
+    if (KnobRuntime.check(java.util.UUID.fromString("21950f56-3eae-3b13-9a46-8d8199714265"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("7754377c-f6fb-33b3-9292-e7aeeb7b4b2b"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("23f75805-ea85-3cd3-82ff-54aded3a212d"))) { initializeMemStoreChunkCreator(); } else { this.balancer.initialize(); }
     this.balancer.updateClusterMetrics(getClusterMetricsWithoutCoprocessor());
 
     // start up all service threads.
     startupTaskGroup.addTask("Initializing master service threads");
-    startServiceThreads();
+if(KnobRuntime.check(java.util.UUID.fromString("22bf3422-ee8d-3f3a-8022-804e545256fe"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("78fb7e40-18da-38e5-9ec0-9fe07355ebb4"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("66b94a1f-c0d0-3b9f-94df-0f74b4b1a606"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("3feb908d-c661-39c9-aafc-cc173995a1b4"))) { registerConfigurationObservers(); } else { startServiceThreads(); }
     // wait meta to be initialized after we start procedure executor
     if (initMetaProc != null) {
       initMetaProc.await();
@@ -1089,7 +1464,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       }
     }
     // Wake up this server to check in
-    sleeper.skipSleepCycle();
+    if (KnobRuntime.check(java.util.UUID.fromString("5ad9e3f6-10a7-3c67-9871-4447c37f3fa2"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("adf496aa-5d91-3aa4-9adb-7336da54ed80"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("ddd7f0e6-a2f5-333d-9a1c-cf4af79a74e2"))) { sleeper.sleep(); } else { sleeper.skipSleepCycle(); }
 
     // Wait for region servers to report in.
     // With this as part of master initialization, it precludes our being able to start a single
@@ -1097,6 +1472,12 @@ public class HMaster extends HRegionServer implements MasterServices {
     String statusStr = "Wait for region servers to report in";
     MonitoredTask waitRegionServer = startupTaskGroup.addTask(statusStr);
     LOG.info(Objects.toString(waitRegionServer));
+if(KnobRuntime.check(java.util.UUID.fromString("15eecbff-2c5d-32f7-88da-7e3abdbbe74f"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2dcf3f3b-aa31-3724-a01d-59fe285d4083"))) {
+throw new java.io.IOException("Injected exception");
+}
     waitForRegionServers(waitRegionServer);
 
     // Check if master is shutting down because issue initializing regionservers or balancer.
@@ -1114,18 +1495,27 @@ public class HMaster extends HRegionServer implements MasterServices {
     if (!waitForMetaOnline()) {
       return;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("6479dec6-f5f5-3548-ae00-5af6721d1f27"))) {
+throw new java.io.IOException("Injected exception");
+}
     TableDescriptor metaDescriptor = tableDescriptors.get(TableName.META_TABLE_NAME);
     final ColumnFamilyDescriptor tableFamilyDesc =
       metaDescriptor.getColumnFamily(HConstants.TABLE_FAMILY);
     final ColumnFamilyDescriptor replBarrierFamilyDesc =
       metaDescriptor.getColumnFamily(HConstants.REPLICATION_BARRIER_FAMILY);
 
-    this.assignmentManager.joinCluster();
+if(KnobRuntime.check(java.util.UUID.fromString("7191ffd5-6cbc-3622-8d9b-75c19da271ea"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("02f17484-445f-357c-9e71-fef999dee1d5"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("c9de9d84-f786-3fa6-8054-d2a02f32bf19"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("34882678-16a1-3213-a931-e3bc7f1c4a54"))) { tryMigrateMetaLocationsFromZooKeeper(); } else { this.assignmentManager.joinCluster(); }
     // The below depends on hbase:meta being online.
     try {
-      this.tableStateManager.start();
+if(KnobRuntime.check(java.util.UUID.fromString("ec9eb152-1cf6-3b39-96d3-b7870456dd0b"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("c750a733-8f36-3735-918b-9d19f611fe2e"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("16b6e9b2-7424-3fdb-93aa-e4c9db9aba59"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("d8c1079c-22a2-3132-9088-0929cff69393"))) { initializeMemStoreChunkCreator(); } else { this.tableStateManager.start(); }
     } catch (NoSuchColumnFamilyException e) {
-      if (tableFamilyDesc == null && replBarrierFamilyDesc == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("5926695e-62b2-320e-b697-189b908c0c9f"))) ? ((tableFamilyDesc == null) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bdade0ba-eed3-31b5-a723-1c89355d0f48"))) ? ((tableFamilyDesc) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("df351919-8091-3d7d-9636-1d5e14a7b17d"))) ? ((tableFamilyDesc == null) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("dbd0c898-efd5-3a94-9df8-bae643b0d5b0"))) ? (tableFamilyDesc == null) : (((KnobRuntime.check(java.util.UUID.fromString("56f9af77-fb53-386e-abbb-0bdf4db6d553"))) ? (((tableFamilyDesc) != (null)) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("c2b1ecc0-9763-3b7c-8db2-fa0eef72b6f8"))) ? ((tableFamilyDesc) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9607082f-778c-302e-b4f1-4d40699d5334"))) ? (replBarrierFamilyDesc == null) : (((KnobRuntime.check(java.util.UUID.fromString("c6112801-c6b1-39db-bdc1-f7d9293c094f"))) ? (((tableFamilyDesc) == (null)) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f0355bb3-c26d-310d-8964-ee8ccadd42ab"))) ? ((tableFamilyDesc == null) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("ef8a10df-7e2b-34c1-b2aa-c33e94425c78"))) ? (((tableFamilyDesc) != (null)) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("fb0021af-2660-39b1-b4db-3cc40669247c"))) ? (((tableFamilyDesc) == (null)) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("b5912a92-c3f9-3f3e-8eec-7b27ceddb712"))) ? (((tableFamilyDesc) != (null)) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("b22b420d-56df-35b5-9255-bf6863a6f17c"))) ? ((replBarrierFamilyDesc) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("01e1b870-c280-373c-9da3-4a170f0364e8"))) ? ((tableFamilyDesc == null) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("50907698-2ab2-30e3-84d3-dd988e57c54d"))) ? (((tableFamilyDesc) == (null)) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("24eca8f2-e9e0-354d-ad52-243e7ca9ab73"))) ? ((tableFamilyDesc == null) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("347237f0-531d-3a1f-801a-172b4cc07c58"))) ? (((tableFamilyDesc) == (null)) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("72a7a86b-81c4-3c04-80ae-ddca57f24cd1"))) ? (((tableFamilyDesc) != (null)) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("c4943acc-6b71-366d-bb18-5658cc633caa"))) ? (((tableFamilyDesc) == (null)) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("10a4fcea-c9e9-3654-977d-a5e45292c60d"))) ? ((replBarrierFamilyDesc) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("069a9146-d7c6-3da5-8ecf-158ec405e070"))) ? (((tableFamilyDesc) != (null)) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f66e591d-6bce-31a7-8617-289516c5f132"))) ? (((tableFamilyDesc) != (null)) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("d1d242bc-6742-3fa8-b773-e5167d077d32"))) ? (((tableFamilyDesc) == (null)) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("79c784b8-a98d-380c-8aa1-38343e43eb6a"))) ? ((tableFamilyDesc == null) || ((replBarrierFamilyDesc) == (null))) : (tableFamilyDesc == null && replBarrierFamilyDesc == null))))))))))))))))))))))))))))))))))))))))))))))))) {
         LOG.info("TableStates manager could not be started. This is expected"
           + " during HBase 1 to 2 upgrade.", e);
       } else {
@@ -1135,7 +1525,7 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     this.assignmentManager.processOfflineRegions();
     // this must be called after the above processOfflineRegions to prevent race
-    this.assignmentManager.wakeMetaLoadedEvent();
+    if (KnobRuntime.check(java.util.UUID.fromString("cb4b2ab4-f6e5-32d0-a759-f70369834c06"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("2efd2ec6-f8a2-3091-9a6e-097b814e75ab"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("afa7781e-d378-33d2-bb90-eb92c4191fba"))) { tryMigrateMetaLocationsFromZooKeeper(); } else { this.assignmentManager.wakeMetaLoadedEvent(); }
 
     // for migrating from a version without HBASE-25099, and also for honoring the configuration
     // first.
@@ -1152,12 +1542,48 @@ public class HMaster extends HRegionServer implements MasterServices {
         if (existingReplicasCount > metaDesc.getRegionReplication()) {
           LOG.info("Update replica count of hbase:meta from {}(in TableDescriptor)"
             + " to {}(existing ZNodes)", metaDesc.getRegionReplication(), existingReplicasCount);
+if(KnobRuntime.check(java.util.UUID.fromString("06fa7b01-bc0e-3031-b34f-b4675ce31123"))) {
+existingReplicasCount *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("85e0de1d-7af4-3141-8f06-a814ca327672"))) {
+existingReplicasCount = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6b7860a5-1a5c-3f34-ab69-33b2dbf7f8ce"))) {
+existingReplicasCount += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ae96e27f-0904-3135-8e7a-d3e2fbf7203f"))) {
+existingReplicasCount -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a71ceeb9-c6b7-313e-a7cf-0666e3e3d07d"))) {
+existingReplicasCount = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b2d1a569-1b1e-3463-b0a1-c855ff3f581b"))) {
+existingReplicasCount /= 2;
+}
           metaDesc = TableDescriptorBuilder.newBuilder(metaDesc)
             .setRegionReplication(existingReplicasCount).build();
           tableDescriptors.update(metaDesc);
         }
         // check again, and issue a ModifyTableProcedure if needed
-        if (metaDesc.getRegionReplication() != replicasNumInConf) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("9b359a62-a94f-3e4a-a335-544993448a46"))) ? ((putUpJettyServer()) == (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("a59aea16-c9a5-309d-a8d4-db930f03126c"))) ? ((getMaxBalancingTime()) == (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("a6f21412-f1b1-378f-8998-1f44cb11c627"))) ? ((putUpJettyServer()) != (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("e942ea4a-99b4-307b-bf9c-3e9166e2ca06"))) ? ((getMaxBalancingTime()) != (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("66b032bd-c2ba-36d3-8a7a-c787a477e4c4"))) ? ((metaDesc.getRegionReplication()) != (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("cf38c6af-73ae-30f2-bea6-6fbbd9f1b3a5"))) ? ((metaDesc.getRegionReplication()) == (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("042fc1c5-16dd-377e-88b2-f8b057c9d549"))) ? ((putUpJettyServer()) == (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("389bb034-62ed-3838-8a39-cd5adc8eb73c"))) ? ((getMaxBalancingTime()) == (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("f8aa2e1f-90e1-3c63-ae8e-edda390fe5ff"))) ? ((putUpJettyServer()) != (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("cd6eacde-c8e2-31e9-b1d2-4b1121e63859"))) ? ((metaDesc.getRegionReplication()) != (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("def5ac90-9c26-3321-b1cc-26d12dd31d7b"))) ? ((getMaxBalancingTime()) != (replicasNumInConf)) : (((KnobRuntime.check(java.util.UUID.fromString("95388eec-e9ff-394c-a854-2766e48369eb"))) ? ((metaDesc.getRegionReplication()) == (1000)) : (metaDesc.getRegionReplication() != replicasNumInConf))))))))))))))))))))))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("cc75d0ff-6e74-3b91-b4e0-9bac2fe8c02f"))) {
+replicasNumInConf *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5c67dca4-1593-3684-8e6d-ed78d7a3562c"))) {
+replicasNumInConf = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("045d4c27-636a-3919-b019-bfd66e8d3ae3"))) {
+replicasNumInConf /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7572d20b-3478-3577-811b-39e2ddec1a9e"))) {
+replicasNumInConf -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8ccf4fe0-8398-3bb2-b8cc-853011a0a79d"))) {
+replicasNumInConf = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7719f5be-11bc-3c1b-88f4-3d418c2dd49b"))) {
+replicasNumInConf += 1;
+}
           LOG.info(
             "The {} config is {} while the replica count in TableDescriptor is {}"
               + " for hbase:meta, altering...",
@@ -1218,11 +1644,11 @@ public class HMaster extends HRegionServer implements MasterServices {
       }
     }
 
-    if (this.cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("da483256-9c3b-3aae-8a83-bf27ff0bcd97"))) ? ((this.cpHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("f789c2e8-c7d8-350d-b047-d7a81af1aa2a"))) ? ((this.cpHost) == (null)) : (this.cpHost != null))))) {
       try {
         this.cpHost.preMasterInitialization();
       } catch (IOException e) {
-        LOG.error("Coprocessor preMasterInitialization() hook failed", e);
+        if (KnobRuntime.check(java.util.UUID.fromString("a283e8e7-f8ea-3621-8b73-43c9c81c53d2"))) { abort("Coprocessor preMasterInitialization() hook failed", e); } else { LOG.error("Coprocessor preMasterInitialization() hook failed", e); }
       }
     }
 
@@ -1244,11 +1670,11 @@ public class HMaster extends HRegionServer implements MasterServices {
     }
     // Set master as 'initialized'.
     setInitialized(true);
-    startupTaskGroup.markComplete("Initialization successful");
+    if (KnobRuntime.check(java.util.UUID.fromString("9e6ae476-ee80-3c2c-abf2-ecc01507ba7b"))) { startupTaskGroup.abort("Initialization successful"); } else if (KnobRuntime.check(java.util.UUID.fromString("39361a54-183b-316e-bc1b-33f1efc26071"))) { stop("Initialization successful"); } else { startupTaskGroup.markComplete("Initialization successful"); }
     MonitoredTask status =
       TaskMonitor.get().createStatus("Progress after master initialized", false, true);
 
-    if (tableFamilyDesc == null && replBarrierFamilyDesc == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("c3bc18a2-0cb2-3b3a-ab0b-26ce82dc3bbf"))) ? ((replBarrierFamilyDesc) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b2ef4028-d48d-37c9-9a61-5bc9f1971450"))) ? (((tableFamilyDesc) != (null)) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("6158f095-bb20-3c6a-aaee-8c3270ba121b"))) ? (tableFamilyDesc == null) : (((KnobRuntime.check(java.util.UUID.fromString("8976cabc-ee68-36c3-be5c-f316acd041e4"))) ? (((tableFamilyDesc) != (null)) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("f39ec2c7-f858-3bf1-9eb4-08b3572cf717"))) ? ((tableFamilyDesc == null) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("10b897c0-31bb-332c-a6eb-4df3327f09b5"))) ? ((tableFamilyDesc == null) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("4a8d3041-f3b7-319b-a9c3-b7067c0c5003"))) ? (((tableFamilyDesc) != (null)) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("1d98d1ef-fce9-3b73-827c-88de2626b837"))) ? (((tableFamilyDesc) == (null)) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("7ae6cea8-8294-3193-9ade-b92d38e14c37"))) ? (((tableFamilyDesc) != (null)) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("bb1cbbed-991d-33d9-b315-94878bde571f"))) ? (((tableFamilyDesc) == (null)) && (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("649be985-7250-35a9-85f3-872ffbcf5c1c"))) ? (((tableFamilyDesc) == (null)) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f73764c8-4d5c-3998-84f9-76379247b8bf"))) ? (((tableFamilyDesc) == (null)) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("4de367eb-23dc-33f6-9a50-92a89bbecada"))) ? (((tableFamilyDesc) != (null)) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("b0c7220f-9bcc-38b6-889b-d3c0390fb4ae"))) ? (((tableFamilyDesc) == (null)) || (replBarrierFamilyDesc == null)) : (((KnobRuntime.check(java.util.UUID.fromString("cab77f9f-2eda-34e2-9866-068b60c5a792"))) ? ((tableFamilyDesc == null) && ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("fc37468e-6193-32e1-8ea8-79ff1675205a"))) ? ((tableFamilyDesc) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("30c24ae5-b2ba-397e-b6b7-43b11f7cace5"))) ? (((tableFamilyDesc) != (null)) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("6d1185bb-cf3b-361b-bf47-a170157f5c87"))) ? ((tableFamilyDesc == null) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("4f149853-3a2b-3fb0-a270-c0e16698aa7b"))) ? (((tableFamilyDesc) == (null)) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("8f999b0d-833c-31f0-9cb1-e3210931ac26"))) ? ((tableFamilyDesc) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("303d8706-9a6b-3130-8fe2-a0a5725241ae"))) ? ((tableFamilyDesc == null) && ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("8738c9cd-3002-36a0-bf95-26817f68ec77"))) ? (replBarrierFamilyDesc == null) : (((KnobRuntime.check(java.util.UUID.fromString("f4d15135-1ce5-3abb-849e-f866c438174e"))) ? ((tableFamilyDesc == null) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("022db5b8-b02b-3503-aa1d-96ff99b404af"))) ? ((replBarrierFamilyDesc) == (null)) : (tableFamilyDesc == null && replBarrierFamilyDesc == null))))))))))))))))))))))))))))))))))))))))))))))))) {
       // create missing CFs in meta table after master is set to 'initialized'.
       createMissingCFsInMetaDuringUpgrade(metaDescriptor);
 
@@ -1271,12 +1697,12 @@ public class HMaster extends HRegionServer implements MasterServices {
         + "initialization should be uninterrupted");
     }
 
-    if (maintenanceMode) {
-      LOG.info("Detected repair mode, skipping final initialization steps.");
+    if (((KnobRuntime.check(java.util.UUID.fromString("a7a67aff-639d-3252-b9fc-9c6893707e43"))) ? (waitForMetaOnline()) : (((KnobRuntime.check(java.util.UUID.fromString("54a50099-c92b-3d66-bd1b-f837f0134f23"))) ? (isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("7ff7e4e4-36ac-3e1d-9335-78731063dbaa"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("f61c7bc0-fe1f-3f30-90cc-2e7b3b4879bb"))) ? (!maintenanceMode) : (((KnobRuntime.check(java.util.UUID.fromString("04043455-8a0c-3a55-9f0e-41743776f90c"))) ? (!waitForMetaOnline()) : (((KnobRuntime.check(java.util.UUID.fromString("f7694660-d44a-3b95-b60d-26cb7c0a6171"))) ? (!waitForNamespaceOnline()) : (((KnobRuntime.check(java.util.UUID.fromString("2e68e9c5-935f-3b07-ba79-243ad08a1883"))) ? (waitForNamespaceOnline()) : (((KnobRuntime.check(java.util.UUID.fromString("6be07be4-3193-39d0-a069-22a51a539478"))) ? (true) : (maintenanceMode))))))))))))))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("e506849f-a16f-3268-8a95-8f6311133425"))) { LOG.error("Detected repair mode, skipping final initialization steps."); } else if (KnobRuntime.check(java.util.UUID.fromString("188162ff-b233-30bf-8379-5b34d5051afa"))) { LOG.warn("Detected repair mode, skipping final initialization steps."); } else { LOG.info("Detected repair mode, skipping final initialization steps."); }
       return;
     }
 
-    assignmentManager.checkIfShouldMoveSystemRegionAsync();
+    if (KnobRuntime.check(java.util.UUID.fromString("acb31ed6-039c-322d-99d6-9605c60bf581"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("38c0aa06-9403-3177-8da3-11d01c3fa50a"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("9d23cdec-7a9d-31f8-8ad3-b79f6c9c2e89"))) { initializeMemStoreChunkCreator(); } else { assignmentManager.checkIfShouldMoveSystemRegionAsync(); }
     status.setStatus("Starting quota manager");
     initQuotaManager();
     if (QuotaUtil.isQuotaEnabled(conf)) {
@@ -1305,7 +1731,7 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     // Check and set the znode ACLs if needed in case we are overtaking a non-secure configuration
     status.setStatus("Checking ZNode ACLs");
-    zooKeeper.checkAndSetZNodeAcls();
+    if (KnobRuntime.check(java.util.UUID.fromString("68286c46-1c55-364b-b033-01a647e87442"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("a886a668-b69c-3bc1-9111-1cfb59b2160b"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("7d2327d5-73ad-390c-a5ae-f840a4b3e645"))) { tryMigrateMetaLocationsFromZooKeeper(); } else { zooKeeper.checkAndSetZNodeAcls(); }
 
     status.setStatus("Initializing MOB Cleaner");
     initMobCleaner();
@@ -1320,7 +1746,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       }
     }
 
-    zombieDetector.interrupt();
+    if (KnobRuntime.check(java.util.UUID.fromString("ffec3baf-f649-3a14-9ed5-b3bf859c8bcc"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("9f1be578-88ef-33ee-85b8-9792a7d34386"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("5d6b3c52-cf5b-3f03-8537-2e9201794fba"))) { initializeMemStoreChunkCreator(); } else { zombieDetector.interrupt(); }
 
     /*
      * After master has started up, lets do balancer post startup initialization. Since this runs in
@@ -1339,7 +1765,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     this.oldWALsDirSizeChore = new OldWALsDirSizeChore(this);
     getChoreService().scheduleChore(this.oldWALsDirSizeChore);
 
-    status.markComplete("Progress after master initialized complete");
+    if (KnobRuntime.check(java.util.UUID.fromString("e4dd1593-4819-31e4-a688-fec8ce4695cf"))) { status.setStatus("Progress after master initialized complete"); } else { status.markComplete("Progress after master initialized complete"); }
   }
 
   /**
@@ -1370,7 +1796,10 @@ public class HMaster extends HRegionServer implements MasterServices {
         && tries > 0
     ) {
       try {
-        Thread.sleep(1000);
+if(KnobRuntime.check(java.util.UUID.fromString("0a73df45-46e8-3571-8fce-d3e8e8c60b84"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("1e784707-66e3-3332-836f-35a9b47a2241"))) { Threads.sleep(1000); } else { Thread.sleep(1000); }
       } catch (InterruptedException e) {
         throw new IOException("Wait interrupted", e);
       }
@@ -1380,6 +1809,15 @@ public class HMaster extends HRegionServer implements MasterServices {
       throw new HBaseIOException(
         "Failed to add table and rep_barrier CFs to meta in a given time.");
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("702906e4-22c9-3a34-9dce-c7bddc130685"))) {
+pid = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("83366018-bc4d-3840-be55-0444eafa4c7a"))) {
+pid += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("625ba2a5-5aa8-3116-87e0-990879a7c581"))) {
+pid = -1;
+}
       Procedure<?> result = getMasterProcedureExecutor().getResult(pid);
       if (result != null && result.isFailed()) {
         throw new IOException("Failed to add table and rep_barrier CFs to meta. "
@@ -1459,6 +1897,20 @@ public class HMaster extends HRegionServer implements MasterServices {
    */
   @InterfaceAudience.Private
   public void updateConfigurationForQuotasObserver(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("f970bf09-46ab-31d1-b270-763a2cf6fbae"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("328d6124-bd4e-3fff-8859-a791cfd04103"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     // We're configured to not delete quotas on table deletion, so we don't need to add the obs.
     if (
       !conf.getBoolean(MasterQuotasObserver.REMOVE_QUOTA_ON_TABLE_DELETE,
@@ -1469,7 +1921,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     String[] masterCoprocs = conf.getStrings(CoprocessorHost.MASTER_COPROCESSOR_CONF_KEY);
     final int length = null == masterCoprocs ? 0 : masterCoprocs.length;
     String[] updatedCoprocs = new String[length + 1];
-    if (length > 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("fe74c038-ba32-3665-9e3c-a9da265e68b0"))) ? ((length) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("82f2a963-5b4b-331c-ac25-7fa94b6f9856"))) ? ((length) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("423a9d72-09c9-301f-b820-f177253c0dba"))) ? ((length) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e822b3ed-424d-3461-b497-e4372864ae5c"))) ? ((length) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("67a17bed-b97a-3541-8fb9-c7dba179861b"))) ? ((length) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b7493815-5a31-3952-af12-0a0993fce934"))) ? ((length) >= (0)) : (length > 0))))))))))))) {
       System.arraycopy(masterCoprocs, 0, updatedCoprocs, 0, masterCoprocs.length);
     }
     updatedCoprocs[length] = MasterQuotasObserver.class.getName();
@@ -1508,6 +1960,15 @@ public class HMaster extends HRegionServer implements MasterServices {
   // Will be overridden in tests
   @InterfaceAudience.Private
   protected void initClusterSchemaService() throws IOException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("44e8cd90-4bb2-3582-8327-64e6b4b121f5"))) {
+throw new InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7869841f-d6ba-36f3-8fdb-b067d6f7533b"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("576028ec-bcd0-3afa-a1d2-0dcf3a4df921"))) {
+throw new java.io.IOException("Injected exception");
+}
     this.clusterSchemaService = new ClusterSchemaServiceImpl(this);
     this.clusterSchemaService.startAsync();
     try {
@@ -1551,6 +2012,9 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public ServerManager getServerManager() {
+if(KnobRuntime.check(java.util.UUID.fromString("a1205338-a689-309f-ac46-a57e449fb2ab"))) {
+return null;
+}
     return this.serverManager;
   }
 
@@ -1581,6 +2045,12 @@ public class HMaster extends HRegionServer implements MasterServices {
    * does if need to install an unexpected exception handler.
    */
   private void startServiceThreads() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("329a20b9-eaec-3359-96e5-a6c90440e5da"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c6219fc3-5376-3e0a-849c-dabc8fcd17e2"))) {
+return;
+}
     // Start the executor service pools
     final int masterOpenRegionPoolSize = conf.getInt(HConstants.MASTER_OPEN_REGION_THREADS,
       HConstants.MASTER_OPEN_REGION_THREADS_DEFAULT);
@@ -1664,6 +2134,281 @@ public class HMaster extends HRegionServer implements MasterServices {
           new HFileCleaner("ArchiveCustomHFileCleaner-" + path.getName(), cleanerInterval, this,
             conf, getMasterFileSystem().getFileSystem(), new Path(archiveDir, path),
             HFileCleaner.HFILE_CLEANER_CUSTOM_PATHS_PLUGINS, sharedHFileCleanerPool, params, null);
+if(KnobRuntime.check(java.util.UUID.fromString("b682fd40-6137-3c7c-916f-4d51013229cf"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cba43f4b-4bb9-365a-a769-547b3a8fbb5b"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f7d8db09-43d1-38a4-a302-79a18f9573e9"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("cleanerThreadTimeoutMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("acbf9861-475c-3608-9933-cf70389b9bbe"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("cleanerThreadCheckIntervalMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eb689fc4-8fc8-3c30-ac46-d4b86944cb05"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("73a3062c-0d9f-3cd0-ac85-bb1123b9cc8f"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("06efb0ec-a576-3c1a-83e8-bd807bb78282"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("de5e4a8a-322e-306c-8f0f-582280b84f00"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e5d67df2-ce13-38f2-aed7-48a6c77a3269"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3244571f-3d4a-3a66-85cb-a59a532b0bd6"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("cleanerThreadTimeoutMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c2c9c1f4-5a9f-3526-95a9-e4355434be25"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("46e0d2da-7416-34c3-b373-b0dcce1c6dd9"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8774a7d8-1527-3521-b2fe-535ec8c52281"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c205f476-1416-3967-83a1-c322b530b5bf"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a78cf94a-0c84-3492-b426-b4bfbc55ac03"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("cleanerThreadCheckIntervalMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a811fae6-88b7-321a-a089-34812ccd087e"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("25e0f2c2-97aa-39c1-8928-378865e310e0"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1ca87187-cfd9-3547-a22b-9171ac3b1dd0"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7682d0b0-9c6c-3f1e-8a25-61aa3316f84f"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("running");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(cleaner);
+    field.set(cleaner, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c55fe66e-d4ad-3ac9-bfb5-067bb06a635f"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("77221aab-2b4f-3cf0-aa6d-eea3f8310bf1"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("54b6c9a8-9aa1-3823-b255-c69725d77781"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("11da7b47-08cb-3667-87e9-00a1989d95c3"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e6263da0-3cd3-36dd-b74f-110488310af2"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2a07386e-e2cc-3982-9ad3-3de679ed3373"))) {
+try {
+    java.lang.reflect.Field field = cleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(cleaner));
+    field.set(cleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         hfileCleaners.add(cleaner);
         hfileCleanerPaths.add(path);
       }
@@ -1674,9 +2419,262 @@ public class HMaster extends HRegionServer implements MasterServices {
     hfileCleaners.add(0,
       new HFileCleaner(cleanerInterval, this, conf, getMasterFileSystem().getFileSystem(),
         archiveDir, exclusiveHFileCleanerPool, params, hfileCleanerPaths));
-    hfileCleanerPaths.add(0, archiveDir);
+    if (KnobRuntime.check(java.util.UUID.fromString("711f1259-813f-3102-933d-4ef8c249a7ce"))) { hfileCleanerPaths.add(0, getMasterWalManager().getOldLogDir()); } else { hfileCleanerPaths.add(0, archiveDir); }
     // Schedule all the hfile cleaners
     for (HFileCleaner hFileCleaner : hfileCleaners) {
+if(KnobRuntime.check(java.util.UUID.fromString("152782a8-d3e6-3322-9d04-9028a7148d08"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dcf46b53-e3ee-339c-b2d3-eb9dc968eca1"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("59b9e181-0821-3598-9de2-b7be0b2203ef"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0cb7e0b8-66a9-3300-b229-5110c743560f"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4b0be381-03f6-3c4f-8d13-566671d4b227"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eec69db5-225a-3f2d-9cf0-e1a38f3d955d"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("cleanerThreadCheckIntervalMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1c1cad03-fa77-3db4-989f-383e7a55e6ea"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8c38291e-e433-31c3-9512-3215f79daf4f"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3e8a78c5-cf39-35a2-8d4b-e051b748473c"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3bb62892-5643-3503-8662-67347fb415e9"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d77bc9f2-86c7-34be-a8b1-c0adc640114a"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("running");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(hFileCleaner);
+    field.set(hFileCleaner, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b980ebe7-fa95-3c8f-801a-9f2ce393d268"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a9997caa-cb8d-3ef7-9de6-e580c49a9403"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("cleanerThreadTimeoutMsec");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8c9e594d-4a2e-3e84-85f2-9f48b13700ed"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cc8927f8-9219-3d77-9f1e-ff6687cab6c7"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("463df6f8-c099-34f4-bf73-3a5910e6824a"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("30ebdffe-3545-386c-98c0-aa0904b8a54a"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ad2fcf8e-b572-3a98-888c-4d9aa490456c"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("59bb9447-9d8b-321b-9157-053e68d584d4"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("throttlePoint");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d5bde742-12f9-32e6-88ca-dfd0a6e73204"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e229f33b-01c9-33f3-9cb1-d782193f77b4"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5e980ce0-b1c1-35b3-b1e2-48dab9a8ff85"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("smallQueueInitSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("65e3622c-7c30-3e6e-85d7-a94ca9e7813f"))) {
+try {
+    java.lang.reflect.Field field = hFileCleaner.getClass().getDeclaredField("largeFileDeleteThreadNumber");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(hFileCleaner));
+    field.set(hFileCleaner, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       getChoreService().scheduleChore(hFileCleaner);
     }
 
@@ -1684,7 +2682,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     // only if hbase.regions.recovery.store.file.ref.count has value > 0
     final int maxStoreFileRefCount = conf.getInt(HConstants.STORE_FILE_REF_COUNT_THRESHOLD,
       HConstants.DEFAULT_STORE_FILE_REF_COUNT_THRESHOLD);
-    if (maxStoreFileRefCount > 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("55a4d9ee-7319-3e98-9e4f-dfa991a6362a"))) ? ((maxStoreFileRefCount) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b545fbef-82eb-3622-91f4-2243035d78dc"))) ? ((maxStoreFileRefCount) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("8d8edc41-b6fb-35fb-a444-918a20d4729a"))) ? ((maxStoreFileRefCount) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("fa10c8cc-c7b3-3506-9e42-b3cc0407847f"))) ? ((maxStoreFileRefCount) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("06325852-99cf-3fd3-adb6-ec10c909806a"))) ? ((maxStoreFileRefCount) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("2d05d7c8-89db-3860-81f8-1f6ad786e057"))) ? ((maxStoreFileRefCount) < (0)) : (maxStoreFileRefCount > 0))))))))))))) {
       this.regionsRecoveryChore = new RegionsRecoveryChore(this, conf, this);
       getChoreService().scheduleChore(this.regionsRecoveryChore);
     } else {
@@ -1702,16 +2700,16 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     final boolean isSnapshotChoreEnabled = this.snapshotCleanupStateStore.get();
     this.snapshotCleanerChore = new SnapshotCleanerChore(this, conf, getSnapshotManager());
-    if (isSnapshotChoreEnabled) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("71dd404d-8069-3c91-9643-b1a6233ba7d2"))) ? (!isSnapshotChoreEnabled) : (((KnobRuntime.check(java.util.UUID.fromString("b3013d07-055d-30de-8bd7-040a34027ba6"))) ? (true) : (isSnapshotChoreEnabled))))) {
       getChoreService().scheduleChore(this.snapshotCleanerChore);
     } else {
-      if (LOG.isTraceEnabled()) {
-        LOG.trace("Snapshot Cleaner Chore is disabled. Not starting up the chore..");
+      if (((KnobRuntime.check(java.util.UUID.fromString("da74cf5b-eb88-3ebb-8399-23ee073bf23a"))) ? (isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("3b22e717-43fc-3d8d-a6dc-f439aef13ec4"))) ? (isAborted()) : (LOG.isTraceEnabled()))))) {
+        if (KnobRuntime.check(java.util.UUID.fromString("9b06cad8-16c1-38b2-b0b3-b8e8c6201857"))) { LOG.error("Snapshot Cleaner Chore is disabled. Not starting up the chore.."); } else if (KnobRuntime.check(java.util.UUID.fromString("8c50b142-2cd4-3e58-b51a-999c1f23544f"))) { LOG.info("Snapshot Cleaner Chore is disabled. Not starting up the chore.."); } else if (KnobRuntime.check(java.util.UUID.fromString("3e4cba0e-081c-3faf-abc9-73433a18885f"))) { LOG.warn("Snapshot Cleaner Chore is disabled. Not starting up the chore.."); } else { LOG.trace("Snapshot Cleaner Chore is disabled. Not starting up the chore.."); }
       }
     }
     serviceStarted = true;
-    if (LOG.isTraceEnabled()) {
-      LOG.trace("Started service threads");
+    if (((KnobRuntime.check(java.util.UUID.fromString("31155674-c0a9-3762-8469-56154d9a3082"))) ? (isAborted()) : (((KnobRuntime.check(java.util.UUID.fromString("8fcdcfae-7dad-3470-9576-50f158788ddd"))) ? (isStopped()) : (LOG.isTraceEnabled()))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("794e13c8-1d94-3750-8fcc-f2461ece8a3d"))) { LOG.info("Started service threads"); } else if (KnobRuntime.check(java.util.UUID.fromString("9a6cb436-317c-33a7-9c36-50117f27dd02"))) { LOG.warn("Started service threads"); } else if (KnobRuntime.check(java.util.UUID.fromString("6e649801-51ec-3f42-8f03-3f55fe62c785"))) { LOG.error("Started service threads"); } else { LOG.trace("Started service threads"); }
     }
   }
 
@@ -1722,7 +2720,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       try {
         masterJettyServer.stop();
       } catch (Exception e) {
-        LOG.error("Failed to stop master jetty server", e);
+        if (KnobRuntime.check(java.util.UUID.fromString("eed94c98-234b-365c-8a8e-5507bd76c683"))) { abort("Failed to stop master jetty server", e); } else { LOG.error("Failed to stop master jetty server", e); }
       }
     }
     stopChores();
@@ -1748,37 +2746,37 @@ public class HMaster extends HRegionServer implements MasterServices {
     // example.
     stopProcedureExecutor();
 
-    if (regionNormalizerManager != null) {
-      regionNormalizerManager.stop();
+    if (((KnobRuntime.check(java.util.UUID.fromString("7a10d9af-b821-3f0c-b972-0752a98b64a5"))) ? ((regionNormalizerManager) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("65160816-506c-3c89-ab18-e64c98aeb929"))) ? ((regionNormalizerManager) == (null)) : (regionNormalizerManager != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("36af6f03-d5c5-3fb5-854a-ef6c4014bbd7"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("8ec04dd1-df95-3d3b-ba23-c24ddffa386d"))) { registerConfigurationObservers(); } else { regionNormalizerManager.stop(); }
     }
     if (this.quotaManager != null) {
-      this.quotaManager.stop();
+      if (KnobRuntime.check(java.util.UUID.fromString("54ec0abe-5a86-3faa-99e1-f55983b918f0"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("ae4d234d-d581-3465-b029-6be6700a11aa"))) { initializeMemStoreChunkCreator(); } else { this.quotaManager.stop(); }
     }
 
-    if (this.activeMasterManager != null) {
-      this.activeMasterManager.stop();
+    if (((KnobRuntime.check(java.util.UUID.fromString("f554db38-b524-3c65-bc7f-c430dbc19761"))) ? ((this.activeMasterManager) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9b117c28-25a3-3428-9128-960e8ea29f24"))) ? ((this.activeMasterManager) == (null)) : (this.activeMasterManager != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("1d5e8d6c-7361-3c19-9464-8638071615f1"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("c366deac-08d6-3918-b22e-f5af93d99d50"))) { initializeMemStoreChunkCreator(); } else { this.activeMasterManager.stop(); }
     }
     if (this.serverManager != null) {
       this.serverManager.stop();
     }
     if (this.assignmentManager != null) {
-      this.assignmentManager.stop();
+      if (KnobRuntime.check(java.util.UUID.fromString("249c3337-5695-30be-99ba-6425de769340"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("e36522c6-01d6-3560-8de0-bc9f66601cbd"))) { initializeMemStoreChunkCreator(); } else { this.assignmentManager.stop(); }
     }
 
     if (masterRegion != null) {
-      masterRegion.close(isAborted());
+      if (KnobRuntime.check(java.util.UUID.fromString("867d70ac-a59c-3a30-8ff4-00dab5dea76a"))) { masterRegion.close(isStopped()); } else if (KnobRuntime.check(java.util.UUID.fromString("0c95b380-bf8f-3b00-938d-d744cc5200c8"))) { setInitialized(isStopped()); } else { masterRegion.close(isAborted()); }
     }
     if (this.walManager != null) {
       this.walManager.stop();
     }
     if (this.fileSystemManager != null) {
-      this.fileSystemManager.stop();
+      if (KnobRuntime.check(java.util.UUID.fromString("a1a587af-384c-3611-9ca5-833d3acb0b08"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("82c8ec9f-f1bc-39a4-93df-02601772353f"))) { initializeMemStoreChunkCreator(); } else { this.fileSystemManager.stop(); }
     }
-    if (this.mpmHost != null) {
-      this.mpmHost.stop("server shutting down.");
+    if (((KnobRuntime.check(java.util.UUID.fromString("e89e1758-28c3-346d-ba96-73ce2370bc4f"))) ? ((this.mpmHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1e6353aa-a800-3dcf-91a9-238cf98798b0"))) ? ((this.mpmHost) != (null)) : (this.mpmHost != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("319a8d88-dcac-3e5e-bd00-5f5b60a13798"))) { stop("server shutting down."); } else { this.mpmHost.stop("server shutting down."); }
     }
     if (this.regionServerTracker != null) {
-      this.regionServerTracker.stop();
+      if (KnobRuntime.check(java.util.UUID.fromString("446cea4f-482b-34e4-9f38-e46da462a2b0"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("f762d458-7204-36f3-8a19-127ec803c920"))) { registerConfigurationObservers(); } else { this.regionServerTracker.stop(); }
     }
   }
 
@@ -1794,6 +2792,9 @@ public class HMaster extends HRegionServer implements MasterServices {
 
       @Override
       public void abortProcess() {
+if(KnobRuntime.check(java.util.UUID.fromString("0d8128c2-0c7b-3a1f-80ae-22c79bd36e9d"))) {
+return;
+}
         abort("The Procedure Store lost the lease", null);
       }
     });
@@ -1827,9 +2828,18 @@ public class HMaster extends HRegionServer implements MasterServices {
    * @param on indicates whether Snapshot Cleanup Chore is to be run
    */
   void switchSnapshotCleanup(final boolean on, final boolean synchronous) throws IOException {
-    if (synchronous) {
+if(KnobRuntime.check(java.util.UUID.fromString("87ac7d81-3291-38ca-bba5-f8bd054cc9d9"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("86f5e728-6378-3199-a82d-17953dc31423"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("e4294749-2edb-3754-aa69-27862bf04114"))) ? (!synchronous) : (synchronous))) {
       synchronized (this.snapshotCleanerChore) {
-        switchSnapshotCleanup(on);
+if(KnobRuntime.check(java.util.UUID.fromString("0c2d38fe-496a-3db9-9de5-050a44d043c7"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("aad54e3a-7ca7-3629-9031-aa90996ab575"))) { setInitialized(!on); } else if (KnobRuntime.check(java.util.UUID.fromString("be5b0dfd-bfc4-3502-b091-51eabab74bae"))) { switchSnapshotCleanup(!on); } else { switchSnapshotCleanup(on); }
       }
     } else {
       switchSnapshotCleanup(on);
@@ -1837,7 +2847,13 @@ public class HMaster extends HRegionServer implements MasterServices {
   }
 
   private void switchSnapshotCleanup(final boolean on) throws IOException {
-    snapshotCleanupStateStore.set(on);
+if(KnobRuntime.check(java.util.UUID.fromString("8da5d84b-5079-32aa-84a9-5befc4dc4ef6"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5632f1dd-2cbb-3bc7-8ccd-f0f2e1afbc9e"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("ef0e5548-ca27-3261-80d3-6ce65d263b35"))) { snapshotCleanupStateStore.set(!on); } else { snapshotCleanupStateStore.set(on); }
     if (on) {
       getChoreService().scheduleChore(this.snapshotCleanerChore);
     } else {
@@ -1846,26 +2862,76 @@ public class HMaster extends HRegionServer implements MasterServices {
   }
 
   private void stopProcedureExecutor() {
-    if (procedureExecutor != null) {
-      configurationManager.deregisterObserver(procedureExecutor.getEnvironment());
+if(KnobRuntime.check(java.util.UUID.fromString("f4275fe3-7fb6-382c-ae8e-f09973d2106f"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("43b773f1-6985-3bc0-a359-0d0e0f3732e0"))) ? ((procedureExecutor) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("f070d21f-81e3-3a27-8fb8-c0c9a9e7eb7d"))) ? ((procedureExecutor) != (null)) : (procedureExecutor != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("dc761b8b-86bf-37dc-b2a5-053fe436f8cf"))) { configurationManager.registerObserver(procedureExecutor.getEnvironment()); } else { configurationManager.deregisterObserver(procedureExecutor.getEnvironment()); }
       procedureExecutor.getEnvironment().getRemoteDispatcher().stop();
-      procedureExecutor.stop();
-      procedureExecutor.join();
+      if (KnobRuntime.check(java.util.UUID.fromString("1ced9a1f-6597-3030-8af3-343d1f6a9df8"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("9132bc54-227a-3f67-bb6c-208f2ff476a6"))) { registerConfigurationObservers(); } else { procedureExecutor.stop(); }
+      if (KnobRuntime.check(java.util.UUID.fromString("fb72f8d3-53b8-336e-aaea-c63e8628931c"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("30d2d345-4f2e-3097-a5b6-d1e0df93fa32"))) { registerConfigurationObservers(); } else { procedureExecutor.join(); }
       procedureExecutor = null;
     }
 
     if (procedureStore != null) {
-      procedureStore.stop(isAborted());
+      if (KnobRuntime.check(java.util.UUID.fromString("81dfabe6-c31c-3e94-82d6-a0d7249be080"))) { setInitialized(isStopped()); } else { procedureStore.stop(isAborted()); }
       procedureStore = null;
     }
   }
 
   private void stopChores() {
-    if (getChoreService() != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("7d5f9558-d38d-3c7c-8e99-21c9aeb0f78d"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("4f7db23c-7e68-3f4f-8fc9-0abfd5d0eae5"))) ? ((getChoreService()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3e1971ca-ceab-30d5-9b81-14984033c226"))) ? ((getChoreService()) != (null)) : (getChoreService() != null))))) {
       shutdownChore(mobFileCleanerChore);
+if(KnobRuntime.check(java.util.UUID.fromString("e3f9af0f-9557-3cb5-9275-42f43eb2d79d"))) {
+try {
+    java.lang.reflect.Field field = mobFileCompactionChore.getClass().getDeclaredField("regionBatchSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(mobFileCompactionChore));
+    field.set(mobFileCompactionChore, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("71ffff4d-ad48-32f3-bd2d-58a56fdf91cc"))) {
+try {
+    java.lang.reflect.Field field = mobFileCompactionChore.getClass().getDeclaredField("regionBatchSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(mobFileCompactionChore));
+    field.set(mobFileCompactionChore, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2d287811-2dcb-37be-9626-4b4925d0a3f3"))) {
+try {
+    java.lang.reflect.Field field = mobFileCompactionChore.getClass().getDeclaredField("regionBatchSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(mobFileCompactionChore));
+    field.set(mobFileCompactionChore, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7369bcba-5513-3bec-b806-2f91b75e51be"))) {
+try {
+    java.lang.reflect.Field field = mobFileCompactionChore.getClass().getDeclaredField("regionBatchSize");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(mobFileCompactionChore));
+    field.set(mobFileCompactionChore, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       shutdownChore(mobFileCompactionChore);
       shutdownChore(balancerChore);
-      if (regionNormalizerManager != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("b66cec86-a425-3181-aad9-7ffdadab015f"))) ? ((regionNormalizerManager) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b961bc96-7562-3b13-abfc-da89d83e0017"))) ? ((regionNormalizerManager) == (null)) : (regionNormalizerManager != null))))) {
         shutdownChore(regionNormalizerManager.getRegionNormalizerChore());
       }
       shutdownChore(clusterStatusChore);
@@ -1875,13 +2941,57 @@ public class HMaster extends HRegionServer implements MasterServices {
       shutdownChore(logCleaner);
       if (hfileCleaners != null) {
         for (ScheduledChore chore : hfileCleaners) {
-          chore.shutdown();
+          if (KnobRuntime.check(java.util.UUID.fromString("7b4369be-50a9-3915-8c27-2dee9cdcc0ff"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("0ce8b70e-d7fa-327a-9d33-b52df23bd841"))) { initializeMemStoreChunkCreator(); } else { chore.shutdown(); }
         }
         hfileCleaners = null;
       }
       shutdownChore(replicationBarrierCleaner);
       shutdownChore(snapshotCleanerChore);
       shutdownChore(hbckChore);
+if(KnobRuntime.check(java.util.UUID.fromString("d463ea84-50a7-33c4-855e-08ce9b33e6f8"))) {
+try {
+    java.lang.reflect.Field field = regionsRecoveryChore.getClass().getDeclaredField("storeFileRefCountThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionsRecoveryChore));
+    field.set(regionsRecoveryChore, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c368f0e4-7d61-30c0-ab4d-c97113d63bdc"))) {
+try {
+    java.lang.reflect.Field field = regionsRecoveryChore.getClass().getDeclaredField("storeFileRefCountThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionsRecoveryChore));
+    field.set(regionsRecoveryChore, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4a2f9d29-7a4a-3bf5-9388-3a9cfdc8f411"))) {
+try {
+    java.lang.reflect.Field field = regionsRecoveryChore.getClass().getDeclaredField("storeFileRefCountThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionsRecoveryChore));
+    field.set(regionsRecoveryChore, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3b74df77-f430-3966-9e2b-9d6690868502"))) {
+try {
+    java.lang.reflect.Field field = regionsRecoveryChore.getClass().getDeclaredField("storeFileRefCountThreshold");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(regionsRecoveryChore));
+    field.set(regionsRecoveryChore, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       shutdownChore(regionsRecoveryChore);
       shutdownChore(rollingUpgradeChore);
       shutdownChore(oldWALsDirSizeChore);
@@ -1897,7 +3007,7 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     // The call could be from the local regionserver,
     // in which case, there is no remote address.
-    if (ia == null && serverStartCode == startcode) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2804e433-cb02-3811-bc62-a43c53b1871a"))) ? (((ia) == (null)) || (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("26c7645a-f8b7-3d9e-a8d0-77cf856f2c64"))) ? ((ia == null) || ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("14ccb49e-d746-3d9d-ae82-9f4d6e7ccb43"))) ? (((ia) != (null)) && ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("057067d9-fa5e-3d3e-9dfe-0bdcc449b6be"))) ? ((serverStartCode) != (startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("d0075700-a6af-308c-ac83-09e2328cd912"))) ? ((ia) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("cd494a84-ee00-3b77-88fc-c530a8dba65a"))) ? (ia == null) : (((KnobRuntime.check(java.util.UUID.fromString("7c90fb14-e577-36d2-89b6-adf1746676f2"))) ? (((ia) == (null)) && (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("ceb5a2df-6210-3cef-be8a-5e0f4b974cb1"))) ? ((ia == null) && ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("2508fa60-f69d-3372-8a71-20ca2c0d67f1"))) ? (((ia) != (null)) || (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("6631f6b0-1cfc-3a9f-a696-4078a061eae3"))) ? ((ia == null) && (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("742b1f5e-dd0c-39b2-81fc-397fbde8549a"))) ? (((ia) != (null)) && ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("c35e9e4e-a13d-3e6e-83b7-497b44d8c83e"))) ? (((ia) == (null)) && ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("21509310-9ef8-307b-9c55-f52b02a7bd90"))) ? (((ia) != (null)) || ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("105f506f-33e9-3133-8414-006c2b59f055"))) ? ((ia == null) || ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("dd5f54a3-efe4-368b-9412-bf67180157d5"))) ? (((ia) != (null)) && (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("94935938-e272-37e5-a58a-03b81396537d"))) ? (((ia) == (null)) || ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("c1ee8348-1900-30de-8aaf-049fabb81bc4"))) ? (serverStartCode == startcode) : (((KnobRuntime.check(java.util.UUID.fromString("ce96f829-a8f4-393a-b1b7-c1ead7ef18a8"))) ? ((serverStartCode) == (startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("4f601107-711d-3217-a5ed-71ea0f0d33dc"))) ? (((ia) != (null)) || ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("9154195f-f33f-3fd3-a8bf-269dabd69922"))) ? ((ia == null) && ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("04686306-e88c-385a-b27f-9fbc49122d22"))) ? ((ia == null) || (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("34e99f63-9362-317e-9af5-e1607d1e2fa8"))) ? ((ia) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6aeb879a-6005-325f-aa65-3f7f9f05dbca"))) ? (((ia) == (null)) || ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("c5a429da-c7ac-34b3-9524-af12b1d2d063"))) ? (((ia) == (null)) && ((serverStartCode) == (startcode))) : (ia == null && serverStartCode == startcode))))))))))))))))))))))))))))))))))))))))))))))))) {
       InetSocketAddress isa = rpcServices.getSocketAddress();
       if (isa != null && isa.getPort() == port) {
         ia = isa.getAddress();
@@ -1939,7 +3049,10 @@ public class HMaster extends HRegionServer implements MasterServices {
         && this.assignmentManager.getRegionStates().hasRegionsInTransition()
     ) {
       try {
-        Thread.sleep(100);
+if(KnobRuntime.check(java.util.UUID.fromString("ecddde7d-04f4-36a7-9e96-e8c6481b1380"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("abcc1ae0-828a-3645-8cea-2f7987a62034"))) { Threads.sleep(100); } else { Thread.sleep(100); }
       } catch (InterruptedException ie) {
         interrupted = true;
       }
@@ -1954,16 +3067,25 @@ public class HMaster extends HRegionServer implements MasterServices {
     ) {
       try {
         // sleep if the number of regions in transition exceeds the limit
-        Thread.sleep(100);
+if(KnobRuntime.check(java.util.UUID.fromString("86e74a5d-5430-3f49-b9fe-b9e7f32b368d"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("c3ddad31-d24b-3de9-8617-06771c5f2578"))) { Threads.sleep(100); } else { Thread.sleep(100); }
       } catch (InterruptedException ie) {
         interrupted = true;
       }
     }
 
-    if (interrupted) Thread.currentThread().interrupt();
+    if (((KnobRuntime.check(java.util.UUID.fromString("a33296e6-d115-3caa-85ef-d029fd6bd903"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("b3c77226-640f-365a-bf54-19ed3326e075"))) ? (!interrupted) : (((KnobRuntime.check(java.util.UUID.fromString("557ee90c-6461-351c-b3b1-d3c70a7bcdb6"))) ? (true) : (interrupted))))))) Thread.currentThread().interrupt();
   }
 
   public BalanceResponse balance() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("4e3690d2-9cb1-3e72-ab63-8d31fbe3197e"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("46ed54ba-7abf-307c-98c0-b2a664cb0c3e"))) {
+return null;
+}
     return balance(BalanceRequest.defaultInstance());
   }
 
@@ -1976,6 +3098,9 @@ public class HMaster extends HRegionServer implements MasterServices {
    */
   public BalanceResponse balanceOrUpdateMetrics() throws IOException {
     synchronized (this.balancer) {
+if(KnobRuntime.check(java.util.UUID.fromString("00664b13-dc5d-39ba-8796-a1c0e49d0338"))) {
+throw new java.io.IOException("Injected exception");
+}
       BalanceResponse response = balance();
       if (!response.isBalancerRan()) {
         Map<TableName, Map<ServerName, List<RegionInfo>>> assignments =
@@ -1986,7 +3111,7 @@ public class HMaster extends HRegionServer implements MasterServices {
         }
         this.balancer.updateBalancerLoadInfo(assignments);
       }
-      return response;
+      return ((KnobRuntime.check(java.util.UUID.fromString("d4f70303-9200-3a01-8249-c5734318bcfd"))) ? (balance()) : (response));
     }
   }
 
@@ -2347,13 +3472,13 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     try {
       checkInitialized();
-      if (this.cpHost != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("8575bcc5-4771-32ca-9b11-44792072ee52"))) ? ((this.cpHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8f1936ca-a6e8-3ecb-9034-349458a0ff2e"))) ? ((this.cpHost) != (null)) : (this.cpHost != null))))) {
         this.cpHost.preMove(hri, rp.getSource(), rp.getDestination());
       }
 
       TransitRegionStateProcedure proc =
         this.assignmentManager.createMoveRegionProcedure(rp.getRegionInfo(), rp.getDestination());
-      if (conf.getBoolean(WARMUP_BEFORE_MOVE, DEFAULT_WARMUP_BEFORE_MOVE)) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("c5fa94c0-2ffd-393e-9b5d-cfab4f6070a7"))) ? (conf.getBoolean(WARMUP_BEFORE_MOVE, !DEFAULT_WARMUP_BEFORE_MOVE)) : (conf.getBoolean(WARMUP_BEFORE_MOVE, DEFAULT_WARMUP_BEFORE_MOVE)))) {
         // Warmup the region on the destination before initiating the move. this call
         // is synchronous and takes some time. doing it before the source region gets
         // closed
@@ -2361,7 +3486,51 @@ public class HMaster extends HRegionServer implements MasterServices {
           + rp.getDestination());
         serverManager.sendRegionWarmup(rp.getDestination(), hri);
       }
-      LOG.info(getClientIdAuditPrefix() + " move " + rp + ", running balancer");
+      if (KnobRuntime.check(java.util.UUID.fromString("573ddbdb-7f38-31cb-962b-7ebcbe345bf7"))) { LOG.warn(((getClientIdAuditPrefix() + " move ") + (rp)) + (", running balancer")); } else if (KnobRuntime.check(java.util.UUID.fromString("b8175a24-e178-349c-86de-5de1ec33cf91"))) { LOG.error((getClientIdAuditPrefix() + " move " + rp) + (", running balancer")); } else if (KnobRuntime.check(java.util.UUID.fromString("2e84bc26-0bd0-3ede-b6e7-258c401ece3d"))) { LOG.error(((getClientIdAuditPrefix() + " move ") + (rp)) + (", running balancer")); } else if (KnobRuntime.check(java.util.UUID.fromString("55235d3f-bb65-340e-a0f1-72fe8795b53f"))) { LOG.warn((getClientIdAuditPrefix() + " move " + rp) + (", running balancer")); } else if (KnobRuntime.check(java.util.UUID.fromString("7f32f73d-a561-3810-a03e-7d4a1fc32f06"))) { LOG.info(((getClientIdAuditPrefix() + " move ") + (rp)) + (", running balancer")); } else if (KnobRuntime.check(java.util.UUID.fromString("3b66d49e-1d47-32bf-b618-3b065f2dfcf2"))) { LOG.info((getClientIdAuditPrefix() + " move " + rp) + (", running balancer")); } else { LOG.info(getClientIdAuditPrefix() + " move " + rp + ", running balancer"); }
+if(KnobRuntime.check(java.util.UUID.fromString("a5bb68db-642b-3a94-8b63-b80065aa1883"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("evictCache");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("907e6b5f-8532-3c0a-99d1-5664aecc0abe"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("forceRetainmentTotalWait");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(proc));
+    field.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d99b8a0f-0e4c-3a6c-ac85-c10a24a38b08"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("isSplit");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e7d10557-4c44-375b-84b9-ea49b8c5749a"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("forceNewPlan");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       Future<byte[]> future = ProcedureSyncWait.submitProcedure(this.procedureExecutor, proc);
       try {
         // Is this going to work? Will we throw exception on error?
@@ -2482,7 +3651,13 @@ public class HMaster extends HRegionServer implements MasterServices {
     startupTaskGroup = TaskMonitor.createTaskGroup(true, "Master startup");
     try {
       if (activeMasterManager.blockUntilBecomingActiveMaster(timeout, startupTaskGroup)) {
-        finishActiveMasterInitialization();
+if(KnobRuntime.check(java.util.UUID.fromString("a3d6e8ac-ce00-317f-b1c8-e6c97c8762d6"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("65556cad-e1cf-3c9a-9261-3f50067a748f"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("1a588f2c-b2d2-3254-83c2-f14c8096930f"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("0efa7506-b3d9-31d8-ab5c-0b33cc62f352"))) { tryMigrateMetaLocationsFromZooKeeper(); } else if (KnobRuntime.check(java.util.UUID.fromString("2c1d8af9-a60e-3ca3-9885-b25a82fc2da6"))) { initializeMemStoreChunkCreator(); } else { finishActiveMasterInitialization(); }
       }
     } catch (Throwable t) {
       startupTaskGroup.abort("Failed to become active master due to:" + t.getMessage());
@@ -2509,8 +3684,61 @@ public class HMaster extends HRegionServer implements MasterServices {
   @Override
   public long deleteTable(final TableName tableName, final long nonceGroup, final long nonce)
     throws IOException {
-    checkInitialized();
+if(KnobRuntime.check(java.util.UUID.fromString("1508dc10-fd61-3a9a-9a6e-8116a0b2c5cf"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("eeb59d6c-1a2b-3b5e-8596-7fd78f22a2db"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ea314ac3-ff64-3fc8-a6f0-e3fc126c75d4"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3bfcaf21-2cfb-3ba4-a53a-7c3f6bee4dc4"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0dc6b7b6-088f-3179-ac85-fd53c4bf64d3"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6f94bf58-f6d6-3b34-b0c7-1ec57e6d9a85"))) {
+return 0;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("bb11de71-6691-3aa9-9cfa-1a8247d1bf01"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("9a58d45a-7bcb-31f2-97f2-67d7b3f01997"))) { initializeMemStoreChunkCreator(); } else { checkInitialized(); }
 
+if(KnobRuntime.check(java.util.UUID.fromString("edf4db0d-ce45-3c90-bf6e-9ce9bfc7db8a"))) {
+throw new java.io.IOException("Injected exception");
+}
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
@@ -2528,6 +3756,53 @@ public class HMaster extends HRegionServer implements MasterServices {
             new DeleteTableProcedure(procedureExecutor.getEnvironment(), tableName, latch));
           latch.await();
 
+if(KnobRuntime.check(java.util.UUID.fromString("04406349-80d3-39fc-9ecd-800f1bca25f5"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("05866534-7932-3ead-9ea2-6e2d14d368fa"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("856e30eb-635d-3543-942c-4adf4ff88d79"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc8c0293-a8bd-3e5c-b3ec-bab9654de813"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0b2883a4-88bb-388f-94b8-dac426fcd801"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           getMaster().getMasterCoprocessorHost().postDeleteTable(tableName);
         }
 
@@ -2547,6 +3822,53 @@ public class HMaster extends HRegionServer implements MasterServices {
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
         protected void run() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("8c9aba4e-0f60-3990-90f0-1b09a6a817f8"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9af44274-a028-332f-bef0-befcc6d0c47f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2e22c240-93b0-31b4-99b8-f31c3a2c90eb"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("50e39d95-5383-3dee-b175-9d1360a41d04"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1acb5c2c-f8b4-335c-a676-eda53aeac5b3"))) {
+throw new java.io.IOException("Injected exception");
+}
           getMaster().getMasterCoprocessorHost().preTruncateTable(tableName);
 
           LOG.info(getClientIdAuditPrefix() + " truncate " + tableName);
@@ -2585,6 +3907,9 @@ public class HMaster extends HRegionServer implements MasterServices {
             new TruncateRegionProcedure(procedureExecutor.getEnvironment(), regionInfo, latch));
           latch.await();
 
+if(KnobRuntime.check(java.util.UUID.fromString("aa8450df-e6e1-3863-a7ba-a504c8983fcf"))) {
+throw new java.io.IOException("Injected exception");
+}
           getMaster().getMasterCoprocessorHost().postTruncateRegion(regionInfo);
         }
 
@@ -2626,12 +3951,203 @@ public class HMaster extends HRegionServer implements MasterServices {
   @Override
   public long modifyColumn(final TableName tableName, final ColumnFamilyDescriptor descriptor,
     final long nonceGroup, final long nonce) throws IOException {
-    checkInitialized();
+if(KnobRuntime.check(java.util.UUID.fromString("e4d82693-65b0-3954-b74a-b3a1a5dac271"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1fe7fe81-b935-37c7-a452-dd8314427271"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8d048e8d-5c68-30c9-8eec-b80780b3204d"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("033bbc45-0fda-3bd6-aa1e-71c5cf5ba886"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cffc02d4-b233-349c-bd82-54a9723a5de1"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fbbdc64e-91c9-3300-937d-1e764f2959de"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("2a19bd5c-1f85-30bb-a416-6e9617317197"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("954bda70-6344-34d1-a7b9-9c82c83640af"))) { registerConfigurationObservers(); } else { checkInitialized(); }
+if(KnobRuntime.check(java.util.UUID.fromString("03860f38-feb6-3686-bb40-1f3151e29ff9"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ee9fd6e5-16a9-3749-920b-6bbe7b1c335b"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("35c7c926-9742-3f20-816f-f353c2b22d74"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00630b31-b521-32dd-8721-05b4cb5e8ed8"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("72bbba5f-d475-3005-b000-6db46aa6eee6"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     checkTableExists(tableName);
+if(KnobRuntime.check(java.util.UUID.fromString("e5631773-00da-3f1d-83ca-757ce45ebcc5"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("de8cc286-0eb7-3581-898a-04508d74df24"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("52fb3cfc-8c04-3676-86c1-cd1965255055"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f813f78a-5176-3fab-925f-79b86a7e1558"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6123c01f-50b6-3ab1-8199-fea19506d3c7"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return modifyTable(tableName, new TableDescriptorGetter() {
 
       @Override
       public TableDescriptor get() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("70a512b1-4889-39c2-b977-839d11dd8f3b"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f71a6f14-628a-310d-b6af-6707c0c4147c"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("06275e64-cf2e-3be7-8e8f-a085d1a2f2da"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2c7d8d34-82c2-3da2-b5f0-b68d8224103f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("11458b7a-3fe5-3d9a-a744-83f59b72aa9b"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         TableDescriptor old = getTableDescriptors().get(tableName);
         if (!old.hasColumnFamily(descriptor.getName())) {
           throw new InvalidFamilyOperationException("Family '" + descriptor.getNameAsString()
@@ -2646,18 +4162,209 @@ public class HMaster extends HRegionServer implements MasterServices {
   @Override
   public long modifyColumnStoreFileTracker(TableName tableName, byte[] family, String dstSFT,
     long nonceGroup, long nonce) throws IOException {
-    checkInitialized();
+if(KnobRuntime.check(java.util.UUID.fromString("eb35c52a-eb2f-30fe-8ff3-d1f482ddce32"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ca5fb2e9-11ae-3bf1-9fe9-07d43f37ab24"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a8418e54-237d-308e-8e66-397ae2b5f30f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c5d5db57-683a-3934-a7e5-f73a00ef15b7"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2dd5e416-0543-3ee4-a3e1-d5b93f5cf0dc"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d3307b35-e5cc-3830-bfbd-b71577d4c0b7"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("e4b8d2df-1a35-3af4-99bb-d5d47257b2e9"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("e28eba6b-1f22-3b64-8401-fa4d0bd148ea"))) { initializeMemStoreChunkCreator(); } else { checkInitialized(); }
+if(KnobRuntime.check(java.util.UUID.fromString("3a39cae8-5bbb-3ced-87de-72b5df827b8b"))) {
+throw new java.io.IOException("Injected exception");
+}
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
 
         @Override
         protected void run() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("efb96bdb-0801-38f3-98c7-8aecc099094f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("04282507-8afe-3105-818a-023e354648e0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("937323b5-3642-3cea-8c68-4423f8eb1d7a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6bd17063-513a-3bb0-8e4f-a4a8ceca1f68"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("78ca7039-3700-3a28-8f75-ac9573f35b9b"))) {
+throw new java.io.IOException("Injected exception");
+}
           String sft = getMaster().getMasterCoprocessorHost()
             .preModifyColumnFamilyStoreFileTracker(tableName, family, dstSFT);
+if(KnobRuntime.check(java.util.UUID.fromString("c920ed3a-e1df-34d7-81a3-bd20de8dbb8e"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b79c7b08-7cd3-3035-b2ff-d740f3711139"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b5aee630-2631-33da-a162-ba10490ef293"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d3dfa494-0576-326c-95ac-6c6b94388d4a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           LOG.info("{} modify column {} store file tracker of table {} to {}",
             getClientIdAuditPrefix(), Bytes.toStringBinary(family), tableName, sft);
           submitProcedure(new ModifyColumnFamilyStoreFileTrackerProcedure(
             procedureExecutor.getEnvironment(), tableName, family, sft));
+if(KnobRuntime.check(java.util.UUID.fromString("410f2a3c-0a98-31cf-ad4e-03677c274cd0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5401d52a-5f45-301d-a6cd-be7b42b727e4"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("35af65fc-97b5-3e72-ad13-288d9d589779"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("35b03f7b-eaa7-3477-8720-b8d992cc30ee"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4763e91b-4a3e-3c01-a910-8b6a12a8264a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           getMaster().getMasterCoprocessorHost().postModifyColumnFamilyStoreFileTracker(tableName,
             family, dstSFT);
         }
@@ -2802,10 +4509,107 @@ public class HMaster extends HRegionServer implements MasterServices {
   private long modifyTable(final TableName tableName,
     final TableDescriptorGetter newDescriptorGetter, final long nonceGroup, final long nonce,
     final boolean shouldCheckDescriptor, final boolean reopenRegions) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("641539c9-d58b-378e-b319-b710827096d0"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f57fe56-2af4-3498-b892-f9355b51ee44"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b709336b-d66b-3bcf-a941-edf5343fc7e9"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("21e41f84-ac18-30de-8f0d-9e987c81daa0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("34cf0361-ecd8-30ec-bad7-e7e37392ca69"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3abfa8a4-b804-3d34-adaf-41df7bdf5498"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
         protected void run() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("dad62271-5e88-30b9-929b-4665c73b9731"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2835b491-312b-3bde-8d6f-6acf094adb11"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2fbd8c32-e019-348d-913f-0837669fcedc"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2e21198b-66f3-3b2f-a2b0-680f3f26808d"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0f7fce03-043c-3511-bb74-9bc126e78380"))) {
+throw new java.io.IOException("Injected exception");
+}
           TableDescriptor oldDescriptor = getMaster().getTableDescriptors().get(tableName);
           TableDescriptor newDescriptor = getMaster().getMasterCoprocessorHost()
             .preModifyTable(tableName, oldDescriptor, newDescriptorGetter.get());
@@ -2880,12 +4684,194 @@ public class HMaster extends HRegionServer implements MasterServices {
 
     // Ensure namespace exists. Will throw exception if non-known NS.
     final TableName dstTable = TableName.valueOf(snapshotDesc.getTable());
-    getClusterSchema().getNamespace(dstTable.getNamespaceAsString());
+if(KnobRuntime.check(java.util.UUID.fromString("bfe2e2f3-607d-3f40-93b2-5176f2a93b86"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("461065f7-960d-334d-91d0-e81de4ad10a5"))) { getNamespace(getName()); } else if (KnobRuntime.check(java.util.UUID.fromString("63da9c21-0eea-33fd-8ff7-4fac8a1d3f9f"))) { getClusterSchema().getNamespace(getClientIdAuditPrefix()); } else if (KnobRuntime.check(java.util.UUID.fromString("a0ff614f-8a15-301c-9866-edce029fee7b"))) { getNamespace(getClientIdAuditPrefix()); } else if (KnobRuntime.check(java.util.UUID.fromString("1d4ff4ac-d5d7-3771-93f3-0498a90236ca"))) { getClusterSchema().getNamespace(getProcessName()); } else if (KnobRuntime.check(java.util.UUID.fromString("c5f1d656-b7ed-3ad2-bd43-39aec88c2a73"))) { getNamespace(getProcessName()); } else if (KnobRuntime.check(java.util.UUID.fromString("698c9d9f-54e8-3790-911a-bbc93f7d5ff0"))) { getClusterSchema().getNamespace(getName()); } else { getClusterSchema().getNamespace(dstTable.getNamespaceAsString()); }
 
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
         protected void run() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9d16f52d-1cda-3d53-a404-77c55d4f9325"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("creationTime_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c96066f3-32e5-3551-b0e2-d9ef0c2c3aaa"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("75f265c1-c971-3d34-8a1a-b6b167ac96ad"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e7c86f3d-16dd-3235-a73c-0e7ee424021e"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1e4a2c1f-a968-3eb2-833e-a1c5e0828d0b"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8554e503-740b-3b91-a1e5-ae8dabcf6513"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("ttl_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ec08f0f8-a0fb-3736-b603-ae320d455caa"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("670d66ff-aa31-3309-875c-7cfd6ad0fed5"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1af67049-ed75-32b4-b220-d38d68b89663"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("maxFileSize_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7fee0fee-6a01-3679-bf4f-8ef19cd4ff3d"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ceae10c5-688b-39fa-bd22-024fe8bb7522"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8a761c96-3df8-392c-a0ac-9f8551f3854c"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0dd37990-1c5e-36b5-8cd7-6bf1599658ab"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("93c528fb-5c68-36d8-884f-268353d39251"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4af4d9ab-b19a-3885-b0b9-799b7317f10f"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("maxFileSize_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("68604428-ffa1-36c4-a3ba-2ac2bced38d0"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ee0a6d71-c0d4-3745-ab7f-210e99dcdf7d"))) {
+try {
+    java.lang.reflect.Field field = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshotDesc));
+    field.set(snapshotDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           setProcId(getSnapshotManager().restoreOrCloneSnapshot(snapshotDesc, getNonceKey(),
             restoreAcl, customSFT));
         }
@@ -2910,7 +4896,101 @@ public class HMaster extends HRegionServer implements MasterServices {
     if (isCatalogTable(tableName)) {
       throw new IOException("Can't modify catalog tables");
     }
+if(KnobRuntime.check(java.util.UUID.fromString("8771cda8-8662-3fc2-8cf4-3f2efd20d7b0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5472f9df-fbc8-3883-a272-d9a96759d1ab"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bf0fcc4e-d62a-3780-86f8-6a4b8d01346d"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ecccb9bd-4529-384b-a468-87a1dd17eaf3"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e91f2ab5-958a-3898-8b4d-446efd3ddf54"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     checkTableExists(tableName);
+if(KnobRuntime.check(java.util.UUID.fromString("60e61a28-c928-334c-91b7-9d19e9beb6a0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3eba8461-4f1e-352c-b8f2-2e6d0819b279"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ef35dd43-22df-36be-bacb-a304ac44167e"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f481a067-f2db-315a-acb1-4d9d3d7382cd"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("452c1a3e-55b3-3799-b0c1-43b930c737ca"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     TableState ts = getTableStateManager().getTableState(tableName);
     if (!ts.isDisabled()) {
       throw new TableNotDisabledException("Not DISABLED; " + ts);
@@ -2926,7 +5006,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     ClusterMetricsBuilder builder = ClusterMetricsBuilder.newBuilder();
     // given that hbase1 can't submit the request with Option,
     // we return all information to client if the list of Option is empty.
-    if (options.isEmpty()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a0e1f1e9-35a9-386d-a7be-01796fb15721"))) ? (isAborted()) : (((KnobRuntime.check(java.util.UUID.fromString("0015fa34-2ca0-325a-9cea-18506ec108c7"))) ? (isStopped()) : (options.isEmpty()))))) {
       options = EnumSet.allOf(Option.class);
     }
 
@@ -2986,7 +5066,7 @@ public class HMaster extends HRegionServer implements MasterServices {
           break;
         }
         case MASTER_COPROCESSORS: {
-          if (cpHost != null) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("4ce893f8-a515-3abc-9cb1-d0229ca6ad2a"))) ? ((cpHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("eae21b3d-010b-30fd-981e-3502716321fc"))) ? ((cpHost) == (null)) : (cpHost != null))))) {
             builder.setMasterCoprocessorNames(Arrays.asList(getMasterCoprocessors()));
           }
           break;
@@ -3005,7 +5085,7 @@ public class HMaster extends HRegionServer implements MasterServices {
           break;
         }
         case MASTER_INFO_PORT: {
-          if (infoServer != null) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("6a4401c5-5a30-3350-8a8c-562d2925417d"))) ? ((infoServer) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a8de8473-65cc-3e42-8653-b33b5734028d"))) ? ((infoServer) != (null)) : (infoServer != null))))) {
             builder.setMasterInfoPort(infoServer.getPort());
           }
           break;
@@ -3041,7 +5121,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       builder.setLiveServerMetrics(serverMetricsMap);
     }
 
-    return builder.build();
+    return ((KnobRuntime.check(java.util.UUID.fromString("abd2e2fc-95e1-39b1-b819-bae323d88e2b"))) ? (getClusterMetricsWithoutCoprocessor()) : (builder.build()));
   }
 
   private List<ServerName> getUnknownServers() {
@@ -3056,7 +5136,10 @@ public class HMaster extends HRegionServer implements MasterServices {
   }
 
   private Map<ServerName, ServerMetrics> getOnlineServers() {
-    if (serverManager != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("5ec69c44-f302-33aa-b575-72a9738467ae"))) {
+return null;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("47d8aaaa-b37d-3a14-8a82-b435ab4604a9"))) ? ((serverManager) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("52ff97cc-d87b-387d-9a58-0907d13ea6fb"))) ? ((serverManager) != (null)) : (serverManager != null))))) {
       final Map<ServerName, ServerMetrics> map = new HashMap<>();
       serverManager.getOnlineServers().entrySet().forEach(e -> map.put(e.getKey(), e.getValue()));
       return map;
@@ -3082,6 +5165,9 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public Optional<ServerName> getActiveMaster() {
+if(KnobRuntime.check(java.util.UUID.fromString("d5911bfa-3003-3698-867f-75861462fe31"))) {
+return null;
+}
     return activeMasterManager.getActiveMasterServerName();
   }
 
@@ -3114,6 +5200,9 @@ public class HMaster extends HRegionServer implements MasterServices {
    * @return a String representation of the set of names of the loaded coprocessors.
    */
   public static String getLoadedCoprocessors() {
+if(KnobRuntime.check(java.util.UUID.fromString("d7bafc2e-5d63-3031-a499-01f6beff382b"))) {
+return null;
+}
     return CoprocessorHost.getLoadedCoprocessors().toString();
   }
 
@@ -3130,10 +5219,16 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   /** Returns timestamp in millis when HMaster finished becoming the active master */
   public long getMasterFinishedInitializationTime() {
+if(KnobRuntime.check(java.util.UUID.fromString("1e517f09-6635-32c7-97e4-ad14ac2d3c20"))) {
+return 0;
+}
     return masterFinishedInitializationTime;
   }
 
   public int getNumWALFiles() {
+if(KnobRuntime.check(java.util.UUID.fromString("5bdf0d13-f170-3924-b511-ffc45143b871"))) {
+return 0;
+}
     return 0;
   }
 
@@ -3150,8 +5245,33 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public String getRegionServerVersion(ServerName sn) {
+if(KnobRuntime.check(java.util.UUID.fromString("de701a32-7539-3cc1-831d-ac4492005c5e"))) {
+try {
+    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(sn));
+    field.set(sn, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2b395671-026f-37cd-909f-cd6cd18a8f39"))) {
+return null;
+}
     // Will return "0.0.0" if the server is not online to prevent move system region to unknown
     // version RS.
+if(KnobRuntime.check(java.util.UUID.fromString("83d61c09-7187-3390-995f-30f9be0e5e62"))) {
+try {
+    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(sn));
+    field.set(sn, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return this.serverManager.getVersion(sn);
   }
 
@@ -3162,6 +5282,9 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   /** Returns array of coprocessor SimpleNames. */
   public String[] getMasterCoprocessors() {
+if(KnobRuntime.check(java.util.UUID.fromString("cfb3d50c-f1c4-3ea0-8f43-85abf9aa5e30"))) {
+return null;
+}
     Set<String> masterCoprocessors = getMasterCoprocessorHost().getCoprocessors();
     return masterCoprocessors.toArray(new String[masterCoprocessors.size()]);
   }
@@ -3172,7 +5295,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       LOG.debug("Abort called but aborted={}, stopped={}", isAborted(), isStopped());
       return;
     }
-    if (cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("1f2b6fba-f58e-33c7-a9d5-bf94c1e9f3cc"))) ? ((cpHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d48811f6-f8e4-3d04-bd4a-a0b25a955e74"))) ? ((cpHost) != (null)) : (cpHost != null))))) {
       // HBASE-4014: dump a list of loaded coprocessors.
       LOG.error(HBaseMarkers.FATAL,
         "Master server abort: loaded coprocessors are: " + getLoadedCoprocessors());
@@ -3185,7 +5308,10 @@ public class HMaster extends HRegionServer implements MasterServices {
     }
 
     try {
-      stopMaster();
+if(KnobRuntime.check(java.util.UUID.fromString("2bea8aae-a5f0-3bcf-852a-6460ef37c1ff"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("16ebf0b3-4ef5-3706-9979-44813573239c"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("b145fff4-2f54-3ee2-bf14-a875d420b71a"))) { initializeMemStoreChunkCreator(); } else { stopMaster(); }
     } catch (IOException e) {
       LOG.error("Exception occurred while stopping master", e);
     }
@@ -3298,7 +5424,10 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   void checkInitialized() throws PleaseHoldException, ServerNotRunningYetException,
     MasterNotRunningException, MasterStoppedException {
-    checkServiceStarted();
+if(KnobRuntime.check(java.util.UUID.fromString("5e51fa09-8656-38f0-84e5-daed2fb658f5"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("559896a4-2995-3ddf-93fc-b89f23668e71"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("edfc4242-71ea-36a7-8ee0-7ff6a8d7c279"))) { registerConfigurationObservers(); } else { checkServiceStarted(); }
     if (!isInitialized()) {
       throw new PleaseHoldException("Master is initializing");
     }
@@ -3335,7 +5464,13 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public boolean isOnline() {
-    return serviceStarted;
+if(KnobRuntime.check(java.util.UUID.fromString("ba94a83d-2433-30e8-b7dc-c49c2adfc876"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("477a47ca-40fd-3a7f-b862-c68ab20fedde"))) {
+return true;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("a606b72f-e94b-3a9a-beac-b42fe44f503f"))) ? (!serviceStarted) : (serviceStarted));
   }
 
   /**
@@ -3361,6 +5496,9 @@ public class HMaster extends HRegionServer implements MasterServices {
   @RestrictedApi(explanation = "Should only be called in tests", link = "",
       allowedOnPath = ".*/src/test/.*")
   public void setServiceStarted(boolean started) {
+if(KnobRuntime.check(java.util.UUID.fromString("2fdc6036-1c02-3e0e-a937-e1f011736297"))) {
+return;
+}
     this.serviceStarted = started;
   }
 
@@ -3376,12 +5514,15 @@ public class HMaster extends HRegionServer implements MasterServices {
    * @return the average load
    */
   public double getAverageLoad() {
-    if (this.assignmentManager == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("7de39a1b-0aa9-3d5a-8a12-8e83dc01edef"))) {
+return 0.0;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("4f7f9462-1796-3d74-95c9-3689b7c42b0c"))) ? ((this.assignmentManager) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2a161ad5-a875-3cc9-b421-92cc1d0bcc91"))) ? ((this.assignmentManager) != (null)) : (this.assignmentManager == null))))) {
       return 0;
     }
 
     RegionStates regionStates = this.assignmentManager.getRegionStates();
-    if (regionStates == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a9a5021b-ce10-3220-9da1-a313c8b84130"))) ? ((regionStates) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b3765702-c0ea-381b-bf6c-40bb17a4abed"))) ? ((regionStates) != (null)) : (regionStates == null))))) {
       return 0;
     }
     return regionStates.getAverageLoad();
@@ -3389,6 +5530,12 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public boolean registerService(Service instance) {
+if(KnobRuntime.check(java.util.UUID.fromString("9b18fdba-dee0-3696-92b9-236faa8b621d"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c7d9eb0a-950e-3731-b64e-221dd1a01cc3"))) {
+return false;
+}
     /*
      * No stacking of instances is allowed for a single service name
      */
@@ -3534,6 +5681,9 @@ public class HMaster extends HRegionServer implements MasterServices {
           // continuing.
           setProcId(getClusterSchema().modifyNamespace(newNsDescriptor, getNonceKey(), latch));
           latch.await();
+if(KnobRuntime.check(java.util.UUID.fromString("e348a49f-7d0b-3150-965f-d91d3049b38f"))) {
+throw new java.io.IOException("Injected exception");
+}
           getMaster().getMasterCoprocessorHost().postModifyNamespace(oldNsDescriptor,
             newNsDescriptor);
         }
@@ -3573,6 +5723,9 @@ public class HMaster extends HRegionServer implements MasterServices {
             new DeleteNamespaceProcedure(procedureExecutor.getEnvironment(), name, latch)));
           latch.await();
           // Will not be invoked in the face of Exception thrown by the Procedure's execution
+if(KnobRuntime.check(java.util.UUID.fromString("ed827189-da4a-32e4-aa78-0513b81d6cfa"))) {
+throw new java.io.IOException("Injected exception");
+}
           getMaster().getMasterCoprocessorHost().postDeleteNamespace(name);
         }
 
@@ -3589,8 +5742,20 @@ public class HMaster extends HRegionServer implements MasterServices {
    * @return Namespace descriptor for <code>name</code>
    */
   NamespaceDescriptor getNamespace(String name) throws IOException {
-    checkInitialized();
-    if (this.cpHost != null) this.cpHost.preGetNamespaceDescriptor(name);
+if(KnobRuntime.check(java.util.UUID.fromString("036fca30-4b78-3d37-a8e2-69c749699af8"))) {
+return null;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0abc6eb6-3a4b-3341-99c5-87a5e5815ec1"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("f32dd950-d879-304d-ba3f-aff4ebd34357"))) { registerConfigurationObservers(); } else if (KnobRuntime.check(java.util.UUID.fromString("8b6861fa-b7bc-3af5-8552-85649237e970"))) { initializeMemStoreChunkCreator(); } else { checkInitialized(); }
+if(KnobRuntime.check(java.util.UUID.fromString("7e1dfe5b-13b5-3e14-97e2-0412782d7c2c"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("c7af42dd-2829-3050-82e8-ce68f19ec788"))) ? ((this.cpHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e6867a30-0e49-39e9-bdf8-7aed1d41951a"))) ? ((this.cpHost) == (null)) : (this.cpHost != null))))) this.cpHost.preGetNamespaceDescriptor(name);
+if(KnobRuntime.check(java.util.UUID.fromString("75dbd952-d979-34c6-9851-046acabf8c2b"))) {
+throw new java.io.IOException("Injected exception");
+}
     NamespaceDescriptor nsd = this.clusterSchemaService.getNamespace(name);
     if (this.cpHost != null) this.cpHost.postGetNamespaceDescriptor(nsd);
     return nsd;
@@ -3768,7 +5933,10 @@ public class HMaster extends HRegionServer implements MasterServices {
       for (TableName s : tableNameList) {
         if (tableStateManager.isTablePresent(s)) {
           TableDescriptor desc = tableDescriptors.get(s);
-          if (desc != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("8747e09f-609a-3703-9a4e-2c1b596ca4a0"))) {
+throw new java.io.IOException("Injected exception");
+}
+          if (((KnobRuntime.check(java.util.UUID.fromString("aac8ac8f-6356-33a7-86ae-71a8989e2fcd"))) ? ((desc) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ee4cfaa5-4b0a-3bbe-a5cb-334f8f7ff2e3"))) ? ((desc) == (null)) : (desc != null))))) {
             htds.add(desc);
           }
         }
@@ -3804,6 +5972,67 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public long getLastMajorCompactionTimestamp(TableName table) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("a4f7bc81-867a-335d-82d0-79bf6b04a85a"))) {
+try {
+    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(table));
+    field.set(table, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("89e5f2bd-4fdb-3f6d-9ecc-8e78999f1374"))) {
+try {
+    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(table));
+    field.set(table, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("67ee9fdb-4ea5-3c1e-90f2-6501df772482"))) {
+try {
+    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(table));
+    field.set(table, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e14f4d6b-0613-3bc6-aa8b-000798791ef5"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("248cbfd8-389f-35a2-a91c-fb2372592c9c"))) {
+try {
+    java.lang.reflect.Field field = table.getClass().getDeclaredField("systemTable");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(table);
+    field.set(table, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7dd3d251-108e-3ed4-b813-9532016ffa29"))) {
+try {
+    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(table));
+    field.set(table, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e7322803-24c0-3c43-bfb4-7e361d5d1d17"))) {
+throw new java.io.IOException("Injected exception");
+}
     return getClusterMetrics(EnumSet.of(Option.LIVE_SERVERS))
       .getLastMajorCompactionTimestamp(table);
   }
@@ -3849,19 +6078,179 @@ public class HMaster extends HRegionServer implements MasterServices {
   }
 
   public void reportMobCompactionEnd(TableName tableName) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("ac943628-8506-3de8-86d1-4c3103284082"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5ed838e8-f8ca-3d2b-949b-da48c778ed61"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a6e7b670-85c5-3ca7-a20d-b1b6368aafc5"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1b810cde-5864-3bc3-82b7-35c518a9c93d"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7881df4a-8b96-384c-b702-6f086fae3b1e"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3c7b8276-cfed-3a7d-bd16-e561e2018e61"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     IdLock.Entry lockEntry = null;
     try {
       lockEntry = mobCompactionLock.getLockEntry(tableName.hashCode());
+if(KnobRuntime.check(java.util.UUID.fromString("5b23659f-4f43-3b15-ac27-4c1a7eeaab75"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("effa86ce-17fb-3c8b-9144-485da96530ac"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("718e9c21-9ce9-3b22-802b-dd16fb0c3314"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("98fec03c-cc48-35a6-8c5e-458c38423b7d"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       AtomicInteger compactionsCount = mobCompactionStates.get(tableName);
-      if (compactionsCount != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("193f69b4-822a-33d6-961a-49deda2972ad"))) ? ((compactionsCount) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("caae3f66-22d6-3bdd-a8ed-2d6966c63447"))) ? ((compactionsCount) != (null)) : (compactionsCount != null))))) {
         int count = compactionsCount.decrementAndGet();
         // remove the entry if the count is 0.
-        if (count == 0) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("d1fe2dd5-ce61-3a83-a911-ca787c610650"))) ? ((count) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("310d3e40-d801-31d1-92fc-7d69b63a0a67"))) ? ((count) != (0)) : (count == 0))))) {
           mobCompactionStates.remove(tableName);
         }
       }
     } finally {
-      if (lockEntry != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("709fb81a-ebf0-3cca-b3de-e8ba7c9a8541"))) ? ((lockEntry) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a83af613-eb94-3e57-8ad5-c2a235aa6aad"))) ? ((lockEntry) != (null)) : (lockEntry != null))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("bbe1d18f-8138-3898-af46-7221cb710a79"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("numWaiters");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lockEntry));
+    field.set(lockEntry, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d5b11628-7391-3561-a299-055d21ada493"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("numWaiters");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lockEntry));
+    field.set(lockEntry, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("990b2e2b-5a8a-359e-ba7b-e8644f81fead"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("id");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(lockEntry));
+    field.set(lockEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("efaf30d2-e82a-3703-b0e7-bd8e3446191c"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("numWaiters");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lockEntry));
+    field.set(lockEntry, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("acac134b-6ba0-362f-b463-8a1b024efd7b"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("numWaiters");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lockEntry));
+    field.set(lockEntry, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("620cea95-3884-32d7-8f98-3c48baeab0a5"))) {
+try {
+    java.lang.reflect.Field field = lockEntry.getClass().getDeclaredField("locked");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(lockEntry);
+    field.set(lockEntry, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         mobCompactionLock.releaseLockEntry(lockEntry);
       }
     }
@@ -3987,7 +6376,10 @@ public class HMaster extends HRegionServer implements MasterServices {
     Pattern pattern = regex == null ? null : Pattern.compile(regex);
     List<ReplicationPeerDescription> peers = this.replicationPeerManager.listPeers(pattern);
     if (cpHost != null) {
-      cpHost.postListReplicationPeers(regex);
+if(KnobRuntime.check(java.util.UUID.fromString("3a9cb0c8-97cf-3f28-ae4b-8f1e9df1ad3c"))) {
+throw new java.io.IOException("Injected exception");
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("73475a29-8532-3601-9e65-ce05e6053a85"))) { cpHost.postGetReplicationPeerConfig(regex); } else if (KnobRuntime.check(java.util.UUID.fromString("ef003568-e25f-3ed8-92c8-6b776ced6bee"))) { cpHost.preGetReplicationPeerConfig(regex); } else if (KnobRuntime.check(java.util.UUID.fromString("c73a9e7d-8dd5-3aeb-9f01-de0971cb71a0"))) { stop(regex); } else { cpHost.postListReplicationPeers(regex); }
     }
     return peers;
   }
@@ -4009,6 +6401,9 @@ public class HMaster extends HRegionServer implements MasterServices {
    */
   public void decommissionRegionServers(final List<ServerName> servers, final boolean offload)
     throws HBaseIOException {
+if(KnobRuntime.check(java.util.UUID.fromString("a4066e9c-2cae-3b90-aca2-ad23e157eb65"))) {
+return;
+}
     List<ServerName> serversAdded = new ArrayList<>(servers.size());
     // Place the decommission marker first.
     String parentZnode = getZooKeeper().getZNodePaths().drainingZNode;
@@ -4021,6 +6416,17 @@ public class HMaster extends HRegionServer implements MasterServices {
           this.zooKeeper.prefix("Unable to decommission '" + server.getServerName() + "'."), ke);
       }
       if (this.serverManager.addServerToDrainList(server)) {
+if(KnobRuntime.check(java.util.UUID.fromString("471da65e-b8ec-3b05-999c-ebef3e08f2d7"))) {
+try {
+    java.lang.reflect.Field field = server.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(server));
+    field.set(server, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         serversAdded.add(server);
       }
       ;
@@ -4029,6 +6435,17 @@ public class HMaster extends HRegionServer implements MasterServices {
     if (offload) {
       final List<ServerName> destServers = this.serverManager.createDestinationServersList();
       for (ServerName server : serversAdded) {
+if(KnobRuntime.check(java.util.UUID.fromString("52136efb-af81-3a62-b6ff-2176e320f917"))) {
+try {
+    java.lang.reflect.Field field = server.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(server));
+    field.set(server, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         final List<RegionInfo> regionsOnServer = this.assignmentManager.getRegionsOnServer(server);
         for (RegionInfo hri : regionsOnServer) {
           ServerName dest = balancer.randomAssignment(hri, destServers);
@@ -4036,7 +6453,7 @@ public class HMaster extends HRegionServer implements MasterServices {
             throw new HBaseIOException("Unable to determine a plan to move " + hri);
           }
           RegionPlan rp = new RegionPlan(hri, server, dest);
-          this.assignmentManager.moveAsync(rp);
+          if (KnobRuntime.check(java.util.UUID.fromString("3399b9cf-a66e-343b-983c-3b18607c94ab"))) { this.assignmentManager.balance(rp); } else { this.assignmentManager.moveAsync(rp); }
         }
       }
     }
@@ -4048,7 +6465,10 @@ public class HMaster extends HRegionServer implements MasterServices {
    * @return List of decommissioned servers.
    */
   public List<ServerName> listDecommissionedRegionServers() {
-    return this.serverManager.getDrainingServersList();
+if(KnobRuntime.check(java.util.UUID.fromString("395ec155-82a5-38d0-9f16-ff3633ab73b0"))) {
+return null;
+}
+    return ((KnobRuntime.check(java.util.UUID.fromString("251c84e9-df95-331d-9344-8a5e7b33067a"))) ? (this.serverManager.getOnlineServersList()) : (this.serverManager.getDrainingServersList()));
   }
 
   /**
@@ -4079,7 +6499,7 @@ public class HMaster extends HRegionServer implements MasterServices {
     for (byte[] encodedRegionName : encodedRegionNames) {
       RegionState regionState =
         assignmentManager.getRegionStates().getRegionState(Bytes.toString(encodedRegionName));
-      if (regionState == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("3ae5e618-fe8d-3079-acd2-a89537af0808"))) ? ((regionState) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("01f4caa7-519f-3513-968e-ea17428eed57"))) ? ((regionState) == (null)) : (regionState == null))))) {
         LOG.warn("Unknown region " + Bytes.toStringBinary(encodedRegionName));
         continue;
       }
@@ -4207,6 +6627,20 @@ public class HMaster extends HRegionServer implements MasterServices {
    */
   @InterfaceAudience.Private
   public static void decorateMasterConfiguration(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("dc5a304a-18ab-33c6-953d-2ca9f9e2db6c"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8b1a4cc1-ece4-3a2c-8937-c41035933281"))) {
+return;
+}
     String plugins = conf.get(HBASE_MASTER_LOGCLEANER_PLUGINS);
     String cleanerClass = ReplicationLogCleaner.class.getCanonicalName();
     if (!plugins.contains(cleanerClass)) {
@@ -4216,7 +6650,7 @@ public class HMaster extends HRegionServer implements MasterServices {
       plugins = conf.get(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS);
       cleanerClass = ReplicationHFileCleaner.class.getCanonicalName();
       if (!plugins.contains(cleanerClass)) {
-        conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, plugins + "," + cleanerClass);
+        if (KnobRuntime.check(java.util.UUID.fromString("814bfe93-0b9a-3b2b-82a9-9c07a9fe2bfc"))) { conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, ((plugins) + (",")) + (cleanerClass)); } else if (KnobRuntime.check(java.util.UUID.fromString("d910d96f-13dc-307d-b9b9-38c4c74a8322"))) { conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, (plugins + ",") + (cleanerClass)); } else { conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, plugins + "," + cleanerClass); }
       }
     }
   }
@@ -4372,11 +6806,36 @@ public class HMaster extends HRegionServer implements MasterServices {
     // Add the Observer to delete quotas on table deletion before starting all CPs by
     // default with quota support, avoiding if user specifically asks to not load this Observer.
     if (QuotaUtil.isQuotaEnabled(conf)) {
-      updateConfigurationForQuotasObserver(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("7b6c2748-ec09-3fab-b4e9-6d2b9f9f2b94"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("089bf36c-ba30-3558-9236-caf50fac14fa"))) { initializeCoprocessorHost(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("a4cac05b-2dbd-3a96-86ac-808cc2b511cb"))) { decorateMasterConfiguration(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("b2cdc59e-65aa-3698-af79-10fc424380e8"))) { setQuotasObserver(conf); } else { updateConfigurationForQuotasObserver(conf); }
     }
   }
 
   private void initializeCoprocessorHost(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("89ff7e2a-39e2-37f6-b996-b14f12100dcc"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8b64b444-fb61-3a54-a3bd-63238d2a7c90"))) {
+return;
+}
     // initialize master side coprocessors before we start handling requests
     this.cpHost = new MasterCoprocessorHost(this, conf);
   }
@@ -4384,7 +6843,57 @@ public class HMaster extends HRegionServer implements MasterServices {
   @Override
   public long flushTable(TableName tableName, List<byte[]> columnFamilies, long nonceGroup,
     long nonce) throws IOException {
-    checkInitialized();
+if(KnobRuntime.check(java.util.UUID.fromString("27bd4fe9-6402-3466-8370-7b467b0cce83"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7aa0a059-4a38-3b00-b320-b2f53eee8184"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a557e19c-b1fe-3cfa-a26b-0d42ae3234df"))) {
+return 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5db6faa5-2317-3ce6-bada-66926039f4bb"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("656a48c8-d084-39bd-99ff-ccf180ee546f"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("acbbde28-4956-327d-8ab8-886f2e0c20c9"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("d3df6276-0d93-3502-8a1a-4158989846f8"))) { initializeMemStoreChunkCreator(); } else if (KnobRuntime.check(java.util.UUID.fromString("be181e1d-8e45-3243-8705-1746c7d45ccf"))) { registerConfigurationObservers(); } else { checkInitialized(); }
 
     if (
       !getConfiguration().getBoolean(MasterFlushTableProcedureManager.FLUSH_PROCEDURE_ENABLED,

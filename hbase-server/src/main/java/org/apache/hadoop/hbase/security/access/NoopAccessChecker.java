@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Map;
@@ -43,6 +44,9 @@ public final class NoopAccessChecker extends AccessChecker {
 
   @Override
   public void requirePermission(User user, String request, String filterUser, Action perm) {
+if(KnobRuntime.check(java.util.UUID.fromString("bad568ee-5354-3af9-953f-55ce3ff7bde5"))) {
+return;
+}
     requireGlobalPermission(user, request, perm, null, null, filterUser);
   }
 

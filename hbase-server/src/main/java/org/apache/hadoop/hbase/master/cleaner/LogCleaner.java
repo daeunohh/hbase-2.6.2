@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HBASE_MASTER_LOGCLEANER_PLUGINS;
 
@@ -85,6 +86,12 @@ public class LogCleaner extends CleanerChore<BaseLogCleanerDelegate>
 
   @Override
   protected boolean validate(Path file) {
+if(KnobRuntime.check(java.util.UUID.fromString("213d754c-01b2-3698-9721-14418ec3821d"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("43321a13-e73b-3270-a0df-8e557962db73"))) {
+return true;
+}
     return AbstractFSWALProvider.validateWALFilename(file.getName())
       || MasterProcedureUtil.validateProcedureWALFilename(file.getName())
       || file.getName().endsWith(MasterRegionFactory.ARCHIVED_WAL_SUFFIX);
@@ -159,23 +166,110 @@ public class LogCleaner extends CleanerChore<BaseLogCleanerDelegate>
   }
 
   private void interruptOldWALsCleaner() {
+if(KnobRuntime.check(java.util.UUID.fromString("0f236f41-840c-383a-b583-adb3bddf5e68"))) {
+return;
+}
     for (Thread cleaner : oldWALsCleaner) {
       LOG.trace("Interrupting thread: {}", cleaner);
-      cleaner.interrupt();
+      if (KnobRuntime.check(java.util.UUID.fromString("6e5961b1-587a-3279-bd86-5bcf8db96013"))) { deleteFile(); } else if (KnobRuntime.check(java.util.UUID.fromString("b466ac4a-b924-3166-8c67-b9d99a56c4f1"))) { interruptOldWALsCleaner(); } else { cleaner.interrupt(); }
     }
-    oldWALsCleaner.clear();
+    if (KnobRuntime.check(java.util.UUID.fromString("1745d830-9583-3a33-b99c-70f2a649fd53"))) { deleteFile(); } else if (KnobRuntime.check(java.util.UUID.fromString("e4e05585-b4c4-3830-bacb-349de3c762c5"))) { interruptOldWALsCleaner(); } else { oldWALsCleaner.clear(); }
   }
 
   private void deleteFile() {
+if(KnobRuntime.check(java.util.UUID.fromString("dff3cfe1-d325-3c20-9195-e8cf4168e37f"))) {
+return;
+}
     while (true) {
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("494b5b20-b77c-33bf-a4c6-f9921053eaef"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
         final CleanerContext context = pendingDelete.take();
         Preconditions.checkNotNull(context);
         FileStatus oldWalFile = context.getTargetToClean();
         try {
-          LOG.debug("Deleting {}", oldWalFile);
+if(KnobRuntime.check(java.util.UUID.fromString("adab3aa3-be5e-3958-9c57-7682a26bb6cb"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("blocksize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a0728a54-e976-3267-8ad4-5cb02e6ec210"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("modification_time");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("20d7b3b0-ca6c-3e1d-b602-c7b4b974d31d"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("access_time");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dec629ff-77b4-3f9b-b833-46efefae8ab1"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("blocksize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bb0ec63d-c9ca-3b7c-aa4a-2f10b61683af"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("blocksize");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("aa8c4a85-1d4e-3084-aab9-f4d243abf1b8"))) {
+try {
+    java.lang.reflect.Field field = oldWalFile.getClass().getDeclaredField("length");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(oldWalFile));
+    field.set(oldWalFile, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("8cc45782-e91d-3791-99ac-f3c945397872"))) { LOG.trace("Deleting {}", oldWalFile); } else { LOG.debug("Deleting {}", oldWalFile); }
+if(KnobRuntime.check(java.util.UUID.fromString("c0a1d853-148e-3fcf-8c98-3605bbb92cf7"))) {
+throw new java.io.IOException("Injected exception");
+}
           boolean succeed = this.fs.delete(oldWalFile.getPath(), false);
-          context.setResult(succeed);
+if(KnobRuntime.check(java.util.UUID.fromString("006fe8ee-76d0-30f6-a4f1-5160715764e9"))) {
+succeed = false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3bf9e09c-f122-36d3-853e-a8caca2c8b2b"))) {
+succeed = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ba5aa563-8d86-3e14-bd0b-55eafe4ad123"))) {
+succeed = !succeed;
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("51072085-d3db-31c6-aeb7-ecaef008e517"))) { context.setResult(false); } else if (KnobRuntime.check(java.util.UUID.fromString("dc8b00bd-8751-3234-ba2b-be085facf386"))) { context.setResult(true); } else if (KnobRuntime.check(java.util.UUID.fromString("1354796d-34c5-3916-b4b8-63665b73b91d"))) { context.setResult(!succeed); } else { context.setResult(succeed); }
         } catch (IOException e) {
           // fs.delete() fails.
           LOG.warn("Failed to delete old WAL file", e);
@@ -195,9 +289,12 @@ public class LogCleaner extends CleanerChore<BaseLogCleanerDelegate>
 
   @Override
   public synchronized void cancel(boolean mayInterruptIfRunning) {
-    LOG.debug("Cancelling LogCleaner");
+if(KnobRuntime.check(java.util.UUID.fromString("24bf50fa-527d-37bd-a007-ef9907e2d135"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("9f272b6a-cd12-3ac3-b146-cca76dc5c574"))) { LOG.warn("Cancelling LogCleaner"); } else if (KnobRuntime.check(java.util.UUID.fromString("dddfaaff-9e62-3664-bf70-71d22aaae4ad"))) { LOG.trace("Cancelling LogCleaner"); } else { LOG.debug("Cancelling LogCleaner"); }
     super.cancel(mayInterruptIfRunning);
-    interruptOldWALsCleaner();
+    if (KnobRuntime.check(java.util.UUID.fromString("9e9c2c5e-f1e7-3f41-a287-a44ef02d6643"))) { deleteFile(); } else { interruptOldWALsCleaner(); }
   }
 
   private static final class CleanerContext {

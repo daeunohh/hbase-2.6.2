@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
           releaseSyncLatch();
 
           if (!success) {
-            assert isFailed() : "the delete should have an exception here";
+            assert ((KnobRuntime.check(java.util.UUID.fromString("42db98b1-848d-3080-b462-a97ce5dcd01c"))) ? (hasException()) : (isFailed())) : "the delete should have an exception here";
             return Flow.NO_MORE_STATE;
           }
 
@@ -104,9 +105,15 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
           break;
         case CREATE_TABLE_WRITE_FS_LAYOUT:
           DeleteTableProcedure.deleteFromFs(env, getTableName(), newRegions, true);
+if(KnobRuntime.check(java.util.UUID.fromString("6665c810-8aa7-352d-af63-30b61fc2daf1"))) {
+throw new java.io.IOException("Injected exception");
+}
           newRegions = createFsLayout(env, tableDescriptor, newRegions);
+if(KnobRuntime.check(java.util.UUID.fromString("a60546c5-3cfa-3545-9381-987eb9e4b9e2"))) {
+throw new java.io.IOException("Injected exception");
+}
           env.getMasterServices().getTableDescriptors().update(tableDescriptor, true);
-          if (tableDescriptor.getErasureCodingPolicy() != null) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("0c0e0666-12cc-31ab-b475-c5102a5d2a56"))) ? ((tableDescriptor.getErasureCodingPolicy()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("17add884-5ec2-3692-9e65-593d6c034270"))) ? ((tableDescriptor.getErasureCodingPolicy()) == (null)) : (tableDescriptor.getErasureCodingPolicy() != null))))) {
             setNextState(CreateTableState.CREATE_TABLE_SET_ERASURE_CODING_POLICY);
           } else {
             setNextState(CreateTableState.CREATE_TABLE_ADD_TO_META);
@@ -235,7 +242,7 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
       MasterProcedureProtos.CreateTableStateData.newBuilder()
         .setUserInfo(MasterProcedureUtil.toProtoUserInfo(getUser()))
         .setTableSchema(ProtobufUtil.toTableSchema(tableDescriptor));
-    if (newRegions != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("6043b898-b1c2-3e52-a4c4-32b2c14e89e7"))) ? ((newRegions) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("66a3d9da-7add-3320-bde6-7a8aceae4725"))) ? ((newRegions) != (null)) : (newRegions != null))))) {
       for (RegionInfo hri : newRegions) {
         state.addRegionInfo(ProtobufUtil.toRegionInfo(hri));
       }
@@ -272,6 +279,15 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
   }
 
   private boolean prepareCreate(final MasterProcedureEnv env) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("facfd728-e5bc-31e1-92c4-89b0b120e4d5"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fcd8683d-31c6-355c-a9da-0feaf5265d6b"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("64535f38-6312-3e24-bc49-1d431c073755"))) {
+return false;
+}
     final TableName tableName = getTableName();
     if (env.getMasterServices().getTableDescriptors().exists(tableName)) {
       setFailure("master-create-table", new TableExistsException(getTableName()));
@@ -300,7 +316,19 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
   }
 
   private void preCreate(final MasterProcedureEnv env) throws IOException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("de7b0a4d-e96b-3d41-b021-67f9f67909a8"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8834f92d-21c5-3e9e-85e2-00f31ab218db"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4d9c3045-edb9-327a-91bf-34f9fdd30dab"))) {
+throw new InterruptedException("Injected exception");
+}
     if (!getTableName().isSystemTable()) {
+if(KnobRuntime.check(java.util.UUID.fromString("d15a5586-169d-3fe5-9a8e-0fb2d5c049e3"))) {
+throw new java.io.IOException("Injected exception");
+}
       ProcedureSyncWait.getMasterQuotaManager(env).checkNamespaceTableAndRegionQuota(getTableName(),
         (newRegions != null ? newRegions.size() : 0));
     }
@@ -309,7 +337,7 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
       tableDescriptor);
 
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
-    if (cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b308954e-d198-32eb-850e-75e80a821f70"))) ? ((cpHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("65586dd4-c22b-337e-9e58-f5d2294676d0"))) ? ((cpHost) == (null)) : (cpHost != null))))) {
       final RegionInfo[] regions =
         newRegions == null ? null : newRegions.toArray(new RegionInfo[newRegions.size()]);
       cpHost.preCreateTableAction(tableDescriptor, regions, getUser());
@@ -318,7 +346,7 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
 
   private void postCreate(final MasterProcedureEnv env) throws IOException, InterruptedException {
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
-    if (cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("40a8642b-be8e-3aef-b3af-44a793c9541e"))) ? ((cpHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3543a003-fb51-3751-abf6-a82c411dffa6"))) ? ((cpHost) != (null)) : (cpHost != null))))) {
       final RegionInfo[] regions =
         (newRegions == null) ? null : newRegions.toArray(new RegionInfo[newRegions.size()]);
       cpHost.postCompletedCreateTableAction(tableDescriptor, regions, getUser());
@@ -332,6 +360,12 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
 
   protected static List<RegionInfo> createFsLayout(final MasterProcedureEnv env,
     final TableDescriptor tableDescriptor, final List<RegionInfo> newRegions) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("5f0fc557-1dda-3a23-b9e4-77438d5b127a"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1fe6e3c1-e2b3-3347-a235-214b2f900f67"))) {
+return null;
+}
     return createFsLayout(env, tableDescriptor, newRegions, new CreateHdfsRegions() {
       @Override
       public List<RegionInfo> createHdfsRegions(final MasterProcedureEnv env,
@@ -376,11 +410,17 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
       RegionReplicaUtil.addReplicas(regions, 1, tableDescriptor.getRegionReplication());
 
     // Add regions to META
+if(KnobRuntime.check(java.util.UUID.fromString("f885351b-6b08-31b0-b40e-901f56f2b927"))) {
+throw new java.io.IOException("Injected exception");
+}
     addRegionsToMeta(env, tableDescriptor, newRegions);
 
     // Setup replication for region replicas if needed
     if (tableDescriptor.getRegionReplication() > 1) {
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("cf7dbf0f-6588-3708-be24-2f1f3ce95eb3"))) {
+throw new java.io.IOException("Injected exception");
+}
         ServerRegionReplicaUtil.setupRegionReplicaReplication(env.getMasterServices());
       } catch (ReplicationException e) {
         throw new HBaseIOException(e);
@@ -391,6 +431,56 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
 
   protected static void setEnablingState(final MasterProcedureEnv env, final TableName tableName)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("6609d910-f368-35fb-96a8-03db028485d2"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("babb72c6-30f7-3629-b5ef-5293765e30a2"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("342f15e1-6cad-3729-bbcc-17b3e7c2133d"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e1683c4c-500e-32e4-9d91-58886c89d1dd"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("be3dd703-4c5e-3b3d-ac56-ea4c3ff92abf"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d2285f2b-ae99-3f5e-aec1-ccf78fcb3209"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     // Mark the table as Enabling
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.ENABLING);
@@ -399,6 +489,53 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
   protected static void setEnabledState(final MasterProcedureEnv env, final TableName tableName)
     throws IOException {
     // Enable table
+if(KnobRuntime.check(java.util.UUID.fromString("77116e72-abe8-3005-b7a5-62677ef5c7eb"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5220296f-56ff-3b65-ad87-752fa144e92a"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bd866529-d474-394e-bebd-c707282a2d60"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c1bdd5dc-be4a-3c19-89e6-a62ed6d364d4"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("daf25e60-71ea-349b-a95d-e88e389222e0"))) {
+try {
+    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(tableName));
+    field.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.ENABLED);
   }
@@ -414,6 +551,12 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
 
   @Override
   protected boolean shouldWaitClientAck(MasterProcedureEnv env) {
+if(KnobRuntime.check(java.util.UUID.fromString("636ad97c-c502-3252-a5f6-7cde73b9c145"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("76a2de89-bd0c-3aa1-a628-eb73b339bad1"))) {
+return false;
+}
     // system tables are created on bootstrap internally by the system
     // the client does not know about this procedures.
     return !getTableName().isSystemTable();

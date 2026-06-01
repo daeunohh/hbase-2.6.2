@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -140,6 +141,20 @@ public class RegionServerTracker extends ZKListener {
     synchronized (this) {
       Set<ServerName> liveServers = regionServers;
       for (ServerName serverName : liveServers) {
+if(KnobRuntime.check(java.util.UUID.fromString("32001780-3474-3c16-be24-89dcf2ec0703"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7e389a0c-8ace-3f6f-abfb-4fa70ce75f26"))) {
+try {
+    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(serverName));
+    field.set(serverName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         RegionServerInfo info = getServerInfo(serverName);
         ServerMetrics serverMetrics = info != null
           ? ServerMetricsBuilder.of(serverName,
@@ -164,6 +179,9 @@ public class RegionServerTracker extends ZKListener {
   // execute the operations which are only needed for active masters, such as expire old servers,
   // add new servers, etc.
   private void processAsActiveMaster(Set<ServerName> newServers) {
+if(KnobRuntime.check(java.util.UUID.fromString("ed65ac36-b890-3857-8ab2-57cc92c151ba"))) {
+return;
+}
     Set<ServerName> oldServers = regionServers;
     ServerManager serverManager = server.getServerManager();
     // expire dead servers
@@ -174,15 +192,26 @@ public class RegionServerTracker extends ZKListener {
     // check whether there are new servers, log them
     boolean newServerAdded = false;
     for (ServerName sn : newServers) {
+if(KnobRuntime.check(java.util.UUID.fromString("a4addfc6-7e53-3945-a491-be7683355337"))) {
+try {
+    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(sn));
+    field.set(sn, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (!oldServers.contains(sn)) {
         newServerAdded = true;
-        LOG.info("RegionServer ephemeral node created, adding [" + sn + "]");
+        if (KnobRuntime.check(java.util.UUID.fromString("adeb44fa-7d2d-31a6-9dd8-7e6a8c07c72c"))) { LOG.info(("RegionServer ephemeral node created, adding [") + (sn)); } else if (KnobRuntime.check(java.util.UUID.fromString("37725a85-fb17-3b77-bfb6-7194a196eb90"))) { LOG.info(("RegionServer ephemeral node created, adding [" + sn) + ("]")); } else if (KnobRuntime.check(java.util.UUID.fromString("9e72f37f-7e59-3a8d-91f0-2c4b85a68d7b"))) { LOG.info("RegionServer ephemeral node created, adding [" + sn); } else if (KnobRuntime.check(java.util.UUID.fromString("d535450a-1f77-315b-860c-945b0411032f"))) { LOG.info("]"); } else if (KnobRuntime.check(java.util.UUID.fromString("c785d7ec-c4cc-3ba6-a45e-472277e27624"))) { LOG.info((("RegionServer ephemeral node created, adding [") + (sn)) + ("]")); } else if (KnobRuntime.check(java.util.UUID.fromString("56b2e5d3-43b4-3625-9b3e-c9aced57eadb"))) { LOG.info(("RegionServer ephemeral node created, adding [") + ("]")); } else if (KnobRuntime.check(java.util.UUID.fromString("2234fef4-6e2d-3874-b73d-c46b073975e1"))) { LOG.info("RegionServer ephemeral node created, adding ["); } else { LOG.info("RegionServer ephemeral node created, adding [" + sn + "]"); }
       }
     }
-    if (newServerAdded && server.isInitialized()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b6190141-4048-3033-9ea7-eb12417036b1"))) ? ((true) && (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("9fdbc199-f5d9-3477-9778-0128d8ae61bf"))) ? ((false) || (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("b868c64e-4bc7-3b1e-8110-d4c3a0d53bde"))) ? (newServerAdded) : (((KnobRuntime.check(java.util.UUID.fromString("8f6911da-c351-31b2-8ac2-0a1aaa8544ec"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("4aca30a3-445d-3e2b-8bb3-aa096b28027d"))) ? ((newServerAdded) || (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("8924f6da-045f-3f9d-96bf-c0d9f773b543"))) ? ((true) || (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("38195739-b010-3398-90bd-e8c96eb95322"))) ? ((true) || (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("6efc1371-adf5-32c8-a8e5-717f0996bf0b"))) ? (true) : (((KnobRuntime.check(java.util.UUID.fromString("0e4d2fb1-1278-39f1-98e6-841fd4629694"))) ? ((false) && (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("2f60647f-3d7a-3270-8282-9cd55249511e"))) ? ((!newServerAdded) || (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("14fd8979-4d79-36ff-ac4f-4d136bba4c12"))) ? ((false) && (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("9a8556bd-aa00-3e87-a9f5-2a2404fdbc0e"))) ? ((true) && (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("e7b3f779-9ae8-3684-bfe1-cb1e51f274ee"))) ? ((newServerAdded) || (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("6cc1abe7-7810-34b4-84ba-fa2248692433"))) ? ((!newServerAdded) && (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("da53f7b3-71ec-3e13-9e99-bd34a4ede664"))) ? ((false) || (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("2b0a4673-e16c-3853-8b28-52ad60964e53"))) ? ((false) || (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("d5cb5034-02e9-3640-b48c-559f27327fa1"))) ? ((newServerAdded) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("26f4aec1-4c86-3ebe-b511-59c757962477"))) ? ((!newServerAdded) || (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("196ff44d-8a90-38ab-8b17-f0c1248e94ef"))) ? ((!newServerAdded) && (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("42504549-9c66-3ca8-8c1a-fdc66b8f140f"))) ? (server.isInitialized()) : (((KnobRuntime.check(java.util.UUID.fromString("b473c162-abec-3670-ae7f-3bfccbe11140"))) ? ((newServerAdded) || (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("46173fe5-c14c-3347-aa35-3782e86380db"))) ? ((true) || (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("d843fb05-3964-3304-a4b0-e5bc01d531b8"))) ? ((newServerAdded) && (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("9afff552-4182-340e-889e-fc64466a1342"))) ? ((!newServerAdded) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("1fcf943b-fef2-304e-a3a4-0ff3c85ffc34"))) ? ((true) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("f4ff66d2-fa98-3e01-a2e2-7797a80dc025"))) ? (!newServerAdded) : (((KnobRuntime.check(java.util.UUID.fromString("17c343e4-3c71-37c6-8a29-6e55fcc8706e"))) ? (server.isAborted()) : (((KnobRuntime.check(java.util.UUID.fromString("d13640bd-028c-3a8d-bcfe-b73cedc83b07"))) ? ((!newServerAdded) || (server.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("bb7cb22e-e676-3fe7-8f23-20372cb52ea9"))) ? ((false) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("cd0c255d-64c9-35ff-b547-4dc85fd44a6b"))) ? ((newServerAdded) && (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("29f0e92b-cf45-3952-8102-808e133e0119"))) ? (server.isStopped()) : (newServerAdded && server.isInitialized()))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
       // Only call the check to move servers if a RegionServer was added to the cluster; in this
       // case it could be a server with a new version so it makes sense to run the check.
-      server.checkIfShouldMoveSystemRegionAsync();
+      if (KnobRuntime.check(java.util.UUID.fromString("ec129f9a-238a-3ab6-bc91-929ee67a1b62"))) { refresh(); } else { server.checkIfShouldMoveSystemRegionAsync(); }
     }
   }
 
@@ -208,12 +237,15 @@ public class RegionServerTracker extends ZKListener {
       this.regionServers = newServers;
       span.setStatus(StatusCode.OK);
     } finally {
-      span.end();
+      if (KnobRuntime.check(java.util.UUID.fromString("accd6994-5397-34c0-8011-2c7693b54113"))) { refresh(); } else { span.end(); }
     }
   }
 
   @Override
   public void nodeChildrenChanged(String path) {
+if(KnobRuntime.check(java.util.UUID.fromString("c874521d-3da4-350d-abe5-48b97bf49c3c"))) {
+return;
+}
     if (
       path.equals(watcher.getZNodePaths().rsZNode) && !server.isAborted() && !server.isStopped()
     ) {

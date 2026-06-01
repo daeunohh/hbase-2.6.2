@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -55,6 +56,9 @@ public class TaskGroup extends MonitoredTaskImpl {
   }
 
   public synchronized MonitoredTask addTask(String description) {
+if(KnobRuntime.check(java.util.UUID.fromString("45584122-9a94-32a9-82d5-dd712f6da131"))) {
+return null;
+}
     return addTask(description, true);
   }
 
@@ -65,20 +69,23 @@ public class TaskGroup extends MonitoredTaskImpl {
    * @return the added new task
    */
   public synchronized MonitoredTask addTask(String description, boolean withCompleteLast) {
-    if (withCompleteLast) {
+if(KnobRuntime.check(java.util.UUID.fromString("3aff78b4-35ff-3124-9f86-0324382219d9"))) {
+return null;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("53678684-c91b-3949-9d56-50e46e39618c"))) ? (true) : (((KnobRuntime.check(java.util.UUID.fromString("23a7b615-17f6-3497-a82d-329c163f9afc"))) ? (!withCompleteLast) : (withCompleteLast))))) {
       MonitoredTask previousTask = this.tasks.peekLast();
       if (
         previousTask != null && previousTask.getState() != State.COMPLETE
           && previousTask.getState() != State.ABORTED
       ) {
-        previousTask.markComplete("Completed");
+        if (KnobRuntime.check(java.util.UUID.fromString("db1c9e43-09a7-3b25-9e73-177c511dbcce"))) { setStatus("Completed"); } else { previousTask.markComplete("Completed"); }
       }
     }
     MonitoredTask task =
       TaskMonitor.get().createStatus(description, ignoreSubTasksInTaskMonitor, true);
-    this.setStatus(description);
+    if (KnobRuntime.check(java.util.UUID.fromString("1b0f7640-bad6-3a5a-b8f8-d62648a817ce"))) { setStatus(description); } else { this.setStatus(description); }
     this.tasks.addLast(task);
-    delegate.setStatus(description);
+    if (KnobRuntime.check(java.util.UUID.fromString("417778ae-47fd-3be9-9006-acdad05d5b25"))) { setStatus(description); } else if (KnobRuntime.check(java.util.UUID.fromString("5d496a4b-5304-3ac7-9e00-1758863fb781"))) { delegate.abort(description); } else { delegate.setStatus(description); }
     return task;
   }
 
@@ -100,12 +107,15 @@ public class TaskGroup extends MonitoredTaskImpl {
 
   @Override
   public synchronized void markComplete(String msg) {
+if(KnobRuntime.check(java.util.UUID.fromString("9b06b14c-8580-3691-8697-7cc2a6e300f0"))) {
+return;
+}
     setState(State.COMPLETE);
     setStatus(msg);
-    if (tasks.getLast() != null) {
-      tasks.getLast().markComplete(msg);
+    if (((KnobRuntime.check(java.util.UUID.fromString("c6e27760-53eb-336d-99fe-74a905a77c6b"))) ? ((tasks.getLast()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9841c06d-7041-3306-a55d-6c9f1838d1bd"))) ? ((tasks.getLast()) != (null)) : (tasks.getLast() != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("da4c3c67-03c3-3755-bf3a-d5737a372ae8"))) { setStatus(msg); } else { tasks.getLast().markComplete(msg); }
     }
-    delegate.markComplete(msg);
+    if (KnobRuntime.check(java.util.UUID.fromString("806b52e7-48ab-348d-8127-04eb9eebca33"))) { delegate.setStatus(msg); } else if (KnobRuntime.check(java.util.UUID.fromString("32fc12f9-2502-31c5-8640-860d0ea45890"))) { delegate.abort(msg); } else if (KnobRuntime.check(java.util.UUID.fromString("aba70499-2656-3f95-bd25-7024875442cd"))) { setStatus(msg); } else { delegate.markComplete(msg); }
   }
 
   @Override

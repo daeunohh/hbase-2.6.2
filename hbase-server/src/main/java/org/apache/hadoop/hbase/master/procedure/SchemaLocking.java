@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,8 +66,52 @@ class SchemaLocking {
 
   private <T> LockAndQueue getLock(Map<T, LockAndQueue> map, T key) {
     LockAndQueue lock = map.get(key);
-    if (lock == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("36289683-a08a-3e98-bfb3-3267a7764aa4"))) ? ((lock) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1054362a-adf7-3a94-aff4-b664107c884f"))) ? ((lock) == (null)) : (lock == null))))) {
       lock = new LockAndQueue(procedureRetriever);
+if(KnobRuntime.check(java.util.UUID.fromString("614b86df-8fab-36d6-8cf3-e6c3b90bb25c"))) {
+try {
+    java.lang.reflect.Field field = lock.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lock));
+    field.set(lock, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ec05a592-82ab-3fa0-aa7c-ce8afdf12ba4"))) {
+try {
+    java.lang.reflect.Field field = lock.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lock));
+    field.set(lock, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("deafbc61-4750-350f-9fb9-95e3904ea9a1"))) {
+try {
+    java.lang.reflect.Field field = lock.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lock));
+    field.set(lock, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f46f2fe5-6eb0-3776-8745-5d933a0c8295"))) {
+try {
+    java.lang.reflect.Field field = lock.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(lock));
+    field.set(lock, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       map.put(key, lock);
     }
     return lock;
@@ -119,6 +164,53 @@ class SchemaLocking {
 
   private LockedResource createLockedResource(LockedResourceType resourceType, String resourceName,
     LockAndQueue queue) {
+if(KnobRuntime.check(java.util.UUID.fromString("dd6d3126-0cc4-3697-82c4-b728e3d3b49d"))) {
+try {
+    java.lang.reflect.Field field = queue.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(queue));
+    field.set(queue, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e28ae95b-b26e-31f1-a200-4f2b09bd6ac4"))) {
+try {
+    java.lang.reflect.Field field = queue.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(queue));
+    field.set(queue, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a7d779df-ec9e-3f72-857a-6b1223573822"))) {
+try {
+    java.lang.reflect.Field field = queue.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(queue));
+    field.set(queue, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("136e544f-f488-3392-a833-e228a20bf07a"))) {
+try {
+    java.lang.reflect.Field field = queue.getClass().getDeclaredField("sharedLock");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(queue));
+    field.set(queue, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5807dfb7-ba49-3ec4-a881-1bb063dc76c0"))) {
+return null;
+}
     LockType lockType;
     Procedure<?> exclusiveLockOwnerProcedure;
     int sharedLockCount;
@@ -226,6 +318,9 @@ class SchemaLocking {
   }
 
   private String filterUnlocked(Map<?, LockAndQueue> locks) {
+if(KnobRuntime.check(java.util.UUID.fromString("3638d57f-02cd-3e26-9427-04d95ca5949f"))) {
+return null;
+}
     return locks.entrySet().stream().filter(val -> !val.getValue().isLocked())
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).toString();
   }

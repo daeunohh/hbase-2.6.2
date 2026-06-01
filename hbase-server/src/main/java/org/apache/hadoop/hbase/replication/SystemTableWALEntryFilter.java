@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.security.access.PermissionStorage;
 import org.apache.hadoop.hbase.security.visibility.VisibilityConstants;
@@ -33,6 +34,9 @@ import org.apache.yetus.audience.InterfaceAudience;
 public class SystemTableWALEntryFilter implements WALEntryFilter {
   @Override
   public Entry filter(Entry entry) {
+if(KnobRuntime.check(java.util.UUID.fromString("8633d648-de27-30df-9378-a8711240249c"))) {
+return null;
+}
     if (
       entry.getKey().getTableName().equals(PermissionStorage.ACL_TABLE_NAME)
         || entry.getKey().getTableName().equals(VisibilityConstants.LABELS_TABLE_NAME)

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryType;
@@ -82,7 +83,21 @@ public class MemorySizeUtil {
    * We need atleast 20% of heap left out for other RS functions.
    */
   public static void checkForClusterFreeHeapMemoryLimit(Configuration conf) {
-    if (conf.get(MEMSTORE_SIZE_OLD_KEY) != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("8af1696e-428d-3f64-870d-75e4d7dba571"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c1908813-23e1-3400-ba0b-8ab37bd7ca8d"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("8e5293b2-2d67-3c84-a85b-c7b762e460e4"))) ? ((conf.get(MEMSTORE_SIZE_OLD_KEY)) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d861fc47-3dc8-38f1-8949-d124302d599d"))) ? ((conf.get(MEMSTORE_SIZE_OLD_KEY + " is deprecated by ")) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("38bba24e-7605-3c6a-bcce-73988e2ed730"))) ? ((conf.get(MEMSTORE_SIZE_OLD_KEY + " is deprecated by ")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3855d037-c2d7-34d7-8bfb-3336e4140c10"))) ? ((conf.get(MEMSTORE_SIZE_OLD_KEY)) == (null)) : (conf.get(MEMSTORE_SIZE_OLD_KEY) != null))))))))) {
       LOG.warn(MEMSTORE_SIZE_OLD_KEY + " is deprecated by " + MEMSTORE_SIZE_KEY);
     }
     float globalMemstoreSize = getGlobalMemStoreHeapPercent(conf, false);
@@ -131,8 +146,22 @@ public class MemorySizeUtil {
    */
   public static float getGlobalMemStoreHeapLowerMark(final Configuration conf,
     boolean honorOldConfig) {
+if(KnobRuntime.check(java.util.UUID.fromString("35b72321-afc0-3671-8f18-a1074cba866b"))) {
+return 0.0f;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("91d4007f-01e0-3fb8-b618-d22835983d3a"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String lowMarkPercentStr = conf.get(MEMSTORE_SIZE_LOWER_LIMIT_KEY);
-    if (lowMarkPercentStr != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("39092464-d13e-36f6-afae-62f3e0afcb59"))) ? ((lowMarkPercentStr) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("368b172b-a092-3ba5-a9a8-48e8e15fa9a5"))) ? ((lowMarkPercentStr) == (null)) : (lowMarkPercentStr != null))))) {
       float lowMarkPercent = Float.parseFloat(lowMarkPercentStr);
       if (lowMarkPercent > 1.0f) {
         LOG.error("Bad configuration value for " + MEMSTORE_SIZE_LOWER_LIMIT_KEY + ": "
@@ -146,6 +175,9 @@ public class MemorySizeUtil {
     if (lowerWaterMarkOldValStr != null) {
       LOG.warn(MEMSTORE_SIZE_LOWER_LIMIT_OLD_KEY + " is deprecated. Instead use "
         + MEMSTORE_SIZE_LOWER_LIMIT_KEY);
+if(KnobRuntime.check(java.util.UUID.fromString("8904e407-25f6-3b1b-9b22-231127295bde"))) {
+throw new java.lang.NumberFormatException("Injected exception");
+}
       float lowerWaterMarkOldVal = Float.parseFloat(lowerWaterMarkOldValStr);
       float upperMarkPercent = getGlobalMemStoreHeapPercent(conf, false);
       if (lowerWaterMarkOldVal > upperMarkPercent) {
@@ -180,6 +212,17 @@ public class MemorySizeUtil {
           + " Going with on heap global memstore size ('" + MEMSTORE_SIZE_KEY + "')");
       }
     }
+if(KnobRuntime.check(java.util.UUID.fromString("52dc4a96-d9f5-3847-b597-9cd28d76d620"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new Pair<>(getOnheapGlobalMemStoreSize(conf), MemoryType.HEAP);
   }
 
@@ -189,6 +232,20 @@ public class MemorySizeUtil {
    * @return the onheap global memstore limt
    */
   public static long getOnheapGlobalMemStoreSize(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("85a29ed4-20c4-381c-b3bb-ed18e80af0a1"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d7ed993d-558a-378e-9992-e78c1dde6541"))) {
+return 0;
+}
     long max = -1L;
     final MemoryUsage usage = safeGetHeapMemoryUsage();
     if (usage != null) {

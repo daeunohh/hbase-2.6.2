@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.ServerName;
@@ -90,6 +91,12 @@ public abstract class ServerRemoteProcedure extends Procedure<MasterProcedureEnv
   @Override
   protected synchronized Procedure<MasterProcedureEnv>[] execute(MasterProcedureEnv env)
     throws ProcedureYieldException, ProcedureSuspendedException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("3db1870c-1b81-34be-bea2-9076dc42dd36"))) {
+throw new InterruptedException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("31489f87-3f36-3539-8f31-6ec140576745"))) {
+return null;
+}
     if (
       state != MasterProcedureProtos.ServerRemoteProcedureState.SERVER_REMOTE_PROCEDURE_DISPATCH
     ) {
@@ -99,7 +106,18 @@ public abstract class ServerRemoteProcedure extends Procedure<MasterProcedureEnv
       state = MasterProcedureProtos.ServerRemoteProcedureState.SERVER_REMOTE_PROCEDURE_DISPATCH;
     }
     try {
-      env.getRemoteDispatcher().addOperationToNode(targetServer, this);
+if(KnobRuntime.check(java.util.UUID.fromString("95cd64ac-0761-388c-8ba3-c5fc38473f53"))) {
+try {
+    java.lang.reflect.Field field = targetServer.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(targetServer));
+    field.set(targetServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("9e6b9ecd-867e-3648-950e-80288f51a0ea"))) { env.getRemoteDispatcher().removeCompletedOperation(targetServer, this); } else { env.getRemoteDispatcher().addOperationToNode(targetServer, this); }
     } catch (FailedRemoteDispatchException frde) {
       LOG.warn("Can not send remote operation {} to {}, this operation will "
         + "be retried to send to another server", this.getProcId(), targetServer);
@@ -112,6 +130,20 @@ public abstract class ServerRemoteProcedure extends Procedure<MasterProcedureEnv
 
   @Override
   protected synchronized void completionCleanup(MasterProcedureEnv env) {
+if(KnobRuntime.check(java.util.UUID.fromString("a3d94682-7a54-3a67-96a4-b00ac82e418f"))) {
+try {
+    java.lang.reflect.Field field = targetServer.getClass().getDeclaredField("startCode");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(targetServer));
+    field.set(targetServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2a93a965-d165-3697-b7b5-9c9d05f3e454"))) {
+return;
+}
     env.getRemoteDispatcher().removeCompletedOperation(targetServer, this);
   }
 
@@ -137,7 +169,7 @@ public abstract class ServerRemoteProcedure extends Procedure<MasterProcedureEnv
 
   synchronized void remoteOperationDone(MasterProcedureEnv env, Throwable error) {
     if (this.isFinished()) {
-      LOG.info("This procedure {} is already finished, skip the rest processes", this.getProcId());
+      if (KnobRuntime.check(java.util.UUID.fromString("6dd0b694-e90f-389d-be9e-c93d78922200"))) { LOG.warn("This procedure {} is already finished, skip the rest processes", getProcId()); } else if (KnobRuntime.check(java.util.UUID.fromString("ac8b69c8-7f56-394c-ab5a-ed33769c30dc"))) { LOG.info("This procedure {} is already finished, skip the rest processes", getProcId()); } else { LOG.info("This procedure {} is already finished, skip the rest processes", this.getProcId()); }
       return;
     }
     if (event == null) {

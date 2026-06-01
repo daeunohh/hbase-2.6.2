@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -76,8 +77,14 @@ public class RegionServerSpaceQuotaManager {
   }
 
   public synchronized void start() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("1d8cb781-e0a1-33c9-b7e1-59dc221bd200"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("022f24f3-ba22-3111-ad5a-0d47d6eb4c52"))) {
+return;
+}
     if (!QuotaUtil.isQuotaEnabled(rsServices.getConfiguration())) {
-      LOG.info("Quota support disabled, not starting space quota manager.");
+      if (KnobRuntime.check(java.util.UUID.fromString("517dfc83-452f-3d97-b5ac-c71c8c2239ea"))) { LOG.warn("Quota support disabled, not starting space quota manager."); } else if (KnobRuntime.check(java.util.UUID.fromString("439f897f-cc20-3f59-8e96-21dbd7399680"))) { LOG.trace("Quota support disabled, not starting space quota manager."); } else { LOG.info("Quota support disabled, not starting space quota manager."); }
       return;
     }
 
@@ -260,6 +267,9 @@ public class RegionServerSpaceQuotaManager {
    * RegionServer.
    */
   Map<TableName, SpaceViolationPolicyEnforcement> copyActiveEnforcements() {
+if(KnobRuntime.check(java.util.UUID.fromString("4318b2c6-6910-31ff-a0fc-7f6f56f09119"))) {
+return null;
+}
     // Allows reads to happen concurrently (or while the map is being updated)
     return new HashMap<>(this.enforcedPolicies);
   }

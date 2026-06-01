@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -52,6 +53,42 @@ public abstract class ProcedurePrepareLatch {
    */
   public static ProcedurePrepareLatch createLatch(int major, int minor) {
     // don't use the latch if we have procedure support
+if(KnobRuntime.check(java.util.UUID.fromString("7f044e0a-c34f-3457-9a3e-b5d79644cdc7"))) {
+minor /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("18b9f4e0-3d84-3279-b76f-4fd9d42a149b"))) {
+minor = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab7f42e9-c322-3149-8dcd-aa5746e0d1c9"))) {
+minor += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("53fc003f-52c4-34e8-97c5-93b406f69542"))) {
+minor -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("67d6d52d-502f-3de3-be99-cb27eec733f1"))) {
+major -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0ff1181a-71fd-3425-a3ce-9e2405fb2f35"))) {
+major += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2bd1819f-d69d-3f45-85a5-05bfb68e961c"))) {
+major = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b16f2884-d46c-3828-9288-d259b48ec8ba"))) {
+minor *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("73169cb8-9460-3308-9c68-b1df0130dfbb"))) {
+major *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bbdfbd72-b6bf-3501-a760-755bfaa4af76"))) {
+minor = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1a03c4f0-d5df-3cbc-894c-9332dae2f96e"))) {
+major /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("035b30bd-cf97-3658-952f-fbc977cabf93"))) {
+major = 0;
+}
     return hasProcedureSupport(major, minor) ? noopLatch : new CompatibilityLatch();
   }
 
@@ -59,6 +96,9 @@ public abstract class ProcedurePrepareLatch {
    * Creates a latch which blocks.
    */
   public static ProcedurePrepareLatch createBlockingLatch() {
+if(KnobRuntime.check(java.util.UUID.fromString("2606ee81-c6ba-3e60-9e66-9cf94de806cc"))) {
+return null;
+}
     return new CompatibilityLatch();
   }
 
@@ -114,7 +154,7 @@ public abstract class ProcedurePrepareLatch {
         throw (InterruptedIOException) new InterruptedIOException().initCause(e);
       }
 
-      if (exception != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("ac18043d-b4ee-3b3e-9874-093e0949f07a"))) ? ((exception) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8d991531-c4cc-3c52-94d2-20bafaff2624"))) ? ((exception) == (null)) : (exception != null))))) {
         throw exception;
       }
     }

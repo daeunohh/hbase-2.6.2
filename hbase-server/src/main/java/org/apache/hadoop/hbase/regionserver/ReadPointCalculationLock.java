@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -53,7 +54,7 @@ public class ReadPointCalculationLock {
   ReadPointCalculationLock(Configuration conf) {
     this.useReadWriteLockForReadPoints =
       conf.getBoolean("hbase.region.readpoints.read.write.lock.enable", false);
-    if (useReadWriteLockForReadPoints) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("bdc2ad9e-8874-371a-b61d-dab952d60786"))) ? (!useReadWriteLockForReadPoints) : (((KnobRuntime.check(java.util.UUID.fromString("f70a5f6d-989e-315e-9df7-9070c534fc35"))) ? (false) : (useReadWriteLockForReadPoints))))) {
       readWriteLock = new ReentrantReadWriteLock();
     } else {
       lock = new ReentrantLock();
@@ -61,7 +62,10 @@ public class ReadPointCalculationLock {
   }
 
   void lock(LockType lockType) {
-    if (useReadWriteLockForReadPoints) {
+if(KnobRuntime.check(java.util.UUID.fromString("dab1c13c-2ec6-364d-930d-942e1361e79c"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("3c4519c3-c5fb-3fd4-bc7f-1ef6df30243f"))) ? (!useReadWriteLockForReadPoints) : (useReadWriteLockForReadPoints))) {
       assert lock == null;
       if (lockType == LockType.CALCULATION_LOCK) {
         readWriteLock.writeLock().lock();
@@ -69,13 +73,16 @@ public class ReadPointCalculationLock {
         readWriteLock.readLock().lock();
       }
     } else {
-      assert readWriteLock == null;
-      lock.lock();
+      assert ((KnobRuntime.check(java.util.UUID.fromString("09c8ef32-6e40-3eb9-a0b9-325ae2e5c80f"))) ? ((readWriteLock) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8fd70c06-831d-3dba-8f63-44b518455961"))) ? ((readWriteLock) == (null)) : (readWriteLock == null))));
+      if (KnobRuntime.check(java.util.UUID.fromString("4d5cfff2-aa21-3004-8019-1e06d7da8f0d"))) { lock.unlock(); } else { lock.lock(); }
     }
   }
 
   void unlock(LockType lockType) {
-    if (useReadWriteLockForReadPoints) {
+if(KnobRuntime.check(java.util.UUID.fromString("d867fc79-7d03-35c4-bcb2-ade3637edb15"))) {
+return;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("d3b9d5f5-5e69-30eb-8a0e-4a377bcc230d"))) ? (!useReadWriteLockForReadPoints) : (useReadWriteLockForReadPoints))) {
       assert lock == null;
       if (lockType == LockType.CALCULATION_LOCK) {
         readWriteLock.writeLock().unlock();
@@ -83,8 +90,8 @@ public class ReadPointCalculationLock {
         readWriteLock.readLock().unlock();
       }
     } else {
-      assert readWriteLock == null;
-      lock.unlock();
+      assert ((KnobRuntime.check(java.util.UUID.fromString("8753a24c-e1b8-3d17-b02a-3869ad3ed16a"))) ? ((readWriteLock) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("725b1a2f-fda0-3951-800e-ede22bdbc323"))) ? ((readWriteLock) == (null)) : (readWriteLock == null))));
+      if (KnobRuntime.check(java.util.UUID.fromString("1b0adeab-cf65-3166-933d-9d2ea7a6c0d1"))) { lock.lock(); } else { lock.unlock(); }
     }
   }
 }

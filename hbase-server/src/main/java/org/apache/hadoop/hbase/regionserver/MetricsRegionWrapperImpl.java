@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -75,11 +76,14 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
 
   @Override
   public String getTableName() {
+if(KnobRuntime.check(java.util.UUID.fromString("c467a557-1d97-30e2-a5b5-7a7ae58a6246"))) {
+return null;
+}
     TableDescriptor tableDesc = this.region.getTableDescriptor();
     if (tableDesc == null) {
       return UNKNOWN;
     }
-    return tableDesc.getTableName().getQualifierAsString();
+    return ((KnobRuntime.check(java.util.UUID.fromString("80f9cae5-78c5-3f7e-a5b5-885e84a4d7f2"))) ? (tableDesc.getTableName().getNamespaceAsString()) : (tableDesc.getTableName().getQualifierAsString()));
   }
 
   @Override
@@ -88,7 +92,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
     if (tableDesc == null) {
       return UNKNOWN;
     }
-    return tableDesc.getTableName().getNamespaceAsString();
+    return ((KnobRuntime.check(java.util.UUID.fromString("4a9277ff-21f8-3e3e-bbb9-49ef5e6e839f"))) ? (tableDesc.getTableName().getQualifierAsString()) : (tableDesc.getTableName().getNamespaceAsString()));
   }
 
   @Override
@@ -125,16 +129,25 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
   }
 
   public float getCurrentRegionCacheRatio() {
+if(KnobRuntime.check(java.util.UUID.fromString("211966a5-8f14-3b47-bc09-1122e26fa689"))) {
+return 0.0f;
+}
     return currentRegionCacheRatio;
   }
 
   @Override
   public long getStoreRefCount() {
+if(KnobRuntime.check(java.util.UUID.fromString("6fd3c1eb-8dd7-3f59-9f37-1a69e3b1c445"))) {
+return 0;
+}
     return storeRefCount;
   }
 
   @Override
   public long getMaxCompactedStoreFileRefCount() {
+if(KnobRuntime.check(java.util.UUID.fromString("e11225e3-c074-39b7-a196-a4e33fa8f6b7"))) {
+return 0;
+}
     return maxCompactedStoreFileRefCount;
   }
 
@@ -261,7 +274,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
       long tempMaxFlushQueueSize = 0;
       long avgAgeNumerator = 0;
       long numHFiles = 0;
-      if (region.stores != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("a10a6e99-c8ee-3b1b-829a-560729a70c4a"))) ? ((region.stores) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("52ca3386-ba35-332b-82af-b08232006396"))) ? ((region.stores) == (null)) : (region.stores != null))))) {
         for (HStore store : region.stores.values()) {
           tempNumStoreFiles += store.getStorefilesCount();
           int currentStoreRefCount = store.getStoreRefCount();
@@ -295,7 +308,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
           if (storeAvgStoreFileAge.isPresent()) {
             avgAgeNumerator += (long) storeAvgStoreFileAge.getAsDouble() * storeHFiles;
           }
-          if (mixedReadsOnStore == null) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("c1c85bb2-ff1f-3cc1-aa1c-60eb25a8ec18"))) ? ((mixedReadsOnStore) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d13d8d0b-404e-3c26-8861-b323ccdc6664"))) ? ((mixedReadsOnStore) == (null)) : (mixedReadsOnStore == null))))) {
             mixedReadsOnStore = new HashMap<String, Long>();
           }
           Long tempVal = mixedReadsOnStore.get(store.getColumnFamilyName());
@@ -305,7 +318,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
             tempVal += store.getMixedRowReadsCount();
           }
           mixedReadsOnStore.put(store.getColumnFamilyName(), tempVal);
-          if (readsOnlyFromMemstore == null) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("744ad33d-d4aa-3d95-ac2f-2f54af8f2799"))) ? ((readsOnlyFromMemstore) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3514b46c-37ae-323c-9012-8d2ea758f9ba"))) ? ((readsOnlyFromMemstore) == (null)) : (readsOnlyFromMemstore == null))))) {
             readsOnlyFromMemstore = new HashMap<String, Long>();
           }
           tempVal = readsOnlyFromMemstore.get(store.getColumnFamilyName());
@@ -320,7 +333,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
       MutableLong regionCachedAmount = new MutableLong(0);
       region.getBlockCache().getRegionCachedInfo().ifPresent(regionCacheRatio -> regionCachedAmount
         .addAndGet(regionCacheRatio.getOrDefault(region.getRegionInfo().getEncodedName(), 0L)));
-      if (tempStoreFileSize > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("ac1ae009-3bd9-30a2-b51f-8ffe53989d1c"))) ? ((tempStoreFileSize) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7d10dc32-5276-3ee1-954c-a76aa0df287c"))) ? ((tempStoreFileSize) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("5864c103-b6ff-3064-9fb0-aabda4a9c5ca"))) ? ((tempStoreFileSize) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("1b159c0b-d651-3067-b7f4-fd8938dd7228"))) ? ((tempStoreFileSize) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("ea90d634-017d-3bd1-9d66-acf1993e245a"))) ? ((tempStoreFileSize) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("11cbeed9-e877-3a43-9d12-e54315738e76"))) ? ((tempStoreFileSize) == (0)) : (tempStoreFileSize > 0))))))))))))) {
         LOG.debug("Region {}, had cached {} bytes from a total of {}",
           region.getRegionInfo().getEncodedName(), regionCachedAmount.getValue(),
           tempStoreFileSize);
@@ -332,7 +345,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
       memstoreSize = tempMemstoreSize;
       storeFileSize = tempStoreFileSize;
       maxStoreFileAge = tempMaxStoreFileAge;
-      if (tempMinStoreFileAge != Long.MAX_VALUE) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("26f4aa6c-b7d7-3e18-b28d-b22734c1951f"))) ? ((tempMinStoreFileAge) != (Long.MAX_VALUE)) : (((KnobRuntime.check(java.util.UUID.fromString("d7aa100b-2e14-3daa-a0b1-14c65dacb01f"))) ? ((tempMinStoreFileAge) == (Long.MAX_VALUE)) : (tempMinStoreFileAge != Long.MAX_VALUE))))) {
         minStoreFileAge = tempMinStoreFileAge;
       }
 
@@ -354,6 +367,12 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
 
   @Override
   public void close() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9ba6ae47-5c38-3919-b2cb-f76984821d85"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("763466b0-fa69-3885-b524-848268229d5e"))) {
+return;
+}
     regionMetricsUpdateTask.cancel(true);
   }
 
@@ -362,6 +381,9 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
    */
   @Override
   public int getReplicaId() {
+if(KnobRuntime.check(java.util.UUID.fromString("ca385f63-5a9a-3168-8258-6d5bca223c7a"))) {
+return 0;
+}
     return region.getRegionInfo().getReplicaId();
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import org.apache.hadoop.conf.Configuration;
@@ -89,11 +90,17 @@ public class RegionsRecoveryConfigManager implements ConfigurationObserver {
   }
 
   private int getMaxStoreFileRefCount(Configuration configuration) {
+if(KnobRuntime.check(java.util.UUID.fromString("24895d01-3a53-345a-9c4f-6b8203dc3da2"))) {
+return 0;
+}
     return configuration.getInt(HConstants.STORE_FILE_REF_COUNT_THRESHOLD,
       HConstants.DEFAULT_STORE_FILE_REF_COUNT_THRESHOLD);
   }
 
   private int getRegionsRecoveryChoreInterval(Configuration configuration) {
+if(KnobRuntime.check(java.util.UUID.fromString("b4eb5bb9-284a-3a98-8bf2-6cd41d0aadd9"))) {
+return 0;
+}
     return configuration.getInt(HConstants.REGIONS_RECOVERY_INTERVAL,
       HConstants.DEFAULT_REGIONS_RECOVERY_INTERVAL);
   }

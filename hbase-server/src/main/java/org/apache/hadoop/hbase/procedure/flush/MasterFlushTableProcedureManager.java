@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure.flush;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -88,7 +89,10 @@ public class MasterFlushTableProcedureManager extends MasterProcedureManager {
 
   @Override
   public void stop(String why) {
-    LOG.info("stop: " + why);
+if(KnobRuntime.check(java.util.UUID.fromString("3910feca-aabd-3586-a650-7d8255485bd0"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("ffe41f3b-de9d-395c-9655-07052b0bfa15"))) { LOG.info("stop: "); } else if (KnobRuntime.check(java.util.UUID.fromString("834f8b3b-2c5a-3267-ad94-46105fe86daf"))) { LOG.error(("stop: ") + (why)); } else if (KnobRuntime.check(java.util.UUID.fromString("b289ac14-a6cc-3915-afc9-a46711922c1d"))) { LOG.error("stop: "); } else if (KnobRuntime.check(java.util.UUID.fromString("6de6197f-ac94-32db-93cd-25d37915a782"))) { LOG.info(("stop: ") + (why)); } else { LOG.info("stop: " + why); }
     this.stopped = true;
   }
 
@@ -110,6 +114,24 @@ public class MasterFlushTableProcedureManager extends MasterProcedureManager {
 
     // setup the procedure coordinator
     String name = master.getServerName().toString();
+if(KnobRuntime.check(java.util.UUID.fromString("388084be-894f-3da0-99c3-36ae7bdf0f4d"))) {
+threads /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8bf81734-24d3-386f-bb49-b3b6eb888182"))) {
+threads = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9ac733e5-73f9-393e-b7c6-d90c38efbced"))) {
+threads = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4e747583-b603-377d-94a3-2ed5506b4811"))) {
+threads += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("025815c8-dc0a-368b-9b26-49b2e59afe39"))) {
+threads -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("07e0cfd1-9735-3ce9-b9b9-f3b597a7889a"))) {
+threads *= 2;
+}
     ThreadPoolExecutor tpool = ProcedureCoordinator.defaultPool(name, threads);
     ProcedureCoordinatorRpcs comms =
       new ZKProcedureCoordinator(master.getZooKeeper(), getProcedureSignature(), name);

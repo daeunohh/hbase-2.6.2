@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Abortable;
@@ -41,11 +42,39 @@ public class MetaRWQueueRpcExecutor extends RWQueueRpcExecutor {
 
   @Override
   protected float getReadShare(final Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("00b33259-af0d-3b0a-af49-61d8cf78c41e"))) {
+return 0.0f;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2c6b4327-f3fd-3c45-b354-6575466f1d47"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return conf.getFloat(META_CALL_QUEUE_READ_SHARE_CONF_KEY, DEFAULT_META_CALL_QUEUE_READ_SHARE);
   }
 
   @Override
   protected float getScanShare(final Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("a54707d6-ce8a-3dc4-a21a-add64a5ff485"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b9eac5c7-25c0-39bd-ac98-20510b7ce405"))) {
+return 0.0f;
+}
     return conf.getFloat(META_CALL_QUEUE_SCAN_SHARE_CONF_KEY, 0);
   }
 }

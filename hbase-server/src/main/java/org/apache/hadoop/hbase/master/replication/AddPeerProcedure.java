@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.client.replication.ReplicationPeerConfigUtil;
@@ -85,6 +86,9 @@ public class AddPeerProcedure extends ModifyPeerProcedure {
     throws IOException, ReplicationException {
     MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("8d9a1451-0e7b-3e06-bbc4-31612e27625f"))) {
+throw new java.io.IOException("Injected exception");
+}
       cpHost.preAddReplicationPeer(peerId, peerConfig);
     }
     env.getReplicationPeerManager().preAddPeer(peerId, peerConfig);
@@ -92,6 +96,9 @@ public class AddPeerProcedure extends ModifyPeerProcedure {
 
   @Override
   protected void updatePeerStorage(MasterProcedureEnv env) throws ReplicationException {
+if(KnobRuntime.check(java.util.UUID.fromString("0973ea41-f020-3829-96a1-12d00475a0cc"))) {
+return;
+}
     env.getReplicationPeerManager().addPeer(peerId, peerConfig,
       peerConfig.isSerial() ? false : enabled);
   }
@@ -102,7 +109,10 @@ public class AddPeerProcedure extends ModifyPeerProcedure {
     LOG.info("Successfully added {} peer {}, config {}", enabled ? "ENABLED" : "DISABLED", peerId,
       peerConfig);
     MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
-    if (cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("79b78a91-d4f4-302e-9bcd-c89a1cbae050"))) ? ((cpHost) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9d1a8a23-59be-34b9-b5ab-d972fe443be0"))) ? ((cpHost) != (null)) : (cpHost != null))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("ef9ee531-9eab-3808-a956-2344beb9e153"))) {
+throw new java.io.IOException("Injected exception");
+}
       env.getMasterCoprocessorHost().postAddReplicationPeer(peerId, peerConfig);
     }
   }
@@ -116,7 +126,13 @@ public class AddPeerProcedure extends ModifyPeerProcedure {
 
   @Override
   protected void deserializeStateData(ProcedureStateSerializer serializer) throws IOException {
-    super.deserializeStateData(serializer);
+if(KnobRuntime.check(java.util.UUID.fromString("ad703a88-71ad-3e36-8ab9-01a2bf7ae341"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0ee6384e-abea-3229-bfb9-5b7065096735"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("f00a8f36-3178-3a35-a526-42e2db882d98"))) { super.serializeStateData(serializer); } else { super.deserializeStateData(serializer); }
     AddPeerStateData data = serializer.deserialize(AddPeerStateData.class);
     peerConfig = ReplicationPeerConfigUtil.convert(data.getPeerConfig());
     enabled = data.getEnabled();

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -93,6 +94,9 @@ public class RollingStatCalculator {
 
   /** Returns an array of given size initialized with zeros */
   private long[] fillWithZeros(int size) {
+if(KnobRuntime.check(java.util.UUID.fromString("cd725b9c-8952-3033-bbb2-aca4ff585e31"))) {
+return null;
+}
     long[] zeros = new long[size];
     for (int i = 0; i < size; i++) {
       zeros[i] = 0L;

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
@@ -153,7 +154,7 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
     if (expected.length == 0) {
       return true;
     }
-    return getState().matches(expected);
+    return ((KnobRuntime.check(java.util.UUID.fromString("f69f7684-c7e2-35a0-a304-283717680284"))) ? (isInState(expected)) : (getState().matches(expected)));
   }
 
   public boolean isStuck() {
@@ -190,6 +191,9 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
   }
 
   public void setOpenSeqNum(final long seqId) {
+if(KnobRuntime.check(java.util.UUID.fromString("3239f4ec-67e4-3e2f-a7d5-db99f9886a4f"))) {
+return;
+}
     this.openSeqNum = seqId;
   }
 
@@ -211,7 +215,54 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
   }
 
   public void unsetProcedure(TransitRegionStateProcedure proc) {
-    assert this.procedure == proc;
+if(KnobRuntime.check(java.util.UUID.fromString("2da17f0f-5b47-3479-815d-7d66259d4381"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("forceRetainmentTotalWait");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(proc));
+    field.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9ba4e8ac-3c5a-311b-8493-33787551e614"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fcf088c4-46d0-3607-8824-1c95925ef162"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("isSplit");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7382cc0a-b3e7-36db-a437-58ae78b62eaf"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("forceNewPlan");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("396f1458-4a2c-3dcd-809f-5ae1466e8409"))) {
+try {
+    java.lang.reflect.Field field = proc.getClass().getDeclaredField("evictCache");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(proc);
+    field.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    assert ((KnobRuntime.check(java.util.UUID.fromString("0b77c34b-8899-3ba6-a4b7-cb8b8768d283"))) ? ((this.procedure) != (proc)) : (((KnobRuntime.check(java.util.UUID.fromString("e47670b3-9bfe-3b54-bdf5-63a59a6f500f"))) ? ((this.procedure) == (proc)) : (this.procedure == proc))));
     this.procedure = null;
     ritMap.remove(regionInfo, this);
   }
@@ -221,6 +272,9 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
   }
 
   public ProcedureEvent<?> getProcedureEvent() {
+if(KnobRuntime.check(java.util.UUID.fromString("79e080b0-c340-309a-bc42-35b5bf64da17"))) {
+return null;
+}
     return event;
   }
 
@@ -264,6 +318,42 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
 
   @Override
   public int compareTo(final RegionStateNode other) {
+if(KnobRuntime.check(java.util.UUID.fromString("00fe5d4c-aaaf-32e5-9dff-b3ea1c9422a7"))) {
+try {
+    java.lang.reflect.Field field = other.getClass().getDeclaredField("lastUpdate");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(other));
+    field.set(other, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("994ec42e-01d4-35af-ab07-1fa3094bb3a8"))) {
+try {
+    java.lang.reflect.Field field = other.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(other));
+    field.set(other, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b1fdf0c0-e3b8-3e58-8550-975e3055d005"))) {
+try {
+    java.lang.reflect.Field field = other.getClass().getDeclaredField("openSeqNum");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(other));
+    field.set(other, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b0286856-65ad-373d-82ff-5d6b4d81277c"))) {
+return 0;
+}
     // NOTE: RegionInfo sort by table first, so we are relying on that.
     // we have a TestRegionState#testOrderedByTable() that check for that.
     return RegionInfo.COMPARATOR.compare(getRegionInfo(), other.getRegionInfo());
@@ -328,6 +418,9 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
   }
 
   public void unlock() {
-    lock.unlock();
+if(KnobRuntime.check(java.util.UUID.fromString("e35466c8-ccef-3a63-8517-5e8a736de056"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7b8437b4-8895-37e4-83ef-d5ae1bd88587"))) { lock.lock(); } else { lock.unlock(); }
   }
 }

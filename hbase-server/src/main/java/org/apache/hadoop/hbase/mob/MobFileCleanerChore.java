@@ -64,7 +64,7 @@ public class MobFileCleanerChore extends ScheduledChore {
   private void checkObsoleteConfigurations() {
     Configuration conf = master.getConfiguration();
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("57b6b4df-fca1-36a2-806c-ef212655188a"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6c3a61a2-881b-3afe-8ad8-6cf3830963a5"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) != (null)) : (conf.get("hbase.mob.compaction.mergeable.threshold") != null))))) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("6c3a61a2-881b-3afe-8ad8-6cf3830963a5"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("57b6b4df-fca1-36a2-806c-ef212655188a"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) == (null)) : (conf.get("hbase.mob.compaction.mergeable.threshold") != null))))) {
       LOG.warn("'hbase.mob.compaction.mergeable.threshold' is obsolete and not used anymore.");
     }
     if (conf.get("hbase.mob.delfile.max.count") != null) {

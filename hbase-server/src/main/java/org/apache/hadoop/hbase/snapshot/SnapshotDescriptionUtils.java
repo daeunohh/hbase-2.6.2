@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.URI;
@@ -302,6 +303,9 @@ public final class SnapshotDescriptionUtils {
    * @return Path to the default snapshot tmp directory, relative to the passed root directory
    */
   private static Path getDefaultWorkingSnapshotDir(final Path rootDir) {
+if(KnobRuntime.check(java.util.UUID.fromString("301be47f-1a96-3bc7-8f14-e90843d44246"))) {
+return null;
+}
     return new Path(getSnapshotsDir(rootDir), SNAPSHOT_TMP_DIR_NAME);
   }
 
@@ -326,11 +330,23 @@ public final class SnapshotDescriptionUtils {
 
     // set the creation time, if one hasn't been set
     long time = snapshot.getCreationTime();
-    if (time == SnapshotDescriptionUtils.NO_SNAPSHOT_START_TIME_SPECIFIED) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("20a97651-e68d-3870-9b59-a2080082933f"))) ? ((time) != (SnapshotDescriptionUtils.NO_SNAPSHOT_START_TIME_SPECIFIED)) : (((KnobRuntime.check(java.util.UUID.fromString("6c809d04-6362-39e1-a89f-07f8bafb33bc"))) ? ((time) == (SnapshotDescriptionUtils.NO_SNAPSHOT_START_TIME_SPECIFIED)) : (time == SnapshotDescriptionUtils.NO_SNAPSHOT_START_TIME_SPECIFIED))))) {
       time = EnvironmentEdgeManager.currentTime();
       LOG.debug("Creation time not specified, setting to:" + time + " (current time:"
         + EnvironmentEdgeManager.currentTime() + ").");
-      builder.setCreationTime(time);
+if(KnobRuntime.check(java.util.UUID.fromString("622579b5-dece-3590-b0bd-e17b8a6aafe7"))) {
+time -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7b7ee320-c1a8-36da-b6c1-06407b6b1e18"))) {
+time = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ee7a56f2-7786-3b48-a4d7-7cfb4b6a8401"))) {
+time = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e03a0900-de4d-3afa-a7fa-c96e9d83a4a7"))) {
+time += 1;
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("15dc2484-74aa-3e42-a189-c14e72ce64ca"))) { builder.setTtl(time); } else { builder.setCreationTime(time); }
     }
 
     long ttl = snapshot.getTtl();
@@ -347,7 +363,16 @@ public final class SnapshotDescriptionUtils {
       }
       ttl = defaultSnapshotTtl;
     }
-    builder.setTtl(ttl);
+if(KnobRuntime.check(java.util.UUID.fromString("501aebbe-9d32-3c31-93c1-cb598820ec4f"))) {
+ttl += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("441281a0-dae3-3f3f-aa0e-5a91d35c0672"))) {
+ttl = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c06f9cbb-f75e-3ae3-b288-85b5633e263f"))) {
+ttl = 0;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("5e4155f1-0c3a-3018-b85e-a8e680ed0e5f"))) { builder.setCreationTime(ttl); } else { builder.setTtl(ttl); }
 
     if (!snapshot.hasVersion()) {
       builder.setVersion(SnapshotDescriptionUtils.SNAPSHOT_LAYOUT_VERSION);
@@ -366,7 +391,200 @@ public final class SnapshotDescriptionUtils {
 
     // set the acl to snapshot if security feature is enabled.
     if (isSecurityAvailable(conf)) {
+if(KnobRuntime.check(java.util.UUID.fromString("fc8b87be-c70d-3bd3-8a16-d06e91e33792"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d2bc7ee1-bdba-358d-bda0-8bb5c7c1715c"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b36be837-42c0-31ca-af77-f91a68d15001"))) {
+try {
+    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
+    field.setAccessible(true);
+    boolean oldValue = (boolean)field.get(conf);
+    field.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d3ec20bb-0c1e-3fca-b862-4015f1941529"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("maxFileSize_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshot));
+    field.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cbf186c5-a22d-3b0e-97af-162d77511f9f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("76b13c31-a5b2-3713-b47b-867c38858e2d"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b36f6041-fefc-3321-8f34-0b99693a64a3"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e13aa0d4-c687-3fb7-8ef3-b02f66fc8750"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a051d071-d11d-3b6e-86b8-5e25c8aaa629"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("34980f1b-2e35-34a5-9620-ae82504f52cc"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d9de0565-1459-34b1-b2a1-4ca96a62896a"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3f0008d6-50da-3794-9be8-55691e54dad7"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("version_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("30637380-018d-358e-9410-dae08f88c9d2"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("maxFileSize_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshot));
+    field.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b4290d6d-a2b8-3224-be3d-15f988e4a87e"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c83988d9-c321-339a-84ae-54486ad13258"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("maxFileSize_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshot));
+    field.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7abb4c2e-a7c6-3d19-9498-e92ae5171de6"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("creationTime_");
+    field.setAccessible(true);
+    long oldValue = ((long)field.get(snapshot));
+    field.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1ad3e6cc-8585-346c-a085-a0a4a239b6a2"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("bitField0_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("83a57aef-4e0b-313c-a18a-7a1c83bc0c12"))) {
+try {
+    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("type_");
+    field.setAccessible(true);
+    int oldValue = ((int)field.get(snapshot));
+    field.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       snapshot = writeAclToSnapshotDescription(snapshot, conf);
+if(KnobRuntime.check(java.util.UUID.fromString("3839cdc4-bbc2-39ea-b243-044635f2149e"))) {
+throw new java.io.IOException("Injected exception");
+}
     }
     return snapshot;
   }
@@ -390,7 +608,10 @@ public final class SnapshotDescriptionUtils {
       // if we get an exception, try to remove the snapshot info
       if (!fs.delete(snapshotInfo, false)) {
         String msg = "Couldn't delete snapshot info file: " + snapshotInfo;
-        LOG.error(msg);
+if(KnobRuntime.check(java.util.UUID.fromString("1a412415-b460-3bd4-a3ae-afa7692e4a07"))) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("fe8405d6-3cb9-33bb-be2a-c51215b7fd90"))) { LOG.debug(msg); } else { LOG.error(msg); }
         throw new IOException(msg);
       }
     }
