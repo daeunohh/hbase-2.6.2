@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.namequeues.impl;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -103,9 +102,6 @@ public class SlowLogQueueService implements NamedQueueService {
 
   @Override
   public NamedQueuePayload.NamedQueueEvent getEvent() {
-if(KnobRuntime.check(java.util.UUID.fromString("2c601ada-e819-3a46-a657-60b951dbe91b"))) {
-return null;
-}
     return NamedQueuePayload.NamedQueueEvent.SLOW_LOG;
   }
 

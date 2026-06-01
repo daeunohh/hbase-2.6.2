@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.RpcCallback;
 import com.google.protobuf.RpcController;
@@ -116,240 +115,6 @@ public class MultiRowMutationEndpoint extends MultiRowMutationService implements
       List<MutationProto> mutateRequestList = request.getMutationRequestList();
       List<Mutation> mutations = new ArrayList<>(mutateRequestList.size());
       for (MutationProto m : mutateRequestList) {
-if(KnobRuntime.check(java.util.UUID.fromString("d8c62612-01ad-36fb-9c8c-5af481d34553"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("nonce_");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6d8e7d30-91e4-32d8-b812-5e20c4a1d304"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fe3826ce-ca2e-3f30-a9a9-d3527e2dc5ad"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ee4de7cc-f14b-3027-ab88-1a807e3d6492"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedHashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cfe02d28-5ef0-3281-b846-dbf65c8ec89b"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4966f89f-78f3-332f-9ce7-7814073efc13"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("timestamp_");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("59a6b340-c25f-341f-8b20-e5debd208949"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cd430362-c6ba-3e12-9212-458e3571e336"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4bed53d7-eaeb-3ea4-a7a6-ee327fc00207"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("94b69130-7c1c-37d5-84cb-0bba0681d1d0"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedSerializedSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9769a60c-dcc2-32e9-b9e7-3898ea773e42"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("208ac471-b308-3566-a870-9c26b6f3e721"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("eda77020-c14e-3815-a160-eeda760991d3"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedHashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("177d3254-3415-3fcd-848e-e8e5845c229b"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8901e292-d4c5-3b53-82a3-5defa60131b8"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("nonce_");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f13c1f7d-a37b-3a09-a141-8bda829983d0"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedHashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2038f3ed-c296-36e2-8d04-083071dcc596"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedSerializedSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c79ff3a9-5cff-3928-b896-6fa47729ea8b"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedSerializedSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("513991c3-bb8c-3814-894f-01b017753a61"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedHashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d9ab9340-6df9-35a8-a960-61641559b6a0"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("timestamp_");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(m));
-    field.set(m, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2c891a36-8253-3a4e-a592-de92792535b8"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("timestamp_");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(m));
-    field.set(m, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f67bbf13-c8a9-39f4-9639-53090b78a5e0"))) {
-try {
-    java.lang.reflect.Field field = m.getClass().getDeclaredField("memoizedSerializedSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(m));
-    field.set(m, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         mutations.add(ProtobufUtil.toMutation(m));
       }
 
@@ -372,7 +137,7 @@ try {
         rowsToLock.add(m.getRow());
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("93d1a611-8928-3899-a646-5766ba539add"))) ? ((request.getConditionCount()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("423a8bf0-b0a6-350c-8477-08e6258ddb23"))) ? ((request.getConditionCount()) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6848f546-c14f-30ee-b945-1cbe70bf1cb8"))) ? ((request.getConditionCount()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e31dfbe8-3b33-305b-83f4-9a359d5c1724"))) ? ((request.getConditionCount()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("2217e671-aace-3426-8765-19989614a840"))) ? ((request.getConditionCount()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e227689e-af78-312b-af0e-2d2d3c233482"))) ? ((request.getConditionCount()) < (0)) : (request.getConditionCount() > 0))))))))))))) {
+      if (request.getConditionCount() > 0) {
         // Get row locks for the mutations and the conditions
         rowLocks = new ArrayList<>();
         for (ClientProtos.Condition condition : request.getConditionList()) {
@@ -402,30 +167,6 @@ try {
         // call utility method on region
         long nonceGroup = request.hasNonceGroup() ? request.getNonceGroup() : HConstants.NO_NONCE;
         long nonce = request.hasNonce() ? request.getNonce() : HConstants.NO_NONCE;
-if(KnobRuntime.check(java.util.UUID.fromString("b420849d-2f96-3b8b-80ad-743e04bc7e72"))) {
-nonce += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dd1ce10d-6f44-388a-b05c-fa7443c02e8c"))) {
-nonceGroup = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3b5358ba-3191-320d-aa93-e758ea507d94"))) {
-nonceGroup += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fb87e65f-32e9-36d0-b6d5-91546f76b95b"))) {
-nonce -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("63353aaa-b909-3036-8137-d0e6959cae5f"))) {
-nonce = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c62a39cf-749f-3cfa-8ab6-12fe0ba49a05"))) {
-nonce = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7f96c9cd-1a3a-3f1c-9695-c1abd6136150"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6ae29ac6-f399-377d-823c-23b33f0f175d"))) {
-nonceGroup = -1;
-}
         region.mutateRowsWithLocks(mutations, rowsToLock, nonceGroup, nonce);
       }
     } catch (IOException e) {

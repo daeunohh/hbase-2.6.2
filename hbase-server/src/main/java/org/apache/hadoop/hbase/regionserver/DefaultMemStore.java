@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
@@ -105,8 +104,8 @@ public class DefaultMemStore extends AbstractMemStore {
             memstoreAccounting.getCellsCount());
         }
         this.snapshot = immutableSegment;
-        if (KnobRuntime.check(java.util.UUID.fromString("9b924554-da88-3574-9b5c-b263dbe3088c"))) { resetTimeOfOldestEdit(); } else { resetActive(); }
-        if (KnobRuntime.check(java.util.UUID.fromString("4997ab4f-7d3f-3048-8c22-153c20188a1d"))) { resetActive(); } else { resetTimeOfOldestEdit(); }
+        resetActive();
+        resetTimeOfOldestEdit();
       }
     }
     return new MemStoreSnapshot(this.snapshotId, this.snapshot);
@@ -135,19 +134,7 @@ public class DefaultMemStore extends AbstractMemStore {
    */
   public List<KeyValueScanner> getScanners(long readPt) throws IOException {
     List<KeyValueScanner> list = new ArrayList<>();
-if(KnobRuntime.check(java.util.UUID.fromString("aaf6c3c5-6aa7-34d5-96f1-90147960971b"))) {
-readPt = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("caec8c4e-50b9-3f8c-bed2-d0b44f6954fa"))) {
-readPt = -1;
-}
     addToScanners(getActive(), readPt, list);
-if(KnobRuntime.check(java.util.UUID.fromString("481ef9f5-9ae7-3fc9-ab4c-563ad5197294"))) {
-readPt = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2c67d68a-835a-3a61-8702-ae0e66c46143"))) {
-readPt = 0;
-}
     addToScanners(getSnapshotSegments(), readPt, list);
     return list;
   }

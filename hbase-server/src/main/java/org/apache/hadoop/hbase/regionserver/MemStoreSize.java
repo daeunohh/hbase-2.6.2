@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -85,30 +84,18 @@ public class MemStoreSize {
   }
 
   public long getDataSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("af36c266-c3d8-391e-90db-3d48aa3fd030"))) {
-return 0;
-}
     return this.dataSize;
   }
 
   public long getHeapSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("9733eb8b-511f-3a73-ad30-f352a42adfac"))) {
-return 0;
-}
     return this.heapSize;
   }
 
   public long getOffHeapSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("07758ca6-5c3b-30f1-90dc-2d435b433c0f"))) {
-return 0;
-}
     return this.offHeapSize;
   }
 
   public int getCellsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("497cbc3b-b7b1-3c6e-8ce1-76732ca859c5"))) {
-return 0;
-}
     return this.cellsCount;
   }
 
@@ -136,9 +123,6 @@ return 0;
 
   @Override
   public String toString() {
-if(KnobRuntime.check(java.util.UUID.fromString("09fe3843-e82b-3a05-8baf-19581a2e1a93"))) {
-return null;
-}
     return "dataSize=" + this.dataSize + ", getHeapSize=" + this.heapSize + ", getOffHeapSize="
       + this.offHeapSize + ", getCellsCount=" + this.cellsCount;
   }

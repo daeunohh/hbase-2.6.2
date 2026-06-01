@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_PARAM_KEY;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_TYPE_KEY;
@@ -174,7 +173,7 @@ public class StoreFileReader {
    */
   void readCompleted() {
     storeFileInfo.decreaseRefCount();
-    if (((KnobRuntime.check(java.util.UUID.fromString("ea8b26a4-758b-3e4c-bfe8-08e12d721542"))) ? ((context.getReaderType()) == (ReaderType.STREAM)) : (((KnobRuntime.check(java.util.UUID.fromString("71f83c49-0776-3212-87a6-96cbe2d42f90"))) ? ((context.getReaderType()) != (ReaderType.STREAM)) : (context.getReaderType() == ReaderType.STREAM))))) {
+    if (context.getReaderType() == ReaderType.STREAM) {
       try {
         reader.close(false);
       } catch (IOException e) {
@@ -433,14 +432,14 @@ public class StoreFileReader {
         return exists;
       }
     } catch (IOException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("262d9592-300a-367c-8fb1-0ead32a7b006"))) { LOG.warn("Error reading bloom filter data -- proceeding without", e); } else { LOG.error("Error reading bloom filter data -- proceeding without", e); }
-      if (KnobRuntime.check(java.util.UUID.fromString("ee4deb93-1b06-3c8c-abca-104569e79db1"))) { setDeleteFamilyBloomFilterFaulty(); } else { setGeneralBloomFilterFaulty(); }
+      LOG.error("Error reading bloom filter data -- proceeding without", e);
+      setGeneralBloomFilterFaulty();
     } catch (IllegalArgumentException e) {
       LOG.error("Bad bloom filter data -- proceeding without", e);
       setGeneralBloomFilterFaulty();
     } finally {
       // Release the bloom block so that its ref count can be decremented.
-      if (((KnobRuntime.check(java.util.UUID.fromString("3420411f-3301-3652-ac86-982bf29b0618"))) ? ((bloomBlock) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("41e70859-0b04-39d2-ae65-bc06aded8709"))) ? ((bloomBlock) != (null)) : (bloomBlock != null))))) {
+      if (bloomBlock != null) {
         bloomBlock.release();
       }
     }
@@ -453,309 +452,6 @@ public class StoreFileReader {
    * @return true if there is overlap, false otherwise
    */
   public boolean passesKeyRangeFilter(Scan scan) {
-if(KnobRuntime.check(java.util.UUID.fromString("5d14994d-3375-3704-9571-36043340a055"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("caching");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("da7383e1-45c9-35ea-ad9c-a439208a64f4"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeOffset");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("185ccc23-f56e-39c5-a431-9354bcd0314a"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("maxVersions");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("09f020ee-2105-30d4-865a-7777f579b0c8"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeOffset");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("35a02b2e-7d78-3b99-9f34-c9402a850eca"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("caching");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cd0a5f65-72a4-3fea-8c42-78b6a3143deb"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e4fdea4a-8cd5-3539-805e-4b06a8ba3c6b"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("maxVersions");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("faee0d9b-1f06-3a23-b60e-85766e950bed"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("maxVersions");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7995a1f4-86ca-351f-8125-f322c1e51f81"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("batch");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("79db96ed-cb14-3987-b690-3d6a8cb4b4ce"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeLimit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ee216972-fb75-372e-87a3-374d3fa2f3b0"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeLimit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b6b042b3-4585-310c-8fb6-0a29a3e21d2c"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("maxVersions");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a9978220-c2bc-3693-ba93-b804c695e41d"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeLimit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4a3d4afb-9eab-3862-b260-24f9b5aa8ddd"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("batch");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("93dd883e-e80f-3cbe-8fa7-fbef1a309a31"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("batch");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b8e0937b-d940-3168-bf81-72d7ef564567"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("maxResultSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d2bb4de2-20c8-3b28-9ab6-7868b33c2322"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("batch");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("22f92e4f-d134-3f0a-a01f-7ad19085a550"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("29c48eab-1933-3d45-88dc-6b24e8144f70"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("mvccReadPoint");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c225ed46-89ee-37ff-bc01-b5bfbc71189b"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("caching");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("298d74b3-7f7f-343d-965e-336375a2596d"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("01e36cb4-ccad-30e3-b1ed-caceaba6a3f4"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("445f22ca-b9ad-34b6-8806-9546bc010e59"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeOffset");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("add5561a-bf77-3a22-beb3-b8d7d7e46ec9"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("cacheBlocks");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scan);
-    field.set(scan, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("50a21dc6-e929-3671-9652-45c532a92c16"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeLimit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1e44957a-8eda-3159-81a3-4783b4bcb90e"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2a097c10-eeee-35c7-963d-91e938e6a39b"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("storeOffset");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5defd49b-8e73-3673-a718-01224f2eecc0"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("caching");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a725dc6c-b493-3731-b1c7-2f7bf329e5a1"))) {
-try {
-    java.lang.reflect.Field field = scan.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(scan));
-    field.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Optional<Cell> firstKeyKV = this.getFirstKey();
     Optional<Cell> lastKeyKV = this.getLastKey();
     if (!firstKeyKV.isPresent() || !lastKeyKV.isPresent()) {
@@ -793,11 +489,11 @@ try {
     }
 
     lastBloomKey = fi.get(LAST_BLOOM_KEY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("c840e8a0-e00f-3d43-a5d6-51dcc1ef344c"))) ? ((bloomFilterType) == (BloomType.ROWCOL)) : (((KnobRuntime.check(java.util.UUID.fromString("ce4f6d4f-fedd-3d55-b41e-7294736798ce"))) ? ((bloomFilterType) != (BloomType.ROWCOL)) : (bloomFilterType == BloomType.ROWCOL))))) {
+    if (bloomFilterType == BloomType.ROWCOL) {
       lastBloomKeyOnlyKV = new KeyValue.KeyOnlyKeyValue(lastBloomKey, 0, lastBloomKey.length);
     }
     byte[] cnt = fi.get(DELETE_FAMILY_COUNT);
-    if (((KnobRuntime.check(java.util.UUID.fromString("24dd95dc-e9a1-3f99-9cd6-9d762f160b45"))) ? ((cnt) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("515599dd-94e8-3c69-87b6-69a012c45ece"))) ? ((cnt) != (null)) : (cnt != null))))) {
+    if (cnt != null) {
       deleteFamilyCnt = Bytes.toLong(cnt);
     }
 
@@ -812,23 +508,17 @@ try {
   }
 
   public void loadBloomfilter(BlockType blockType, BloomFilterMetrics metrics) {
-if(KnobRuntime.check(java.util.UUID.fromString("8ce1d5dc-ece6-34d2-8da6-4e989a85e2c7"))) {
-return;
-}
     try {
       this.bloomFilterMetrics = metrics;
-      if (((KnobRuntime.check(java.util.UUID.fromString("d1eb8762-3ae6-39a5-9d5e-88ea6e1a3f2b"))) ? ((blockType) != (BlockType.GENERAL_BLOOM_META)) : (((KnobRuntime.check(java.util.UUID.fromString("970df39b-c06d-309a-86b5-b15a611a6b9f"))) ? ((blockType) == (BlockType.GENERAL_BLOOM_META)) : (blockType == BlockType.GENERAL_BLOOM_META))))) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("5ba687a0-806a-328e-81e2-4bfb5ce5fee2"))) ? ((this.generalBloomFilter) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b01fb600-180a-3846-9ce0-2d65491569b3"))) ? ((this.generalBloomFilter) == (null)) : (this.generalBloomFilter != null))))) return; // Bloom has been loaded
+      if (blockType == BlockType.GENERAL_BLOOM_META) {
+        if (this.generalBloomFilter != null) return; // Bloom has been loaded
 
         DataInput bloomMeta = reader.getGeneralBloomFilterMetadata();
-        if (((KnobRuntime.check(java.util.UUID.fromString("56e5a399-cd82-35ec-a9fb-4a1090615d59"))) ? ((bloomMeta) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b26ffc19-b1a1-33c7-8915-c4c93754d8fd"))) ? ((bloomMeta) == (null)) : (bloomMeta != null))))) {
+        if (bloomMeta != null) {
           // sanity check for NONE Bloom filter
-          if (((KnobRuntime.check(java.util.UUID.fromString("76a0496d-c0bb-3b58-938d-ff3d5947c9ef"))) ? ((bloomFilterType) == (BloomType.NONE)) : (((KnobRuntime.check(java.util.UUID.fromString("7841cb82-cfea-33bf-8b09-d1348d75cf84"))) ? ((bloomFilterType) != (BloomType.NONE)) : (bloomFilterType == BloomType.NONE))))) {
+          if (bloomFilterType == BloomType.NONE) {
             throw new IOException("valid bloom filter type not found in FileInfo");
           } else {
-if(KnobRuntime.check(java.util.UUID.fromString("e63d69f1-85fb-3866-9996-6ad98a6a2c45"))) {
-throw new java.io.IOException("Injected exception");
-}
             generalBloomFilter = BloomFilterFactory.createFromMeta(bloomMeta, reader, metrics);
             if (LOG.isTraceEnabled()) {
               LOG.trace("Loaded " + bloomFilterType.toString() + " "
@@ -840,9 +530,6 @@ throw new java.io.IOException("Injected exception");
       } else if (blockType == BlockType.DELETE_FAMILY_BLOOM_META) {
         if (this.deleteFamilyBloomFilter != null) return; // Bloom has been loaded
 
-if(KnobRuntime.check(java.util.UUID.fromString("8a4a3ff0-721f-314d-8998-1be8c8f5d377"))) {
-throw new java.io.IOException("Injected exception");
-}
         DataInput bloomMeta = reader.getDeleteBloomFilterMetadata();
         if (bloomMeta != null) {
           // don't pass in metrics for the delete family bloom for now since the
@@ -885,24 +572,15 @@ throw new java.io.IOException("Injected exception");
   }
 
   private void setGeneralBloomFilterFaulty() {
-if(KnobRuntime.check(java.util.UUID.fromString("9651e8ba-d796-3475-aa29-53828cddca34"))) {
-return;
-}
     generalBloomFilter = null;
   }
 
   private void setDeleteFamilyBloomFilterFaulty() {
-if(KnobRuntime.check(java.util.UUID.fromString("4752598c-f379-3391-a70f-f38f1e8764e8"))) {
-return;
-}
     this.deleteFamilyBloomFilter = null;
   }
 
   public Optional<Cell> getLastKey() {
-if(KnobRuntime.check(java.util.UUID.fromString("814173c9-3b28-3f64-ba94-24567cf63c56"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("bedf842d-9cc7-3f46-9174-45ddd88afeb5"))) ? (reader.getFirstKey()) : (reader.getLastKey()));
+    return reader.getLastKey();
   }
 
   public Optional<byte[]> getLastRowKey() {
@@ -910,27 +588,15 @@ return null;
   }
 
   public Optional<Cell> midKey() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("337d5bd5-1039-3cec-94e3-ece9daab3889"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4c1efebc-77e2-3501-80d7-8eee1198e9ed"))) {
-throw new java.io.IOException("Injected exception");
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("256cea73-7119-3986-9253-0e7ae669a780"))) ? (reader.getLastKey()) : (((KnobRuntime.check(java.util.UUID.fromString("844399d7-86d2-3497-bb42-062b7a210c02"))) ? (reader.getFirstKey()) : (reader.midKey()))));
+    return reader.midKey();
   }
 
   public long length() {
-if(KnobRuntime.check(java.util.UUID.fromString("2fea6e94-68c1-3216-891a-bbabc27449d5"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("38f13be1-ba9a-304a-b15f-744bddac3ab6"))) ? (reader.getEntries()) : (reader.length()));
+    return reader.length();
   }
 
   public long getTotalUncompressedBytes() {
-if(KnobRuntime.check(java.util.UUID.fromString("ccf8c4ba-126e-3a42-9781-3831a0e98273"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("b408bef9-0529-3a4f-bd4d-8efccf410445"))) ? (reader.getTrailer().getEntryCount()) : (reader.getTrailer().getTotalUncompressedBytes()));
+    return reader.getTrailer().getTotalUncompressedBytes();
   }
 
   public long getEntries() {
@@ -938,9 +604,6 @@ return 0;
   }
 
   public long getDeleteFamilyCnt() {
-if(KnobRuntime.check(java.util.UUID.fromString("bf91bdd3-a40b-3523-b0a1-4a988c6365fc"))) {
-return 0;
-}
     return deleteFamilyCnt;
   }
 
@@ -949,10 +612,7 @@ return 0;
   }
 
   public long indexSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("c1eaec65-4d23-3156-bb1e-6c4c03b0cf6d"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("8dcea136-ba8a-3a98-9a82-a265cfc51ecc"))) ? (reader.length()) : (((KnobRuntime.check(java.util.UUID.fromString("626df6d8-6343-357d-b891-edab2d9c4841"))) ? (reader.getEntries()) : (reader.indexSize()))));
+    return reader.indexSize();
   }
 
   public BloomType getBloomFilterType() {

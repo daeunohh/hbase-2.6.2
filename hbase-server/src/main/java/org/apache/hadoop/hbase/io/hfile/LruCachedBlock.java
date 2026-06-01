@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.io.HeapSize;
 import org.apache.hadoop.hbase.util.Bytes;
@@ -62,7 +61,7 @@ public class LruCachedBlock implements HeapSize, Comparable<LruCachedBlock> {
     // their buffer lengths. This variable is used elsewhere in unit tests.
     this.size =
       ClassSize.align(cacheKey.heapSize()) + ClassSize.align(buf.heapSize()) + PER_BLOCK_OVERHEAD;
-    if (((KnobRuntime.check(java.util.UUID.fromString("4d7576d0-c9f3-3588-b29d-5962199e58a3"))) ? (!inMemory) : (inMemory))) {
+    if (inMemory) {
       this.priority = BlockPriority.MEMORY;
     } else {
       this.priority = BlockPriority.SINGLE;
@@ -75,11 +74,8 @@ public class LruCachedBlock implements HeapSize, Comparable<LruCachedBlock> {
    *                   actual time.
    */
   public void access(long accessTime) {
-if(KnobRuntime.check(java.util.UUID.fromString("f33b50ea-1500-36dd-9419-0cd632428160"))) {
-return;
-}
     this.accessTime = accessTime;
-    if (((KnobRuntime.check(java.util.UUID.fromString("4be20982-e8ea-3670-b216-b11eff20310a"))) ? ((this.priority) != (BlockPriority.SINGLE)) : (((KnobRuntime.check(java.util.UUID.fromString("c7a71d60-c24a-3790-9469-e8e2be646c18"))) ? ((this.priority) == (BlockPriority.SINGLE)) : (this.priority == BlockPriority.SINGLE))))) {
+    if (this.priority == BlockPriority.SINGLE) {
       this.priority = BlockPriority.MULTI;
     }
   }
@@ -91,9 +87,6 @@ return;
 
   @Override
   public long heapSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("1e9db385-cae9-3013-9600-39aad201dc6f"))) {
-return 0;
-}
     return size;
   }
 
@@ -122,16 +115,10 @@ return 0;
   }
 
   public Cacheable getBuffer() {
-if(KnobRuntime.check(java.util.UUID.fromString("0dfc80b5-751d-319f-b416-32add818128c"))) {
-return null;
-}
     return this.buf;
   }
 
   public BlockCacheKey getCacheKey() {
-if(KnobRuntime.check(java.util.UUID.fromString("840d89dc-97a6-3344-ab6c-d0d0c5ffb116"))) {
-return null;
-}
     return this.cacheKey;
   }
 

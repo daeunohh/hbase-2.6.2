@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -76,9 +75,6 @@ public class PressureAwareCompactionThroughputController extends PressureAwareTh
 
   @Override
   public void setup(final RegionServerServices server) {
-if(KnobRuntime.check(java.util.UUID.fromString("cc9a57c8-fd37-32b2-87f0-db60bd847a72"))) {
-return;
-}
     server.getChoreService()
       .scheduleChore(new ScheduledChore("CompactionThroughputTuner", this, tuningPeriod) {
 
@@ -116,22 +112,8 @@ return;
 
   @Override
   public void setConf(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("c98f4184-5c8b-3b78-8606-ce8dfda7641c"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e22aa5b3-b46b-3ea6-aa7d-b17bd56ac002"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     super.setConf(conf);
-    if (((KnobRuntime.check(java.util.UUID.fromString("2ed3afd3-321d-361c-a97b-82fda06d0e34"))) ? ((conf) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("f81b8b26-3b07-38ae-aa30-b762caa2d9d9"))) ? ((conf) == (null)) : (conf == null))))) {
+    if (conf == null) {
       return;
     }
     this.maxThroughputUpperBound = conf.getLong(HBASE_HSTORE_COMPACTION_MAX_THROUGHPUT_HIGHER_BOUND,
@@ -140,21 +122,10 @@ try {
       DEFAULT_HBASE_HSTORE_COMPACTION_MAX_THROUGHPUT_LOWER_BOUND);
     this.maxThroughputOffpeak = conf.getLong(HBASE_HSTORE_COMPACTION_MAX_THROUGHPUT_OFFPEAK,
       DEFAULT_HBASE_HSTORE_COMPACTION_MAX_THROUGHPUT_OFFPEAK);
-if(KnobRuntime.check(java.util.UUID.fromString("abd5750b-0fc0-3479-b6ea-fd028b2b16a7"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     this.offPeakHours = OffPeakHours.getInstance(conf);
     this.controlPerSize = conf.getLong(HBASE_HSTORE_COMPACTION_THROUGHPUT_CONTROL_CHECK_INTERVAL,
       this.maxThroughputLowerBound);
-    if (KnobRuntime.check(java.util.UUID.fromString("8499642a-c6a5-36ff-9a35-625fb0efe618"))) { tune(this.maxThroughputLowerBound); } else { this.setMaxThroughput(this.maxThroughputLowerBound); }
+    this.setMaxThroughput(this.maxThroughputLowerBound);
     this.tuningPeriod = getConf().getInt(HBASE_HSTORE_COMPACTION_THROUGHPUT_TUNE_PERIOD,
       DEFAULT_HSTORE_COMPACTION_THROUGHPUT_TUNE_PERIOD);
     LOG.info("Compaction throughput configurations, higher bound: "

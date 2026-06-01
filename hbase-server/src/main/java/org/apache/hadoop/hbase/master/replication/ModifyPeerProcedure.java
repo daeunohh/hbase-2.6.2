@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -156,12 +155,6 @@ public abstract class ModifyPeerProcedure extends AbstractPeerProcedure<PeerModi
 
   // will be override in test to simulate error
   protected void reopenRegions(MasterProcedureEnv env) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("e2fef717-dc15-3573-8448-199dc1606190"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fac0c60f-c97a-30e9-9e70-3a9711f1ecc7"))) {
-throw new java.io.IOException("Injected exception");
-}
     ReplicationPeerConfig peerConfig = getNewPeerConfig();
     ReplicationPeerConfig oldPeerConfig = getOldPeerConfig();
     TableStateManager tsm = env.getMasterServices().getTableStateManager();
@@ -170,50 +163,6 @@ throw new java.io.IOException("Injected exception");
         continue;
       }
       TableName tn = td.getTableName();
-if(KnobRuntime.check(java.util.UUID.fromString("a5da0826-10d3-38bb-a0d4-c69e1120272c"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b0de252d-8d95-3ca9-b54c-e67504e1498a"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ff259504-d0b5-357e-b5b3-436f99cfce51"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1fbff0dc-98d5-3e3b-b7d1-5f21510a506b"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (!peerConfig.needToReplicate(tn)) {
         continue;
       }
@@ -222,9 +171,6 @@ try {
       }
       if (needReopen(tsm, tn)) {
         addChildProcedure(new ReopenTableRegionsProcedure(tn));
-if(KnobRuntime.check(java.util.UUID.fromString("d0df4a28-3a9e-3414-a77e-1f60e733964d"))) {
-throw new java.io.IOException("Injected exception");
-}
       }
     }
   }
@@ -238,7 +184,7 @@ throw new java.io.IOException("Injected exception");
     ReplicationQueueStorage queueStorage) throws ReplicationException {
     if (barrier >= 0) {
       lastSeqIds.put(encodedRegionName, barrier);
-      if (((KnobRuntime.check(java.util.UUID.fromString("7ed3c9ca-ab8f-3729-b6b9-5fa53a7460ec"))) ? ((lastSeqIds.size()) > (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("57b9f98a-c883-3b14-af9c-e8cf1afc8d3a"))) ? ((lastSeqIds.size()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("157155c7-cf77-357f-9151-cf6a17dcb0c0"))) ? ((lastSeqIds.size()) != (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("7cfa1b75-5440-34b7-ba1a-79c191caec41"))) ? ((lastSeqIds.size()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7ec78ec4-3554-3525-a8be-a95068afb8c4"))) ? ((lastSeqIds.size()) == (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("c1bae473-7121-328e-8e51-317c38c726a5"))) ? ((lastSeqIds.size()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("49d15028-dda4-3373-b83e-c143a80194d3"))) ? ((lastSeqIds.size()) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("cfe84c9a-1662-32fd-a4e9-d93eae222d06"))) ? ((lastSeqIds.size()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4d929371-e174-34ed-bbb7-4a83125e3b80"))) ? ((lastSeqIds.size()) <= (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("ec6c5afc-2105-3d34-aaef-c2561255058f"))) ? ((lastSeqIds.size()) >= (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("b611a566-c2f4-329a-8966-5ff64e35fcc8"))) ? ((lastSeqIds.size()) < (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (((KnobRuntime.check(java.util.UUID.fromString("07b9d6e3-7df2-3415-ab33-45d7910952e3"))) ? ((lastSeqIds.size()) == (0)) : (lastSeqIds.size() >= UPDATE_LAST_SEQ_ID_BATCH_SIZE))))))))))))))))))))))))) {
+      if (lastSeqIds.size() >= UPDATE_LAST_SEQ_ID_BATCH_SIZE) {
         queueStorage.setLastSequenceIds(peerId, lastSeqIds);
         lastSeqIds.clear();
       }
@@ -253,100 +199,9 @@ throw new java.io.IOException("Injected exception");
         continue;
       }
       TableName tn = td.getTableName();
-if(KnobRuntime.check(java.util.UUID.fromString("8fb9dff2-33be-30bc-a397-2094fdcb62d3"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("be3ff345-3d12-3397-a91f-7faf8e33da4c"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7388ccb4-948f-35b7-9a37-32b2b8cba204"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c7aa1f31-94fa-30d9-ab71-895390b2d0d1"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (!peerConfig.needToReplicate(tn)) {
         continue;
       }
-if(KnobRuntime.check(java.util.UUID.fromString("7f224060-a69d-3418-afb3-b18369683085"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b261fc85-62da-3182-9ee5-fbac82e51056"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("afef0da6-e3af-3d53-ae7b-07b02ac2e1e8"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a9bb9558-1886-3a28-a200-db3cd93f6b68"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3ad9d854-fbbb-3674-b035-05167d18a6bc"))) {
-try {
-    java.lang.reflect.Field field = tn.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tn));
-    field.set(tn, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       setLastPushedSequenceIdForTable(env, tn, lastSeqIds);
     }
     if (!lastSeqIds.isEmpty()) {
@@ -411,7 +266,7 @@ try {
     backoffConsumer.accept(backoff);
     setTimeout(Math.toIntExact(backoff));
     setState(ProcedureProtos.ProcedureState.WAITING_TIMEOUT);
-    if (KnobRuntime.check(java.util.UUID.fromString("c0ddbe07-8d68-3b66-99aa-18aa940d5d96"))) { releaseLatch(); } else { skipPersistence(); }
+    skipPersistence();
     throw new ProcedureSuspendedException();
   }
 

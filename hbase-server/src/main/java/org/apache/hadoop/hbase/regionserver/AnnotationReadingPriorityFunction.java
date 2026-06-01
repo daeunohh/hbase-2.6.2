@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -120,7 +119,7 @@ public class AnnotationReadingPriorityFunction implements PriorityFunction {
     }
     this.rpcServices = rpcServices;
     this.annotatedQos = qosMap;
-    if (((KnobRuntime.check(java.util.UUID.fromString("c815636c-ce66-3054-831e-66defdaabc16"))) ? ((methodMap.get("getRegion")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9bc2798b-7f01-3287-9ec5-41b8ecc617c3"))) ? ((methodMap.get("getRegion")) == (null)) : (methodMap.get("getRegion") == null))))) {
+    if (methodMap.get("getRegion") == null) {
       methodMap.put("hasRegion", new HashMap<>());
       methodMap.put("getRegion", new HashMap<>());
     }

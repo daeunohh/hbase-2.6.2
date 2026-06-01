@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 import org.apache.yetus.audience.InterfaceStability;
@@ -43,9 +42,6 @@ public abstract class ProcedureManager {
 
   @Override
   public int hashCode() {
-if(KnobRuntime.check(java.util.UUID.fromString("146fe8da-dd16-345b-959b-ef4a1d88ee76"))) {
-return 0;
-}
     return this.getProcedureSignature().hashCode();
   }
 }

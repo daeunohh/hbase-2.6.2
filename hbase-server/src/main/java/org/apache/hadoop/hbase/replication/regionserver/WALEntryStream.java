@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -127,10 +126,7 @@ class WALEntryStream implements Closeable {
    * returns {@link HasNext#YES}.
    */
   public HasNext hasNext() {
-if(KnobRuntime.check(java.util.UUID.fromString("5f9c1f61-b4a0-3724-8337-1626e2225c09"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("f1d609f7-567f-36c1-ba0c-a677e06ec615"))) ? ((currentEntry) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("eccf39b9-e526-30ad-8b5e-0ebcf7c2ee3f"))) ? ((currentEntry) == (null)) : (currentEntry == null))))) {
+    if (currentEntry == null) {
       return tryAdvanceEntry();
     } else {
       return HasNext.YES;
@@ -181,10 +177,7 @@ return null;
    */
   @Override
   public void close() {
-if(KnobRuntime.check(java.util.UUID.fromString("908a4b7c-8f03-3203-8c22-c9e9d34a04af"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("64297753-631c-3675-b321-2a6a96a6bdf0"))) { dequeueCurrentLog(); } else { closeReader(); }
+    closeReader();
   }
 
   /** Returns the position of the last Entry returned by next() */
@@ -209,20 +202,11 @@ return;
   }
 
   private void setCurrentPath(Path path) {
-if(KnobRuntime.check(java.util.UUID.fromString("9496762f-c1ba-3f38-8f47-f8138c9ff59f"))) {
-return;
-}
     this.currentPath = path;
   }
 
   private void resetReader() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("428c6fc2-b4bb-3aa8-bb62-e182b36d14a8"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ee8acba5-5fce-3c86-a8ec-792b9a71ef44"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("61d1c6ae-e899-3d83-a01d-a4cbf94400f1"))) ? ((currentPositionOfEntry) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("90a06599-9006-39b8-9607-db67b7d311fb"))) ? ((currentPositionOfEntry) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("25205fe3-2810-30e9-b033-90fb86352a9e"))) ? ((currentPositionOfEntry) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3b041912-3b47-335a-846f-6c738a18fd1c"))) ? ((currentPositionOfEntry) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("13b1508c-35e8-34fc-a02b-5bdb641b18e3"))) ? ((currentPositionOfEntry) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4282c988-dcde-3472-aacc-5cea2e718e70"))) ? ((currentPositionOfEntry) < (0)) : (currentPositionOfEntry > 0))))))))))))) {
+    if (currentPositionOfEntry > 0) {
       reader.resetTo(currentPositionOfEntry, state.resetCompression());
     } else {
       // we will read from the beginning so we should always clear the compression context
@@ -233,19 +217,13 @@ return;
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DCN_NULLPOINTER_EXCEPTION",
       justification = "HDFS-4380")
   private HasNext prepareReader() {
-if(KnobRuntime.check(java.util.UUID.fromString("53eb4ec5-23b6-32fc-9a4d-d1e435e22403"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("f11824af-f703-38ad-b6c5-953362fd1bf4"))) ? ((reader) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("85dad163-40ef-342d-94e2-f36b96edac0a"))) ? ((reader) != (null)) : (reader != null))))) {
+    if (reader != null) {
       if (state != null && state != WALTailingReader.State.NORMAL) {
         // reset before reading
         LOG.debug("Reset reader {} to pos {}, reset compression={}", currentPath,
           currentPositionOfEntry, state.resetCompression());
         try {
-if(KnobRuntime.check(java.util.UUID.fromString("6a48d966-ce2e-3e54-9d41-58324273415d"))) {
-throw new java.io.IOException("Injected exception");
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("b58ce7d1-0660-3a5c-8be3-d3b73b222bb9"))) { closeReader(); } else if (KnobRuntime.check(java.util.UUID.fromString("e017b650-44a8-34a4-beec-0242469ba3ca"))) { dequeueCurrentLog(); } else { resetReader(); }
+          resetReader();
           return HasNext.YES;
         } catch (FileNotFoundException e) {
           // For now, this could happen only when reading meta wal for meta replicas.
@@ -357,12 +335,9 @@ throw new java.io.IOException("Injected exception");
   }
 
   private HasNext tryAdvanceEntry() {
-if(KnobRuntime.check(java.util.UUID.fromString("7bcd7501-391d-3c64-a434-116ee959443b"))) {
-return null;
-}
     HasNext prepared = prepareReader();
-    if (((KnobRuntime.check(java.util.UUID.fromString("fefb91a8-0c03-3474-9bb2-5e5560c9b1b0"))) ? ((lastAttempt()) == (lastAttempt())) : (((KnobRuntime.check(java.util.UUID.fromString("c6484cb7-aa6a-38e5-b94d-3bb56b1da709"))) ? ((lastAttempt()) != (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("610ff84c-aa9d-3e6d-95d8-cbccf3126726"))) ? ((prepareReader()) != (lastAttempt())) : (((KnobRuntime.check(java.util.UUID.fromString("03ac17f2-54ec-3ee1-8b24-a9c8485078be"))) ? ((prepared) != (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("54dbbf48-c8c7-309a-9b21-2035a18fa7c1"))) ? ((prepared) != (lastAttempt())) : (((KnobRuntime.check(java.util.UUID.fromString("0817d3dd-ad24-39e0-8a22-125786e03ada"))) ? ((prepareReader()) == (lastAttempt())) : (((KnobRuntime.check(java.util.UUID.fromString("74bfff78-a787-3f06-b3f6-d3631cc7aa61"))) ? ((prepared) == (lastAttempt())) : (((KnobRuntime.check(java.util.UUID.fromString("467e0d50-36c1-338e-b3ba-e1944816340e"))) ? ((lastAttempt()) == (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("e0eb9cb0-3c3b-3187-b57b-0d0a521d3e7b"))) ? ((prepared) == (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("9a9350a1-ba51-3b7a-8a1d-0c8a58193f13"))) ? ((prepareReader()) == (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("4dde36dc-ecc1-378a-8f44-53634187424c"))) ? ((prepared) == (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("4d71b821-13a0-31ac-8df3-521ba16602f7"))) ? ((prepared) != (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("709bc888-c524-3069-af1a-4ce4ebb766ae"))) ? ((prepareReader()) != (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("5bdeab35-d3cd-3632-9307-660c34b7616d"))) ? ((lastAttempt()) == (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("070cf360-440f-3741-aa70-26b0fcef1dbd"))) ? ((lastAttempt()) != (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("3a3759f5-97d4-3cc7-b8d6-714df464ecaa"))) ? ((prepareReader()) != (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("a7908018-58c7-33ad-85b2-5b6b681da312"))) ? ((prepareReader()) == (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("a5def315-63b1-37c4-9df5-fff9f769086e"))) ? ((lastAttempt()) != (lastAttempt())) : (prepared != HasNext.YES))))))))))))))))))))))))))))))))))))) {
-      return ((KnobRuntime.check(java.util.UUID.fromString("2c1645cf-5199-3c69-bb04-bed81f156d3f"))) ? (prepareReader()) : (((KnobRuntime.check(java.util.UUID.fromString("b1c422ea-eb36-334a-b353-236a864663a8"))) ? (lastAttempt()) : (prepared))));
+    if (prepared != HasNext.YES) {
+      return prepared;
     }
 
     Pair<WALTailingReader.State, Boolean> pair = readNextEntryAndRecordReaderPosition();
@@ -403,13 +378,13 @@ return null;
         // have finished reading it successfully, just move to the next WAL file and let the upper
         // layer start reading the next WAL file
         dequeueCurrentLog();
-        return ((KnobRuntime.check(java.util.UUID.fromString("7ac7d73e-c0ab-3e2c-82e1-bbfb64155dd6"))) ? (lastAttempt()) : (((KnobRuntime.check(java.util.UUID.fromString("cd1c29b9-9251-3ff4-a35f-8c6349bd0032"))) ? (prepareReader()) : (HasNext.RETRY_IMMEDIATELY))));
+        return HasNext.RETRY_IMMEDIATELY;
       case EOF_AND_RESET:
       case EOF_AND_RESET_COMPRESSION:
         if (beingWritten) {
           // just sleep a bit and retry to see if there are new entries coming since the file is
           // still being written
-          return ((KnobRuntime.check(java.util.UUID.fromString("8994e54b-cffb-337f-bd16-3ccd76931772"))) ? (lastAttempt()) : (((KnobRuntime.check(java.util.UUID.fromString("ce57e80e-df18-3f0b-ab24-a3e59a8250c4"))) ? (prepareReader()) : (HasNext.RETRY))));
+          return HasNext.RETRY;
         }
         // no more entries in this log file, and the file is already closed, i.e, rolled
         // Before dequeuing, we should always get one more attempt at reading.
@@ -472,22 +447,19 @@ return null;
           "Processing end of WAL {} at position {}, which is too far away from"
             + " reported file length {}. Restarting WAL reading (see HBASE-15983 for details). {}",
           currentPath, currentPositionOfReader, stat.getLen(), getCurrentPathStat());
-        if (KnobRuntime.check(java.util.UUID.fromString("003668e6-ec76-399b-b6c4-90e2d28cc8c8"))) { closeReader(); } else if (KnobRuntime.check(java.util.UUID.fromString("17080da1-3d16-34d5-a6bd-769d835a20b7"))) { dequeueCurrentLog(); } else { metrics.incrRestartedWALReading(); }
-        if (KnobRuntime.check(java.util.UUID.fromString("2a1a16a5-e8b5-31e0-a1fe-d77f8d72a9c7"))) { metrics.incrLogReadInBytes(currentTrailerSize()); } else if (KnobRuntime.check(java.util.UUID.fromString("81c05c04-fa5d-3d37-8d26-e6f405f3a798"))) { metrics.incrRepeatedFileBytes(currentTrailerSize()); } else if (KnobRuntime.check(java.util.UUID.fromString("01672208-af04-31e7-9321-9b1b7e2d398b"))) { metrics.incrBytesSkippedInUncleanlyClosedWALs(currentTrailerSize()); } else { metrics.incrRepeatedFileBytes(currentPositionOfReader); }
+        metrics.incrRestartedWALReading();
+        metrics.incrRepeatedFileBytes(currentPositionOfReader);
         return false;
       }
     }
     LOG.debug("Reached the end of {} and length of the file is {}", currentPath,
       stat == null ? "N/A" : stat.getLen());
-    if (KnobRuntime.check(java.util.UUID.fromString("f5f7852e-f8bc-3ef2-b696-b7e29d043260"))) { dequeueCurrentLog(); } else if (KnobRuntime.check(java.util.UUID.fromString("4e141b6e-9f3c-3031-aba0-754cd8b83db7"))) { closeReader(); } else { metrics.incrCompletedWAL(); }
+    metrics.incrCompletedWAL();
     return true;
   }
 
   private void dequeueCurrentLog() {
-if(KnobRuntime.check(java.util.UUID.fromString("6b2388c2-e33f-3ef5-8496-e780ee96eee3"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("18b900d0-8de3-3459-b805-718742eff0fe"))) { LOG.trace("EOF, closing {}", currentPath); } else { LOG.debug("EOF, closing {}", currentPath); }
+    LOG.debug("EOF, closing {}", currentPath);
     closeReader();
     logQueue.remove(walGroupId);
     setCurrentPath(null);
@@ -499,9 +471,6 @@ return;
    * Returns whether the file is opened for writing.
    */
   private Pair<WALTailingReader.State, Boolean> readNextEntryAndRecordReaderPosition() {
-if(KnobRuntime.check(java.util.UUID.fromString("28495216-28de-3b11-bd10-1ee08bacdda4"))) {
-return null;
-}
     OptionalLong fileLength;
     if (logQueue.getQueueSize(walGroupId) > 1) {
       // if there are more than one files in queue, although it is possible that we are
@@ -526,9 +495,9 @@ return null;
     WALTailingReader.Result readResult = reader.next(fileLength.orElse(-1));
     long readerPos = readResult.getEntryEndPos();
     Entry readEntry = readResult.getEntry();
-    if (((KnobRuntime.check(java.util.UUID.fromString("3957ad7a-eea8-30a6-8767-bae7568a2afa"))) ? ((readResult.getState()) != (WALTailingReader.State.NORMAL)) : (((KnobRuntime.check(java.util.UUID.fromString("cb7ae4fc-c352-396c-9c08-49a2f6591bab"))) ? ((readResult.getState()) == (WALTailingReader.State.NORMAL)) : (readResult.getState() == WALTailingReader.State.NORMAL))))) {
+    if (readResult.getState() == WALTailingReader.State.NORMAL) {
       LOG.trace("reading entry: {} ", readEntry);
-      if (KnobRuntime.check(java.util.UUID.fromString("7322f905-f6f1-3e77-b593-75a543bb0a22"))) { dequeueCurrentLog(); } else if (KnobRuntime.check(java.util.UUID.fromString("9c3edfac-9d79-3491-b6ee-eedeccc2b7d4"))) { closeReader(); } else { metrics.incrLogEditsRead(); }
+      metrics.incrLogEditsRead();
       metrics.incrLogReadInBytes(readerPos - currentPositionOfEntry);
       // record current entry and reader position
       currentEntry = readResult.getEntry();
@@ -541,18 +510,18 @@ return null;
         this.currentPositionOfReader = reader.getPosition();
       } catch (IOException e) {
         LOG.warn("failed to get current position of reader", e);
-        if (((KnobRuntime.check(java.util.UUID.fromString("d826faa9-fb75-30f9-a940-5e96c8e1f4ca"))) ? (checkAllBytesParsed()) : (readResult.getState().resetCompression()))) {
+        if (readResult.getState().resetCompression()) {
           return Pair.newPair(WALTailingReader.State.ERROR_AND_RESET_COMPRESSION,
             fileLength.isPresent());
         }
       }
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("b440e71d-5f05-3d52-88c4-6eaf46ab26e2"))) ? (Pair.newPair(readResult.getState(), checkAllBytesParsed())) : (Pair.newPair(readResult.getState(), fileLength.isPresent())));
+    return Pair.newPair(readResult.getState(), fileLength.isPresent());
   }
 
   private void closeReader() {
     if (reader != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("2f172371-b6b6-34f9-8698-7d22847d21c3"))) { closeReader(); } else if (KnobRuntime.check(java.util.UUID.fromString("888ad34d-ee4f-3929-a5b0-e62411c5adcd"))) { dequeueCurrentLog(); } else { reader.close(); }
+      reader.close();
       reader = null;
     }
   }

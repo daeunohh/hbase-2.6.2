@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -61,14 +60,8 @@ public class RegionServerRpcQuotaManager implements RpcQuotaManager {
   }
 
   public void start(final RpcScheduler rpcScheduler) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f35d81c0-5409-3ded-96c3-1066af226ffb"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8d2057aa-587a-32c5-8a21-b186b44f237e"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (!QuotaUtil.isQuotaEnabled(rsServices.getConfiguration())) {
-      if (KnobRuntime.check(java.util.UUID.fromString("afd6c330-60e3-3629-8acc-991793e2f5fd"))) { LOG.trace("Quota support disabled"); } else { LOG.info("Quota support disabled"); }
+      LOG.info("Quota support disabled");
       return;
     }
 
@@ -77,11 +70,8 @@ throw new java.io.IOException("Injected exception");
     // Initialize quota cache
     quotaCache = new QuotaCache(rsServices);
     quotaCache.start();
-if(KnobRuntime.check(java.util.UUID.fromString("21e77409-df4e-3d09-914c-1e80045f0e98"))) {
-throw new java.io.IOException("Injected exception");
-}
     rpcThrottleEnabled = rpcThrottleStorage.isRpcThrottleEnabled();
-    if (KnobRuntime.check(java.util.UUID.fromString("58c6c9e3-0322-32a5-b77d-8e9603c26e97"))) { LOG.info("Start rpc quota manager and rpc throttle enabled is {}", !rpcThrottleEnabled); } else if (KnobRuntime.check(java.util.UUID.fromString("b8516173-4080-3256-9a25-dd9aecafdf95"))) { LOG.warn("Start rpc quota manager and rpc throttle enabled is {}", !rpcThrottleEnabled); } else { LOG.info("Start rpc quota manager and rpc throttle enabled is {}", rpcThrottleEnabled); }
+    LOG.info("Start rpc quota manager and rpc throttle enabled is {}", rpcThrottleEnabled);
   }
 
   public void stop() {
@@ -95,13 +85,7 @@ throw new java.io.IOException("Injected exception");
   }
 
   private boolean isQuotaEnabled() {
-if(KnobRuntime.check(java.util.UUID.fromString("5788a33e-629b-3a59-9fc1-437e1e11319b"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("139811b4-8631-35e7-aae1-4f706ac2a4eb"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("430e80c0-41b1-3741-be9c-f68b425a751c"))) ? ((quotaCache) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ad577d2d-0e11-3db8-9b74-bcd769969949"))) ? ((quotaCache) == (null)) : (quotaCache != null))));
+    return quotaCache != null;
   }
 
   public void switchRpcThrottle(boolean enable) throws IOException {
@@ -200,19 +184,10 @@ return true;
   @Override
   public OperationQuota checkBatchQuota(final Region region,
     final OperationQuota.OperationType type) throws IOException, RpcThrottlingException {
-if(KnobRuntime.check(java.util.UUID.fromString("35c1fec3-2738-3286-9cb1-af20a74f11a5"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c62fcb92-52f3-3e6c-a012-80b324e7e835"))) {
-return null;
-}
     switch (type) {
       case GET:
         return this.checkBatchQuota(region, 0, 1);
       case MUTATE:
-if(KnobRuntime.check(java.util.UUID.fromString("172be604-590b-3d89-bcba-1dd161324f08"))) {
-throw new java.io.IOException("Injected exception");
-}
         return this.checkBatchQuota(region, 1, 0);
       case CHECK_AND_MUTATE:
         return this.checkBatchQuota(region, 1, 1);
@@ -253,20 +228,11 @@ throw new java.io.IOException("Injected exception");
   @Override
   public OperationQuota checkBatchQuota(final Region region, final int numWrites,
     final int numReads) throws IOException, RpcThrottlingException {
-if(KnobRuntime.check(java.util.UUID.fromString("7da2d7c3-2107-3311-aefb-e36a1874dd2f"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3e395ba0-47e3-3fb5-9177-83a5c10e59c2"))) {
-return null;
-}
     Optional<User> user = RpcServer.getRequestUser();
     UserGroupInformation ugi;
-    if (((KnobRuntime.check(java.util.UUID.fromString("8e8d38c6-9425-3dfb-85c4-158d38b07ea1"))) ? (isQuotaEnabled()) : (user.isPresent()))) {
+    if (user.isPresent()) {
       ugi = user.get().getUGI();
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("7aad2b05-42d5-38a7-9aa2-1684085332f9"))) {
-throw new java.io.IOException("Injected exception");
-}
       ugi = User.getCurrent().getUGI();
     }
     TableDescriptor tableDescriptor = region.getTableDescriptor();

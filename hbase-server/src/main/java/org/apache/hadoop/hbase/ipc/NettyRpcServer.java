@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.crypto.tls.X509Util.DEFAULT_HBASE_SERVER_NETTY_TLS_WRAP_SIZE;
 import static org.apache.hadoop.hbase.io.crypto.tls.X509Util.HBASE_SERVER_NETTY_TLS_ENABLED;
@@ -158,7 +157,7 @@ public class NettyRpcServer extends RpcServer {
     }
 
     // call before creating bootstrap below so that the necessary configs can be set
-    if (KnobRuntime.check(java.util.UUID.fromString("a2f0a03d-6fae-30a7-9168-902477de97b8"))) { initReconfigurable(conf); } else { configureNettyWatermarks(conf); }
+    configureNettyWatermarks(conf);
 
     EventLoopGroup eventLoopGroup = config.group();
     Class<? extends ServerChannel> channelClass = config.serverChannelClass();
@@ -169,97 +168,6 @@ public class NettyRpcServer extends RpcServer {
       .childHandler(new ChannelInitializer<Channel>() {
         @Override
         protected void initChannel(Channel ch) throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("90606997-e694-3b5b-924c-beeb6dd3f985"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("low");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b4fde376-1689-372b-802e-bca9aac76b2f"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("high");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("893359ec-148e-3af0-94da-e751fa3389a0"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("high");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e51c4cdd-1ab0-35e8-99c1-635a95bc2e3a"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("high");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("78831053-e92b-3859-9e20-ba9281aa6521"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("low");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("96f9ad6c-0c9d-39d3-bc23-72cc69ec0d6e"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("low");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7a60b9a7-56e9-3489-ba53-cc83ad3f4244"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("929f7678-3b62-314b-921e-317aabde4953"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("low");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ad121cc0-73cf-30aa-947e-518b370a101b"))) {
-try {
-    java.lang.reflect.Field field = writeBufferWaterMark.getClass().getDeclaredField("high");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(writeBufferWaterMark));
-    field.set(writeBufferWaterMark, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           ch.config().setWriteBufferWaterMark(writeBufferWaterMark);
           ch.config().setAllocator(channelAllocator);
           ChannelPipeline pipeline = ch.pipeline();
@@ -286,7 +194,7 @@ try {
       });
     try {
       serverChannel = bootstrap.bind(this.bindAddress).sync().channel();
-      if (KnobRuntime.check(java.util.UUID.fromString("1868138b-077f-300d-9bd9-f7b1bbec0f59"))) { LOG.warn("Bind to {}", serverChannel.localAddress()); } else { LOG.info("Bind to {}", serverChannel.localAddress()); }
+      LOG.info("Bind to {}", serverChannel.localAddress());
     } catch (InterruptedException e) {
       throw new InterruptedIOException(e.getMessage());
     }
@@ -296,11 +204,8 @@ try {
 
   @Override
   public void onConfigurationChange(Configuration newConf) {
-if(KnobRuntime.check(java.util.UUID.fromString("78b066d7-f27b-3975-b011-e706019f0b2d"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("1db89ca3-f3ef-3b26-af4e-ca99463d6ee9"))) { initReconfigurable(newConf); } else if (KnobRuntime.check(java.util.UUID.fromString("f0d3a81c-259f-3998-833b-c14c6d522b8e"))) { configureNettyWatermarks(newConf); } else { super.onConfigurationChange(newConf); }
-    if (KnobRuntime.check(java.util.UUID.fromString("d270c953-972d-33bc-b679-077cf8368cc2"))) { initReconfigurable(newConf); } else { configureNettyWatermarks(newConf); }
+    super.onConfigurationChange(newConf);
+    configureNettyWatermarks(newConf);
   }
 
   private void configureNettyWatermarks(Configuration conf) {
@@ -428,90 +333,13 @@ return;
       // Start AuthenticationTokenSecretManager in synchronized way to avoid race conditions in
       // LeaderElector start. See HBASE-25875
       synchronized (authTokenSecretMgr) {
-if(KnobRuntime.check(java.util.UUID.fromString("de7af0ec-c925-363c-bf35-b3d20e7b58ee"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("keyUpdateInterval");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e4aa49f9-0d85-3e99-8d8f-8f1e26094dc3"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("idSeq");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("578e9ed1-b485-3f45-81c5-7b308b80cbb9"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("idSeq");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("984046b9-6952-3155-8aa0-a77e2ba69d80"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("idSeq");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("54bc5e27-3202-3d3c-b1f9-9c1bd939e717"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("idSeq");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9c920e79-30e6-3fdc-8e06-81a9c5cf1852"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("lastKeyUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("190e63d6-93f7-306e-993d-dbb4c3359d44"))) {
-try {
-    java.lang.reflect.Field field = authTokenSecretMgr.getClass().getDeclaredField("tokenMaxLifetime");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(authTokenSecretMgr));
-    field.set(authTokenSecretMgr, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         setSecretManager(authTokenSecretMgr);
-        if (KnobRuntime.check(java.util.UUID.fromString("400b935f-cc48-3772-8884-59119f3dadfa"))) { authTokenSecretMgr.stop(); } else { authTokenSecretMgr.start(); }
+        authTokenSecretMgr.start();
       }
     }
     this.authManager = new ServiceAuthorizationManager();
     HBasePolicyProvider.init(conf, authManager);
-    if (KnobRuntime.check(java.util.UUID.fromString("a0e576c4-e4f8-3697-8ce7-f20221c2dcd0"))) { scheduler.stop(); } else { scheduler.start(); }
+    scheduler.start();
     started = true;
   }
 
@@ -520,7 +348,7 @@ try {
     if (!running) {
       return;
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("0b4f6ec5-e3d8-33f4-be52-d97d5dedb4fe"))) { LOG.info("Stopping server on "); } else if (KnobRuntime.check(java.util.UUID.fromString("6305c92e-c1a1-32d5-8ee9-ecca75951ba8"))) { LOG.info(("Stopping server on ") + (this.serverChannel.localAddress())); } else { LOG.info("Stopping server on " + this.serverChannel.localAddress()); }
+    LOG.info("Stopping server on " + this.serverChannel.localAddress());
     FileChangeWatcher ks = keyStoreWatcher.getAndSet(null);
     if (ks != null) {
       ks.stop();
@@ -529,8 +357,8 @@ try {
     if (ts != null) {
       ts.stop();
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("04562b1e-1fb5-3f0a-944f-627f54269b0a"))) ? ((authTokenSecretMgr) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("264d9057-20e8-38e5-a3aa-0cb81079162d"))) ? ((authTokenSecretMgr) != (null)) : (authTokenSecretMgr != null))))) {
-      if (KnobRuntime.check(java.util.UUID.fromString("a7341589-4f48-3698-add6-756d75c308c7"))) { authTokenSecretMgr.start(); } else { authTokenSecretMgr.stop(); }
+    if (authTokenSecretMgr != null) {
+      authTokenSecretMgr.stop();
       authTokenSecretMgr = null;
     }
     allChannels.close().awaitUninterruptibly();
@@ -650,40 +478,9 @@ try {
   }
 
   SslContext getSslContext() throws X509Exception, IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("846efd5a-e1ce-38fb-9d39-540cd0c4803a"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8bcb11d8-e60f-3982-838a-f4641cd5b4e6"))) {
-throw new java.io.IOException("Injected exception");
-}
     SslContext result = sslContextForServer.get();
-    if (((KnobRuntime.check(java.util.UUID.fromString("da30883d-ba11-3ab9-8b79-d6694d7e9616"))) ? ((result) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("40478578-910d-36d5-8fc3-865d29793645"))) ? ((result) != (null)) : (result == null))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("c7c13264-15e3-321c-9955-3fc2ac28b1de"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8c5c5f32-5374-3287-9ea7-c532abbcb068"))) {
-throw new java.io.IOException("Injected exception");
-}
+    if (result == null) {
       result = X509Util.createSslContextForServer(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("1fc530ee-3654-3aab-94b8-dd1711f4e049"))) {
-try {
-    java.lang.reflect.Field field = result.getClass().getDeclaredField("startTls");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(result);
-    field.set(result, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (!sslContextForServer.compareAndSet(null, result)) {
         // lost the race, another thread already set the value
         result = sslContextForServer.get();

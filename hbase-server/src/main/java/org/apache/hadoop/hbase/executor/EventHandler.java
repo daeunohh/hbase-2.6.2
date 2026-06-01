@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
-import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.context.Context;
@@ -75,7 +74,7 @@ public abstract class EventHandler implements Runnable, Comparable<EventHandler>
     this.server = server;
     this.eventType = eventType;
     seqid = seqids.incrementAndGet();
-    if (((KnobRuntime.check(java.util.UUID.fromString("8b8e0f62-b85d-3f99-83a1-dd689ae13680"))) ? ((server) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("4956b03a-5d28-3501-b8fb-e5248465fede"))) ? ((server) != (null)) : (server != null))))) {
+    if (server != null) {
       this.waitingTimeForEvents =
         server.getConfiguration().getInt("hbase.master.event.waiting.time", 1000);
     }
@@ -96,23 +95,17 @@ public abstract class EventHandler implements Runnable, Comparable<EventHandler>
 
   @Override
   public void run() {
-if(KnobRuntime.check(java.util.UUID.fromString("a419dd5a-e40f-3286-8382-40d3f5e6db3c"))) {
-return;
-}
     Span span = TraceUtil.getGlobalTracer().spanBuilder(getClass().getSimpleName())
       .setParent(Context.current().with(parent)).startSpan();
     // assume that this is the top of an execution on a new or reused thread, that we're safe to
     // blast any existing MDC state.
     try (Scope scope = span.makeCurrent()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b8aab05b-7e31-3417-8772-0995d09b21af"))) { MDC.put("event_type", getInformativeName()); } else { MDC.put("event_type", eventType.toString()); }
-if(KnobRuntime.check(java.util.UUID.fromString("ae0faa95-1062-3656-ac49-e85922eb8a64"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("14ffd83b-c4bc-3bc2-97f9-1f3680279f7c"))) { MDC.clear(); } else { process(); }
+      MDC.put("event_type", eventType.toString());
+      process();
     } catch (Throwable t) {
       handleException(t);
     } finally {
-      if (KnobRuntime.check(java.util.UUID.fromString("5e8abac3-0a0d-3e97-ad9a-674ab1bf3e00"))) { MDC.clear(); } else { span.end(); }
+      span.end();
       MDC.clear();
     }
   }
@@ -127,9 +120,6 @@ throw new java.io.IOException("Injected exception");
    * @return The event type.
    */
   public EventType getEventType() {
-if(KnobRuntime.check(java.util.UUID.fromString("d82fb557-dc0a-35a8-bb4b-216b42b4f822"))) {
-return null;
-}
     return this.eventType;
   }
 

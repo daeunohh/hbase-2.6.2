@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.fs.permission.AclEntryScope.ACCESS;
 import static org.apache.hadoop.fs.permission.AclEntryScope.DEFAULT;
@@ -560,13 +559,7 @@ public class SnapshotScannerHDFSAclHelper implements Closeable {
   }
 
   boolean isNotFamilyOrQualifierPermission(TablePermission tablePermission) {
-if(KnobRuntime.check(java.util.UUID.fromString("f57eb91e-6d9f-3953-ab56-5fb05d665b70"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("569dc194-3aed-3d41-a38b-5740b2c59447"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("7fee4643-9083-3c68-8067-06af38675bca"))) ? (!tablePermission.hasFamily()) : (((KnobRuntime.check(java.util.UUID.fromString("62012166-bed5-3620-a9a2-a7d9943e02ac"))) ? ((!tablePermission.hasFamily()) && (!tablePermission.hasQualifier())) : (((KnobRuntime.check(java.util.UUID.fromString("b5f4bae9-2a36-3c63-8875-e0f2902943c0"))) ? (!tablePermission.hasQualifier()) : (((KnobRuntime.check(java.util.UUID.fromString("001f46b4-9d1a-392d-b6b8-251410527fb2"))) ? ((!tablePermission.hasFamily()) || (!tablePermission.hasQualifier())) : (!tablePermission.hasFamily() && !tablePermission.hasQualifier()))))))));
+    return !tablePermission.hasFamily() && !tablePermission.hasQualifier();
   }
 
   public static boolean isAclSyncToHdfsEnabled(Configuration conf) {

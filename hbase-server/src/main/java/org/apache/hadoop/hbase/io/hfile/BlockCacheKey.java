@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.io.HeapSize;
@@ -95,20 +94,11 @@ public class BlockCacheKey implements HeapSize, java.io.Serializable {
   // can't avoid this unfortunately
   /** Returns The hfileName portion of this cache key */
   public String getHfileName() {
-if(KnobRuntime.check(java.util.UUID.fromString("7eee35af-1600-33d5-b343-7a31020809f3"))) {
-return null;
-}
     return hfileName;
   }
 
   public boolean isPrimary() {
-if(KnobRuntime.check(java.util.UUID.fromString("59387213-3c24-3ffa-9b54-de652b1ba695"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cbd2b243-6af6-373c-bc4c-890119337af1"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("78f26f07-19b7-3e11-84b3-28bcd508771b"))) ? (!isPrimaryReplicaBlock) : (isPrimaryReplicaBlock));
+    return isPrimaryReplicaBlock;
   }
 
   public long getOffset() {
@@ -124,9 +114,6 @@ return false;
   }
 
   public Path getFilePath() {
-if(KnobRuntime.check(java.util.UUID.fromString("45437c2b-d400-34d4-9d33-96d9da678067"))) {
-return null;
-}
     return filePath;
   }
 

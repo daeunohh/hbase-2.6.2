@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -57,12 +56,6 @@ public class SplitOrMergeStateStore {
   }
 
   public boolean isSplitOrMergeEnabled(MasterSwitchType switchType) {
-if(KnobRuntime.check(java.util.UUID.fromString("aa71a641-0fb4-30e1-883e-5c2a4d0b330f"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("54f13d59-1214-3fdc-8a67-83740e5d7b85"))) {
-return true;
-}
     switch (switchType) {
       case SPLIT:
         return splitStateStore.get();

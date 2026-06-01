@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -155,12 +154,6 @@ public class WALCoprocessorHost extends CoprocessorHost<WALCoprocessor, WALCopro
 
   public void postWALWrite(final RegionInfo info, final WALKey logKey, final WALEdit logEdit)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2985b587-ee8e-3373-adbe-385c38ef3128"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f2f19377-ed51-3e00-a0e3-8ac6819b17bd"))) {
-return;
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new WALObserverOperation() {
       @Override
       protected void call(WALObserver observer) throws IOException {
@@ -175,12 +168,6 @@ return;
    * @param newPath the path of the wal we are going to create
    */
   public void preWALRoll(Path oldPath, Path newPath) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2141b875-89d1-3656-98ca-b261dc0766ca"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("53268e89-b26c-346c-a401-313c47e7d367"))) {
-throw new java.io.IOException("Injected exception");
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new WALObserverOperation() {
       @Override
       protected void call(WALObserver observer) throws IOException {
@@ -195,12 +182,6 @@ throw new java.io.IOException("Injected exception");
    * @param newPath the path of the wal we have created and now is the current
    */
   public void postWALRoll(Path oldPath, Path newPath) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("efc46763-b957-30ed-b7ed-a5514e557a60"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3f6b5785-a048-37c3-8904-07f9a63dccc7"))) {
-return;
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new WALObserverOperation() {
       @Override
       protected void call(WALObserver observer) throws IOException {

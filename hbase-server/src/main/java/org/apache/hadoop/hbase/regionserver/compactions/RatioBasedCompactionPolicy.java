@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -193,14 +192,8 @@ public class RatioBasedCompactionPolicy extends SortedCompactionPolicy {
   @Override
   public boolean needsCompaction(Collection<HStoreFile> storeFiles,
     List<HStoreFile> filesCompacting) {
-if(KnobRuntime.check(java.util.UUID.fromString("0b2354ce-47d2-3d5b-ae31-8f97ab25e153"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7935e0ff-5bee-3682-9171-863b213036d3"))) {
-return true;
-}
     int numCandidates = storeFiles.size() - filesCompacting.size();
-    return ((KnobRuntime.check(java.util.UUID.fromString("7596f0e4-bcfb-35b7-a42c-af1cbf025a3e"))) ? ((numCandidates) < (comConf.getMaxFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("77074493-2188-36ef-b452-c82651066b89"))) ? ((numCandidates) < (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("c87b4d6d-8b9e-3ce8-a4b7-0e5d772733ee"))) ? ((numCandidates) == (comConf.getMaxFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("36feaf02-34d9-37e0-89be-82783fed7d64"))) ? ((numCandidates) <= (comConf.getMaxFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("7ff5fe2b-8c70-3b16-8a17-733702c51d7d"))) ? ((numCandidates) <= (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("f13751df-7463-375c-944b-3c79a7a5e6bc"))) ? ((numCandidates) >= (comConf.getMaxFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("74f09979-bf08-3372-99a9-c492d81e8594"))) ? ((numCandidates) != (comConf.getMaxFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("87a1675d-cfcd-3575-9436-2d51f058db3b"))) ? ((numCandidates) != (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("3b64c6c9-bcfc-3293-bc7c-ef8bd7099988"))) ? ((numCandidates) == (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("b1b0a9bc-94d9-3b6e-972a-710e3099a074"))) ? ((numCandidates) > (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("a14c7156-7dcf-39b8-b0c1-3c494e1d264b"))) ? ((numCandidates) >= (comConf.getMinFilesToCompact())) : (((KnobRuntime.check(java.util.UUID.fromString("e5f57154-f21b-3b4b-b115-4f909ae93ad3"))) ? ((numCandidates) > (comConf.getMaxFilesToCompact())) : (numCandidates >= comConf.getMinFilesToCompact()))))))))))))))))))))))));
+    return numCandidates >= comConf.getMinFilesToCompact();
   }
 
   /**

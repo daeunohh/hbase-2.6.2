@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.net.InetSocketAddress;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -33,9 +32,6 @@ class RpcSchedulerContext extends RpcScheduler.Context {
 
   @Override
   public InetSocketAddress getListenerAddress() {
-if(KnobRuntime.check(java.util.UUID.fromString("0280d095-339d-3fbf-a30a-a21181ae8214"))) {
-return null;
-}
     return this.rpcServer.getListenerAddress();
   }
 }

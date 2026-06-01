@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -89,23 +88,6 @@ public class InputStreamBlockDistribution {
    * True if we should derive StoreFile HDFSBlockDistribution from the underlying input stream
    */
   public static boolean isEnabled(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("15b32771-cabe-3bd3-882f-f4ad5f01ae79"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7564415a-dd84-38fe-af63-4cf4d18f9f37"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1ef85e84-96e4-3e07-855f-66242c3da852"))) {
-return true;
-}
     return conf.getBoolean(HBASE_LOCALITY_INPUTSTREAM_DERIVE_ENABLED,
       DEFAULT_HBASE_LOCALITY_INPUTSTREAM_DERIVE_ENABLED);
   }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.nio.ByteBuffer;
@@ -114,9 +113,6 @@ public class MemStoreLABImpl implements MemStoreLAB {
 
   @Override
   public Cell copyCellInto(Cell cell) {
-if(KnobRuntime.check(java.util.UUID.fromString("f9a711fe-393e-3961-aa57-d20c1c52b7f8"))) {
-return null;
-}
     // See head of copyBBECellInto for how it differs from copyCellInto
     return (cell instanceof ByteBufferExtendedCell)
       ? copyBBECellInto((ByteBufferExtendedCell) cell, maxAlloc)
@@ -150,9 +146,6 @@ return null;
    * @see #copyCellInto(Cell, int)
    */
   private Cell copyBBECellInto(ByteBufferExtendedCell cell, int maxAlloc) {
-if(KnobRuntime.check(java.util.UUID.fromString("924f558d-36c6-38af-aa8a-2cf13138bda0"))) {
-return null;
-}
     int size = cell.getSerializedSize();
     Preconditions.checkArgument(size >= 0, "negative size");
     // Callers should satisfy large allocations from JVM heap so limit fragmentation.
@@ -168,25 +161,7 @@ return null;
       // and so the current thread has to try again to make its chunk or grab the chunk
       // that the other thread created
       // Try to allocate from this chunk
-      if (((KnobRuntime.check(java.util.UUID.fromString("4ec33de7-733a-38ce-b59d-43bd05a97de9"))) ? ((c) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("836d6835-d97e-3c90-9d63-3b9b3adb7257"))) ? ((getOrMakeChunk()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("524cdd98-fdd7-3e35-9b3d-63b2a67d61d7"))) ? ((c) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ab0bff64-c993-3395-af31-873a8d214d01"))) ? ((getOrMakeChunk()) == (null)) : (c != null))))))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("4c09029d-d503-302a-afad-b6f18dbcfbdc"))) {
-size += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bb4cbaab-f9e3-3c78-9625-83de17965f9a"))) {
-size = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("933e85a8-d044-39ea-b987-67c0bbfa7c43"))) {
-size *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("83228d14-f223-35bd-a08a-da6e21d91c95"))) {
-size = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cffe42be-7ab3-34a4-996b-28a8578db2d1"))) {
-size /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e49c7e75-42a2-3f28-b244-afa42f95f55c"))) {
-size -= 1;
-}
+      if (c != null) {
         allocOffset = c.alloc(size);
         if (allocOffset != -1) {
           // We succeeded - this is the common case - small alloc
@@ -205,9 +180,6 @@ size -= 1;
    * @see #copyBBECellInto(ByteBufferExtendedCell, int)
    */
   private Cell copyCellInto(Cell cell, int maxAlloc) {
-if(KnobRuntime.check(java.util.UUID.fromString("bf0e721e-1287-3776-8496-f642dd2b7185"))) {
-return null;
-}
     int size = Segment.getCellLength(cell);
     Preconditions.checkArgument(size >= 0, "negative size");
     // Callers should satisfy large allocations directly from JVM since they
@@ -224,25 +196,7 @@ return null;
       // and so the current thread has to try again to make its chunk or grab the chunk
       // that the other thread created
       // Try to allocate from this chunk
-      if (((KnobRuntime.check(java.util.UUID.fromString("b38d7e76-4ab6-3009-996f-13bef3c21698"))) ? ((getOrMakeChunk()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("05f40135-d108-31dc-a75a-15c99c74bd55"))) ? ((getOrMakeChunk()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("725a8fdc-1edb-3764-8e77-d0d9d2d90979"))) ? ((c) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3580a947-77b4-3913-b7e6-77edd8ac1487"))) ? ((c) != (null)) : (c != null))))))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("259408cf-ca35-3e70-813b-cd7745e7b410"))) {
-size += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("be9a7678-5544-3e47-92cc-4bdd5011e9ed"))) {
-size *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bb2cba19-0044-322d-b361-60d64c2f7f33"))) {
-size = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d5b02b91-c415-3bb6-9b9d-788e5c6dccc7"))) {
-size -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ffac5b85-4fba-35b9-874f-738023adf249"))) {
-size = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("47a75679-8fa2-3052-b1ea-ec1be88bf200"))) {
-size /= 2;
-}
+      if (c != null) {
         allocOffset = c.alloc(size);
         if (allocOffset != -1) {
           // We succeeded - this is the common case - small alloc
@@ -263,29 +217,8 @@ size /= 2;
    * @see #copyBBECToChunkCell(ByteBufferExtendedCell, ByteBuffer, int, int)
    */
   private static Cell copyToChunkCell(Cell cell, ByteBuffer buf, int offset, int len) {
-if(KnobRuntime.check(java.util.UUID.fromString("effa3b44-5fad-3d05-9211-b59ef5c3b944"))) {
-return null;
-}
     int tagsLen = cell.getTagsLength();
     if (cell instanceof ExtendedCell) {
-if(KnobRuntime.check(java.util.UUID.fromString("8577a41a-6139-301c-b0e2-aa661531998d"))) {
-offset /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("26492a4f-065e-3616-a937-38cf0934809b"))) {
-offset *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f23bdb79-aa16-3715-bcd9-c4fc83393ba0"))) {
-offset = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2cf3eae5-62e1-3ca3-8ecd-e2a167431056"))) {
-offset += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("00dda5fe-21ba-3b71-a3f9-53f7cd088e77"))) {
-offset = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("66b85d2d-94a8-3e47-9712-d32096247cba"))) {
-offset -= 1;
-}
       ((ExtendedCell) cell).write(buf, offset);
     } else {
       // Normally all Cell impls within Server will be of type ExtendedCell. Just considering the
@@ -305,68 +238,11 @@ offset -= 1;
     int len) {
     int tagsLen = cell.getTagsLength();
     cell.write(buf, offset);
-if(KnobRuntime.check(java.util.UUID.fromString("3fe27585-f598-39f2-9376-0da63d92ab4a"))) {
-offset += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bd8a0cb7-cc7e-3d23-8cfc-b38c87ee15a7"))) {
-len += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("406ec60f-526a-34d2-aec1-592bdfbb7d82"))) {
-len -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("42033720-ada6-3372-a240-6f8a500a548c"))) {
-len = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f45233af-9e3c-3ef1-9c8a-fb3a2d2bcc5b"))) {
-len /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("79257696-6f44-362f-aff9-70a2a2137309"))) {
-offset -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b43bcf13-77cb-32b1-b66f-de2e6583255b"))) {
-tagsLen /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c4805e3a-44a8-3fed-b16c-28974b7c480c"))) {
-tagsLen -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("adcf68fa-4816-3b01-bef8-7dda852c718f"))) {
-len *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("15cbbfaa-3036-3316-a133-2b598e0e0129"))) {
-tagsLen += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f50e9236-f5ce-38ff-bc9a-011561fdf58b"))) {
-tagsLen = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("842b246d-6645-3f61-b0e5-4a9345a1539f"))) {
-tagsLen *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("639902d0-d0f6-31ab-bdb1-2088c39e920d"))) {
-offset = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("632f38d4-b0cc-37dc-ab9a-2e0be8e0bc09"))) {
-len = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6013f000-3fc0-3fc7-b6ec-6eb512da0dd7"))) {
-offset = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b6a572c4-98a4-3b20-83ac-31294c29ad91"))) {
-tagsLen = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("099792d4-65ae-3f5e-90ae-64a3767973ea"))) {
-offset /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d4bf45c9-01e4-3539-91d5-abc69d5edf29"))) {
-offset *= 2;
-}
     return createChunkCell(buf, offset, len, tagsLen, cell.getSequenceId());
   }
 
   private static Cell createChunkCell(ByteBuffer buf, int offset, int len, int tagsLen,
     long sequenceId) {
-if(KnobRuntime.check(java.util.UUID.fromString("91c26955-f0c9-3f4c-8ad6-af3206330263"))) {
-return null;
-}
     // TODO : write the seqid here. For writing seqId we should create a new cell type so
     // that seqId is not used as the state
     if (tagsLen == 0) {
@@ -449,15 +325,15 @@ return null;
     // No current chunk, so we want to allocate one. We race
     // against other allocators to CAS in an uninitialized chunk
     // (which is cheap to allocate)
-    if (((KnobRuntime.check(java.util.UUID.fromString("d23b6863-fd82-397b-b2f3-439680aa2b20"))) ? (isOffHeap()) : (lock.tryLock()))) {
+    if (lock.tryLock()) {
       try {
         // once again check inside the lock
         c = currChunk.get();
-        if (((KnobRuntime.check(java.util.UUID.fromString("c17a3506-02f8-37da-9117-5e951b629a7f"))) ? ((c) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8b309ccb-8ff3-3e0c-bc72-5a35c03c09ca"))) ? ((c) == (null)) : (c != null))))) {
+        if (c != null) {
           return c;
         }
         c = this.chunkCreator.getChunk();
-        if (((KnobRuntime.check(java.util.UUID.fromString("61945a60-0d42-3a92-bce1-7c97df357460"))) ? ((c) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("d0eb1a5d-4049-3ad2-9ddf-3a6734d3353b"))) ? ((c) != (null)) : (c != null))))) {
+        if (c != null) {
           // set the curChunk. No need of CAS as only one thread will be here
           currChunk.set(c);
           chunks.add(c.getId());

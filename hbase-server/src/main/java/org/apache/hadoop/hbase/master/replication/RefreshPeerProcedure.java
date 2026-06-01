@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -60,24 +59,15 @@ public class RefreshPeerProcedure extends ServerRemoteProcedure
 
   @Override
   public String getPeerId() {
-if(KnobRuntime.check(java.util.UUID.fromString("f4c446f1-545c-387b-a6f9-116e1b3234b1"))) {
-return null;
-}
     return peerId;
   }
 
   @Override
   public PeerOperationType getPeerOperationType() {
-if(KnobRuntime.check(java.util.UUID.fromString("ec85f487-942b-30b3-a0b0-e385b4e278f0"))) {
-return null;
-}
     return PeerOperationType.REFRESH;
   }
 
   private static PeerModificationType toPeerModificationType(PeerOperationType type) {
-if(KnobRuntime.check(java.util.UUID.fromString("4050812b-5ad7-38ad-81bf-16ea5125f071"))) {
-return null;
-}
     switch (type) {
       case ADD:
         return PeerModificationType.ADD_PEER;
@@ -95,53 +85,6 @@ return null;
   }
 
   private static PeerOperationType toPeerOperationType(PeerModificationType type) {
-if(KnobRuntime.check(java.util.UUID.fromString("cccaf3b2-f2ea-3e53-9268-000dd7ade165"))) {
-try {
-    java.lang.reflect.Field field = type.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(type));
-    field.set(type, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bb9e0c55-3062-33b7-9d44-9734367cb751"))) {
-try {
-    java.lang.reflect.Field field = type.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(type));
-    field.set(type, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ea3cd13b-c96b-3c12-9a3c-4bd6ec4bc25f"))) {
-try {
-    java.lang.reflect.Field field = type.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(type));
-    field.set(type, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dfe8fa92-d4e4-3aa6-87c5-cacb6d1e9fad"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("31b8bcac-4e20-3154-90c7-8d71e913ca5c"))) {
-try {
-    java.lang.reflect.Field field = type.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(type));
-    field.set(type, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     switch (type) {
       case ADD_PEER:
         return PeerOperationType.ADD;
@@ -173,18 +116,7 @@ try {
       LOG.warn("Refresh peer {} for {} on {} failed", peerId, type, targetServer, error);
       return false;
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("e949db1e-481f-3402-9846-130c5c3694f7"))) {
-try {
-    java.lang.reflect.Field field = targetServer.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(targetServer));
-    field.set(targetServer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("dcac6236-5e17-38d6-a5da-6a2a22bc9060"))) { LOG.warn("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer); } else { LOG.info("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer); }
+      LOG.info("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer);
       return true;
     }
   }

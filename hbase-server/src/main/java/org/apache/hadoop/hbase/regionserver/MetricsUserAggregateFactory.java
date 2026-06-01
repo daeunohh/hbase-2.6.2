@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -31,30 +30,13 @@ public class MetricsUserAggregateFactory {
   public static final boolean DEFAULT_METRIC_USER_ENABLED_CONF = false;
 
   public static MetricsUserAggregate getMetricsUserAggregate(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("657be518-dd63-3aea-a96b-3d3934731fa8"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cb61b937-f30a-355e-9197-e9ee6f38293a"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("e04e3db7-2f88-3221-a7af-bf82b533b776"))) ? (conf.getBoolean(METRIC_USER_ENABLED_CONF, !DEFAULT_METRIC_USER_ENABLED_CONF)) : (conf.getBoolean(METRIC_USER_ENABLED_CONF, DEFAULT_METRIC_USER_ENABLED_CONF)))) {
+    if (conf.getBoolean(METRIC_USER_ENABLED_CONF, DEFAULT_METRIC_USER_ENABLED_CONF)) {
       return new MetricsUserAggregateImpl(conf);
     } else {
       // NoOpMetricUserAggregate
       return new MetricsUserAggregate() {
         @Override
         public MetricsUserAggregateSource getSource() {
-if(KnobRuntime.check(java.util.UUID.fromString("b3cb405d-c6f1-37c5-8e7b-e07dcb874889"))) {
-return null;
-}
           return null;
         }
 

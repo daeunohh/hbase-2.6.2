@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -182,9 +181,6 @@ public class HFilePreadReader extends HFileReaderImpl {
         }
       }
     });
-if(KnobRuntime.check(java.util.UUID.fromString("9826cd48-0f6f-3549-a204-18c59912cb1b"))) {
-throw new java.io.IOException("Injected exception");
-}
     fsBlockReader.closeStreams();
   }
 }

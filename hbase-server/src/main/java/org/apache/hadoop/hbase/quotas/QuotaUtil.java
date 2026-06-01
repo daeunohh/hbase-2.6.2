@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -110,24 +109,7 @@ public class QuotaUtil extends QuotaTableUtil {
 
   /** Returns true if the support for quota is enabled */
   public static boolean isQuotaEnabled(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("9bb99610-0946-37f7-86b9-0a7265496504"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4cfed44e-2184-3fc0-ab8c-fbce293ddb7e"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d0b2c88f-19e3-3246-ae69-0cbadd82912d"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("94734cb6-4273-3058-aa68-3eafd2e684da"))) ? (conf.getBoolean(QUOTA_CONF_KEY, !QUOTA_ENABLED_DEFAULT)) : (conf.getBoolean(QUOTA_CONF_KEY, QUOTA_ENABLED_DEFAULT)));
+    return conf.getBoolean(QUOTA_CONF_KEY, QUOTA_ENABLED_DEFAULT);
   }
 
   /*

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.NamespaceDescriptor;
@@ -63,56 +62,6 @@ public class CreateNamespaceProcedure
   @Override
   protected Flow executeFromState(final MasterProcedureEnv env, final CreateNamespaceState state)
     throws InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("c1ca9cbb-188b-34e4-9b12-554245391e78"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("55ee19bf-2057-321c-babd-df5ee4e670b8"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d5210085-3465-3ae7-8582-110ca15b4495"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a1f5ce92-9ce2-3fbb-92dd-ee5c728fcf96"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d02a70f4-7325-3997-9736-f351e2b372ae"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("10db5555-4a5e-31ed-bbf9-b5926515d760"))) {
-throw new InterruptedException("Injected exception");
-}
     if (isTraceEnabled()) {
       LOG.trace(this + " execute state=" + state);
     }
@@ -122,7 +71,7 @@ throw new InterruptedException("Injected exception");
           boolean success = prepareCreate(env);
           releaseSyncLatch();
           if (!success) {
-            assert ((KnobRuntime.check(java.util.UUID.fromString("91cd3136-0512-3fd3-ada4-458074becf26"))) ? (isBootstrapNamespace()) : (isFailed())) : "createNamespace should have an exception here";
+            assert isFailed() : "createNamespace should have an exception here";
             return Flow.NO_MORE_STATE;
           }
           setNextState(CreateNamespaceState.CREATE_NAMESPACE_CREATE_DIRECTORY);
@@ -132,10 +81,7 @@ throw new InterruptedException("Injected exception");
           setNextState(CreateNamespaceState.CREATE_NAMESPACE_INSERT_INTO_NS_TABLE);
           break;
         case CREATE_NAMESPACE_INSERT_INTO_NS_TABLE:
-if(KnobRuntime.check(java.util.UUID.fromString("39336b96-b803-31c2-a86d-36e2b1a6a3b6"))) {
-throw new java.io.IOException("Injected exception");
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("e469a937-97e6-394f-970e-a7c13edcc7d3"))) { updateZKNamespaceManager(env, nsDescriptor); } else if (KnobRuntime.check(java.util.UUID.fromString("28ec9f6b-0043-3187-aefa-84c7c754fdd3"))) { createDirectory(env, nsDescriptor); } else { insertIntoNSTable(env, nsDescriptor); }
+          insertIntoNSTable(env, nsDescriptor);
           setNextState(CreateNamespaceState.CREATE_NAMESPACE_UPDATE_ZK);
           break;
         case CREATE_NAMESPACE_UPDATE_ZK:
@@ -194,9 +140,6 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   protected CreateNamespaceState getInitialState() {
-if(KnobRuntime.check(java.util.UUID.fromString("10f52837-3a92-3465-8343-0df8f1e43403"))) {
-return null;
-}
     return CreateNamespaceState.CREATE_NAMESPACE_PREPARE;
   }
 
@@ -226,12 +169,6 @@ return null;
 
   @Override
   protected boolean waitInitialized(MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("31304e30-9c3b-3cd2-978a-71328d4f90a9"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6265e8a4-779a-38be-8406-a1aab5ed4e91"))) {
-return true;
-}
     // Namespace manager might not be ready if master is not fully initialized,
     // return false to reject user namespace creation; return true for default
     // and system namespace creation (this is part of master initialization).
@@ -251,9 +188,6 @@ return true;
 
   @Override
   public TableOperationType getTableOperationType() {
-if(KnobRuntime.check(java.util.UUID.fromString("019943be-4a50-3544-acd3-a1c1ad943dcf"))) {
-return null;
-}
     return TableOperationType.EDIT;
   }
 

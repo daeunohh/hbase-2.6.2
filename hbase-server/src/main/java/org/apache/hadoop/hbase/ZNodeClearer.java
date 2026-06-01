@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -65,9 +64,6 @@ public final class ZNodeClearer {
    * Logs the errors without failing on exception.
    */
   public static void writeMyEphemeralNodeOnDisk(String fileContent) {
-if(KnobRuntime.check(java.util.UUID.fromString("ddfecb25-f5cd-3a37-bc20-4f18221c2ad5"))) {
-return;
-}
     String fileName = ZNodeClearer.getMyEphemeralNodeFileName();
     if (fileName == null) {
       LOG.warn("Environment variable HBASE_ZNODE_FILE not set; znodes will not be cleared "

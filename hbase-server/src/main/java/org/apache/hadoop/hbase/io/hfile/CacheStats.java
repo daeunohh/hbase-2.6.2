@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
@@ -146,8 +145,8 @@ public class CacheStats {
 
   public void miss(boolean caching, boolean primary, BlockType type) {
     missCount.increment();
-    if (((KnobRuntime.check(java.util.UUID.fromString("bddb9646-6312-3aa0-8870-579df617b007"))) ? (!primary) : (primary))) primaryMissCount.increment();
-    if (((KnobRuntime.check(java.util.UUID.fromString("61244441-94c3-303c-8ee0-d2bfda7c5e2d"))) ? (!caching) : (caching))) missCachingCount.increment();
+    if (primary) primaryMissCount.increment();
+    if (caching) missCachingCount.increment();
     if (type == null) {
       return;
     }
@@ -191,11 +190,8 @@ public class CacheStats {
   }
 
   public void hit(boolean caching, boolean primary, BlockType type) {
-if(KnobRuntime.check(java.util.UUID.fromString("cea9b879-63aa-3a79-96c1-98c6ec7f272d"))) {
-return;
-}
     hitCount.increment();
-    if (((KnobRuntime.check(java.util.UUID.fromString("322fcc6b-9190-3f71-80f8-8b18ca46cf32"))) ? (!primary) : (primary))) primaryHitCount.increment();
+    if (primary) primaryHitCount.increment();
     if (caching) hitCachingCount.increment();
 
     if (type == null) {
@@ -241,9 +237,6 @@ return;
   }
 
   public void evict() {
-if(KnobRuntime.check(java.util.UUID.fromString("df9720c4-b3d2-3f3f-aad5-6016f1f38807"))) {
-return;
-}
     evictionCount.increment();
   }
 
@@ -441,9 +434,6 @@ return;
   }
 
   public void rollMetricsPeriod() {
-if(KnobRuntime.check(java.util.UUID.fromString("478b8c53-522b-3e0c-af74-87aeaad47e3c"))) {
-return;
-}
     hitCounts[windowIndex] = getHitCount() - lastHitCount;
     lastHitCount = getHitCount();
     hitCachingCounts[windowIndex] = getHitCachingCount() - lastHitCachingCount;
@@ -464,9 +454,6 @@ return;
   }
 
   public long getSumHitCachingCountsPastNPeriods() {
-if(KnobRuntime.check(java.util.UUID.fromString("8068f52a-13a3-3bf9-a5e0-4786dcad5fdb"))) {
-return 0;
-}
     return sum(hitCachingCounts);
   }
 

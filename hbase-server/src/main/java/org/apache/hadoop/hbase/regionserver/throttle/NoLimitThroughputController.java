@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.hadoop.hbase.regionserver.RegionServerServices;
@@ -37,12 +36,6 @@ public class NoLimitThroughputController implements ThroughputController {
 
   @Override
   public long control(String compactionName, long size) throws InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("60a3e622-65f8-3667-971c-3fd2dbff9c8d"))) {
-throw new InterruptedException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("097ee55d-c556-34de-a4da-ce91ca8668cc"))) {
-return 0;
-}
     return 0;
   }
 

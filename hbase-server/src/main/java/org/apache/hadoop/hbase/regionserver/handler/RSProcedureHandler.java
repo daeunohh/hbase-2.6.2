@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.handler;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.executor.EventHandler;
 import org.apache.hadoop.hbase.procedure2.RSProcedureCallable;
@@ -51,9 +50,6 @@ public class RSProcedureHandler extends EventHandler {
 
   @Override
   public void process() {
-if(KnobRuntime.check(java.util.UUID.fromString("01f54c2b-9ed8-3724-9e76-fdc35ff6a6a7"))) {
-return;
-}
     Throwable error = null;
     try {
       MDC.put("pid", Long.toString(procId));

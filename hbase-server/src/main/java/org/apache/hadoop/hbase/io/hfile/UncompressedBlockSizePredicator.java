@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -44,12 +43,6 @@ public class UncompressedBlockSizePredicator implements BlockCompressedSizePredi
    */
   @Override
   public boolean shouldFinishBlock(int uncompressed) {
-if(KnobRuntime.check(java.util.UUID.fromString("0317e0f6-5004-3c55-af30-adcb2f9036e1"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("28d09b3f-8bce-3e53-a95d-a493e5e14c31"))) {
-return true;
-}
     return true;
   }
 

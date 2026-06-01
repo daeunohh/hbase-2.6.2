@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.janitor;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,12 +95,6 @@ public class CatalogJanitor extends ScheduledChore {
 
   @Override
   protected boolean initialChore() {
-if(KnobRuntime.check(java.util.UUID.fromString("1f8e9226-7113-37f7-9d60-11308ef19ab5"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3910807f-ddba-35ae-834d-6db5956bbd09"))) {
-return true;
-}
     try {
       if (getEnabled()) {
         scan();
@@ -114,23 +107,17 @@ return true;
   }
 
   public boolean setEnabled(final boolean enabled) {
-if(KnobRuntime.check(java.util.UUID.fromString("f92e783f-867a-31d4-a6dc-82b3495f6aff"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("245b6965-a26d-361a-a6f0-cf61eb4495a5"))) {
-return true;
-}
     boolean alreadyEnabled = this.enabled.getAndSet(enabled);
     // If disabling is requested on an already enabled chore, we could have an active
     // scan still going on, callers might not be aware of that and do further action thinkng
     // that no action would be from this chore. In this case, the right action is to wait for
     // the active scan to complete before exiting this function.
-    if (((KnobRuntime.check(java.util.UUID.fromString("dcb29e4a-4bf3-35cc-be98-f576cd0d7f04"))) ? ((!enabled) && (alreadyEnabled)) : (((KnobRuntime.check(java.util.UUID.fromString("6cc8d489-5b19-30ee-9dad-e99d576aa815"))) ? ((!enabled) || (alreadyEnabled)) : (((KnobRuntime.check(java.util.UUID.fromString("10db6e04-57a3-3c24-a674-6141537da201"))) ? (alreadyEnabled) : (((KnobRuntime.check(java.util.UUID.fromString("8a30f874-7c0f-3dd2-ac69-3a09e059124f"))) ? (!alreadyEnabled) : (((KnobRuntime.check(java.util.UUID.fromString("d6a241ac-4c09-3129-9ee2-6d129ee74ea0"))) ? (!enabled) : (((KnobRuntime.check(java.util.UUID.fromString("8c854a9d-7d18-30e2-8fa5-996752bae8a9"))) ? ((!enabled) || (!alreadyEnabled)) : (((KnobRuntime.check(java.util.UUID.fromString("9938921d-c8e8-38d3-9e3b-5e013715657c"))) ? ((!enabled) && (!alreadyEnabled)) : (!enabled && alreadyEnabled))))))))))))))) {
+    if (!enabled && alreadyEnabled) {
       while (alreadyRunning.get()) {
         Threads.sleepWithoutInterrupt(100);
       }
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("dda2a334-3b33-36c0-ad64-5ccef893f03b"))) ? (!alreadyEnabled) : (alreadyEnabled));
+    return alreadyEnabled;
   }
 
   public boolean getEnabled() {
@@ -139,9 +126,6 @@ return true;
 
   @Override
   protected void chore() {
-if(KnobRuntime.check(java.util.UUID.fromString("f832fe82-244c-3740-82d3-a9260c0f4c67"))) {
-return;
-}
     try {
       AssignmentManager am = this.services.getAssignmentManager();
       if (
@@ -188,11 +172,11 @@ return;
         LOG.warn(this.lastReport.toString());
       } else {
         if (LOG.isDebugEnabled()) {
-          if (KnobRuntime.check(java.util.UUID.fromString("44ec4220-ac6e-38ee-8dae-775b793093cf"))) { LOG.warn(this.lastReport.toString()); } else { LOG.debug(this.lastReport.toString()); }
+          LOG.debug(this.lastReport.toString());
         }
       }
 
-      if (KnobRuntime.check(java.util.UUID.fromString("655bb52e-5243-3315-bb3b-bb4733cbd867"))) { checkLog4jProperties(); } else { updateAssignmentManagerMetrics(); }
+      updateAssignmentManagerMetrics();
 
       Map<RegionInfo, Result> mergedRegions = this.lastReport.mergedRegions;
       for (Map.Entry<RegionInfo, Result> e : mergedRegions.entrySet()) {
@@ -213,10 +197,10 @@ return;
       // Now work on our list of found parents. See if any we can clean up.
       HashSet<String> parentNotCleaned = new HashSet<>();
       for (Map.Entry<RegionInfo, Result> e : splitParents.entrySet()) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("fc22d9ad-1813-3feb-ba1d-555a21a37024"))) ? (getEnabled()) : (this.services.isInMaintenanceMode()))) {
+        if (this.services.isInMaintenanceMode()) {
           // Stop cleaning if the master is in maintenance mode
           if (LOG.isDebugEnabled()) {
-            if (KnobRuntime.check(java.util.UUID.fromString("fc92e0d8-0058-3972-8dbc-67d59b33e852"))) { LOG.warn("In maintenance mode, not cleaning"); } else { LOG.debug("In maintenance mode, not cleaning"); }
+            LOG.debug("In maintenance mode, not cleaning");
           }
           break;
         }
@@ -254,9 +238,6 @@ return;
 
   /** Returns Returns last published Report that comes of last successful scan of hbase:meta. */
   public CatalogJanitorReport getLastReport() {
-if(KnobRuntime.check(java.util.UUID.fromString("3ce6f143-de52-3849-8769-fba15f81fb6f"))) {
-return null;
-}
     return this.lastReport;
   }
 
@@ -312,9 +293,6 @@ return null;
 
     @Override
     public int compare(RegionInfo left, RegionInfo right) {
-if(KnobRuntime.check(java.util.UUID.fromString("a1a2037a-cc41-3d84-9769-45af00dca40f"))) {
-return 0;
-}
       // This comparator differs from the one RegionInfo in that it sorts
       // parent before daughters.
       if (left == null) {
@@ -467,16 +445,13 @@ return 0;
     String filename = "log4j.properties";
     try (final InputStream inStream =
       CatalogJanitor.class.getClassLoader().getResourceAsStream(filename)) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("47493b2f-3c02-38a9-a42a-0e44834a3b4c"))) ? ((inStream) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("4cb80355-5a9d-301c-b548-f2144c10ea99"))) ? ((inStream) != (null)) : (inStream != null))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("142d9f76-1c8c-3026-be99-d3952da9f1d8"))) {
-throw new java.io.IOException("Injected exception");
-}
+      if (inStream != null) {
         new Properties().load(inStream);
       } else {
-        if (KnobRuntime.check(java.util.UUID.fromString("805f90da-367c-3c2d-96f9-b5c1c427e224"))) { System.out.println("No " + filename); } else if (KnobRuntime.check(java.util.UUID.fromString("18854cfa-58e7-3d4a-abff-d1a079fb9eac"))) { System.out.println((("No ") + (filename)) + (" on classpath; Add one else no logging output!")); } else if (KnobRuntime.check(java.util.UUID.fromString("279db2c7-1286-300e-a1e2-6b451338642c"))) { System.out.println(("No ") + (filename)); } else if (KnobRuntime.check(java.util.UUID.fromString("992b1d94-e3f5-3589-a206-6f9883fc4e3a"))) { System.out.println("No "); } else if (KnobRuntime.check(java.util.UUID.fromString("2adb0cce-2444-3d05-a010-091ae705e2a5"))) { System.out.println(("No ") + (" on classpath; Add one else no logging output!")); } else if (KnobRuntime.check(java.util.UUID.fromString("bea96400-d58b-3a60-a696-ce4eb6ecf84d"))) { System.out.println(" on classpath; Add one else no logging output!"); } else if (KnobRuntime.check(java.util.UUID.fromString("9993c3d4-48ee-3a32-8abb-6535fc5de594"))) { System.out.println(("No " + filename) + (" on classpath; Add one else no logging output!")); } else { System.out.println("No " + filename + " on classpath; Add one else no logging output!"); }
+        System.out.println("No " + filename + " on classpath; Add one else no logging output!");
       }
     } catch (IOException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("9481779e-6549-340a-89d7-4b41cf7fb5d8"))) { LOG.warn("Log4j check failed", e); } else { LOG.error("Log4j check failed", e); }
+      LOG.error("Log4j check failed", e);
     }
   }
 

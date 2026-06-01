@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -66,23 +65,6 @@ public class AccessChecker {
   private static Groups groupService;
 
   public static boolean isAuthorizationSupported(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("923c7a35-05e5-3d08-80d6-62b651033334"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cd999078-db8f-3c27-aec8-562317dafea5"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f652cfc8-1c36-3393-ab0c-fbd3a305f904"))) {
-return true;
-}
     return conf.getBoolean(User.HBASE_SECURITY_AUTHORIZATION_CONF_KEY, false);
   }
 
@@ -96,9 +78,6 @@ return true;
   }
 
   public AuthManager getAuthManager() {
-if(KnobRuntime.check(java.util.UUID.fromString("89d9497e-2ce2-3806-b00d-c777cf66852a"))) {
-return null;
-}
     return authManager;
   }
 
@@ -467,36 +446,11 @@ return null;
    * Initialize the group service.
    */
   private void initGroupService(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("dbd8bdf3-d765-362d-a73d-bd1d3315b88d"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("01f08865-6ed4-3311-997a-466a1edcb223"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("09235cdd-803f-3ac4-a303-8d6bfaaead8a"))) ? ((groupService) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9ab1a246-cdde-338a-9016-137f92223d2f"))) ? ((groupService) == (null)) : (groupService == null))))) {
+    if (groupService == null) {
       if (conf.getBoolean(User.TestingGroups.TEST_CONF, false)) {
         UserProvider.setGroups(new User.TestingGroups(UserProvider.getGroups()));
         groupService = UserProvider.getGroups();
       } else {
-if(KnobRuntime.check(java.util.UUID.fromString("2ce399c1-d8b6-3d66-8a42-2995792b9293"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         groupService = Groups.getUserToGroupsMappingService(conf);
       }
     }

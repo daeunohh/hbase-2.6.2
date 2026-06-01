@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collections;
 import java.util.List;
@@ -79,9 +78,6 @@ public abstract class ImmutableSegment extends Segment {
   }
 
   public List<Segment> getAllSegments() {
-if(KnobRuntime.check(java.util.UUID.fromString("ed61006f-031c-3df9-bddd-5a1969ecffd7"))) {
-return null;
-}
     return Collections.singletonList(this);
   }
 
@@ -97,9 +93,6 @@ return null;
    * {@link MemStoreLABImpl} used by this segment.
    */
   List<KeyValueScanner> getSnapshotScanners() {
-if(KnobRuntime.check(java.util.UUID.fromString("f6dca487-424b-3fed-a25a-4b02fa73ba15"))) {
-return null;
-}
     return Collections.singletonList(new SnapshotSegmentScanner(this));
   }
 }

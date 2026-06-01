@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.net.InetAddress;
 import java.security.cert.X509Certificate;
@@ -59,9 +58,6 @@ public interface RpcCallContext {
 
   /** Returns Current request's user name or not present if none ongoing. */
   default Optional<String> getRequestUserName() {
-if(KnobRuntime.check(java.util.UUID.fromString("4358ae58-c67a-37ee-9c15-34da6eb5a822"))) {
-return null;
-}
     return getRequestUser().map(User::getShortName);
   }
 

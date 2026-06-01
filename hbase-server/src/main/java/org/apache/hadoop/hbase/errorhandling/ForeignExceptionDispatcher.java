@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.errorhandling;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +59,11 @@ public class ForeignExceptionDispatcher implements ForeignExceptionListener, For
   @Override
   public synchronized void receive(ForeignException e) {
     // if we already have an exception, then ignore it
-    if (((KnobRuntime.check(java.util.UUID.fromString("43c24942-8b8e-392a-92f0-cf2ad021aa68"))) ? ((exception) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("7f8889a8-69b2-3ba5-8a70-54c1d4a096b3"))) ? ((exception) == (null)) : (exception != null))))) return;
+    if (exception != null) return;
 
-    if (KnobRuntime.check(java.util.UUID.fromString("203fa9a8-aaa3-3c19-9398-611000c42635"))) { LOG.debug((name) + (" accepting received exception"), e); } else { LOG.debug(name + " accepting received exception", e); }
+    LOG.debug(name + " accepting received exception", e);
     // mark that we got the error
-    if (((KnobRuntime.check(java.util.UUID.fromString("39915a25-cb7a-3844-a9a1-607c498b5f21"))) ? ((e) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8ae8dcb4-ea6d-3f9f-bda2-eb27f8ea0cfe"))) ? ((e) != (null)) : (e != null))))) {
+    if (e != null) {
       exception = e;
     } else {
       exception = new ForeignException(name, "");
@@ -76,10 +75,7 @@ public class ForeignExceptionDispatcher implements ForeignExceptionListener, For
 
   @Override
   public synchronized void rethrowException() throws ForeignException {
-if(KnobRuntime.check(java.util.UUID.fromString("ed4736f6-02f3-3ede-b814-9f878659acd0"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("1136878b-40d4-33a7-8d1f-1afde383c0e8"))) ? ((exception) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2838f5d9-30cc-3c8b-a453-5947926523c6"))) ? ((exception) == (null)) : (exception != null))))) {
+    if (exception != null) {
       // This gets the stack where this is caused, (instead of where it was deserialized).
       // This is much more useful for debugging
       throw new ForeignException(exception.getSource(), exception.getCause());

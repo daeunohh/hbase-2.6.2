@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -163,45 +162,9 @@ public class FixedFileTrailer {
   private static int getMaxTrailerSize() {
     int maxSize = 0;
     for (int version = HFile.MIN_FORMAT_VERSION; version <= HFile.MAX_FORMAT_VERSION; ++version) {
-if(KnobRuntime.check(java.util.UUID.fromString("2ace6e1d-f229-3835-b278-8baa783eafd6"))) {
-version *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("53ac5124-99b7-3e0e-9b73-9c67138d04a9"))) {
-version = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cd2557e1-ad29-36ec-8171-74fb6a2523a8"))) {
-version -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("284c26c1-cd21-31dc-8447-95ef7fb33906"))) {
-maxSize *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1e034b0e-c408-3fda-811f-cbcd1eb60aff"))) {
-maxSize += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6ef72342-0716-3025-bab8-359851c06a55"))) {
-maxSize = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bed9ae76-4808-3526-a734-111f63c5950a"))) {
-version = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("eda1ac87-ebe1-3e17-984d-18716dc2c262"))) {
-maxSize /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c9d0f7a5-557e-35d6-9e19-cc2f47b7865b"))) {
-version /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7b33e1ef-e866-3908-9e66-156255864dc7"))) {
-maxSize = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0fcefa7d-f7f7-3a4e-803e-dfe1f32fc754"))) {
-maxSize -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("50399d5c-94ae-38b4-af9d-4d993dc00924"))) {
-version += 1;
-}
       maxSize = Math.max(getTrailerSize(version), maxSize);
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("f24906e5-e1ce-3d1a-9e7b-ffd9eb3b933a"))) ? (0) : (maxSize));
+    return maxSize;
   }
 
   private static final int[] TRAILER_SIZE = computeTrailerSizeByVersion();
@@ -214,10 +177,7 @@ version += 1;
   }
 
   public int getTrailerSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("16c722b3-55ae-33cd-b177-023e5a3ac2f7"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("7268aa61-da34-3170-b35a-859c0a7f28cf"))) ? (extractMajorVersion(getTrailerSize(majorVersion))) : (((KnobRuntime.check(java.util.UUID.fromString("7c484e21-5e58-325e-8000-7e0bee56f80b"))) ? (getTrailerSize(getTrailerSize(majorVersion))) : (getTrailerSize(majorVersion)))));
+    return getTrailerSize(majorVersion);
   }
 
   /**
@@ -240,9 +200,6 @@ return 0;
   }
 
   HFileProtos.FileTrailerProto toProtobuf() {
-if(KnobRuntime.check(java.util.UUID.fromString("5dc38975-9bf5-3598-9208-b5605ef43d53"))) {
-return null;
-}
     HFileProtos.FileTrailerProto.Builder builder = HFileProtos.FileTrailerProto.newBuilder()
       .setFileInfoOffset(fileInfoOffset).setLoadOnOpenDataOffset(loadOnOpenDataOffset)
       .setUncompressedDataIndexSize(uncompressedDataIndexSize)
@@ -252,10 +209,10 @@ return null;
       .setLastDataBlockOffset(lastDataBlockOffset)
       .setComparatorClassName(getHBase1CompatibleName(comparatorClassName))
       .setCompressionCodec(compressionCodec.ordinal());
-    if (((KnobRuntime.check(java.util.UUID.fromString("65e89ada-cd4c-31d9-9547-86ccc08ddbe1"))) ? ((encryptionKey) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("68a9fd30-e31d-333f-92c6-7455266c586e"))) ? ((encryptionKey) == (null)) : (encryptionKey != null))))) {
+    if (encryptionKey != null) {
       builder.setEncryptionKey(UnsafeByteOperations.unsafeWrap(encryptionKey));
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("4e5221b4-e3ad-3f78-88d2-0da9bb7db247"))) ? (toProtobuf()) : (builder.build()));
+    return builder.build();
   }
 
   /**
@@ -263,19 +220,10 @@ return null;
    * serialize the old hbase-1.x where it makes sense. See {@link #getHBase1CompatibleName(String)}.
    */
   void serializeAsPB(DataOutputStream output) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("1783207b-4e2a-3274-8dfc-321d193abded"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6c12274a-2c75-33e0-ac3f-68c40b34a7c8"))) {
-throw new java.io.IOException("Injected exception");
-}
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     // We need this extra copy unfortunately to determine the final size of the
     // delimited output, see use of baos.size() below.
-if(KnobRuntime.check(java.util.UUID.fromString("f8038e06-07f0-316f-a68b-9ac7dde67317"))) {
-throw new java.io.IOException("Injected exception");
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("96f707ab-7518-328c-9646-026699f1e018"))) { toProtobuf().writeDelimitedTo(new ByteArrayOutputStream()); } else { toProtobuf().writeDelimitedTo(baos); }
+    toProtobuf().writeDelimitedTo(baos);
     baos.writeTo(output);
     // Pad to make up the difference between variable PB encoding length and the
     // length when encoded as writable under earlier V2 formats. Failure to pad
@@ -297,18 +245,12 @@ throw new java.io.IOException("Injected exception");
   void deserialize(DataInputStream inputStream) throws IOException {
     HFile.checkFormatVersion(majorVersion);
 
-if(KnobRuntime.check(java.util.UUID.fromString("8218da9c-1e3d-392a-9cf2-bc4ca60f1b20"))) {
-throw new java.io.IOException("Injected exception");
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("c1bd46bd-446c-3301-a11c-0f457451a21d"))) { deserializeFromPB(inputStream); } else { BlockType.TRAILER.readAndCheck(inputStream); }
+    BlockType.TRAILER.readAndCheck(inputStream);
 
     if (
       majorVersion > 2
         || (majorVersion == 2 && minorVersion >= HFileReaderImpl.PBUF_TRAILER_MINOR_VERSION)
     ) {
-if(KnobRuntime.check(java.util.UUID.fromString("c0fcf094-dc7b-3789-8c3d-52b4784f2dc5"))) {
-throw new java.io.IOException("Injected exception");
-}
       deserializeFromPB(inputStream);
     } else {
       deserializeFromWritable(inputStream);
@@ -316,25 +258,7 @@ throw new java.io.IOException("Injected exception");
 
     // The last 4 bytes of the file encode the major and minor version universally
     int version = inputStream.readInt();
-if(KnobRuntime.check(java.util.UUID.fromString("edb4ced9-1d90-3e7c-9a6e-d23baaf7f3ae"))) {
-version *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6ad648f3-8f83-354e-8d78-0465e109eaf8"))) {
-version -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f87eb7ff-6428-3e55-8072-77c878533d52"))) {
-version = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("68158323-28c4-3c72-a3d0-47ef32955a41"))) {
-version = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("13c74fe9-f72d-38bd-87e5-ddabd3b12121"))) {
-version += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("51b85819-ed77-330b-aa14-9d25eafca40e"))) {
-version /= 2;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("39a1ccd2-a23b-34c3-8370-b2869ec994d7"))) { HFile.checkFormatVersion(extractMajorVersion(extractMinorVersion(version))); } else if (KnobRuntime.check(java.util.UUID.fromString("aab0ebc0-814b-3d7f-ae17-c0d1f027c96a"))) { HFile.checkFormatVersion(getTrailerSize(extractMinorVersion(version))); } else if (KnobRuntime.check(java.util.UUID.fromString("ad9861c5-1ecd-3ed1-911e-6d1f5b638756"))) { HFile.checkFormatVersion(getTrailerSize(2)); } else if (KnobRuntime.check(java.util.UUID.fromString("9074f26b-3b1b-3b03-b159-457e21a9298c"))) { HFile.checkFormatVersion(extractMajorVersion(2)); } else if (KnobRuntime.check(java.util.UUID.fromString("d2b09e25-bbd0-332c-b872-ec3dd2dee55f"))) { HFile.checkFormatVersion(getTrailerSize(extractMajorVersion(version))); } else if (KnobRuntime.check(java.util.UUID.fromString("6c4177a3-c016-39be-9a82-7c68ff55e18b"))) { HFile.checkFormatVersion(extractMajorVersion(extractMajorVersion(version))); } else { expectMajorVersion(extractMajorVersion(version)); }
+    expectMajorVersion(extractMajorVersion(version));
     expectMinorVersion(extractMinorVersion(version));
   }
 
@@ -343,9 +267,6 @@ version /= 2;
    */
   void deserializeFromPB(DataInputStream inputStream) throws IOException {
     // read PB and skip padding
-if(KnobRuntime.check(java.util.UUID.fromString("dfc130dd-2ef1-3553-8dbc-6fa71a7b85e7"))) {
-throw new java.io.IOException("Injected exception");
-}
     int start = inputStream.available();
     HFileProtos.FileTrailerProto trailerProto =
       HFileProtos.FileTrailerProto.parser().parseDelimitedFrom(inputStream);
@@ -359,7 +280,7 @@ throw new java.io.IOException("Injected exception");
     if (trailerProto.hasLoadOnOpenDataOffset()) {
       loadOnOpenDataOffset = trailerProto.getLoadOnOpenDataOffset();
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("7992fdd6-93a5-3698-a2e8-7531a426c492"))) ? (trailerProto.hasLoadOnOpenDataOffset()) : (((KnobRuntime.check(java.util.UUID.fromString("1027b073-ba84-3f62-8e31-8c8a0fe8dbc2"))) ? (trailerProto.hasFileInfoOffset()) : (trailerProto.hasUncompressedDataIndexSize()))))) {
+    if (trailerProto.hasUncompressedDataIndexSize()) {
       uncompressedDataIndexSize = trailerProto.getUncompressedDataIndexSize();
     }
     if (trailerProto.hasTotalUncompressedBytes()) {
@@ -368,10 +289,10 @@ throw new java.io.IOException("Injected exception");
     if (trailerProto.hasDataIndexCount()) {
       dataIndexCount = trailerProto.getDataIndexCount();
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("ef6bb9be-a2c5-3380-a008-2f22e6b3292f"))) ? (trailerProto.hasLoadOnOpenDataOffset()) : (((KnobRuntime.check(java.util.UUID.fromString("c4d01e39-1ea7-35e0-89d0-286fb86a9bd6"))) ? (trailerProto.hasFileInfoOffset()) : (((KnobRuntime.check(java.util.UUID.fromString("06d98191-f911-3b97-b401-ee8bf28aa625"))) ? (trailerProto.hasUncompressedDataIndexSize()) : (trailerProto.hasMetaIndexCount()))))))) {
+    if (trailerProto.hasMetaIndexCount()) {
       metaIndexCount = trailerProto.getMetaIndexCount();
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("0614e9dd-1ec2-344b-a14f-47216c88fd04"))) ? (trailerProto.hasLoadOnOpenDataOffset()) : (((KnobRuntime.check(java.util.UUID.fromString("6847b26e-d768-3d11-b19e-ebe98040bbe4"))) ? (trailerProto.hasUncompressedDataIndexSize()) : (((KnobRuntime.check(java.util.UUID.fromString("e029a765-da46-396b-8478-8abbef9becfb"))) ? (trailerProto.hasFileInfoOffset()) : (trailerProto.hasEntryCount()))))))) {
+    if (trailerProto.hasEntryCount()) {
       entryCount = trailerProto.getEntryCount();
     }
     if (trailerProto.hasNumDataIndexLevels()) {
@@ -384,9 +305,6 @@ throw new java.io.IOException("Injected exception");
       lastDataBlockOffset = trailerProto.getLastDataBlockOffset();
     }
     if (trailerProto.hasComparatorClassName()) {
-if(KnobRuntime.check(java.util.UUID.fromString("193c2d2a-ff1b-36b3-bee6-41747687827f"))) {
-throw new java.io.IOException("Injected exception");
-}
       setComparatorClass(getComparatorClass(trailerProto.getComparatorClassName()));
     }
     if (trailerProto.hasCompressionCodec()) {
@@ -394,7 +312,7 @@ throw new java.io.IOException("Injected exception");
     } else {
       compressionCodec = Compression.Algorithm.NONE;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("9ce9f76a-f270-3a61-afa1-0b92d531e18e"))) ? (trailerProto.hasUncompressedDataIndexSize()) : (((KnobRuntime.check(java.util.UUID.fromString("73e038ba-9b2d-3146-90eb-25a7d8d27c11"))) ? (trailerProto.hasLoadOnOpenDataOffset()) : (((KnobRuntime.check(java.util.UUID.fromString("995ad905-5596-399f-9421-d78346dbf517"))) ? (trailerProto.hasFileInfoOffset()) : (trailerProto.hasEncryptionKey()))))))) {
+    if (trailerProto.hasEncryptionKey()) {
       encryptionKey = trailerProto.getEncryptionKey().toByteArray();
     }
   }
@@ -403,36 +321,15 @@ throw new java.io.IOException("Injected exception");
    * Deserialize the file trailer as writable data
    */
   void deserializeFromWritable(DataInput input) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("06aa1b9e-e8ba-3a25-91d3-9cd702ed6098"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a5e118e5-7f2f-32e1-83bd-92ddae5ece1b"))) {
-throw new java.io.IOException("Injected exception");
-}
     fileInfoOffset = input.readLong();
     loadOnOpenDataOffset = input.readLong();
-if(KnobRuntime.check(java.util.UUID.fromString("f332a415-a2be-3160-a673-dbcf592b7e16"))) {
-throw new java.io.IOException("Injected exception");
-}
     dataIndexCount = input.readInt();
-if(KnobRuntime.check(java.util.UUID.fromString("6b842247-a5d9-3053-acd9-875d8d2e5d0c"))) {
-throw new java.io.IOException("Injected exception");
-}
     uncompressedDataIndexSize = input.readLong();
     metaIndexCount = input.readInt();
 
-if(KnobRuntime.check(java.util.UUID.fromString("f3e1f85c-3e29-3f98-ae8b-60ef3ba9ebc2"))) {
-throw new java.io.IOException("Injected exception");
-}
     totalUncompressedBytes = input.readLong();
     entryCount = input.readLong();
-if(KnobRuntime.check(java.util.UUID.fromString("acc5ad2e-151c-3444-ad43-45f34cfea2ac"))) {
-throw new java.io.IOException("Injected exception");
-}
     compressionCodec = Compression.Algorithm.values()[input.readInt()];
-if(KnobRuntime.check(java.util.UUID.fromString("72d04210-00ed-3016-89b0-e7f42a2a4220"))) {
-throw new java.io.IOException("Injected exception");
-}
     numDataIndexLevels = input.readInt();
     firstDataBlockOffset = input.readLong();
     lastDataBlockOffset = input.readLong();
@@ -443,10 +340,7 @@ throw new java.io.IOException("Injected exception");
   }
 
   private void append(StringBuilder sb, String s) {
-if(KnobRuntime.check(java.util.UUID.fromString("62f448f7-ae40-31b1-a7fa-f77a3dc593b9"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("87748496-e5fc-3589-bc9a-8f811aade5e0"))) ? ((getMaxTrailerSize()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7bd0b188-9ee4-3e6a-bb59-5fdfab3e1d0f"))) ? ((getTrailerSize()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("109ebb12-1f24-39eb-9c13-c374fbcca359"))) ? ((sb.length()) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6855563c-f6fe-3196-9383-fd4d5d842657"))) ? ((getTrailerSize()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("1e7413b5-5d40-31cf-a3bc-eae66c2fb13e"))) ? ((getTrailerSize()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3fbc019a-2062-3da2-a7da-f68f64c1bd66"))) ? ((sb.length()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("9d12a6a5-cfa3-355f-8e5e-3f0e504bd213"))) ? ((getMaxTrailerSize()) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("bf5d5678-d9f4-3a21-bb9c-bc307f3b5811"))) ? ((sb.length()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e1d96d67-70a6-3c62-a65e-0635201f68e1"))) ? ((sb.length()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("16d84a8d-c182-3383-91ab-db898246b09a"))) ? ((getTrailerSize()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("338b63e3-115f-3aca-969b-b0678a6e2d33"))) ? ((getMaxTrailerSize()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4064e476-3a4a-386b-9d86-ad6e8b5dfcd6"))) ? ((getMaxTrailerSize()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4d7df0e7-4be0-3c72-b73c-fa72113a84bf"))) ? ((getMaxTrailerSize()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a7e8eb5c-2e58-3995-bed2-b3d623240293"))) ? ((getMaxTrailerSize()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("594e3ea4-5dff-3c37-8f11-10112a0b7775"))) ? ((getTrailerSize()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("2ae19e96-b348-318c-ac2b-9c52fb9f09c7"))) ? ((getTrailerSize()) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("217c852a-68a5-3f69-ba0d-8ef946798b66"))) ? ((sb.length()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("362b9bde-822c-3e87-95cb-0a8d81b8416c"))) ? ((sb.length()) < (0)) : (sb.length() > 0))))))))))))))))))))))))))))))))))))) {
+    if (sb.length() > 0) {
       sb.append(", ");
     }
     sb.append(s);
@@ -541,23 +435,14 @@ return;
   }
 
   public long getFileInfoOffset() {
-if(KnobRuntime.check(java.util.UUID.fromString("984cb93d-8691-3327-a080-cdacae9907bc"))) {
-return 0;
-}
     return fileInfoOffset;
   }
 
   public void setFileInfoOffset(long fileInfoOffset) {
-if(KnobRuntime.check(java.util.UUID.fromString("e194f364-cb91-3142-8ad5-647c7cf83710"))) {
-return;
-}
     this.fileInfoOffset = fileInfoOffset;
   }
 
   public long getLoadOnOpenDataOffset() {
-if(KnobRuntime.check(java.util.UUID.fromString("c47cb491-02e2-3768-8acb-d3d8d35fb9f0"))) {
-return 0;
-}
     return loadOnOpenDataOffset;
   }
 
@@ -582,16 +467,10 @@ return 0;
   }
 
   public long getTotalUncompressedBytes() {
-if(KnobRuntime.check(java.util.UUID.fromString("7229e862-cbe4-399c-b891-ec44a2164f4a"))) {
-return 0;
-}
     return totalUncompressedBytes;
   }
 
   public void setTotalUncompressedBytes(long totalUncompressedBytes) {
-if(KnobRuntime.check(java.util.UUID.fromString("2148ba8a-19b7-3a8c-b838-83b5d0327981"))) {
-return;
-}
     this.totalUncompressedBytes = totalUncompressedBytes;
   }
 
@@ -600,9 +479,6 @@ return;
   }
 
   public void setEntryCount(long newEntryCount) {
-if(KnobRuntime.check(java.util.UUID.fromString("33f4a7e5-e4f5-3f68-808d-9f82abdf1ca1"))) {
-return;
-}
     entryCount = newEntryCount;
   }
 
@@ -611,9 +487,6 @@ return;
   }
 
   public void setCompressionCodec(Compression.Algorithm compressionCodec) {
-if(KnobRuntime.check(java.util.UUID.fromString("54adea97-cf76-3604-b209-89e7a2e83a2d"))) {
-return;
-}
     this.compressionCodec = compressionCodec;
   }
 
@@ -633,18 +506,12 @@ return;
   }
 
   public void setLastDataBlockOffset(long lastDataBlockOffset) {
-if(KnobRuntime.check(java.util.UUID.fromString("597c889f-015e-3f0f-88d2-4ec63ad62582"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("f5abd5da-0ec6-321c-953a-b56d65502b1d"))) { HFile.checkFormatVersion(2); } else { expectAtLeastMajorVersion(2); }
+    expectAtLeastMajorVersion(2);
     this.lastDataBlockOffset = lastDataBlockOffset;
   }
 
   public long getFirstDataBlockOffset() {
-if(KnobRuntime.check(java.util.UUID.fromString("b0e45865-2603-33e8-bd42-e0ea664edebb"))) {
-return 0;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("0e318a7b-4bf6-38a6-9f29-1fb5a95c0a40"))) { HFile.checkFormatVersion(2); } else { expectAtLeastMajorVersion(2); }
+    expectAtLeastMajorVersion(2);
     return firstDataBlockOffset;
   }
 
@@ -668,9 +535,6 @@ return 0;
    * Returns the minor version of this HFile format
    */
   public int getMinorVersion() {
-if(KnobRuntime.check(java.util.UUID.fromString("301c3a02-da4c-31a1-9566-a66e97039ef3"))) {
-return 0;
-}
     return minorVersion;
   }
 
@@ -774,10 +638,10 @@ return 0;
       }
     try {
       Class<? extends CellComparator> comparatorClass = getComparatorClass(comparatorClassName);
-      if (((KnobRuntime.check(java.util.UUID.fromString("3a1d560d-ab52-3500-b560-4ab7b5a83513"))) ? ((comparatorClass) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("95a1866d-b45e-3c0b-b23d-20238e80725d"))) ? ((comparatorClass) != (null)) : (comparatorClass != null))))) {
+      if (comparatorClass != null) {
         return comparatorClass.getDeclaredConstructor().newInstance();
       }
-      if (KnobRuntime.check(java.util.UUID.fromString("2fa147d5-2926-3b70-a8c5-2fc72eede780"))) { LOG.warn(("No Comparator class for ") + (comparatorClassName)); } else if (KnobRuntime.check(java.util.UUID.fromString("052cd15e-a2cd-347b-a4c0-ec648c301915"))) { LOG.warn(". Returning Null."); } else if (KnobRuntime.check(java.util.UUID.fromString("9cd51cbd-3203-3dfc-952f-0f77f6b90aa0"))) { LOG.warn((("No Comparator class for ") + (comparatorClassName)) + (". Returning Null.")); } else if (KnobRuntime.check(java.util.UUID.fromString("d7afbe08-1108-3e7d-9037-a27db2330103"))) { LOG.warn(("No Comparator class for ") + (". Returning Null.")); } else if (KnobRuntime.check(java.util.UUID.fromString("dc4c07dc-65ce-321e-9f89-b002a7796e93"))) { LOG.warn("No Comparator class for " + comparatorClassName); } else if (KnobRuntime.check(java.util.UUID.fromString("d8821f46-9ee6-3751-9143-698bc9e53b7e"))) { LOG.warn(("No Comparator class for " + comparatorClassName) + (". Returning Null.")); } else if (KnobRuntime.check(java.util.UUID.fromString("06203450-49d4-323d-9ba0-9414026345f0"))) { LOG.warn("No Comparator class for "); } else { LOG.warn("No Comparator class for " + comparatorClassName + ". Returning Null."); }
+      LOG.warn("No Comparator class for " + comparatorClassName + ". Returning Null.");
       return null;
     } catch (Exception e) {
       throw new IOException("Comparator class " + comparatorClassName + " is not instantiable", e);
@@ -794,10 +658,7 @@ return 0;
   }
 
   public void setUncompressedDataIndexSize(long uncompressedDataIndexSize) {
-if(KnobRuntime.check(java.util.UUID.fromString("15a293f3-591a-3b00-9072-a05970277bbb"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("f82b59fc-cf53-3128-af52-ef093f9e0c71"))) { HFile.checkFormatVersion(2); } else { expectAtLeastMajorVersion(2); }
+    expectAtLeastMajorVersion(2);
     this.uncompressedDataIndexSize = uncompressedDataIndexSize;
   }
 

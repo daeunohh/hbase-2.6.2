@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.procedure.ReopenTableRegionsProcedure.PROGRESSIVE_BATCH_BACKOFF_MILLIS_DEFAULT;
 import static org.apache.hadoop.hbase.master.procedure.ReopenTableRegionsProcedure.PROGRESSIVE_BATCH_BACKOFF_MILLIS_KEY;
@@ -98,7 +97,7 @@ public class ModifyTableProcedure extends AbstractStateMachineTableProcedure<Mod
     final boolean reopenRegions) throws HBaseIOException {
     super(env, latch);
     this.reopenRegions = reopenRegions;
-    if (KnobRuntime.check(java.util.UUID.fromString("c2c5b5a2-5701-30e5-87be-8063fb44c311"))) { initialize(oldTableDescriptor, !shouldCheckDescriptor); } else { initialize(oldTableDescriptor, shouldCheckDescriptor); }
+    initialize(oldTableDescriptor, shouldCheckDescriptor);
     this.modifiedTableDescriptor = newTableDescriptor;
     preflightChecks(env, null/* No table checks; if changing peers, table can be online */);
   }
@@ -192,57 +191,7 @@ public class ModifyTableProcedure extends AbstractStateMachineTableProcedure<Mod
           setNextState(ModifyTableState.MODIFY_TABLE_PRE_OPERATION);
           break;
         case MODIFY_TABLE_PRE_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("47d1c233-4853-3b67-b397-e7df2ade7642"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8c90b46d-19fe-39a7-b66f-4062bcfe225c"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d1eea1f6-06f4-38c7-8f2a-abfd178e1377"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dfe711e9-785e-354a-8701-e76f2eee15a6"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("59946552-8c72-340b-8ec6-38b1ee8adbd0"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6830af9f-0d8d-3e8b-9d09-0059cc733f88"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("9b160fbb-1381-3763-b550-37381e434fa1"))) { postModify(env, state); } else if (KnobRuntime.check(java.util.UUID.fromString("f9874790-f45f-367b-afd9-8c19507490c9"))) { runCoprocessorAction(env, state); } else { preModify(env, state); }
+          preModify(env, state);
           // We cannot allow changes to region replicas when 'reopenRegions==false',
           // as this mode bypasses the state management required for modifying region replicas.
           if (reopenRegions) {
@@ -253,13 +202,13 @@ try {
           break;
         case MODIFY_TABLE_CLOSE_EXCESS_REPLICAS:
           if (isTableEnabled(env)) {
-            if (KnobRuntime.check(java.util.UUID.fromString("215fcc71-a835-3a74-8a2e-2d4cf5fe18e7"))) { prepareModify(env); } else if (KnobRuntime.check(java.util.UUID.fromString("16a62e0e-8d1b-344f-a986-66bded3f65c1"))) { updateTableDescriptor(env); } else { closeExcessReplicasIfNeeded(env); }
+            closeExcessReplicasIfNeeded(env);
           }
           setNextState(ModifyTableState.MODIFY_TABLE_UPDATE_TABLE_DESCRIPTOR);
           break;
         case MODIFY_TABLE_UPDATE_TABLE_DESCRIPTOR:
           updateTableDescriptor(env);
-          if (((KnobRuntime.check(java.util.UUID.fromString("baffaf9b-258d-3e31-9012-6a8dea7fe338"))) ? (!reopenRegions) : (reopenRegions))) {
+          if (reopenRegions) {
             setNextState(ModifyTableState.MODIFY_TABLE_REMOVE_REPLICA_COLUMN);
           } else {
             setNextState(ModifyTableState.MODIFY_TABLE_POST_OPERATION);
@@ -296,11 +245,11 @@ try {
           assignNewReplicasIfNeeded(env);
           if (TableName.isMetaTableName(getTableName())) {
             MetaLocationSyncer syncer = env.getMasterServices().getMetaLocationSyncer();
-            if (((KnobRuntime.check(java.util.UUID.fromString("43266d69-f0ea-328c-ad89-30c3c03de252"))) ? ((syncer) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e2d33b6d-7ae9-36f3-a027-1a47b1d47ef1"))) ? ((syncer) != (null)) : (syncer != null))))) {
-              if (KnobRuntime.check(java.util.UUID.fromString("c161716f-c8ee-348c-a15b-3f7deafa6b02"))) { syncer.setMetaReplicaCount(modifiedTableDescriptor.getColumnFamilyCount()); } else { syncer.setMetaReplicaCount(modifiedTableDescriptor.getRegionReplication()); }
+            if (syncer != null) {
+              syncer.setMetaReplicaCount(modifiedTableDescriptor.getRegionReplication());
             }
           }
-          if (((KnobRuntime.check(java.util.UUID.fromString("e08acf72-7fea-3bc2-bbc5-55618eec1cc8"))) ? (!deleteColumnFamilyInModify) : (deleteColumnFamilyInModify))) {
+          if (deleteColumnFamilyInModify) {
             setNextState(ModifyTableState.MODIFY_TABLE_DELETE_FS_LAYOUT);
           } else
             if (ErasureCodingUtils.needsSync(unmodifiedTableDescriptor, modifiedTableDescriptor)) {
@@ -318,9 +267,6 @@ try {
             return Flow.NO_MORE_STATE;
           }
         case MODIFY_TABLE_SYNC_ERASURE_CODING_POLICY:
-if(KnobRuntime.check(java.util.UUID.fromString("154c5990-ed21-3cfd-89fb-a28e485c5cf6"))) {
-throw new java.io.IOException("Injected exception");
-}
           ErasureCodingUtils.sync(env.getMasterFileSystem().getFileSystem(),
             env.getMasterFileSystem().getRootDir(), modifiedTableDescriptor);
           return Flow.NO_MORE_STATE;
@@ -328,97 +274,9 @@ throw new java.io.IOException("Injected exception");
           throw new UnsupportedOperationException("unhandled state=" + state);
       }
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("681aa942-a61c-323a-b0f2-e30b3f8b0ce1"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("083e72c3-f552-376f-8b76-6307eb4dc4a2"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5f8ddc90-19f8-376a-a049-36f0cc29ed2b"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b66ed60d-16f2-3a11-9ca8-db0c626e3cda"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (isRollbackSupported(state)) {
         setFailure("master-modify-table", e);
       } else {
-if(KnobRuntime.check(java.util.UUID.fromString("11670fbb-dcd3-3e01-b3b0-538d116a14bc"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6bba5664-c821-382e-8706-b55e47cf065e"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b1c01afb-a60f-3348-b41c-fa15e3dc166c"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("48c646b2-a197-38a1-9d8b-0fd786836047"))) {
-try {
-    java.lang.reflect.Field field = state.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(state));
-    field.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         LOG.warn("Retriable error trying to modify table={} (in state={})", getTableName(), state,
           e);
       }
@@ -506,7 +364,7 @@ try {
       modifyTableMsg.hasShouldCheckDescriptor() ? modifyTableMsg.getShouldCheckDescriptor() : false;
     reopenRegions = modifyTableMsg.hasReopenRegions() ? modifyTableMsg.getReopenRegions() : true;
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("52788271-2767-3352-82d9-47978f461bb0"))) ? (modifyTableMsg.getDeleteColumnFamilyInModify()) : (((KnobRuntime.check(java.util.UUID.fromString("24b50f36-dcaa-3626-b78b-ce4828b79f21"))) ? (modifyTableMsg.getShouldCheckDescriptor()) : (((KnobRuntime.check(java.util.UUID.fromString("c09b21fa-fef7-3d9b-a886-06edc1b6c962"))) ? (modifyTableMsg.hasShouldCheckDescriptor()) : (modifyTableMsg.hasUnmodifiedTableSchema()))))))) {
+    if (modifyTableMsg.hasUnmodifiedTableSchema()) {
       unmodifiedTableDescriptor =
         ProtobufUtil.toTableDescriptor(modifyTableMsg.getUnmodifiedTableSchema());
     }
@@ -514,10 +372,7 @@ try {
 
   @Override
   public TableName getTableName() {
-if(KnobRuntime.check(java.util.UUID.fromString("de0d981b-28ef-3a0a-8e39-4772e257abea"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("82f83dbc-7d40-3df5-8b09-4ca386bd102c"))) ? (getTableName()) : (modifiedTableDescriptor.getTableName()));
+    return modifiedTableDescriptor.getTableName();
   }
 
   @Override
@@ -566,9 +421,6 @@ return null;
       isDeleteColumnFamily(unmodifiedTableDescriptor, modifiedTableDescriptor);
 
     // check for store file tracker configurations
-if(KnobRuntime.check(java.util.UUID.fromString("5b5a0e3c-4d8d-32ba-960c-214235c1dd74"))) {
-throw new java.io.IOException("Injected exception");
-}
     StoreFileTrackerValidationUtils.checkForModifyTable(env.getMasterConfiguration(),
       unmodifiedTableDescriptor, modifiedTableDescriptor, !isTableEnabled(env));
   }
@@ -636,9 +488,6 @@ throw new java.io.IOException("Injected exception");
     if (newReplicaCount >= oldReplicaCount) {
       return;
     }
-if(KnobRuntime.check(java.util.UUID.fromString("75f7b6b3-81d9-347f-88e2-c61b7df792a9"))) {
-throw new java.io.IOException("Injected exception");
-}
     env.getAssignmentManager().getRegionStateStore().removeRegionReplicas(getTableName(),
       oldReplicaCount, newReplicaCount);
     env.getAssignmentManager().getRegionStates().getRegionsOfTable(getTableName()).stream()
@@ -703,9 +552,6 @@ throw new java.io.IOException("Injected exception");
             modifiedTableDescriptor, getUser());
           break;
         case MODIFY_TABLE_POST_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("4b8c0b8a-a403-3f09-9db4-391d365f0165"))) {
-throw new java.io.IOException("Injected exception");
-}
           cpHost.postCompletedModifyTableAction(getTableName(), unmodifiedTableDescriptor,
             modifiedTableDescriptor, getUser());
           break;

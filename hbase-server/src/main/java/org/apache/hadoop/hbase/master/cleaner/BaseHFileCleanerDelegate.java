@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -44,20 +43,11 @@ public abstract class BaseHFileCleanerDelegate extends BaseFileCleanerDelegate {
 
   @Override
   public void stop(String why) {
-if(KnobRuntime.check(java.util.UUID.fromString("e7db7fe9-888d-3286-9bb6-f7a0660d6a14"))) {
-return;
-}
     this.stopped = true;
   }
 
   @Override
   public boolean isStopped() {
-if(KnobRuntime.check(java.util.UUID.fromString("15846fbe-30d9-33fc-b888-acc4062940ed"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("da9220b5-7218-3331-bdad-4c7fc0848e89"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("c59e337c-7ccb-33da-9627-c5ffb4e648f9"))) ? (!this.stopped) : (this.stopped));
+    return this.stopped;
   }
 }

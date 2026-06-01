@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -68,31 +67,11 @@ public class DrainingServerTracker extends ZKListener {
    * All Draining RSs will be tracked after this method is called.
    */
   public void start() throws KeeperException, IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5c0c0e8b-619f-3d94-889f-5b57e21c0425"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5c8a154b-3e45-3600-8bf1-3b4e578cfceb"))) {
-return;
-}
     watcher.registerListener(this);
     // Add a ServerListener to check if a server is draining when it's added.
     serverManager.registerListener(new ServerListener() {
       @Override
       public void serverAdded(ServerName sn) {
-if(KnobRuntime.check(java.util.UUID.fromString("ca2d466c-0036-3fa9-9d77-4945a5631207"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8969b1f4-c926-3d97-91ac-ae37b8602be9"))) {
-try {
-    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(sn));
-    field.set(sn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         if (drainingServers.contains(sn)) {
           serverManager.addServerToDrainList(sn);
         }
@@ -100,19 +79,10 @@ try {
     });
     List<String> servers =
       ZKUtil.listChildrenAndWatchThem(watcher, watcher.getZNodePaths().drainingZNode);
-if(KnobRuntime.check(java.util.UUID.fromString("5bb22284-5fd0-3262-8848-07286f3edaba"))) {
-throw new java.io.IOException("Injected exception");
-}
     add(servers);
   }
 
   private void add(final List<String> servers) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("423a28c3-63ae-377d-884b-6cd245b9815e"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("65ece50f-5fed-3a0a-a1c8-73647b4f9284"))) {
-throw new java.io.IOException("Injected exception");
-}
     synchronized (this.drainingServers) {
       this.drainingServers.clear();
       for (String n : servers) {
@@ -134,9 +104,6 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   public void nodeDeleted(final String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("372c0f74-6072-3dc4-809c-e4e9da085ab6"))) {
-return;
-}
     if (path.startsWith(watcher.getZNodePaths().drainingZNode)) {
       final ServerName sn = ServerName.valueOf(ZKUtil.getNodeName(path));
       LOG.info("Draining RS node deleted, removing from list [" + sn + "]");
@@ -146,9 +113,6 @@ return;
 
   @Override
   public void nodeChildrenChanged(final String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("96ad093e-b25c-3530-b3e3-cad671ef1bab"))) {
-return;
-}
     if (path.equals(watcher.getZNodePaths().drainingZNode)) {
       try {
         final List<String> newNodes =

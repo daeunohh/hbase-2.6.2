@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -47,7 +46,7 @@ public class WorkerAssigner implements ServerListener {
     this.event = event;
     // ServerManager might be null in a test context where we are mocking; allow for this
     ServerManager sm = this.master.getServerManager();
-    if (((KnobRuntime.check(java.util.UUID.fromString("05c8e0f7-5817-3929-9012-afb1245ae3d7"))) ? ((sm) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5e18bc3a-84b1-3815-af7f-19d002b33fa7"))) ? ((sm) != (null)) : (sm != null))))) {
+    if (sm != null) {
       sm.registerListener(this);
     }
   }
@@ -81,20 +80,6 @@ public class WorkerAssigner implements ServerListener {
 
   @Override
   public void serverAdded(ServerName worker) {
-if(KnobRuntime.check(java.util.UUID.fromString("a7ccc919-b9a8-3f58-83a4-a5968bdfab63"))) {
-try {
-    java.lang.reflect.Field field = worker.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(worker));
-    field.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c14cf032-3cd9-3aad-a930-6129a1720431"))) {
-return;
-}
     this.wake(master.getMasterProcedureExecutor().getEnvironment().getProcedureScheduler());
   }
 

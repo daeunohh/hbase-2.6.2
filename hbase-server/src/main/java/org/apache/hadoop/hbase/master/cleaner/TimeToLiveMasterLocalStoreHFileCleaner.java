@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -38,31 +37,11 @@ public class TimeToLiveMasterLocalStoreHFileCleaner extends BaseTimeToLiveFileCl
 
   @Override
   protected long getTtlMs(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("1ff25940-1257-38e5-bd93-00ef5166cf1c"))) {
-return 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("13c0d791-6e73-335b-8bea-376c623166e8"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return conf.getLong(TTL_CONF_KEY, DEFAULT_TTL);
   }
 
   @Override
   protected boolean valiateFilename(Path file) {
-if(KnobRuntime.check(java.util.UUID.fromString("8bbefbe8-0f15-3cf7-a0ec-fb7e673f2d26"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("abc317b7-a678-3b9b-8ed4-a589faf4b2b3"))) {
-return false;
-}
     return file.getName().endsWith(MasterRegionFactory.ARCHIVED_HFILE_SUFFIX);
   }
 

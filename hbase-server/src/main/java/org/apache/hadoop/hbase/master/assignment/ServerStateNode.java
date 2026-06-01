@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import java.util.Set;
@@ -46,33 +45,21 @@ public class ServerStateNode implements Comparable<ServerStateNode> {
   }
 
   public ServerName getServerName() {
-if(KnobRuntime.check(java.util.UUID.fromString("7a217982-bafd-3a98-95c3-b640e17cf0da"))) {
-return null;
-}
     return serverName;
   }
 
   public ServerState getState() {
-if(KnobRuntime.check(java.util.UUID.fromString("efb6acd2-cf6e-32fe-923e-c924a0160ddd"))) {
-return null;
-}
     return state;
   }
 
   public boolean isInState(final ServerState... expected) {
-if(KnobRuntime.check(java.util.UUID.fromString("628771ee-c714-31a6-ba30-61cc52218f03"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ebafe56f-14c9-3b57-8655-9a962ae01a27"))) {
-return false;
-}
     boolean expectedState = false;
-    if (((KnobRuntime.check(java.util.UUID.fromString("8398fd2e-2e87-363c-9f3a-d3f598181934"))) ? ((expected) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2a34e6dd-1081-38e7-9bc2-5c44691a0325"))) ? ((expected) == (null)) : (expected != null))))) {
+    if (expected != null) {
       for (int i = 0; i < expected.length; ++i) {
         expectedState |= (state == expected[i]);
       }
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("2afb174c-5f23-3ca3-a31a-f7a4208263fa"))) ? (!expectedState) : (((KnobRuntime.check(java.util.UUID.fromString("fcdb5296-5649-3747-a340-ef3d85b657d5"))) ? (false) : (expectedState))));
+    return expectedState;
   }
 
   void setState(final ServerState state) {
@@ -80,9 +67,6 @@ return false;
   }
 
   public int getRegionCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("e0f1f81f-b1ad-34a6-be48-6070a8c6cf0a"))) {
-return 0;
-}
     return regions.size();
   }
 
@@ -96,68 +80,15 @@ return 0;
   }
 
   public void addRegion(final RegionStateNode regionNode) {
-if(KnobRuntime.check(java.util.UUID.fromString("d11c039d-7fd4-3f86-8fd9-2e4303a53166"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8c897212-ca1b-3ef5-bcb9-50dbce33e1df"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("783b0805-8692-3380-9031-99c3a392f67b"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     this.regions.add(regionNode);
   }
 
   public void removeRegion(final RegionStateNode regionNode) {
-if(KnobRuntime.check(java.util.UUID.fromString("342ba9a8-8546-3f8c-9dce-415f0d464355"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fe09760e-7571-3a65-a169-67eda93048a5"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("99712fee-7726-3e0c-9aa8-13937942956b"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     this.regions.remove(regionNode);
   }
 
   public Lock readLock() {
-if(KnobRuntime.check(java.util.UUID.fromString("49ebd606-1c05-3cd3-a769-8d36cbc43d68"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("4ba00b59-fb2a-3ca3-b4ae-c64b5ce28ab3"))) ? (lock.writeLock()) : (lock.readLock()));
+    return lock.readLock();
   }
 
   public Lock writeLock() {

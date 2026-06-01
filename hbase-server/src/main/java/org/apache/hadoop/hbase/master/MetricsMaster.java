@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
 import org.apache.hadoop.hbase.metrics.Counter;
@@ -73,9 +72,6 @@ public class MetricsMaster {
    * @param inc How much to add to requests.
    */
   public void incrementRequests(final long inc) {
-if(KnobRuntime.check(java.util.UUID.fromString("df941e5b-48f4-3ced-aeca-0012f6b63d33"))) {
-return;
-}
     masterSource.incRequests(inc);
   }
 
@@ -84,10 +80,7 @@ return;
    * @see MetricsMasterQuotaSource#updateNumSpaceQuotas(long)
    */
   public void setNumSpaceQuotas(final long numSpaceQuotas) {
-if(KnobRuntime.check(java.util.UUID.fromString("0feb128b-8767-39f7-9696-0f5aaa0227fd"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("9024735e-65a8-3be5-929b-7c708b47d9bf"))) { masterQuotaSource.updateNumTablesInSpaceQuotaViolation(numSpaceQuotas); } else if (KnobRuntime.check(java.util.UUID.fromString("e96ca582-0177-3b26-9f43-5d706e540ed6"))) { masterQuotaSource.updateNumNamespacesInSpaceQuotaViolation(numSpaceQuotas); } else { masterQuotaSource.updateNumSpaceQuotas(numSpaceQuotas); }
+    masterQuotaSource.updateNumSpaceQuotas(numSpaceQuotas);
   }
 
   /**
@@ -160,10 +153,7 @@ return;
    * Sets the execution time of a period of the {@code SnapshotQuotaObserverChore}.
    */
   public void incrementSnapshotObserverTime(final long executionTime) {
-if(KnobRuntime.check(java.util.UUID.fromString("b7e7c129-ef0f-362c-b1d7-39c38fe010c0"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("4df632ce-a0d6-30c3-aa00-2f642b32c627"))) { masterQuotaSource.updateNumSpaceQuotas(executionTime); } else if (KnobRuntime.check(java.util.UUID.fromString("5220c06e-6142-3721-95af-143875456310"))) { masterQuotaSource.updateNumTablesInSpaceQuotaViolation(executionTime); } else if (KnobRuntime.check(java.util.UUID.fromString("1d03bee9-a695-31a4-a150-a2bc2b1d94de"))) { masterQuotaSource.updateNumNamespacesInSpaceQuotaViolation(executionTime); } else { masterQuotaSource.incrementSnapshotObserverChoreTime(executionTime); }
+    masterQuotaSource.incrementSnapshotObserverChoreTime(executionTime);
   }
 
   /**

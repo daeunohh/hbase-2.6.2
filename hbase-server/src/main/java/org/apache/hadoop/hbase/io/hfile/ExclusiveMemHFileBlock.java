@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.io.ByteBuffAllocator;
 import org.apache.hadoop.hbase.nio.ByteBuff;
@@ -64,12 +63,6 @@ public class ExclusiveMemHFileBlock extends HFileBlock {
 
   @Override
   public boolean isSharedMem() {
-if(KnobRuntime.check(java.util.UUID.fromString("d4a65474-4920-3b9b-90b6-c30c4d62996a"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c071f0c1-f9da-39dc-8aad-dbaa540c38f9"))) {
-return true;
-}
     return false;
   }
 }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -103,30 +102,18 @@ public interface RegionServerServices extends Server, MutableOnlineRegions, Favo
     }
 
     public HRegion getRegion() {
-if(KnobRuntime.check(java.util.UUID.fromString("cbf98663-5b13-3bbf-9c69-880e052b3c62"))) {
-return null;
-}
       return region;
     }
 
     public long getOpenProcId() {
-if(KnobRuntime.check(java.util.UUID.fromString("415f3fdd-99b7-36d3-8aed-ef075d6badc9"))) {
-return 0;
-}
       return openProcId;
     }
 
     public long getMasterSystemTime() {
-if(KnobRuntime.check(java.util.UUID.fromString("d5774614-604b-3cba-b865-7b64fa48a47c"))) {
-return 0;
-}
       return masterSystemTime;
     }
 
     public long getInitiatingMasterActiveTime() {
-if(KnobRuntime.check(java.util.UUID.fromString("67fedc51-7d62-3b9d-b5f0-26464b258141"))) {
-return 0;
-}
       return initiatingMasterActiveTime;
     }
   }
@@ -166,16 +153,10 @@ return 0;
     }
 
     public TransitionCode getCode() {
-if(KnobRuntime.check(java.util.UUID.fromString("fc49aea6-c578-32f3-81bf-8f5b37d3e55b"))) {
-return null;
-}
       return code;
     }
 
     public long getOpenSeqNum() {
-if(KnobRuntime.check(java.util.UUID.fromString("b799aaf4-c1be-3cbd-8195-d26d3f45b677"))) {
-return 0;
-}
       return openSeqNum;
     }
 
@@ -188,9 +169,6 @@ return 0;
     }
 
     public long[] getProcIds() {
-if(KnobRuntime.check(java.util.UUID.fromString("e2f9b471-a19e-3b94-ad76-94194cc599fb"))) {
-return null;
-}
       return procIds;
     }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas.policies;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,9 +42,6 @@ public final class MissingSnapshotViolationPolicyEnforcement
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "MS_EXPOSE_REP",
       justification = "singleton pattern")
   public static SpaceViolationPolicyEnforcement getInstance() {
-if(KnobRuntime.check(java.util.UUID.fromString("cf7624d8-0253-3279-a861-c5f97b00ce2d"))) {
-return null;
-}
     return SINGLETON;
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,9 +80,6 @@ public class DeadServer {
   }
 
   public synchronized Set<ServerName> copyServerNames() {
-if(KnobRuntime.check(java.util.UUID.fromString("6945fc1d-f104-3234-b263-de5ebc741a81"))) {
-return null;
-}
     Set<ServerName> clone = new HashSet<>(deadServers.size());
     clone.addAll(deadServers.keySet());
     return clone;
@@ -114,21 +110,7 @@ return null;
    * @see #processing(ServerName)
    */
   public synchronized void finish(ServerName sn) {
-if(KnobRuntime.check(java.util.UUID.fromString("5d25399e-811c-3782-9e07-8a4242c4a3cf"))) {
-try {
-    java.lang.reflect.Field field = sn.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(sn));
-    field.set(sn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4a969f8d-10ce-3ca0-bbf7-0a82c193504e"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("dd3fe1f3-1bcd-3f70-b581-01cf855a94c7"))) ? (processingServers.contains(sn)) : (processingServers.remove(sn)))) {
+    if (processingServers.remove(sn)) {
       LOG.debug("Removed {} from processing; numProcessing={}", sn, processingServers.size());
     }
   }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,91 +63,13 @@ public abstract class AbstractMemStore implements MemStore {
 
   public static void addToScanners(List<? extends Segment> segments, long readPt,
     List<KeyValueScanner> scanners) {
-if(KnobRuntime.check(java.util.UUID.fromString("8bb11c13-10a7-3c40-8eaf-c489022c0e54"))) {
-return;
-}
     for (Segment item : segments) {
-if(KnobRuntime.check(java.util.UUID.fromString("27f4f90a-941a-3203-b6d1-d28bc9b41a7d"))) {
-try {
-    java.lang.reflect.Field field = item.getClass().getDeclaredField("tagsPresent");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(item);
-    field.set(item, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("893bc322-e31e-38fe-935d-edb87e0bb7f9"))) {
-try {
-    java.lang.reflect.Field field = item.getClass().getDeclaredField("minSequenceId");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(item));
-    field.set(item, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1b983cfc-a71f-3926-a5fa-6dc98e10029c"))) {
-readPt = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("80144249-c15b-3713-b2a9-ac7f0fb2fbc9"))) {
-try {
-    java.lang.reflect.Field field = item.getClass().getDeclaredField("minSequenceId");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(item));
-    field.set(item, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ed23330e-6d26-3188-b928-6ef37bf92a47"))) {
-readPt = -1;
-}
       addToScanners(item, readPt, scanners);
     }
   }
 
   protected static void addToScanners(Segment segment, long readPt,
     List<KeyValueScanner> scanners) {
-if(KnobRuntime.check(java.util.UUID.fromString("e76a3551-718a-33e2-bfa6-0ceeb7b39284"))) {
-try {
-    java.lang.reflect.Field field = segment.getClass().getDeclaredField("tagsPresent");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(segment);
-    field.set(segment, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4139819c-75c1-3b17-9ed6-575ca90da330"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a680483e-8802-30d4-a24b-ec23942b346c"))) {
-try {
-    java.lang.reflect.Field field = segment.getClass().getDeclaredField("minSequenceId");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(segment));
-    field.set(segment, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9f312985-8eee-3499-a3cb-f96b13f1b7b1"))) {
-try {
-    java.lang.reflect.Field field = segment.getClass().getDeclaredField("minSequenceId");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(segment));
-    field.set(segment, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (!segment.isEmpty()) {
       scanners.add(segment.getScanner(readPt));
     }
@@ -159,22 +80,19 @@ try {
     this.conf = conf;
     this.comparator = c;
     this.regionServices = regionServices;
-    if (KnobRuntime.check(java.util.UUID.fromString("ff29a4b2-8d93-37da-ba9e-f93d578ade0f"))) { setOldestEditTimeToNow(); } else if (KnobRuntime.check(java.util.UUID.fromString("969ecc58-513b-3080-ba69-4cbc7ded90bf"))) { resetTimeOfOldestEdit(); } else { resetActive(); }
-    if (KnobRuntime.check(java.util.UUID.fromString("371e0ecb-08e8-33d9-b1c5-0c503ec4d272"))) { setOldestEditTimeToNow(); } else if (KnobRuntime.check(java.util.UUID.fromString("62b61485-de8e-34e3-ae0b-f8102c303119"))) { resetActive(); } else { resetTimeOfOldestEdit(); }
+    resetActive();
+    resetTimeOfOldestEdit();
     this.snapshot = SegmentFactory.instance().createImmutableSegment(c);
     this.snapshotId = NO_SNAPSHOT_ID;
   }
 
   protected void resetActive() {
-if(KnobRuntime.check(java.util.UUID.fromString("7f37b234-f037-30c4-ab22-e533bbc4a1cb"))) {
-return;
-}
     // Record the MutableSegment' heap overhead when initialing
     MemStoreSizing memstoreAccounting = new NonThreadSafeMemStoreSizing();
     // Reset heap to not include any keys
     active = SegmentFactory.instance().createMutableSegment(conf, comparator, memstoreAccounting);
     // regionServices can be null when testing
-    if (((KnobRuntime.check(java.util.UUID.fromString("84442577-b916-399e-95c3-1454a9ffa538"))) ? ((regionServices) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("816ad64a-7b50-385b-b066-84e8e57d65d8"))) ? ((regionServices) == (null)) : (regionServices != null))))) {
+    if (regionServices != null) {
       regionServices.addMemStoreSize(memstoreAccounting.getDataSize(),
         memstoreAccounting.getHeapSize(), memstoreAccounting.getOffHeapSize(),
         memstoreAccounting.getCellsCount());
@@ -182,9 +100,6 @@ return;
   }
 
   protected void resetTimeOfOldestEdit() {
-if(KnobRuntime.check(java.util.UUID.fromString("91721c1a-e1f0-3535-8c01-890f8ae3176a"))) {
-return;
-}
     this.timeOfOldestEdit = Long.MAX_VALUE;
   }
 
@@ -197,9 +112,6 @@ return;
 
   @Override
   public void add(Iterable<Cell> cells, MemStoreSizing memstoreSizing) {
-if(KnobRuntime.check(java.util.UUID.fromString("aa951e20-d57e-3c4d-9848-cb1a26bad1ca"))) {
-return;
-}
     for (Cell cell : cells) {
       add(cell, memstoreSizing);
     }
@@ -207,9 +119,6 @@ return;
 
   @Override
   public void add(Cell cell, MemStoreSizing memstoreSizing) {
-if(KnobRuntime.check(java.util.UUID.fromString("d079deae-be43-3674-bc0d-531c85a2994a"))) {
-return;
-}
     doAddOrUpsert(cell, 0, memstoreSizing, true);
   }
 
@@ -228,16 +137,13 @@ return;
 
   private void doAddOrUpsert(Cell cell, long readpoint, MemStoreSizing memstoreSizing,
     boolean doAdd) {
-if(KnobRuntime.check(java.util.UUID.fromString("a60b2911-7a02-3ca5-a314-d748e24b1589"))) {
-return;
-}
     MutableSegment currentActive;
     boolean succ = false;
     while (!succ) {
       currentActive = getActive();
       succ = preUpdate(currentActive, cell, memstoreSizing);
-      if (((KnobRuntime.check(java.util.UUID.fromString("433dc233-9e30-3a47-8309-c9fcbc05bc3b"))) ? (!succ) : (((KnobRuntime.check(java.util.UUID.fromString("b01c1b7a-d479-3fc0-8f0d-e79776c2c793"))) ? (false) : (succ))))) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("4c8f8c46-2d55-3a43-95a4-c674f914c30a"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("26871d7b-16c6-3452-a0e1-f49988e9cd24"))) ? (!doAdd) : (doAdd))))) {
+      if (succ) {
+        if (doAdd) {
           doAdd(currentActive, cell, memstoreSizing);
         } else {
           doUpsert(currentActive, cell, readpoint, memstoreSizing);
@@ -248,9 +154,6 @@ return;
   }
 
   protected void doAdd(MutableSegment currentActive, Cell cell, MemStoreSizing memstoreSizing) {
-if(KnobRuntime.check(java.util.UUID.fromString("90af09f9-fb59-310e-a1d5-3ef8acfdf661"))) {
-return;
-}
     Cell toAdd = maybeCloneWithAllocator(currentActive, cell, false);
     boolean mslabUsed = (toAdd != cell);
     // This cell data is backed by the same byte[] where we read request in RPC(See
@@ -265,16 +168,7 @@ return;
     if (!mslabUsed) {
       toAdd = deepCopyIfNeeded(toAdd);
     }
-if(KnobRuntime.check(java.util.UUID.fromString("336138a9-927c-3949-9bda-94ab749b543c"))) {
-mslabUsed = true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("68ecf14f-9caf-3bb1-94fd-6cb0032909b2"))) {
-mslabUsed = false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("46d9fa8b-7d56-3be4-85a7-55d5b65024aa"))) {
-mslabUsed = !mslabUsed;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("7ec10369-3e5d-3a32-a2a6-a24246134f8c"))) { internalAdd(currentActive, toAdd, !mslabUsed, memstoreSizing); } else if (KnobRuntime.check(java.util.UUID.fromString("b8bb00c1-5ca8-33b4-b4a1-5aee70e41d58"))) { internalAdd(currentActive, deepCopyIfNeeded(toAdd), mslabUsed, memstoreSizing); } else if (KnobRuntime.check(java.util.UUID.fromString("6210c5e5-77b5-3807-92c0-bec5b7a762ba"))) { internalAdd(currentActive, toAdd, false, memstoreSizing); } else { internalAdd(currentActive, toAdd, mslabUsed, memstoreSizing); }
+    internalAdd(currentActive, toAdd, mslabUsed, memstoreSizing);
   }
 
   private void doUpsert(MutableSegment currentActive, Cell cell, long readpoint,
@@ -484,9 +378,6 @@ mslabUsed = !mslabUsed;
 
   @Override
   public void close() {
-if(KnobRuntime.check(java.util.UUID.fromString("a94830bf-b960-328b-91ae-5f1c2ef8ae9c"))) {
-return;
-}
     // active should never be null
     active.close();
     // for snapshot, either it is empty, where we do not reference any real segment which contains a

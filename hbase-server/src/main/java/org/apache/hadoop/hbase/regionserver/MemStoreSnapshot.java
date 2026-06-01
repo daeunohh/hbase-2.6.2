@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -53,31 +52,19 @@ public class MemStoreSnapshot {
 
   /** Returns snapshot's identifier. */
   public long getId() {
-if(KnobRuntime.check(java.util.UUID.fromString("b2057b10-7e21-38a0-a11b-22176a277b47"))) {
-return 0;
-}
     return id;
   }
 
   /** Returns Number of Cells in this snapshot. */
   public int getCellsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("f76bc9c5-3238-3609-9bfb-1e67f4e5415e"))) {
-return 0;
-}
     return cellsCount;
   }
 
   public long getDataSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("6c928b77-51cf-3442-abc4-3470fc809b67"))) {
-return 0;
-}
     return memStoreSize.getDataSize();
   }
 
   public MemStoreSize getMemStoreSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("24c1ff4c-b385-31f7-a5d7-308e1658df2b"))) {
-return null;
-}
     return memStoreSize;
   }
 
@@ -96,20 +83,11 @@ return null;
    *         over the snapshot.
    */
   public List<KeyValueScanner> getScanners() {
-if(KnobRuntime.check(java.util.UUID.fromString("86cebbbc-c942-33ea-ae35-d4a08b64c341"))) {
-return null;
-}
     return snapshotImmutableSegment.getSnapshotScanners();
   }
 
   /** Returns true if tags are present in this snapshot */
   public boolean isTagsPresent() {
-if(KnobRuntime.check(java.util.UUID.fromString("d91a8935-721e-3aaf-959f-4d06b87f7556"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0aacecda-5fb7-3e67-a30f-1e250e1e7d0f"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("23a11f7a-a6a8-32c5-8114-b22d1d17f5ac"))) ? (!this.tagsPresent) : (this.tagsPresent));
+    return this.tagsPresent;
   }
 }

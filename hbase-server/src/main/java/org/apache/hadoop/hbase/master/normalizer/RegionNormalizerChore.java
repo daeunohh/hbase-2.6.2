@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.ScheduledChore;
@@ -38,7 +37,7 @@ class RegionNormalizerChore extends ScheduledChore {
   private final MasterServices master;
 
   public RegionNormalizerChore(MasterServices master) {
-    super(((KnobRuntime.check(java.util.UUID.fromString("64a7f66d-1454-30c4-a5e6-c62befdba036"))) ? ((master.getServerName()) + ("-RegionNormalizerChore")) : (((KnobRuntime.check(java.util.UUID.fromString("48ae8625-9d84-3a98-b281-e3c23b2e0398"))) ? ("-RegionNormalizerChore") : (master.getServerName() + "-RegionNormalizerChore")))), master,
+    super(master.getServerName() + "-RegionNormalizerChore", master,
       master.getConfiguration().getInt("hbase.normalizer.period", 300_000));
     this.master = master;
   }

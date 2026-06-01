@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -98,17 +97,6 @@ public class WALCellCodec implements Codec {
   public static WALCellCodec create(Configuration conf, String cellCodecClsName,
     CompressionContext compression) throws UnsupportedOperationException {
     if (cellCodecClsName == null) {
-if(KnobRuntime.check(java.util.UUID.fromString("12d67e56-ddf0-3260-b408-d60391fb123d"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cellCodecClsName = getWALCellCodecClass(conf).getName();
     }
     return ReflectionUtils.instantiateWithCustomCtor(cellCodecClsName,
@@ -428,7 +416,7 @@ try {
   @Override
   public Encoder getEncoder(OutputStream os) {
     os = (os instanceof ByteBufferWriter) ? os : new ByteBufferWriterOutputStream(os);
-    if (((KnobRuntime.check(java.util.UUID.fromString("47a90ad4-97fb-3d66-97e0-56508201193d"))) ? ((compression) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("20b3c547-f43b-3104-88c7-4c595b51275f"))) ? ((compression) != (null)) : (compression == null))))) {
+    if (compression == null) {
       return new EnsureKvEncoder(os);
     }
     return new CompressedKvEncoder(os, compression);

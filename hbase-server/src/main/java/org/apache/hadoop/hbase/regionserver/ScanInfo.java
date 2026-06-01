@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.hadoop.conf.Configuration;
@@ -68,20 +67,6 @@ public class ScanInfo {
   }
 
   private static long getCellsPerTimeoutCheck(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("b6502e35-5384-3c94-a8b0-260eaa41939f"))) {
-return 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3ffd3f66-2eb0-3f21-868e-fdd35bf6ef75"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     long perHeartbeat = conf.getLong(StoreScanner.HBASE_CELLS_SCANNED_PER_HEARTBEAT_CHECK,
       StoreScanner.DEFAULT_HBASE_CELLS_SCANNED_PER_HEARTBEAT_CHECK);
     return perHeartbeat > 0
@@ -107,7 +92,7 @@ try {
       conf.getLong(HConstants.TABLE_MAX_ROWSIZE_KEY, HConstants.TABLE_MAX_ROWSIZE_DEFAULT),
       conf.getBoolean("hbase.storescanner.use.pread", false), getCellsPerTimeoutCheck(conf),
       conf.getBoolean(StoreScanner.STORESCANNER_PARALLEL_SEEK_ENABLE, false),
-      ((KnobRuntime.check(java.util.UUID.fromString("26e9d60e-c35a-304f-a0f1-27a255e07afe"))) ? (conf.getLong(StoreScanner.STORESCANNER_PREAD_MAX_BYTES, (4) * (4 * blockSize))) : (((KnobRuntime.check(java.util.UUID.fromString("c6eb04e8-17f7-3ee1-b0d5-e785492de0f1"))) ? (conf.getLong(StoreScanner.STORESCANNER_PREAD_MAX_BYTES, blockSize)) : (((KnobRuntime.check(java.util.UUID.fromString("3cd5201b-2d98-3a8a-ba83-d8201a0c73c0"))) ? (conf.getLong(StoreScanner.STORESCANNER_PREAD_MAX_BYTES, (4) * (blockSize))) : (conf.getLong(StoreScanner.STORESCANNER_PREAD_MAX_BYTES, 4 * blockSize))))))), newVersionBehavior);
+      conf.getLong(StoreScanner.STORESCANNER_PREAD_MAX_BYTES, 4 * blockSize), newVersionBehavior);
   }
 
   private ScanInfo(byte[] family, int minVersions, int maxVersions, long ttl,
@@ -130,71 +115,38 @@ try {
   }
 
   long getTableMaxRowSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("31e3b017-c925-36a1-87dc-0edcfb89c9c2"))) {
-return 0;
-}
     return this.tableMaxRowSize;
   }
 
   boolean isUsePread() {
-if(KnobRuntime.check(java.util.UUID.fromString("8d295a16-63f6-326d-b155-530c0a1bbc6c"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9755d40e-f0ca-3a79-9a63-0c1369a0700d"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("640f3354-4962-31d0-b311-a416a2e29480"))) ? (!this.usePread) : (this.usePread));
+    return this.usePread;
   }
 
   long getCellsPerTimeoutCheck() {
-if(KnobRuntime.check(java.util.UUID.fromString("c27364f2-ad02-3241-833b-74b748382f3d"))) {
-return 0;
-}
     return this.cellsPerTimeoutCheck;
   }
 
   boolean isParallelSeekEnabled() {
-if(KnobRuntime.check(java.util.UUID.fromString("5d099650-fad8-3d8a-88af-3729b9491c6d"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("331d11b0-0533-33f3-b816-d23d5215a679"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("0abaf900-57c6-307a-bff6-9cfd75aa78a7"))) ? (!this.parallelSeekEnabled) : (this.parallelSeekEnabled));
+    return this.parallelSeekEnabled;
   }
 
   public byte[] getFamily() {
-if(KnobRuntime.check(java.util.UUID.fromString("1ade16fb-85e3-300c-bada-bd22a4f438ca"))) {
-return null;
-}
     return family;
   }
 
   public int getMinVersions() {
-if(KnobRuntime.check(java.util.UUID.fromString("831b49b9-916f-3982-985e-b7c45da280e0"))) {
-return 0;
-}
     return minVersions;
   }
 
   public int getMaxVersions() {
-if(KnobRuntime.check(java.util.UUID.fromString("466143ae-c416-3e46-9516-f8cefc342213"))) {
-return 0;
-}
     return maxVersions;
   }
 
   public long getTtl() {
-if(KnobRuntime.check(java.util.UUID.fromString("09bc91fa-9376-34f7-92ea-c9e1b53944b5"))) {
-return 0;
-}
     return ttl;
   }
 
   public KeepDeletedCells getKeepDeletedCells() {
-if(KnobRuntime.check(java.util.UUID.fromString("e586af87-850d-3f66-b92f-de4cb0a33314"))) {
-return null;
-}
     return keepDeletedCells;
   }
 
@@ -203,27 +155,15 @@ return null;
   }
 
   public CellComparator getComparator() {
-if(KnobRuntime.check(java.util.UUID.fromString("bd66afb6-fa0f-3d44-bf5a-0e041cffa909"))) {
-return null;
-}
     return comparator;
   }
 
   long getPreadMaxBytes() {
-if(KnobRuntime.check(java.util.UUID.fromString("f4540432-0901-341f-9e2c-9ef71490b495"))) {
-return 0;
-}
     return preadMaxBytes;
   }
 
   public boolean isNewVersionBehavior() {
-if(KnobRuntime.check(java.util.UUID.fromString("180b189a-6cae-3859-aae0-bc6cc3096dc1"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("aadbe108-26e6-3bdd-abbc-b53cc9e9f27c"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("2840007d-ed2b-348e-ba0d-c21260f90465"))) ? (!newVersionBehavior) : (newVersionBehavior));
+    return newVersionBehavior;
   }
 
   /**

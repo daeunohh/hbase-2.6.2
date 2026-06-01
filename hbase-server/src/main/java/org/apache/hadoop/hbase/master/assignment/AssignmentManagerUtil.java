@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.DEFAULT_HBASE_ENABLE_SEPARATE_CHILD_REGIONS;
 
@@ -70,23 +69,6 @@ final class AssignmentManagerUtil {
   static GetRegionInfoResponse getRegionInfoResponse(final MasterProcedureEnv env,
     final ServerName regionLocation, final RegionInfo hri, boolean includeBestSplitRow)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("68b7ac4d-8c89-30a5-9180-37f7000cdf93"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b93dcb11-72bc-34ce-ab49-41322ce0c11a"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ae42a1bf-b9ce-36e9-84da-3cab30b6e23e"))) {
-try {
-    java.lang.reflect.Field field = regionLocation.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionLocation));
-    field.set(regionLocation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // TODO: There is no timeout on this controller. Set one!
     HBaseRpcController controller =
       env.getMasterServices().getClusterConnection().getRpcControllerFactory().newController();
@@ -110,9 +92,6 @@ try {
   }
 
   private static void unlock(List<RegionStateNode> regionNodes) {
-if(KnobRuntime.check(java.util.UUID.fromString("cc483c1f-f587-3506-bd43-6befbc519177"))) {
-return;
-}
     for (ListIterator<RegionStateNode> iter = regionNodes.listIterator(regionNodes.size()); iter
       .hasPrevious();) {
       iter.previous().unlock();
@@ -121,12 +100,6 @@ return;
 
   static TransitRegionStateProcedure[] createUnassignProceduresForSplitOrMerge(
     MasterProcedureEnv env, Stream<RegionInfo> regions, int regionReplication) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("29e1817f-10d4-3cc5-8123-e119ee26d59f"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e9532900-7e24-3a0d-9d48-fea87c07ffa1"))) {
-return null;
-}
     List<RegionStateNode> regionNodes = regions
       .flatMap(hri -> IntStream.range(0, regionReplication)
         .mapToObj(i -> RegionReplicaUtil.getRegionInfoForReplica(hri, i)))
@@ -137,13 +110,13 @@ return null;
     int i = 0;
     // hold the lock at once, and then release it in finally. This is important as SCP may jump in
     // if we release the lock in the middle when we want to do rollback, and cause problems.
-    if (KnobRuntime.check(java.util.UUID.fromString("8001a787-fe5c-3809-8301-c1cbd84ff308"))) { unlock(regionNodes); } else { lock(regionNodes); }
+    lock(regionNodes);
     try {
       for (; i < procs.length; i++) {
         RegionStateNode regionNode = regionNodes.get(i);
         TransitRegionStateProcedure proc =
           TransitRegionStateProcedure.unassignSplitMerge(env, regionNode.getRegionInfo());
-        if (((KnobRuntime.check(java.util.UUID.fromString("4906429e-0e81-3ee6-bf9c-b2cbe22be895"))) ? ((regionNode.getProcedure()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("fc2c3672-f6d0-3060-b289-e9f469029448"))) ? ((regionNode.getProcedure()) == (null)) : (regionNode.getProcedure() != null))))) {
+        if (regionNode.getProcedure() != null) {
           throw new HBaseIOException(
             "The parent region " + regionNode + " is currently in transition, give up");
         }
@@ -153,7 +126,7 @@ return null;
       // all succeeded, set rollback to false
       rollback = false;
     } finally {
-      if (((KnobRuntime.check(java.util.UUID.fromString("3482570c-75b3-3759-8259-e8f6bba93a26"))) ? (true) : (((KnobRuntime.check(java.util.UUID.fromString("6b63c5dc-d8e1-3149-b84f-3449f1433791"))) ? (!rollback) : (((KnobRuntime.check(java.util.UUID.fromString("557b1eef-fe86-3b55-a39c-dcff243e3c39"))) ? (false) : (rollback))))))) {
+      if (rollback) {
         for (;;) {
           i--;
           if (i < 0) {
@@ -308,20 +281,6 @@ return null;
 
   static void reopenRegionsForRollback(MasterProcedureEnv env, List<RegionInfo> regions,
     int regionReplication, ServerName targetServer) {
-if(KnobRuntime.check(java.util.UUID.fromString("a0881708-3aa8-36ad-a3bf-c72f04940b2b"))) {
-try {
-    java.lang.reflect.Field field = targetServer.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(targetServer));
-    field.set(targetServer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("98208849-9c7d-3da6-9b67-2b14018bfe45"))) {
-return;
-}
     TransitRegionStateProcedure[] procs =
       createAssignProcedures(env, regions, regionReplication, targetServer, true);
     if (procs.length > 0) {
@@ -331,9 +290,6 @@ return;
 
   static void removeNonDefaultReplicas(MasterProcedureEnv env, Stream<RegionInfo> regions,
     int regionReplication) {
-if(KnobRuntime.check(java.util.UUID.fromString("3197b29d-2a1f-3e0b-ab8d-cef2e94af1c8"))) {
-return;
-}
     // Remove from in-memory states
     regions.flatMap(hri -> IntStream.range(1, regionReplication)
       .mapToObj(i -> RegionReplicaUtil.getRegionInfoForReplica(hri, i))).forEach(hri -> {

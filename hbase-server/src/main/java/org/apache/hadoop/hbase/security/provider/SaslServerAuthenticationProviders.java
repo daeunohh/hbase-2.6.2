@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.provider;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -50,9 +49,6 @@ public final class SaslServerAuthenticationProviders {
    * Returns the number of registered providers.
    */
   public int getNumRegisteredProviders() {
-if(KnobRuntime.check(java.util.UUID.fromString("a1263003-9a41-3735-b9f4-2c280a9b09b8"))) {
-return 0;
-}
     return providers.size();
   }
 
@@ -61,7 +57,7 @@ return 0;
    */
   public static SaslServerAuthenticationProviders getInstance(Configuration conf) {
     SaslServerAuthenticationProviders providers = holder.get();
-    if (((KnobRuntime.check(java.util.UUID.fromString("ddd13362-66de-3165-9cdf-f30be5eae89e"))) ? ((null) == (providers)) : (((KnobRuntime.check(java.util.UUID.fromString("1ebfaecb-7db0-3331-bef8-45f75f676b14"))) ? ((null) != (providers)) : (null == providers))))) {
+    if (null == providers) {
       synchronized (holder) {
         // Someone else beat us here
         providers = holder.get();
@@ -80,9 +76,6 @@ return 0;
    * Removes the cached singleton instance of {@link SaslServerAuthenticationProviders}.
    */
   public static void reset() {
-if(KnobRuntime.check(java.util.UUID.fromString("47e88e73-5ca0-3fd6-9dfd-ffc452241474"))) {
-return;
-}
     synchronized (holder) {
       holder.set(null);
     }

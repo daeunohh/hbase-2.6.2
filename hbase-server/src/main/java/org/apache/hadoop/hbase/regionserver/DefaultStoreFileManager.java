@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.StoreFileWriter.shouldEnableHistoricalCompactionFiles;
 
@@ -109,12 +108,6 @@ class DefaultStoreFileManager implements StoreFileManager {
 
   @Override
   public void loadFiles(List<HStoreFile> storeFiles) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("994ddc77-fda9-3ab5-9a29-d5c37efab593"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ede62c6f-dd2f-3e0f-9c5f-74db48758452"))) {
-throw new java.io.IOException("Injected exception");
-}
     this.storeFiles = new StoreFileList(ImmutableList.sortedCopyOf(storeFileComparator, storeFiles),
       enableLiveFileTracking
         ? ImmutableList.sortedCopyOf(storeFileComparator, getLiveFiles(storeFiles))
@@ -123,28 +116,16 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   public final Collection<HStoreFile> getStoreFiles() {
-if(KnobRuntime.check(java.util.UUID.fromString("ac6c01de-a24a-36a2-9529-e9e25d119250"))) {
-return null;
-}
     return storeFiles.all;
   }
 
   @Override
   public Collection<HStoreFile> getCompactedfiles() {
-if(KnobRuntime.check(java.util.UUID.fromString("622bc245-837d-3856-9272-8c5fba346638"))) {
-return null;
-}
     return compactedfiles;
   }
 
   @Override
   public void insertNewFiles(Collection<HStoreFile> sfs) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("775cf8fc-2de1-30e8-8391-08bcafacc391"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8d08a25a-0610-3c5e-b9c7-6e806cdb4c89"))) {
-throw new java.io.IOException("Injected exception");
-}
     storeFiles = new StoreFileList(
       ImmutableList.sortedCopyOf(storeFileComparator, Iterables.concat(storeFiles.all, sfs)),
       enableLiveFileTracking
@@ -155,9 +136,6 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   public ImmutableCollection<HStoreFile> clearFiles() {
-if(KnobRuntime.check(java.util.UUID.fromString("40e4d93d-ae49-3d3f-95bd-78f00111e0d1"))) {
-return null;
-}
     ImmutableList<HStoreFile> result = storeFiles.all;
     storeFiles =
       new StoreFileList(ImmutableList.of(), enableLiveFileTracking ? ImmutableList.of() : null);
@@ -166,9 +144,6 @@ return null;
 
   @Override
   public Collection<HStoreFile> clearCompactedFiles() {
-if(KnobRuntime.check(java.util.UUID.fromString("b746ad96-8e93-392b-8ea4-3a8deb8285e4"))) {
-return null;
-}
     List<HStoreFile> result = compactedfiles;
     compactedfiles = ImmutableList.of();
     return result;
@@ -176,10 +151,7 @@ return null;
 
   @Override
   public final int getStorefileCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("55f6b1d3-92bb-3335-8b60-7603e0e6405c"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("6cd76a52-75b2-3ce8-a385-9e66fe55ac99"))) ? (getStorefileCount()) : (storeFiles.all.size()));
+    return storeFiles.all.size();
   }
 
   @Override
@@ -241,10 +213,7 @@ return 0;
   @Override
   public Collection<HStoreFile> getFilesForScan(byte[] startRow, boolean includeStartRow,
     byte[] stopRow, boolean includeStopRow, boolean onlyLatestVersion) {
-if(KnobRuntime.check(java.util.UUID.fromString("1acbc6e2-ff39-3539-a0e7-09c5dd7319a2"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("9d7f3236-804c-36f4-8764-091085ecae70"))) ? ((onlyLatestVersion) && (enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("337aa275-2885-3b95-a979-1d3d7784c5f3"))) ? (onlyLatestVersion) : (((KnobRuntime.check(java.util.UUID.fromString("7b1c4dca-c692-3fbe-9b1d-9ee993aa9103"))) ? ((!onlyLatestVersion) && (enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("98ed62bd-3ee1-3901-820f-248521d7997e"))) ? (enableLiveFileTracking) : (((KnobRuntime.check(java.util.UUID.fromString("63aee74e-87f3-3223-93ea-9701fb7010d1"))) ? (!onlyLatestVersion) : (((KnobRuntime.check(java.util.UUID.fromString("e7e31ccf-e836-3fe6-a5c9-85689f5e05ff"))) ? ((onlyLatestVersion) || (enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("92b3c600-69c1-3e42-8e6f-4a6220d7a0c7"))) ? ((!onlyLatestVersion) || (!enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("820d2267-1577-34c9-af48-83a3633ced42"))) ? (!enableLiveFileTracking) : (((KnobRuntime.check(java.util.UUID.fromString("a63e7ee1-6fe6-306a-8c33-8671ef758e95"))) ? ((onlyLatestVersion) || (!enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("c289d466-be93-377b-bb29-5bb4502232c6"))) ? ((!onlyLatestVersion) || (enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("2244c525-2082-3e31-8e17-333f98ec8d8e"))) ? ((!onlyLatestVersion) && (!enableLiveFileTracking)) : (((KnobRuntime.check(java.util.UUID.fromString("df43c0e4-afdf-3f69-b81a-c01215b91b78"))) ? ((onlyLatestVersion) && (!enableLiveFileTracking)) : (onlyLatestVersion && enableLiveFileTracking))))))))))))))))))))))))) {
+    if (onlyLatestVersion && enableLiveFileTracking) {
       return storeFiles.live;
     }
     // We cannot provide any useful input and already have the files sorted by seqNum.

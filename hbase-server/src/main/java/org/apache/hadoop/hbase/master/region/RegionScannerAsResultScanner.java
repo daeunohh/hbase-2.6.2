@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,19 +54,10 @@ class RegionScannerAsResultScanner implements ResultScanner {
 
   @Override
   public Result next() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5e22ae1c-92a3-307e-bb93-7d157c2ba248"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("22dd8f83-24c0-361a-b035-7f460f417451"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (!moreRows) {
       return null;
     }
     for (;;) {
-if(KnobRuntime.check(java.util.UUID.fromString("1afaa0d8-c681-393f-bc29-18dac5821f26"))) {
-throw new java.io.IOException("Injected exception");
-}
       moreRows = scanner.next(cells);
       if (cells.isEmpty()) {
         if (!moreRows) {
@@ -90,9 +80,6 @@ throw new java.io.IOException("Injected exception");
   @Override
   public void close() {
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("ace42136-dd79-3000-a3af-297b1d16b66f"))) {
-throw new java.io.IOException("Injected exception");
-}
       scanner.close();
     } catch (IOException e) {
       LOG.warn("Failed to close scanner", e);

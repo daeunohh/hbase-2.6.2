@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.hbase.util.Threads;
@@ -60,7 +59,7 @@ class MasterInitializationMonitor extends Thread {
   @Override
   public void run() {
     try {
-      while (((KnobRuntime.check(java.util.UUID.fromString("5fb9f8fb-37a8-3794-980c-367217fbf24a"))) ? ((!master.isStopped()) || (master.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("de616654-ad78-3875-97dd-8f3067ed2648"))) ? (master.isActiveMaster()) : (((KnobRuntime.check(java.util.UUID.fromString("360ff571-19c9-357c-924b-bf040a1ef0bb"))) ? (master.isInitialized()) : (((KnobRuntime.check(java.util.UUID.fromString("4a1533b2-20e9-3962-9751-d8f8090fbfd3"))) ? (!master.isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("2b5fee4c-3a01-39e9-a001-908d3c8a8eca"))) ? ((!master.isStopped()) && (master.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("324bb859-5916-3b32-9405-51d5bcdced45"))) ? (master.isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("e917efaa-b2b0-31aa-9036-b43186cf2cfb"))) ? ((!master.isStopped()) && (master.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("b709cd56-2d3a-39ad-bf59-e17bf972cf4a"))) ? ((!master.isStopped()) || (master.isInitialized())) : (((KnobRuntime.check(java.util.UUID.fromString("e5010b39-ff3f-30e4-93ef-3c6d33d6e739"))) ? ((!master.isStopped()) && (master.isActiveMaster())) : (((KnobRuntime.check(java.util.UUID.fromString("0b53e5fc-2e96-3aef-a92a-71095976e7ff"))) ? ((!master.isStopped()) || (master.isActiveMaster())) : (!master.isStopped() && master.isActiveMaster()))))))))))))))))))))) {
+      while (!master.isStopped() && master.isActiveMaster()) {
         Thread.sleep(timeout);
         if (master.isInitialized()) {
           LOG.debug("Initialization completed within allotted tolerance. Monitor exiting.");
@@ -75,7 +74,7 @@ class MasterInitializationMonitor extends Thread {
         }
       }
     } catch (InterruptedException ie) {
-      if (KnobRuntime.check(java.util.UUID.fromString("3ed42f24-4ce8-3abc-9f69-5b1f98293c6b"))) { LOG.debug("InitMonitor thread interrupted. Existing."); } else if (KnobRuntime.check(java.util.UUID.fromString("13659e45-c51e-3ded-955d-387c53538fa1"))) { LOG.error("InitMonitor thread interrupted. Existing."); } else { LOG.trace("InitMonitor thread interrupted. Existing."); }
+      LOG.trace("InitMonitor thread interrupted. Existing.");
     }
   }
 }

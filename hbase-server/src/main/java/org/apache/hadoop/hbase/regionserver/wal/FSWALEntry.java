@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -78,7 +77,7 @@ class FSWALEntry extends Entry {
     this.closeRegion = !inMemstore && edit.isRegionCloseMarker();
     this.regionInfo = regionInfo;
     this.txid = txid;
-    if (((KnobRuntime.check(java.util.UUID.fromString("d7e48d9f-ced2-3339-9318-40f9dd6c291a"))) ? (!inMemstore) : (inMemstore))) {
+    if (inMemstore) {
       // construct familyNames here to reduce the work of log sinker.
       Set<byte[]> families = edit.getFamilies();
       this.familyNames = families != null ? families : collectFamilies(edit.getCells());
@@ -86,15 +85,12 @@ class FSWALEntry extends Entry {
       this.familyNames = Collections.emptySet();
     }
     this.rpcCall = rpcCall;
-    if (((KnobRuntime.check(java.util.UUID.fromString("1245b50e-5d59-353b-9a89-e83c7eff3e81"))) ? ((rpcCall) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("be69b825-b48b-3bbc-9aa7-ab147fa046a5"))) ? ((rpcCall) == (null)) : (rpcCall != null))))) {
+    if (rpcCall != null) {
       rpcCall.retainByWAL();
     }
   }
 
   static Set<byte[]> collectFamilies(List<Cell> cells) {
-if(KnobRuntime.check(java.util.UUID.fromString("782dfb26-11e9-3b1a-af2e-599089e47263"))) {
-return null;
-}
     if (CollectionUtils.isEmpty(cells)) {
       return Collections.emptySet();
     } else {
@@ -139,47 +135,10 @@ return null;
     long regionSequenceId = we.getWriteNumber();
     if (!this.getEdit().isReplay() && inMemstore) {
       for (Cell c : getEdit().getCells()) {
-if(KnobRuntime.check(java.util.UUID.fromString("1d1fb741-8923-3b70-a8ce-d1b3074cacf0"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ed3f2cad-3282-359d-be69-72744e350616"))) {
-regionSequenceId = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1eb60a7b-0379-3b56-9aa6-4786a19ffd93"))) {
-regionSequenceId = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("36b6541c-53e4-39c2-b4e1-6cac6f3b493b"))) {
-regionSequenceId += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a9481770-682d-3402-8f30-b1d218dde8ec"))) {
-regionSequenceId -= 1;
-}
         PrivateCellUtil.setSequenceId(c, regionSequenceId);
       }
     }
 
-if(KnobRuntime.check(java.util.UUID.fromString("2105e83b-43da-3f33-8892-ee5d387f9b20"))) {
-try {
-    java.lang.reflect.Field field = we.getClass().getDeclaredField("writeNumber");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(we));
-    field.set(we, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("64b24310-fccc-3794-a664-9df03d107c41"))) {
-try {
-    java.lang.reflect.Field field = we.getClass().getDeclaredField("completed");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(we);
-    field.set(we, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     getKey().setWriteEntry(we);
     return regionSequenceId;
   }

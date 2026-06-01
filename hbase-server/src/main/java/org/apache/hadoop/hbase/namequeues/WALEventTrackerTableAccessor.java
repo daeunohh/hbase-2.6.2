@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.namequeues;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.waleventtracker.WALEventTrackerTableCreator.WAL_EVENT_TRACKER_INFO_FAMILY;
 
@@ -63,9 +62,6 @@ public final class WALEventTrackerTableAccessor {
     TableName.valueOf(WAL_EVENT_TRACKER_TABLE_NAME_STR);
 
   private static void doPut(final Connection connection, final List<Put> puts) throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("7c88b117-b0b6-37e0-b38f-8331eee44860"))) {
-return;
-}
     RetryCounter retryCounter = getRetryFactory(connection.getConfiguration()).create();
     while (true) {
       try (Table table = connection.getTable(WAL_EVENT_TRACKER_TABLE_NAME)) {

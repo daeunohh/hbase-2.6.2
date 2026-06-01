@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.mob;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class RSMobFileCleanerChore extends ScheduledChore {
   private final HRegionServer rs;
 
   public RSMobFileCleanerChore(HRegionServer rs) {
-    super(((KnobRuntime.check(java.util.UUID.fromString("3db5798f-b443-3d08-b469-2ad6b86b9c27"))) ? ("-MobFileCleanerChore") : (((KnobRuntime.check(java.util.UUID.fromString("9bd7b442-2cf6-3b01-887f-1b3d599113f9"))) ? ((rs.getServerName()) + ("-MobFileCleanerChore")) : (rs.getServerName() + "-MobFileCleanerChore")))), rs,
+    super(rs.getServerName() + "-MobFileCleanerChore", rs,
       rs.getConfiguration().getInt(MobConstants.MOB_CLEANER_PERIOD,
         MobConstants.DEFAULT_MOB_CLEANER_PERIOD),
       Math.round(rs.getConfiguration().getInt(MobConstants.MOB_CLEANER_PERIOD,

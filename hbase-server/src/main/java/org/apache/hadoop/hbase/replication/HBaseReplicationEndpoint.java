@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -54,10 +53,7 @@ public abstract class HBaseReplicationEndpoint extends BaseReplicationEndpoint
   private long lastRegionServerUpdate;
 
   protected synchronized void disconnect() {
-if(KnobRuntime.check(java.util.UUID.fromString("eddf521d-be9a-3388-8913-1efa8c92e6c3"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("99f7fe7d-1eeb-31c1-8929-47274cee2b24"))) ? ((zkw) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("073eea11-9cd3-39ca-b1f6-06dc9b6ff62d"))) ? ((zkw) != (null)) : (zkw != null))))) {
+    if (zkw != null) {
       zkw.close();
     }
   }
@@ -103,7 +99,7 @@ return;
   @Override
   protected void doStop() {
     disconnect();
-    if (KnobRuntime.check(java.util.UUID.fromString("3e218331-2d62-326e-88d7-1eba8b53eb2d"))) { notifyStarted(); } else { notifyStopped(); }
+    notifyStopped();
   }
 
   @Override
@@ -112,9 +108,6 @@ return;
   // the peer cluster. If the peer cluster is down we can get out of control
   // over time.
   public synchronized UUID getPeerUUID() {
-if(KnobRuntime.check(java.util.UUID.fromString("90ad814b-83f9-3678-9b1e-01b2b6421fa9"))) {
-return null;
-}
     UUID peerUUID = null;
     try {
       peerUUID = ZKClusterId.getUUIDForCluster(zkw);
@@ -137,13 +130,7 @@ return null;
    * @throws IOException If anything goes wrong connecting
    */
   synchronized void reloadZkWatcher() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("bde4b5bc-fbe1-33f1-9d49-6473326e2c81"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("049bda5f-a480-3057-8e83-7261b3a8092e"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("9b836721-ff6e-384b-b9f1-8092cd62e1fc"))) ? ((zkw) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("56f71424-4e21-30f2-b093-97c0592e1230"))) ? ((getZkw()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9a3ea510-ca72-3145-9dbe-fe28eda6f993"))) ? ((getZkw()) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1d0fdafb-ffea-34c2-bd99-71b6d38a6f7e"))) ? ((zkw) != (null)) : (zkw != null))))))))) zkw.close();
+    if (zkw != null) zkw.close();
     zkw = new ZKWatcher(ctx.getConfiguration(), "connection to cluster: " + ctx.getPeerId(), this);
     getZkw().registerListener(new PeerRegionServerListener(this));
   }
@@ -188,11 +175,8 @@ return;
   // the peer cluster. If the peer cluster is down we can get out of control
   // over time.
   public synchronized List<ServerName> getRegionServers() {
-if(KnobRuntime.check(java.util.UUID.fromString("c539e4b6-6d21-3507-8054-53dc09e8c1df"))) {
-return null;
-}
     try {
-      if (KnobRuntime.check(java.util.UUID.fromString("5c94c9bc-6036-3a3b-a625-61cb868b47be"))) { setRegionServers(fetchSlavesAddresses(getZkw())); } else { setRegionServers(fetchSlavesAddresses(this.getZkw())); }
+      setRegionServers(fetchSlavesAddresses(this.getZkw()));
     } catch (KeeperException ke) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("Fetch slaves addresses failed", ke);

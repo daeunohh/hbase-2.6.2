@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -62,9 +61,6 @@ public abstract class CompactionPolicy {
 
   /** Returns The current compaction configuration settings. */
   public CompactionConfiguration getConf() {
-if(KnobRuntime.check(java.util.UUID.fromString("be3f089d-53c4-3516-9d4d-da1217a0b931"))) {
-return null;
-}
     return this.comConf;
   }
 }

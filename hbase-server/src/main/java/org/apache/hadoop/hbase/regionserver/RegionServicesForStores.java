@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -47,7 +46,7 @@ public class RegionServicesForStores {
   public RegionServicesForStores(HRegion region, RegionServerServices rsServices) {
     this.region = region;
     this.rsServices = rsServices;
-    if (((KnobRuntime.check(java.util.UUID.fromString("eb1e11dd-7b17-325d-a3fe-370e38baee3c"))) ? ((this.rsServices) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9c6d4ff7-9475-3982-bbdf-46c9a06e56d8"))) ? ((this.rsServices) != (null)) : (this.rsServices != null))))) {
+    if (this.rsServices != null) {
       this.inMemoryPoolSize =
         rsServices.getConfiguration().getInt(CompactingMemStore.IN_MEMORY_CONPACTION_POOL_SIZE_KEY,
           CompactingMemStore.IN_MEMORY_CONPACTION_POOL_SIZE_DEFAULT);

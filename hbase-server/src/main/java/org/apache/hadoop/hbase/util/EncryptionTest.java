@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -98,24 +97,7 @@ public class EncryptionTest {
    */
   public static void testEncryption(final Configuration conf, final String cipher, byte[] key)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("8909f336-91ed-3904-b9f6-2b84a6585cf1"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("07d6edf7-6173-31a7-8b96-cb4f67b64da5"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5e05a8e3-996a-3cbf-83f6-b40446c84021"))) {
-throw new java.io.IOException("Injected exception");
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("4fd64fa9-b9aa-3a00-a930-039fd70d21c0"))) ? ((cipher) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("356d33ed-c1a3-3f93-adb1-c459b36b90e7"))) ? ((cipher) == (null)) : (cipher == null))))) {
+    if (cipher == null) {
       return;
     }
     if (!Encryption.isEncryptionEnabled(conf)) {

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.quotas.SpaceQuotaSnapshot.SpaceQuotaStatus;
@@ -47,9 +46,6 @@ public class SpaceViolationPolicyEnforcementFactory {
    * Returns an instance of this factory.
    */
   public static SpaceViolationPolicyEnforcementFactory getInstance() {
-if(KnobRuntime.check(java.util.UUID.fromString("988fc18a-2e8e-3551-9545-92e3c1ab9ee1"))) {
-return null;
-}
     return INSTANCE;
   }
 
@@ -94,87 +90,7 @@ return null;
    */
   public SpaceViolationPolicyEnforcement createWithoutViolation(RegionServerServices rss,
     TableName tableName, SpaceQuotaSnapshot snapshot) {
-if(KnobRuntime.check(java.util.UUID.fromString("8331df9c-0f4a-3f1e-91cd-51fa559693b0"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("814f9319-51f0-3998-bfb7-3c122304cc56"))) {
-try {
-    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("usage");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(snapshot));
-    field.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("79b5bc4a-fb9e-30af-a7d6-80edab0a32cf"))) {
-try {
-    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(snapshot));
-    field.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c93448f3-9651-3ee9-a0bb-f9523d21d577"))) {
-try {
-    java.lang.reflect.Field field = snapshot.getClass().getDeclaredField("limit");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(snapshot));
-    field.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d6dca8ae-3a95-39cc-b1fc-1fa818ce1e5f"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4867d007-d425-38b9-8b4d-adb0d23b3d21"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7c8478cd-9914-3915-9807-29118b7e0d98"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("83dfc6ee-6f24-377c-bf78-231ba3682224"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("811abd68-ddb6-3941-87f9-979b1f12eda5"))) ? ((snapshot) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e94226ce-8d30-3314-9629-55d79d687cc4"))) ? ((snapshot) == (null)) : (snapshot == null))))) {
+    if (snapshot == null) {
       // If we have no snapshot, this is equivalent to no quota for this table.
       // We should do use the (singleton instance) of this policy to do nothing.
       return MissingSnapshotViolationPolicyEnforcement.getInstance();

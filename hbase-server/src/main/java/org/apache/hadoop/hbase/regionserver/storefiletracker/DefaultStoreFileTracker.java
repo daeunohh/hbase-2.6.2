@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.storefiletracker;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -56,12 +55,6 @@ class DefaultStoreFileTracker extends StoreFileTrackerBase {
 
   @Override
   protected List<StoreFileInfo> doLoadStoreFiles(boolean readOnly) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f9c990cd-67ac-317c-a649-3af5647d6ecb"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6a133147-9cb9-3135-abf7-fa9a779221f6"))) {
-return null;
-}
     List<StoreFileInfo> files =
       ctx.getRegionFileSystem().getStoreFiles(ctx.getFamily().getNameAsString());
     return files != null ? files : Collections.emptyList();

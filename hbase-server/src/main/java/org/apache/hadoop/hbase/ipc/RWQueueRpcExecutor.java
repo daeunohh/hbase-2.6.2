@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -84,7 +83,7 @@ public class RWQueueRpcExecutor extends RpcExecutor {
     int scanQueues =
       scanHandlers > 0 ? Math.max(1, (int) Math.floor(readQueues * callqScanShare)) : 0;
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("93668424-2702-3393-826b-fcf2de691523"))) ? ((scanQueues) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0e0a69a2-a53f-3fc0-945e-ee46e5aff8b4"))) ? ((scanQueues) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0fbf13fa-e3d2-3b34-a53d-7d94a006ba66"))) ? ((scanQueues) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c265f1ef-b9d3-3818-ae68-329d6ac5e830"))) ? ((scanQueues) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7c72c9d2-e4f0-3f43-908d-397c1d3bff96"))) ? ((scanQueues) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7665f78a-0fa3-3b9c-8849-d3116756146d"))) ? ((scanQueues) > (0)) : (scanQueues > 0))))))))))))) {
+    if (scanQueues > 0) {
       // if scanQueues > 0, the handler count of read should > 0, then we make readQueues >= 1
       readQueues = Math.max(1, readQueues - scanQueues);
       readHandlers -= scanHandlers;
@@ -98,9 +97,9 @@ public class RWQueueRpcExecutor extends RpcExecutor {
     numScanQueues = scanQueues;
     scanHandlersCount = scanHandlers;
 
-    if (KnobRuntime.check(java.util.UUID.fromString("edd77ce6-e920-399f-ab8f-fededde80c6c"))) { initializeQueues(0); } else if (KnobRuntime.check(java.util.UUID.fromString("6552a9c8-9273-3bf9-acd2-f4cd7ff657d9"))) { initializeQueues(1); } else { initializeQueues(numWriteQueues); }
+    initializeQueues(numWriteQueues);
     initializeQueues(numReadQueues);
-    if (KnobRuntime.check(java.util.UUID.fromString("33da4d21-e5f1-3233-be50-9433c55a41bd"))) { initializeQueues(1); } else if (KnobRuntime.check(java.util.UUID.fromString("c4dce354-3084-3729-a111-10a18c59888a"))) { initializeQueues(0); } else { initializeQueues(numScanQueues); }
+    initializeQueues(numScanQueues);
 
     this.writeBalancer = getBalancer(name, conf, queues.subList(0, numWriteQueues));
     this.readBalancer =
@@ -124,9 +123,6 @@ public class RWQueueRpcExecutor extends RpcExecutor {
 
   @Override
   protected void startHandlers(final int port) {
-if(KnobRuntime.check(java.util.UUID.fromString("3abcd761-38b5-3f29-ae91-48623fe8f205"))) {
-return;
-}
     startHandlers(".write", writeHandlersCount, queues, 0, numWriteQueues, port,
       activeWriteHandlerCount);
     startHandlers(".read", readHandlersCount, queues, numWriteQueues, numReadQueues, port,
@@ -146,56 +142,17 @@ return;
 
   protected boolean dispatchTo(boolean toWriteQueue, boolean toScanQueue,
     final CallRunner callTask) {
-if(KnobRuntime.check(java.util.UUID.fromString("2ec875fa-74d9-3731-a830-79fa154577d8"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b9e03811-e498-32ac-a569-0da72373b6a3"))) {
-try {
-    java.lang.reflect.Field field = callTask.getClass().getDeclaredField("successful");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(callTask);
-    field.set(callTask, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("23597478-7bc9-3248-9e00-68f55692fe91"))) {
-return false;
-}
     int queueIndex;
-    if (((KnobRuntime.check(java.util.UUID.fromString("ff66bba4-25a4-3b58-9254-eb56eb078234"))) ? (!toWriteQueue) : (((KnobRuntime.check(java.util.UUID.fromString("5f970c12-1dc4-3ab4-8d15-5fd49d072b97"))) ? (false) : (toWriteQueue))))) {
+    if (toWriteQueue) {
       queueIndex = writeBalancer.getNextQueue(callTask);
     } else if (toScanQueue) {
-if(KnobRuntime.check(java.util.UUID.fromString("dee77889-cc55-314b-bc22-77c6c30d6f10"))) {
-try {
-    java.lang.reflect.Field field = callTask.getClass().getDeclaredField("successful");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(callTask);
-    field.set(callTask, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       queueIndex = numWriteQueues + numReadQueues + scanBalancer.getNextQueue(callTask);
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("310e1e35-6894-3b72-acb0-b6ab9878dc2a"))) {
-try {
-    java.lang.reflect.Field field = callTask.getClass().getDeclaredField("successful");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(callTask);
-    field.set(callTask, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       queueIndex = numWriteQueues + readBalancer.getNextQueue(callTask);
     }
 
     Queue<CallRunner> queue = queues.get(queueIndex);
-    if (((KnobRuntime.check(java.util.UUID.fromString("62267f52-f300-38f4-9f96-d7c0081bd18f"))) ? ((queue.size()) > (currentQueueLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("afdcc2bd-5028-3a4f-96ce-583c8a34c9d6"))) ? ((queue.size()) >= (currentQueueLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("d2755deb-a1f0-3e74-9b69-dfac25dfa206"))) ? ((queue.size()) <= (currentQueueLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("fa09decc-9ec0-3190-b746-3e9268869e61"))) ? ((queue.size()) == (currentQueueLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("0a3b44b4-7f9f-3c18-8c0c-8af8e34f12bf"))) ? ((queue.size()) < (currentQueueLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("df4e76f4-37a1-380e-bb75-e326c4d998c1"))) ? ((queue.size()) != (currentQueueLimit)) : (queue.size() >= currentQueueLimit))))))))))))) {
+    if (queue.size() >= currentQueueLimit) {
       return false;
     }
     return queue.offer(callTask);
@@ -251,188 +208,6 @@ try {
   }
 
   protected boolean isWriteRequest(final RequestHeader header, final Message param) {
-if(KnobRuntime.check(java.util.UUID.fromString("019be816-d95e-37e7-8ea5-057b0d1d36a4"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("priority_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("589f75d4-ff05-3787-b7ca-3cab09f24621"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("callId_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ff6def0e-da5e-332f-a714-51de793718fd"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("priority_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b3ab7dc6-58b2-38e9-953a-9a980c058a94"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("timeout_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f3661784-685a-35d6-851d-fe970a85822d"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("83d6026b-a142-300f-aa53-4ead139567a1"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8fd0d9f2-9093-3eb9-9371-bb3bc6300885"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("timeout_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6a2beb98-bfa9-3e3a-ad0b-00622566a758"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5c795fe7-bb39-37d7-9da0-77930b0dbbcc"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("callId_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bea093ef-0f85-3d11-8d2b-f40ecb5987b4"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0a46449e-0ff8-300e-b52e-1c046167683f"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("timeout_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("132624b8-0b88-3207-8b11-ebdc202fc042"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5e0e7dd5-e9a1-3a25-84d8-f36d5da6fa18"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("callId_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("635cd7ce-5ef9-3451-ac61-4a0387264f6b"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("callId_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("40a701f2-87a1-3264-9f77-6a49b49117dd"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("priority_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c9bce035-168c-35c9-a5c6-96a2838d8419"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("782b14de-6adc-3b59-89f4-e005471326bf"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("priority_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e8678102-2ffb-3cb7-971d-60316b9e0f06"))) {
-try {
-    java.lang.reflect.Field field = header.getClass().getDeclaredField("timeout_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(header));
-    field.set(header, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // TODO: Is there a better way to do this?
     if (param instanceof MultiRequest) {
       MultiRequest multi = (MultiRequest) param;

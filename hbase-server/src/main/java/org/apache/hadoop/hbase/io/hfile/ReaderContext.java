@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HConstants;
@@ -56,16 +55,10 @@ public class ReaderContext {
   }
 
   public Path getFilePath() {
-if(KnobRuntime.check(java.util.UUID.fromString("80f1f6c0-6200-3b74-bd1b-d98b241ac9e8"))) {
-return null;
-}
     return this.filePath;
   }
 
   public FSDataInputStreamWrapper getInputStreamWrapper() {
-if(KnobRuntime.check(java.util.UUID.fromString("083a2336-1a7e-312f-bdcb-85dd22875950"))) {
-return null;
-}
     return this.fsdis;
   }
 

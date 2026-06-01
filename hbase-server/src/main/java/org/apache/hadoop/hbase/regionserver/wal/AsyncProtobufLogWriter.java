@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.FutureUtils.addListener;
 
@@ -81,9 +80,6 @@ public class AsyncProtobufLogWriter extends AbstractProtobufLogWriter
     @Override
     public void write(int b) throws IOException {
       oneByteBuf[0] = (byte) b;
-if(KnobRuntime.check(java.util.UUID.fromString("847e0b0a-e961-3145-ad98-6e476bf4a177"))) {
-throw new java.io.IOException("Injected exception");
-}
       write(oneByteBuf);
     }
 
@@ -94,26 +90,8 @@ throw new java.io.IOException("Injected exception");
     @Override
     public void write(ByteBuffer b, int off, int len) throws IOException {
       ByteBuffer bb = b.duplicate();
-if(KnobRuntime.check(java.util.UUID.fromString("6284f686-afea-3b75-b914-aed53771261d"))) {
-off = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2c499af6-37b2-3d52-9f56-42d95b2dd0bd"))) {
-off *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("44a994fa-62ed-3a6b-980b-615de9c731db"))) {
-off += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("99b4d541-891f-36a8-9bf8-d90e7fd59ef9"))) {
-off = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dfa6254b-1aba-3301-9421-46ee1a06c8e8"))) {
-off -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("477bb72c-af60-39b5-8cae-ab79ad303a24"))) {
-off /= 2;
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("a523befc-d8ab-3448-a1c5-db3b60a6d85c"))) { bb.limit(off); } else { bb.position(off); }
-      if (KnobRuntime.check(java.util.UUID.fromString("f2ee42ab-d175-3d52-96dc-84c1d6ab55e0"))) { bb.limit(len); } else if (KnobRuntime.check(java.util.UUID.fromString("98ee14c4-6b6d-3e3d-a539-e9bb299240f7"))) { bb.position(off); } else if (KnobRuntime.check(java.util.UUID.fromString("339ebfcd-2605-3fa9-8ed0-449b45439df2"))) { bb.limit(off); } else if (KnobRuntime.check(java.util.UUID.fromString("6ae1cc9a-5e47-3a90-bc25-0c3ae30929ff"))) { bb.limit((off) + (len)); } else if (KnobRuntime.check(java.util.UUID.fromString("cd2fa6c7-9c7f-33fe-8aab-5999b7de1f13"))) { bb.position(len); } else if (KnobRuntime.check(java.util.UUID.fromString("29310f84-6a64-3a4f-a5e0-3ee8a95de738"))) { bb.position((off) + (len)); } else { bb.limit(off + len); }
+      bb.position(off);
+      bb.limit(off + len);
       out.write(bb);
     }
 
@@ -161,15 +139,12 @@ off /= 2;
     }
     try {
       for (Cell cell : entry.getEdit().getCells()) {
-if(KnobRuntime.check(java.util.UUID.fromString("49d0862a-e407-3e0b-83dc-5e2f43b43f09"))) {
-throw new java.io.IOException("Injected exception");
-}
         cellEncoder.write(cell);
       }
     } catch (IOException e) {
       throw new AssertionError("should not happen", e);
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("ed3785f4-26bb-30a0-abcd-3aef074f1097"))) { length.addAndGet(buffered); } else if (KnobRuntime.check(java.util.UUID.fromString("c9c3d56d-81d9-3aa9-9383-2492aacfa580"))) { length.addAndGet((output.buffered()) - (buffered)); } else if (KnobRuntime.check(java.util.UUID.fromString("4c9bc4ab-8e37-3203-816f-844e09028ed9"))) { length.addAndGet(output.buffered()); } else { length.addAndGet(output.buffered() - buffered); }
+    length.addAndGet(output.buffered() - buffered);
   }
 
   @Override
@@ -184,15 +159,9 @@ throw new java.io.IOException("Injected exception");
     }
     try {
       writeWALTrailer();
-if(KnobRuntime.check(java.util.UUID.fromString("b97a82ac-4ce1-36d6-aac4-859598ab13d3"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("22198283-5b80-3c3b-ab37-a871fa71ae66"))) { writeWALTrailer(); } else { output.close(); }
+      output.close();
     } catch (Exception e) {
       LOG.warn("normal close failed, try recover", e);
-if(KnobRuntime.check(java.util.UUID.fromString("0a8f8bc9-a32f-3f64-bd32-0e2bb56f8be0"))) {
-throw new java.io.IOException("Injected exception");
-}
       output.recoverAndClose(null);
     }
     /**
@@ -299,7 +268,7 @@ throw new java.io.IOException("Injected exception");
      * we return output.getSyncedLength
      */
     AsyncFSOutput outputToUse = this.output;
-    if (((KnobRuntime.check(java.util.UUID.fromString("03aa8e5d-e4cd-3d4b-ab51-56e9822720d7"))) ? ((outputToUse) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("70350409-a290-3282-bba4-dcf3a6c42888"))) ? ((outputToUse) == (null)) : (outputToUse == null))))) {
+    if (outputToUse == null) {
       long finalSyncedLengthToUse = this.finalSyncedLength;
       assert finalSyncedLengthToUse >= 0;
       return finalSyncedLengthToUse;

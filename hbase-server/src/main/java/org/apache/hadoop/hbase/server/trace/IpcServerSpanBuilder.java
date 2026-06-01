@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.server.trace;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.trace.HBaseSemanticAttributes.RPC_METHOD;
 import static org.apache.hadoop.hbase.trace.HBaseSemanticAttributes.RPC_SERVICE;
@@ -68,17 +67,11 @@ public class IpcServerSpanBuilder implements Supplier<Span> {
   }
 
   public IpcServerSpanBuilder setName(final String name) {
-if(KnobRuntime.check(java.util.UUID.fromString("af5a953c-f54a-3728-815b-2a1d7d2109f0"))) {
-return null;
-}
     this.name = name;
     return this;
   }
 
   public <T> IpcServerSpanBuilder addAttribute(final AttributeKey<T> key, T value) {
-if(KnobRuntime.check(java.util.UUID.fromString("3ced8360-88bc-3e44-8fbd-9f2c7c8d5b5b"))) {
-return null;
-}
     attributes.put(key, value);
     return this;
   }
@@ -88,6 +81,6 @@ return null;
     final SpanBuilder builder =
       TraceUtil.getGlobalTracer().spanBuilder(name).setSpanKind(SpanKind.SERVER);
     attributes.forEach((k, v) -> builder.setAttribute((AttributeKey<? super Object>) k, v));
-    return ((KnobRuntime.check(java.util.UUID.fromString("ef93aab6-93f8-3ed7-8830-d299b248d06e"))) ? (build()) : (builder.startSpan()));
+    return builder.startSpan();
   }
 }

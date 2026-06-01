@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -78,9 +77,6 @@ public interface ReplicationEndpoint extends ReplicationPeerConfigListener {
     }
 
     public Configuration getConfiguration() {
-if(KnobRuntime.check(java.util.UUID.fromString("2afe0a50-af2d-361a-a5af-3641c547bd1f"))) {
-return null;
-}
       return conf;
     }
 

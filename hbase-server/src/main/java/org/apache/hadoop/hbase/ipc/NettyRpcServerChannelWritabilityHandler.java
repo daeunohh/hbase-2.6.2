@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
@@ -64,9 +63,6 @@ public class NettyRpcServerChannelWritabilityHandler extends ChannelDuplexHandle
   @Override
   public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)
     throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("01729442-b584-3e3e-98c1-8a861258e071"))) {
-return;
-}
     if (handleFatalThreshold(ctx)) {
       promise.setFailure(
         new ConnectionClosedException("Channel outbound bytes exceeded fatal threshold"));
@@ -82,9 +78,6 @@ return;
 
   @Override
   public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("48762bfe-52a5-366b-8ca0-30e4e8260b6d"))) {
-return;
-}
     if (isWritabilityBackpressureEnabled.getAsBoolean()) {
       handleWritabilityChanged(ctx);
     }
@@ -92,14 +85,8 @@ return;
   }
 
   private boolean handleFatalThreshold(ChannelHandlerContext ctx) {
-if(KnobRuntime.check(java.util.UUID.fromString("4bf8acb3-ef6d-3d5c-9cca-9291188f7b08"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8c3f66f7-31e8-365e-a27f-b99233350cf8"))) {
-return true;
-}
     int fatalThreshold = pendingBytesFatalThreshold.getAsInt();
-    if (((KnobRuntime.check(java.util.UUID.fromString("c9b8da22-8ecd-3055-ae5b-d7e63d8a1246"))) ? ((fatalThreshold) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0473b2da-6422-3d9b-9ed9-bdfafc9d393e"))) ? ((fatalThreshold) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("70772e50-cf21-3ef6-bca8-559e69067f9a"))) ? ((fatalThreshold) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c1ce023d-b682-35fd-942d-15750194f46d"))) ? ((fatalThreshold) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("9a5f2ed2-396e-3d21-9671-e50ef274a1b5"))) ? ((fatalThreshold) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("112d2bc2-8f02-3cbb-b537-2c2e6ef6018d"))) ? ((fatalThreshold) != (0)) : (fatalThreshold <= 0))))))))))))) {
+    if (fatalThreshold <= 0) {
       return false;
     }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.exceptions.DeserializationException;
@@ -46,13 +45,7 @@ public abstract class BooleanStateStore extends MasterStateStore {
    * Returns true if the flag is on, otherwise false
    */
   public boolean get() {
-if(KnobRuntime.check(java.util.UUID.fromString("73d5049b-6b2f-3c65-9bed-d0abd9827696"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2ba5f7d9-ed1d-3e79-8190-cfa85b13d7b5"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("1be4f793-5b2c-318e-acd1-887293e6c1c9"))) ? (!on) : (on));
+    return on;
   }
 
   /**

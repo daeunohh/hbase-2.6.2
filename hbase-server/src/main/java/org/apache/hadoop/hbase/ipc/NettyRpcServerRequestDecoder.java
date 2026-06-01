@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.util.NettyFutureUtils;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -53,13 +52,7 @@ class NettyRpcServerRequestDecoder extends SimpleChannelInboundHandler<ByteBuf> 
   @Override
   protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
     // 4 bytes length field
-    if (KnobRuntime.check(java.util.UUID.fromString("979ccc60-df6a-3ed5-a404-077e24e1a012"))) { metrics.receivedBytes(msg.readableBytes()); } else if (KnobRuntime.check(java.util.UUID.fromString("cbbd9df6-c252-312d-a239-d7a60ee70aa1"))) { metrics.receivedBytes(4); } else if (KnobRuntime.check(java.util.UUID.fromString("ef1336cb-e493-383a-a8ec-4c30dc2883e6"))) { metrics.receivedBytes((msg.readableBytes()) + (4)); } else { metrics.receivedBytes(msg.readableBytes() + 4); }
-if(KnobRuntime.check(java.util.UUID.fromString("38bd0762-0df9-3eaa-8bea-8e4e647b3b88"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("89ea899c-fa5b-348d-8c7f-26475a793353"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
+    metrics.receivedBytes(msg.readableBytes() + 4);
     connection.process(msg);
   }
 }

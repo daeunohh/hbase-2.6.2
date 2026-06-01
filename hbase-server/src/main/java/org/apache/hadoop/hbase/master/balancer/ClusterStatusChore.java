@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.balancer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.InterruptedIOException;
 import org.apache.hadoop.hbase.ScheduledChore;
@@ -36,7 +35,7 @@ public class ClusterStatusChore extends ScheduledChore {
   private final LoadBalancer balancer;
 
   public ClusterStatusChore(HMaster master, LoadBalancer balancer) {
-    super(((KnobRuntime.check(java.util.UUID.fromString("c8d3c2d6-d789-369e-8dd9-2072fa52450b"))) ? ((master.getServerName()) + ("-ClusterStatusChore")) : (((KnobRuntime.check(java.util.UUID.fromString("a1e93156-62ca-3206-88b6-ca9b66d99042"))) ? ("-ClusterStatusChore") : (master.getServerName() + "-ClusterStatusChore")))), master,
+    super(master.getServerName() + "-ClusterStatusChore", master,
       master.getConfiguration().getInt("hbase.balancer.statusPeriod", 60000));
     this.master = master;
     this.balancer = balancer;

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.namequeues.impl;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,9 +72,6 @@ public class BalancerRejectionQueueService implements NamedQueueService {
 
   @Override
   public NamedQueuePayload.NamedQueueEvent getEvent() {
-if(KnobRuntime.check(java.util.UUID.fromString("b6b3200b-abb8-32c1-9677-f1aea23e578c"))) {
-return null;
-}
     return NamedQueuePayload.NamedQueueEvent.BALANCE_REJECTION;
   }
 

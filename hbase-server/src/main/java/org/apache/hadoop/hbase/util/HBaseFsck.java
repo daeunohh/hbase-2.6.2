@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -358,20 +357,6 @@ public class HBaseFsck extends Configured implements Closeable {
 
   /** Returns A retry counter factory configured for retrying lock file creation. */
   public static RetryCounterFactory createLockRetryCounterFactory(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("782157d6-90f8-3978-8f7d-b4028774ef0c"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d62f0bb6-d1ec-3495-9660-c6908ab031da"))) {
-return null;
-}
     return new RetryCounterFactory(
       conf.getInt("hbase.hbck.lockfile.attempts", DEFAULT_MAX_LOCK_FILE_ATTEMPTS),
       conf.getInt("hbase.hbck.lockfile.attempt.sleep.interval",
@@ -413,51 +398,19 @@ return null;
 
     @Override
     public FSDataOutputStream call() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0d10ba1c-13eb-39f5-ab03-e16a6d6497b4"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a3563f6a-c555-3a94-be0e-9d8698b8d496"))) {
-return null;
-}
       try {
-if(KnobRuntime.check(java.util.UUID.fromString("0b4fdfc8-4dbe-3189-8317-7516b2a43c27"))) {
-throw new java.io.IOException("Injected exception");
-}
         FileSystem fs = CommonFSUtils.getCurrentFileSystem(this.conf);
         FsPermission defaultPerms =
           CommonFSUtils.getFilePermissions(fs, this.conf, HConstants.DATA_FILE_UMASK_KEY);
-if(KnobRuntime.check(java.util.UUID.fromString("056e2cb0-5865-3ce2-9691-d6439e23e1c9"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2bcab72d-90b4-347b-b045-bfa47b0edd70"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         Path tmpDir = getTmpDir(conf);
         this.hbckLockPath = new Path(tmpDir, HBCK_LOCK_FILE);
-if(KnobRuntime.check(java.util.UUID.fromString("e6cf58ca-c070-3a45-bca3-85a0e21b36d9"))) {
-throw new java.io.IOException("Injected exception");
-}
         fs.mkdirs(tmpDir);
-if(KnobRuntime.check(java.util.UUID.fromString("2e505926-2323-3268-9606-777955153643"))) {
-throw new java.io.IOException("Injected exception");
-}
         final FSDataOutputStream out = createFileWithRetries(fs, this.hbckLockPath, defaultPerms);
         out.writeBytes(InetAddress.getLocalHost().toString());
         // Add a note into the file we write on why hbase2 is writing out an hbck1 lock file.
         out.writeBytes(" Written by an hbase-2.x Master to block an "
           + "attempt by an hbase-1.x HBCK tool making modification to state. "
           + "See 'HBCK must match HBase server version' in the hbase refguide.");
-if(KnobRuntime.check(java.util.UUID.fromString("08e2096d-6dcc-3bff-bac1-cb6aa3ee824d"))) {
-throw new java.io.IOException("Injected exception");
-}
         out.flush();
         return out;
       } catch (RemoteException e) {
@@ -500,67 +453,6 @@ throw new java.io.IOException("Injected exception");
    */
   public static Pair<Path, FSDataOutputStream> checkAndMarkRunningHbck(Configuration conf,
     RetryCounter retryCounter) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("7227fcd5-7b5e-3601-b8e9-1091f859a54f"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("53a4c820-27c7-3613-8feb-1f768a3c1c78"))) {
-try {
-    java.lang.reflect.Field field = retryCounter.getClass().getDeclaredField("attempts");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(retryCounter));
-    field.set(retryCounter, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d2ee58ec-d8e9-3df6-bdb3-4ac15dc56cf6"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3cbb25e8-b6c6-3191-b5d5-35fbdbf6a294"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4e3850e4-d602-31b2-8a44-7cb2abc56d77"))) {
-try {
-    java.lang.reflect.Field field = retryCounter.getClass().getDeclaredField("attempts");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(retryCounter));
-    field.set(retryCounter, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("389cd3dd-fd97-3ad8-aa6d-c244f46634e5"))) {
-try {
-    java.lang.reflect.Field field = retryCounter.getClass().getDeclaredField("attempts");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(retryCounter));
-    field.set(retryCounter, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fe4dea4f-8e99-3191-bf68-49869833f907"))) {
-try {
-    java.lang.reflect.Field field = retryCounter.getClass().getDeclaredField("attempts");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(retryCounter));
-    field.set(retryCounter, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     FileLockCallable callable = new FileLockCallable(conf, retryCounter);
     ExecutorService executor = Executors.newFixedThreadPool(1);
     FutureTask<FSDataOutputStream> futureTask = new FutureTask<>(callable);

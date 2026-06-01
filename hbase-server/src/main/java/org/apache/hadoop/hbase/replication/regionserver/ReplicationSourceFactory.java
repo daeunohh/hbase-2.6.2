@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.replication.ReplicationQueueInfo;
@@ -44,9 +43,6 @@ public final class ReplicationSourceFactory {
       String defaultReplicationSourceImpl = isQueueRecovered
         ? RecoveredReplicationSource.class.getCanonicalName()
         : ReplicationSource.class.getCanonicalName();
-if(KnobRuntime.check(java.util.UUID.fromString("b79299d7-1225-3eff-ae98-fb33e543b66d"))) {
-throw new java.lang.ClassNotFoundException("Injected exception");
-}
       Class<?> c = Class.forName(
         conf.get("replication.replicationsource.implementation", defaultReplicationSourceImpl));
       src = c.asSubclass(ReplicationSourceInterface.class).getDeclaredConstructor().newInstance();

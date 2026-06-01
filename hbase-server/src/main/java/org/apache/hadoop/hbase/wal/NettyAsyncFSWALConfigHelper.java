@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,20 +55,6 @@ public final class NettyAsyncFSWALConfigHelper {
   }
 
   static Pair<EventLoopGroup, Class<? extends Channel>> getEventLoopConfig(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("0e10ea47-13a1-3ce8-bd93-5123f38892f6"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("58487162-6021-3df0-8b2d-18d42c58a1f1"))) {
-return null;
-}
     String name = conf.get(EVENT_LOOP_CONFIG);
     if (StringUtils.isBlank(name)) {
       return null;

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHORIZATION;
 
@@ -257,9 +256,6 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
     }
 
     public BlockingService getBlockingService() {
-if(KnobRuntime.check(java.util.UUID.fromString("2fda3bc8-5f3d-3356-8f1c-d5fcd9441612"))) {
-return null;
-}
       return this.service;
     }
   }
@@ -303,7 +299,7 @@ return null;
     this.authorize = conf.getBoolean(HADOOP_SECURITY_AUTHORIZATION, false);
     this.userProvider = UserProvider.instantiate(conf);
     this.isSecurityEnabled = userProvider.isHBaseSecurityEnabled();
-    if (((KnobRuntime.check(java.util.UUID.fromString("1ced0382-8aab-3566-8426-afbf9ad9ae7e"))) ? (true) : (((KnobRuntime.check(java.util.UUID.fromString("4f456647-34c3-35fb-b392-abbd373f2b9d"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("5202b5a4-d2ec-378e-ac95-7411c5c5582f"))) ? (!isSecurityEnabled) : (isSecurityEnabled))))))) {
+    if (isSecurityEnabled) {
       saslProps = SaslUtil.initSaslProperties(conf.get("hbase.rpc.protection",
         QualityOfProtection.AUTHENTICATION.name().toLowerCase(Locale.ROOT)));
       serverPrincipal = Preconditions.checkNotNull(userProvider.getCurrentUserName(),
@@ -323,10 +319,10 @@ return null;
     if (scheduler instanceof ConfigurationObserver) {
       ((ConfigurationObserver) scheduler).onConfigurationChange(newConf);
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("9916ee87-2209-3b98-ae01-aa62a991916c"))) ? (!authorize) : (authorize))) {
+    if (authorize) {
       refreshAuthManager(newConf, new HBasePolicyProvider());
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("ede32676-3c23-3ad4-b129-53fd363ffacb"))) { ProxyUsers.refreshSuperUserGroupsConfiguration(newConf); } else if (KnobRuntime.check(java.util.UUID.fromString("e903efa4-a1cf-3749-8278-85ca74b6ec1f"))) { initReconfigurable(newConf); } else { refreshSlowLogConfiguration(newConf); }
+    refreshSlowLogConfiguration(newConf);
   }
 
   private void refreshSlowLogConfiguration(Configuration newConf) {
@@ -388,21 +384,12 @@ return null;
   }
 
   Configuration getConf() {
-if(KnobRuntime.check(java.util.UUID.fromString("f8b15d3c-9c24-35a5-ae95-593387e0c89a"))) {
-return null;
-}
     return conf;
   }
 
   @Override
   public boolean isStarted() {
-if(KnobRuntime.check(java.util.UUID.fromString("48276199-def0-3721-89bb-a75ef886874e"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5d4c1d1c-fb51-399d-8e91-aaaace837753"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("601fa07a-e1db-301e-b82f-7712e198ec30"))) ? (!this.started) : (this.started));
+    return this.started;
   }
 
   @Override
@@ -412,17 +399,6 @@ return true;
     System.setProperty("hadoop.policy.file", "hbase-policy.xml");
     this.authManager.refresh(conf, pp);
     LOG.info("Refreshed hbase-policy.xml successfully");
-if(KnobRuntime.check(java.util.UUID.fromString("e354b512-5884-3675-870a-b389492c1c79"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     ProxyUsers.refreshSuperUserGroupsConfiguration(conf);
     LOG.info("Refreshed super and proxy users successfully");
   }
@@ -489,44 +465,8 @@ try {
         responseSize += call.getResponseCellSize();
       }
 
-if(KnobRuntime.check(java.util.UUID.fromString("129616c9-9920-3508-9a95-dd09507dd0be"))) {
-qTime /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1fae4506-c07c-3f49-a7fe-56b2c69bcb21"))) {
-qTime *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8b3e0ab5-7b00-3fff-af18-f214447fd676"))) {
-qTime -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d7c7cef9-fa6c-3b2f-b455-31e4115e108b"))) {
-qTime += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d5389733-74b3-3992-b84c-a19b515c1dec"))) {
-qTime = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2dbb21c1-4048-33d2-b914-25c26fdbc09d"))) {
-qTime = -1;
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("cbc9b0f1-5b72-335d-9181-cba9d4c0ca53"))) { metrics.totalCall(qTime); } else if (KnobRuntime.check(java.util.UUID.fromString("8067b65b-1dd5-3054-8625-aabdc3cb9dbb"))) { metrics.processedCall(qTime); } else { metrics.dequeuedCall(qTime); }
-if(KnobRuntime.check(java.util.UUID.fromString("c869100b-de01-3782-b248-a6c3a0ed604b"))) {
-processingTime = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ca17739d-c4b3-32a5-89ef-a101f7eed136"))) {
-processingTime /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5d5b8ea7-9033-3db9-86f2-6bb6d1d469cc"))) {
-processingTime = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("985669ef-7b91-3fc3-9fb9-2faf3aa4c760"))) {
-processingTime -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8b1945a0-8066-3e75-aff6-921a73be0db1"))) {
-processingTime += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("51ecf572-f03a-3b21-86f5-891a927cd101"))) {
-processingTime *= 2;
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("ea2dbc8f-798a-32cb-b52d-ee6431a7d6cd"))) { metrics.dequeuedCall(processingTime); } else if (KnobRuntime.check(java.util.UUID.fromString("bd4dc02f-6f9f-390c-8c72-cb397e888878"))) { metrics.totalCall(processingTime); } else { metrics.processedCall(processingTime); }
+      metrics.dequeuedCall(qTime);
+      metrics.processedCall(processingTime);
       metrics.totalCall(totalTime);
       metrics.receivedRequest(requestSize);
       metrics.sentResponse(responseSize);
@@ -534,7 +474,7 @@ processingTime *= 2;
       // response time or larger than configured warning size
       boolean tooSlow = isTooSlow(call, processingTime);
       boolean tooLarge = isTooLarge(call, responseSize, responseBlockSize);
-      if (((KnobRuntime.check(java.util.UUID.fromString("9ec9eecf-0af7-37bc-b19d-3e96c7dcdc41"))) ? ((tooSlow) || (tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("f8214378-ccd5-3fd5-b506-19771fa6830f"))) ? ((tooSlow) && (tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("209419e3-cbbf-3d56-821f-686831a1eb8d"))) ? ((!tooSlow) || (!tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("f9f568a9-4bcf-3112-aab8-fad0339b0e04"))) ? ((!tooSlow) && (tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("e163a7d3-7f14-34dc-9dd7-a6263d3370e2"))) ? ((!tooSlow) && (!tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("b03898c8-2955-3381-9944-4369b84d9ab3"))) ? (!tooSlow) : (((KnobRuntime.check(java.util.UUID.fromString("5a6c0537-2746-38c3-8f60-45fcb9bfe5e9"))) ? (!tooLarge) : (((KnobRuntime.check(java.util.UUID.fromString("65040a94-a6eb-3674-bd85-9d6177135b60"))) ? ((!tooSlow) || (tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("fc3ee7ca-7641-3aca-a50f-d220f24acbf1"))) ? (tooSlow) : (((KnobRuntime.check(java.util.UUID.fromString("5234b342-70b4-3438-91b1-f1707ad805dc"))) ? (tooLarge) : (((KnobRuntime.check(java.util.UUID.fromString("c98ecbb9-4110-3784-a2b0-bfbabb67a715"))) ? ((tooSlow) && (!tooLarge)) : (((KnobRuntime.check(java.util.UUID.fromString("70c16b14-6c6f-3de7-ba24-387d3dc9a684"))) ? ((tooSlow) || (!tooLarge)) : (tooSlow || tooLarge))))))))))))))))))))))))) {
+      if (tooSlow || tooLarge) {
         final String userName = call.getRequestUserName().orElse(StringUtils.EMPTY);
         // when tagging, we let TooLarge trump TooSmall to keep output simple
         // note that large responses will often also be slow.
@@ -567,7 +507,7 @@ processingTime *= 2;
 
       if (e instanceof LinkageError) throw new DoNotRetryIOException(e);
       if (e instanceof IOException) throw (IOException) e;
-      if (KnobRuntime.check(java.util.UUID.fromString("18430658-572e-3fa2-877f-9926b85dc26f"))) { LOG.debug("Unexpected throwable object ", e); } else { LOG.error("Unexpected throwable object ", e); }
+      LOG.error("Unexpected throwable object ", e);
       throw new IOException(e.getMessage(), e);
     }
   }
@@ -678,25 +618,7 @@ processingTime *= 2;
       int truncatedLength =
         strParam.length() < traceLogMaxLength ? strParam.length() : traceLogMaxLength;
       String truncatedFlag = truncatedLength == strParam.length() ? "" : KEY_WORD_TRUNCATED;
-if(KnobRuntime.check(java.util.UUID.fromString("a0186c70-058f-323e-a741-be18e7e81885"))) {
-truncatedLength /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("703de279-2861-33e2-b40c-5261fb2dc334"))) {
-truncatedLength *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b0f407c7-750d-359f-9528-e810ccbfca79"))) {
-truncatedLength += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ef2b3e32-3bf0-3132-8558-05c51b943da7"))) {
-truncatedLength = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6f25e137-9baf-302c-81aa-065a4a757c77"))) {
-truncatedLength = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2076a332-596f-3d27-9eb3-01b2ad1f65de"))) {
-truncatedLength -= 1;
-}
-      return ((KnobRuntime.check(java.util.UUID.fromString("38992dd3-a031-3a31-9235-f7650c642bba"))) ? ((strParam.subSequence(0, 0)) + (truncatedFlag)) : (((KnobRuntime.check(java.util.UUID.fromString("fc99daf0-3466-3966-93ca-294567ef8bbd"))) ? ((strParam.subSequence(0, 150)) + (truncatedFlag)) : (((KnobRuntime.check(java.util.UUID.fromString("e2e5698f-b3bf-30f6-acf0-496dd6a9edf5"))) ? ((strParam.subSequence(0, truncatedLength)) + (truncatedFlag)) : (strParam.subSequence(0, truncatedLength) + truncatedFlag))))));
+      return strParam.subSequence(0, truncatedLength) + truncatedFlag;
     }
     return strParam.subSequence(0, 150) + KEY_WORD_TRUNCATED;
   }
@@ -725,9 +647,6 @@ truncatedLength -= 1;
 
   @Override
   public void addCallSize(final long diff) {
-if(KnobRuntime.check(java.util.UUID.fromString("b73c3d57-7d0f-33e1-863e-b9d9e12d0339"))) {
-return;
-}
     this.callQueueSizeInBytes.add(diff);
   }
 
@@ -740,54 +659,7 @@ return;
    */
   public synchronized void authorize(UserGroupInformation user, ConnectionHeader connection,
     InetAddress addr) throws AuthorizationException {
-if(KnobRuntime.check(java.util.UUID.fromString("c79167c9-fdfa-3559-9f5b-a0fbfbb6e719"))) {
-try {
-    java.lang.reflect.Field field = connection.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(connection));
-    field.set(connection, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8109b77e-05cb-3f8e-9995-fc11586fd9f5"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b0ebbf2f-e324-3466-af42-dab3da8a946f"))) {
-try {
-    java.lang.reflect.Field field = connection.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(connection));
-    field.set(connection, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("67c491b8-3d5a-33c7-8db3-ad359a745653"))) {
-try {
-    java.lang.reflect.Field field = connection.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(connection));
-    field.set(connection, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("05d06cbe-b0fb-3a37-a124-d273456981b5"))) {
-try {
-    java.lang.reflect.Field field = connection.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(connection));
-    field.set(connection, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("73a465af-dcc4-3dc4-b859-c1602eb45aeb"))) ? (!authorize) : (authorize))) {
+    if (authorize) {
       Class<?> c = getServiceInterface(services, connection.getServiceName());
       authManager.authorize(user, c, getConf(), addr);
     }
@@ -882,7 +754,7 @@ try {
   public static Optional<RpcCall> unsetCurrentCall() {
     Optional<RpcCall> rpcCall = getCurrentCall();
     CurCall.set(null);
-    return ((KnobRuntime.check(java.util.UUID.fromString("aac0f297-c727-3947-b728-97e9ed9a6005"))) ? (getCurrentCall()) : (rpcCall));
+    return rpcCall;
   }
 
   /**
@@ -969,7 +841,7 @@ try {
       return status;
     }
     status = TaskMonitor.get().createRPCStatus(Thread.currentThread().getName());
-    if (KnobRuntime.check(java.util.UUID.fromString("7eb6d045-3112-3c69-bd42-07abc52900d1"))) { status.resume("Waiting for a call"); } else { status.pause("Waiting for a call"); }
+    status.pause("Waiting for a call");
     RpcServer.MONITORED_RPC.set(status);
     return status;
   }
@@ -1002,20 +874,11 @@ try {
 
   @Override
   public void setNamedQueueRecorder(NamedQueueRecorder namedQueueRecorder) {
-if(KnobRuntime.check(java.util.UUID.fromString("bf89e1e9-fea4-3711-9305-b40d19729859"))) {
-return;
-}
     this.namedQueueRecorder = namedQueueRecorder;
   }
 
   protected boolean needAuthorization() {
-if(KnobRuntime.check(java.util.UUID.fromString("fbbe428d-275c-312c-ba80-a255d1ef19dd"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4c609151-b5cc-3e29-b258-7160059f2cc0"))) {
-return false;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("31baa82f-8f51-309f-8718-83823fc49e42"))) ? (!authorize) : (authorize));
+    return authorize;
   }
 
   @RestrictedApi(explanation = "Should only be called in tests", link = "",

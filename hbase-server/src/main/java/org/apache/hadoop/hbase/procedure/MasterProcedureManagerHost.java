@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -38,20 +37,6 @@ public class MasterProcedureManagerHost extends ProcedureManagerHost<MasterProce
 
   @Override
   public void loadProcedures(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("b28909b7-4315-34cc-8981-8a9a26c1b761"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("294639d5-b05e-307b-8bb1-fbe70e1c78cf"))) {
-return;
-}
     loadUserProcedures(conf, MASTER_PROCEDURE_CONF_KEY);
     for (MasterProcedureManager mpm : getProcedureManagers()) {
       procedureMgrMap.put(mpm.getProcedureSignature(), mpm);
@@ -60,30 +45,12 @@ return;
 
   public void initialize(MasterServices master, final MetricsMaster metricsMaster)
     throws KeeperException, IOException, UnsupportedOperationException {
-if(KnobRuntime.check(java.util.UUID.fromString("996d8b67-5e63-3116-a249-4a63763b383f"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b89a8522-7b91-3786-b57b-6395c59f9e08"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("74afe43e-277b-3413-ad5a-0b9e0253d37c"))) {
-throw new UnsupportedOperationException("Injected exception");
-}
     for (MasterProcedureManager mpm : getProcedureManagers()) {
-if(KnobRuntime.check(java.util.UUID.fromString("3f341cfa-bd35-31b1-ae20-7dedd6577f2d"))) {
-throw new java.lang.UnsupportedOperationException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4ece5c5b-b081-3877-8bc0-c04680a2cd54"))) {
-throw new java.io.IOException("Injected exception");
-}
       mpm.initialize(master, metricsMaster);
     }
   }
 
   public void stop(String why) {
-if(KnobRuntime.check(java.util.UUID.fromString("ce366f06-4b63-33bb-bb58-f70d0a1ac618"))) {
-return;
-}
     for (MasterProcedureManager mpm : getProcedureManagers()) {
       mpm.stop(why);
     }

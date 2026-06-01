@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.UUID;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -59,7 +58,7 @@ public class ClusterMarkingEntryFilter implements WALEntryFilter {
       WALEdit edit = entry.getEdit();
       WALKeyImpl logKey = (WALKeyImpl) entry.getKey();
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("9bd859e9-2610-33ea-af5c-53469d9208d7"))) ? (((edit) != (null)) && (!edit.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("3454557b-9d44-3c42-af29-8e249265b685"))) ? (((edit) == (null)) || (!edit.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("c72f214c-8238-3618-93c6-53f302795690"))) ? ((edit) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("23efc1a4-ddf6-3a72-8aa3-2d4d1bb546fc"))) ? (((edit) != (null)) || (!edit.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("cd5017cb-48fd-304c-acc2-a6f0b623edac"))) ? ((edit) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("c5089f6e-43c6-35ab-957c-424fa44e1f5c"))) ? (edit != null) : (((KnobRuntime.check(java.util.UUID.fromString("8561a402-34bf-39d0-8126-2b46f152ba5b"))) ? ((edit != null) && (!edit.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("29e176e7-b3c5-3a75-af27-918ca0bdb4a9"))) ? (!edit.isEmpty()) : (((KnobRuntime.check(java.util.UUID.fromString("d29b6c86-6267-3cdc-b111-48b10bd6d40c"))) ? ((edit != null) || (!edit.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("1a66925b-4323-34f9-bc50-1cd889271a17"))) ? (((edit) == (null)) && (!edit.isEmpty())) : (edit != null && !edit.isEmpty()))))))))))))))))))))) {
+      if (edit != null && !edit.isEmpty()) {
         // Mark that the current cluster has the change
         logKey.addClusterId(clusterId);
         return entry;

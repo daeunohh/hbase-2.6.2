@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -124,10 +123,7 @@ public class RegionServerSnapshotManager extends RegionServerProcedureManager {
    */
   @Override
   public void start() {
-if(KnobRuntime.check(java.util.UUID.fromString("8fe9fb09-bb35-32c4-ae94-0626d0bb28d4"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("2ff8d2f3-59af-3e8f-a5ac-47802d745813"))) { LOG.debug("Start Snapshot Manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("130e1b18-a02f-3f8f-9d30-7ee1e2c0b094"))) { LOG.info("Start Snapshot Manager "); } else if (KnobRuntime.check(java.util.UUID.fromString("6f452290-50c3-3c5b-bc49-76c38f99a5e8"))) { LOG.info(("Start Snapshot Manager ") + (rss.getServerName().toString())); } else if (KnobRuntime.check(java.util.UUID.fromString("25436957-78a4-3c8a-971f-4202e93dcb0d"))) { LOG.debug(("Start Snapshot Manager ") + (rss.getServerName().toString())); } else { LOG.debug("Start Snapshot Manager " + rss.getServerName().toString()); }
+    LOG.debug("Start Snapshot Manager " + rss.getServerName().toString());
     this.memberRpcs.start(rss.getServerName().toString(), member);
   }
 
@@ -137,24 +133,12 @@ return;
    */
   @Override
   public void stop(boolean force) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0ff75b55-81f6-39bc-b0c7-d390896abf42"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0c16ebc5-1f3a-34ff-9170-76322ec5c733"))) {
-return;
-}
     String mode = force ? "abruptly" : "gracefully";
-    if (KnobRuntime.check(java.util.UUID.fromString("c1c5bf2e-9de1-3c25-a418-15bcede9d338"))) { LOG.debug(("Stopping RegionServerSnapshotManager ") + (mode)); } else if (KnobRuntime.check(java.util.UUID.fromString("52152c04-fc9b-3c65-806d-0db0ba4e494f"))) { LOG.debug((("Stopping RegionServerSnapshotManager ") + (mode)) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("fee886aa-eb5d-3389-8b3f-d5d9420b7718"))) { LOG.info(("Stopping RegionServerSnapshotManager ") + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("6bdc8109-ea55-3827-8bdb-db474adadb68"))) { LOG.info(("Stopping RegionServerSnapshotManager " + mode) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("d7b7069e-3c61-3811-9117-ba8025ff3f83"))) { LOG.info(("Stopping RegionServerSnapshotManager ") + (mode)); } else if (KnobRuntime.check(java.util.UUID.fromString("09a04961-cf5a-3a94-a151-a112a288b052"))) { LOG.debug(("Stopping RegionServerSnapshotManager " + mode) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("6047a325-76e7-35b5-b08a-7de071f57e3e"))) { LOG.debug("Stopping RegionServerSnapshotManager "); } else if (KnobRuntime.check(java.util.UUID.fromString("2141a379-f35b-3f21-9016-afa732bfdab2"))) { LOG.info("Stopping RegionServerSnapshotManager "); } else if (KnobRuntime.check(java.util.UUID.fromString("1743b3d6-36b1-318c-a590-fa17074daf5f"))) { LOG.info("."); } else if (KnobRuntime.check(java.util.UUID.fromString("7d27159c-19a4-337e-8840-b148b1578c93"))) { LOG.debug(("Stopping RegionServerSnapshotManager ") + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("6ae07c41-b3f9-3319-9637-882c4008d0df"))) { LOG.info((("Stopping RegionServerSnapshotManager ") + (mode)) + (".")); } else if (KnobRuntime.check(java.util.UUID.fromString("1451fb4e-bd85-3e7a-a290-e99c17e0fc5a"))) { LOG.info("Stopping RegionServerSnapshotManager " + mode); } else if (KnobRuntime.check(java.util.UUID.fromString("39073a0e-143d-3823-b932-8b281a2b99aa"))) { LOG.debug("Stopping RegionServerSnapshotManager " + mode); } else if (KnobRuntime.check(java.util.UUID.fromString("0ea1b7f5-0819-3292-8207-4779e02df1fa"))) { LOG.debug("."); } else { LOG.info("Stopping RegionServerSnapshotManager " + mode + "."); }
+    LOG.info("Stopping RegionServerSnapshotManager " + mode + ".");
 
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("337cef10-c2da-3fbd-b69e-00341e9cf89d"))) {
-throw new java.io.IOException("Injected exception");
-}
       this.member.close();
     } finally {
-if(KnobRuntime.check(java.util.UUID.fromString("3b89cd8a-9c2f-3174-8b57-d69fe389d242"))) {
-throw new java.io.IOException("Injected exception");
-}
       this.memberRpcs.close();
     }
   }
@@ -392,9 +376,6 @@ throw new java.io.IOException("Injected exception");
    */
   @Override
   public void initialize(RegionServerServices rss) throws KeeperException {
-if(KnobRuntime.check(java.util.UUID.fromString("b5b30bb2-02a0-391b-be08-781e243fc493"))) {
-return;
-}
     this.rss = rss;
     ZKWatcher zkw = rss.getZooKeeper();
     this.memberRpcs =
@@ -413,9 +394,6 @@ return;
 
   @Override
   public String getProcedureSignature() {
-if(KnobRuntime.check(java.util.UUID.fromString("23babaca-634a-3c64-808c-2036cb71cd32"))) {
-return null;
-}
     return SnapshotManager.ONLINE_SNAPSHOT_CONTROLLER_DESCRIPTION;
   }
 

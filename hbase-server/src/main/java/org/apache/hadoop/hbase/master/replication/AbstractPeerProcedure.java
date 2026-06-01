@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.master.procedure.MasterProcedureEnv;
@@ -83,34 +82,16 @@ public abstract class AbstractPeerProcedure<TState>
   @Override
   protected void serializeStateData(ProcedureStateSerializer serializer) throws IOException {
     super.serializeStateData(serializer);
-if(KnobRuntime.check(java.util.UUID.fromString("65a7b68c-6f03-3583-85cc-5cbd1d858e58"))) {
-throw new java.io.IOException("Injected exception");
-}
     serializer.serialize(PeerProcedureStateData.newBuilder().setPeerId(peerId).build());
   }
 
   @Override
   protected void deserializeStateData(ProcedureStateSerializer serializer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("4b0e6e7c-fe5b-3151-bd26-d7795b429231"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a8f0bed0-da7c-3464-8b04-8f9e4f009bfd"))) {
-throw new java.io.IOException("Injected exception");
-}
     super.deserializeStateData(serializer);
-if(KnobRuntime.check(java.util.UUID.fromString("6ce16647-f713-3fa9-ac76-29e6c5d2eadd"))) {
-throw new java.io.IOException("Injected exception");
-}
     peerId = serializer.deserialize(PeerProcedureStateData.class).getPeerId();
   }
 
   protected final void checkPeerModificationEnabled(MasterProcedureEnv env) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("20f16945-6eba-3b16-ba21-1529553be026"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8f260606-1411-3293-a532-887efd191f26"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (!env.getMasterServices().isReplicationPeerModificationEnabled()) {
       throw new IOException("Replication peer modification disabled");
     }

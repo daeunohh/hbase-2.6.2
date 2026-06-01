@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.DataInput;
@@ -191,8 +190,8 @@ public final class HFile {
 
   public static final void updateReadLatency(long latencyMillis, boolean pread, boolean tooSlow) {
     RpcServer.getCurrentCall().ifPresent(call -> call.updateFsReadTime(latencyMillis));
-    if (((KnobRuntime.check(java.util.UUID.fromString("37371620-b37a-3953-b509-fa92c526b496"))) ? (!pread) : (pread))) {
-      if (KnobRuntime.check(java.util.UUID.fromString("7b5c8d30-8e29-3f98-bfd0-78f2974f25e0"))) { MetricsIO.getInstance().updateFsReadTime(latencyMillis); } else if (KnobRuntime.check(java.util.UUID.fromString("8d327318-e6c1-3ccd-bfc7-4651f9ca3efd"))) { MetricsIO.getInstance().updateFsWriteTime(latencyMillis); } else { MetricsIO.getInstance().updateFsPreadTime(latencyMillis); }
+    if (pread) {
+      MetricsIO.getInstance().updateFsPreadTime(latencyMillis);
     } else {
       MetricsIO.getInstance().updateFsReadTime(latencyMillis);
     }
@@ -275,18 +274,12 @@ public final class HFile {
     }
 
     public WriterFactory withOutputStream(FSDataOutputStream ostream) {
-if(KnobRuntime.check(java.util.UUID.fromString("5a05d26e-ca07-3555-8360-c90343ddbcdc"))) {
-return null;
-}
       Preconditions.checkNotNull(ostream);
       this.ostream = ostream;
       return this;
     }
 
     public WriterFactory withFavoredNodes(InetSocketAddress[] favoredNodes) {
-if(KnobRuntime.check(java.util.UUID.fromString("59e1ee51-2c3e-316a-89ee-f43ff51dea59"))) {
-return null;
-}
       // Deliberately not checking for null here.
       this.favoredNodes = favoredNodes;
       return this;
@@ -306,7 +299,7 @@ return null;
       if ((path != null ? 1 : 0) + (ostream != null ? 1 : 0) != 1) {
         throw new AssertionError("Please specify exactly one of " + "filesystem/path or path");
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("5ace6453-5906-3ac0-bac2-429cc878782b"))) ? ((path) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("10fc20f4-9ae3-3cdd-8743-49fd98ac9e2d"))) ? ((path) != (null)) : (path != null))))) {
+      if (path != null) {
         ostream = HFileWriterImpl.createOutputStream(conf, fs, path, favoredNodes);
         try {
           ostream.setDropBehind(shouldDropBehind && cacheConf.shouldDropBehindCompaction());
@@ -668,9 +661,6 @@ return null;
   }
 
   public static void main(String[] args) throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("ddb8e3b0-9cac-3f4e-b6a1-2b2c5b60082e"))) {
-return;
-}
     // delegate to preserve old behavior
     HFilePrettyPrinter.main(args);
   }

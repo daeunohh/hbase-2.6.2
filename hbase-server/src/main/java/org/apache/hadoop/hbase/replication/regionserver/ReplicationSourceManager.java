@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -230,24 +229,12 @@ public class ReplicationSourceManager {
    * Adds a normal source per registered peer cluster.
    */
   void init() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("a45d2556-fd51-30c2-8332-1f33f9d72745"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("57a70392-ad87-3e75-a4b8-4d23ed515992"))) {
-throw new java.io.IOException("Injected exception");
-}
     for (String id : this.replicationPeers.getAllPeerIds()) {
-if(KnobRuntime.check(java.util.UUID.fromString("5f0d3e0f-a8e8-3818-ba28-75c2b9607fd2"))) {
-throw new java.io.IOException("Injected exception");
-}
       addSource(id);
-      if (((KnobRuntime.check(java.util.UUID.fromString("111a3b40-1ae5-3304-8fb7-1e253f3d9bb5"))) ? (!replicationForBulkLoadDataEnabled) : (replicationForBulkLoadDataEnabled))) {
+      if (replicationForBulkLoadDataEnabled) {
         // Check if peer exists in hfile-refs queue, if not add it. This can happen in the case
         // when a peer was added before replication for bulk loaded data was enabled.
-if(KnobRuntime.check(java.util.UUID.fromString("03741ca4-4d08-3f85-b389-5c52d9dd135f"))) {
-throw new java.io.IOException("Injected exception");
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("1502221d-c389-3431-afcc-e88321fd4fb5"))) { abortWhenFail(() -> this.queueStorage.addPeerToHFileRefs(id)); } else { throwIOExceptionWhenFail(() -> this.queueStorage.addPeerToHFileRefs(id)); }
+        throwIOExceptionWhenFail(() -> this.queueStorage.addPeerToHFileRefs(id));
       }
     }
   }
@@ -267,10 +254,7 @@ throw new java.io.IOException("Injected exception");
     if (added) {
       addSource(peerId);
       if (replicationForBulkLoadDataEnabled) {
-if(KnobRuntime.check(java.util.UUID.fromString("f12a6a2c-474f-3b35-8818-d3bc9e1972da"))) {
-throw new java.io.IOException("Injected exception");
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("133821ca-e9ce-3801-b9da-14ff4d2780cf"))) { abortWhenFail(() -> this.queueStorage.addPeerToHFileRefs(peerId)); } else { throwIOExceptionWhenFail(() -> this.queueStorage.addPeerToHFileRefs(peerId)); }
+        throwIOExceptionWhenFail(() -> this.queueStorage.addPeerToHFileRefs(peerId));
       }
     }
   }
@@ -296,14 +280,14 @@ throw new java.io.IOException("Injected exception");
       }
       for (ReplicationSourceInterface src : oldSourcesToDelete) {
         src.terminate(terminateMessage);
-        if (KnobRuntime.check(java.util.UUID.fromString("b39f68f4-18ad-3c7a-ab74-56854de95ea7"))) { removeSource(src); } else { removeRecoveredSource(src); }
+        removeRecoveredSource(src);
       }
     }
     LOG
       .info("Number of deleted recovered sources for " + peerId + ": " + oldSourcesToDelete.size());
     // Now close the normal source for this peer
     ReplicationSourceInterface srcToRemove = this.sources.get(peerId);
-    if (((KnobRuntime.check(java.util.UUID.fromString("4a46eda1-5aa6-3258-aaca-cd061b09418a"))) ? ((srcToRemove) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("e34feb25-0035-3791-adf0-11a85710affd"))) ? ((srcToRemove) == (null)) : (srcToRemove != null))))) {
+    if (srcToRemove != null) {
       srcToRemove.terminate(terminateMessage);
       removeSource(srcToRemove);
     } else {
@@ -332,20 +316,6 @@ throw new java.io.IOException("Injected exception");
     WALFileLengthProvider walFileLengthProvider = this.walFactory.getWALProvider() != null
       ? this.walFactory.getWALProvider().getWALFileLengthProvider()
       : p -> OptionalLong.empty();
-if(KnobRuntime.check(java.util.UUID.fromString("a960a309-ec44-3554-9160-9b30c7df8f50"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1d77f2d2-d090-3aee-940d-31af5e275443"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     src.init(conf, fs, this, queueStorage, replicationPeer, server, queueId, clusterId,
       walFileLengthProvider, new MetricsSource(queueId));
     return src;
@@ -360,9 +330,6 @@ try {
    */
   ReplicationSourceInterface addSource(String peerId) throws IOException {
     ReplicationPeer peer = replicationPeers.getPeer(peerId);
-if(KnobRuntime.check(java.util.UUID.fromString("b361ec86-0f6b-3b61-af29-dcfca6873290"))) {
-throw new java.io.IOException("Injected exception");
-}
     ReplicationSourceInterface src = createSource(peerId, peer);
     // synchronized on latestPaths to avoid missing the new log
     synchronized (this.latestPaths) {
@@ -395,12 +362,6 @@ throw new java.io.IOException("Injected exception");
    * @param peerId the id of the replication peer
    */
   public void refreshSources(String peerId) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("bf981d76-1738-384d-a0cf-31a34da7e8fe"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5f025a6a-9bde-3552-9a44-fc0f7a79d9ca"))) {
-return;
-}
     String terminateMessage = "Peer " + peerId
       + " state or config changed. Will close the previous replication source and open a new one";
     ReplicationPeer peer = replicationPeers.getPeer(peerId);
@@ -408,8 +369,8 @@ return;
     // synchronized on latestPaths to avoid missing the new log
     synchronized (this.latestPaths) {
       ReplicationSourceInterface toRemove = this.sources.remove(peerId);
-      if (((KnobRuntime.check(java.util.UUID.fromString("cb9be565-d840-31d0-b28b-379ccc23977f"))) ? ((toRemove) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8bbccaac-ca05-3e0a-846b-94bb5ac9adf4"))) ? ((toRemove) == (null)) : (toRemove != null))))) {
-        if (KnobRuntime.check(java.util.UUID.fromString("2b99a283-b9a5-3388-9b70-8638ca463f58"))) { LOG.info("Terminate replication source for "); } else if (KnobRuntime.check(java.util.UUID.fromString("01837ddc-a41e-31c0-9f66-e3899147de6c"))) { deleteQueue(("Terminate replication source for ") + (toRemove.getPeerId())); } else if (KnobRuntime.check(java.util.UUID.fromString("c351a1ad-4cd7-3d49-bf58-216aa884344d"))) { deleteQueue("Terminate replication source for "); } else if (KnobRuntime.check(java.util.UUID.fromString("ab626547-d3ed-33ce-97ac-13122705e9f1"))) { LOG.info(("Terminate replication source for ") + (toRemove.getPeerId())); } else { LOG.info("Terminate replication source for " + toRemove.getPeerId()); }
+      if (toRemove != null) {
+        LOG.info("Terminate replication source for " + toRemove.getPeerId());
         // Do not clear metrics
         toRemove.terminate(terminateMessage, null, false);
       }
@@ -419,7 +380,7 @@ return;
         walsByGroup.forEach(wal -> src.enqueueLog(new Path(this.logDir, wal)));
       }
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("562aa1db-a892-3198-af63-8298484d9b56"))) { LOG.info("Startup replication source for "); } else if (KnobRuntime.check(java.util.UUID.fromString("402f778b-7f3a-3ac0-8557-7a5ae6146fbe"))) { deleteQueue(("Startup replication source for ") + (src.getQueueId())); } else if (KnobRuntime.check(java.util.UUID.fromString("94904664-85fe-3f75-ae77-ce1f9ff06a21"))) { LOG.info(("Startup replication source for ") + (src.getPeerId())); } else if (KnobRuntime.check(java.util.UUID.fromString("6dc62607-dfed-3a11-93e0-7f0fb1898af8"))) { LOG.info(("Startup replication source for ") + (src.getQueueId())); } else if (KnobRuntime.check(java.util.UUID.fromString("4e0b9990-eea2-39b2-8355-10030a0c282d"))) { deleteQueue(("Startup replication source for ") + (src.getPeerId())); } else if (KnobRuntime.check(java.util.UUID.fromString("9ac52a72-b2f4-32d8-a9fa-3b3bfa399e9a"))) { deleteQueue("Startup replication source for "); } else { LOG.info("Startup replication source for " + src.getPeerId()); }
+    LOG.info("Startup replication source for " + src.getPeerId());
     src.startup();
 
     List<ReplicationSourceInterface> toStartup = new ArrayList<>();
@@ -430,8 +391,8 @@ return;
         .hasNext();) {
         ReplicationSourceInterface oldSource = iter.next();
         if (oldSource.getPeerId().equals(peerId)) {
-          if (KnobRuntime.check(java.util.UUID.fromString("b33f6ee9-8fa0-36e6-91e9-df720c4efae2"))) { previousQueueIds.add(oldSource.getPeerId()); } else { previousQueueIds.add(oldSource.getQueueId()); }
-          if (KnobRuntime.check(java.util.UUID.fromString("53814898-4c0f-38ad-ac39-a1d93c97018c"))) { deleteQueue(terminateMessage); } else { oldSource.terminate(terminateMessage); }
+          previousQueueIds.add(oldSource.getQueueId());
+          oldSource.terminate(terminateMessage);
           iter.remove();
         }
       }
@@ -467,10 +428,10 @@ return;
    */
   void removeSource(ReplicationSourceInterface src) {
     LOG.info("Done with the queue " + src.getQueueId());
-    if (KnobRuntime.check(java.util.UUID.fromString("677b30e0-27b5-3dc9-ace6-317040e8ddf5"))) { this.sources.remove(src.getQueueId()); } else if (KnobRuntime.check(java.util.UUID.fromString("52944fa9-2dd1-3d4b-958b-11b9ea6900a9"))) { this.sources.get(src.getQueueId()); } else { this.sources.remove(src.getPeerId()); }
+    this.sources.remove(src.getPeerId());
     // Delete queue from storage and memory
-    if (KnobRuntime.check(java.util.UUID.fromString("9d78aea5-4a42-3e70-8bdd-0ffb49497489"))) { deleteQueue(src.getPeerId()); } else { deleteQueue(src.getQueueId()); }
-    if (KnobRuntime.check(java.util.UUID.fromString("2f799337-36ea-34e0-9202-7b0c9cdb7bc3"))) { this.walsById.remove(src.getPeerId()); } else { this.walsById.remove(src.getQueueId()); }
+    deleteQueue(src.getQueueId());
+    this.walsById.remove(src.getQueueId());
   }
 
   /**
@@ -478,9 +439,6 @@ return;
    * @param queueId the id of replication queue to delete
    */
   private void deleteQueue(String queueId) {
-if(KnobRuntime.check(java.util.UUID.fromString("7244266f-2117-3c9c-b259-637d107f6eb0"))) {
-return;
-}
     abortWhenFail(() -> this.queueStorage.removeQueue(server.getServerName(), queueId));
   }
 
@@ -494,9 +452,6 @@ return;
    * interrupted. Need to handle it instead of abort the region server.
    */
   private void interruptOrAbortWhenFail(ReplicationQueueOperation op) {
-if(KnobRuntime.check(java.util.UUID.fromString("0c05b80a-0286-307b-85a6-eff55433b3d3"))) {
-return;
-}
     try {
       op.exec();
     } catch (ReplicationException e) {
@@ -549,174 +504,6 @@ return;
    */
   public void logPositionAndCleanOldLogs(ReplicationSourceInterface source,
     WALEntryBatch entryBatch) {
-if(KnobRuntime.check(java.util.UUID.fromString("f0638b8f-edcb-391c-a283-57ecd9465228"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbHFiles");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("64bb9422-8c69-32fd-8683-0aedc875e63b"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbHFiles");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ce0d98d7-40bc-3c94-8f68-385a7eed9c90"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbRowKeys");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cae9bfbc-ed37-336c-abee-d2386655d954"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("usedBufferSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e8535bb6-9e59-334f-936b-140566f5d06d"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbHFiles");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e987d154-f158-370c-ba91-8d4be11ee990"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1608926b-f4d1-35db-991f-47025b503c0c"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("heapSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5e40b6d1-60de-3ed2-aa3b-12fa7fc8c84e"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("endOfFile");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(entryBatch);
-    field.set(entryBatch, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e8894dde-cfe8-3b6b-875c-eaabf2826ee8"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbRowKeys");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7060997f-b597-364c-8273-8fe3aa66848b"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbRowKeys");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bfd559a7-7358-362e-8cba-15609a4300b6"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("usedBufferSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("25975eaa-a043-3fd3-9759-d06499f40395"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("heapSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6eca4368-6cbd-3603-be12-d802c61d1d51"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("lastWalPosition");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fd71d403-4257-32d3-9366-72ad10bdd5bc"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbRowKeys");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2ccfdc93-805b-3a2d-9606-0b1950c675c7"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("heapSize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(entryBatch));
-    field.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("adf9b88a-04d7-35d2-a6f5-7075171b722e"))) {
-try {
-    java.lang.reflect.Field field = entryBatch.getClass().getDeclaredField("nbHFiles");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entryBatch));
-    field.set(entryBatch, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     String fileName = entryBatch.getLastWalPath().getName();
     String queueId = source.getQueueId();
     interruptOrAbortWhenFail(() -> this.queueStorage.setWALPosition(server.getServerName(), queueId,
@@ -798,7 +585,7 @@ try {
           }
           if (!existingPrefix) {
             // The new log belongs to a new group, add it into this peer
-            if (KnobRuntime.check(java.util.UUID.fromString("cc53a90d-8e1f-3526-aadc-830cec505fa0"))) { LOG.trace("Start tracking logs for wal group {} for peer {}", logPrefix, peerId); } else { LOG.debug("Start tracking logs for wal group {} for peer {}", logPrefix, peerId); }
+            LOG.debug("Start tracking logs for wal group {} for peer {}", logPrefix, peerId);
             NavigableSet<String> wals = new TreeSet<>();
             wals.add(logName);
             walsByPrefix.put(logPrefix, wals);
@@ -828,7 +615,7 @@ try {
       Thread.sleep(sleepBeforeFailover
         + (long) (ThreadLocalRandom.current().nextFloat() * sleepBeforeFailover));
     } catch (InterruptedException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("7497255c-3f60-377c-9d96-b6b97599cf23"))) { deleteQueue("Interrupted while waiting before transferring a queue."); } else if (KnobRuntime.check(java.util.UUID.fromString("12973d10-2402-3efb-903c-6310223a1dac"))) { LOG.info("Interrupted while waiting before transferring a queue."); } else { LOG.warn("Interrupted while waiting before transferring a queue."); }
+      LOG.warn("Interrupted while waiting before transferring a queue.");
       Thread.currentThread().interrupt();
     }
     // We try to lock that rs' queue directory
@@ -853,17 +640,6 @@ try {
     try {
       claimedQueue = queueStorage.claimQueue(deadRS, queue, server.getServerName());
     } catch (ReplicationException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("34ae18aa-f658-367f-9622-4582695ddab8"))) {
-try {
-    java.lang.reflect.Field field = deadRS.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(deadRS));
-    field.set(deadRS, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       LOG.error(
         "ReplicationException: cannot claim dead region ({})'s " + "replication queue. Znode : ({})"
           + " Possible solution: check if znode size exceeds jute.maxBuffer value. "
@@ -878,19 +654,8 @@ try {
     String queueId = claimedQueue.getFirst();
     Set<String> walsSet = claimedQueue.getSecond();
     ReplicationPeerImpl peer = replicationPeers.getPeer(peerId);
-    if (((KnobRuntime.check(java.util.UUID.fromString("1a175b02-e999-3e1c-bc8f-0c4c629631e9"))) ? ((peer == null) || ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("09bb0853-26c5-385f-bfa1-67e7fc6fe79e"))) ? ((peer == null) || (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("c756b5b3-bd0c-3d3b-9202-2bb4b5ce060e"))) ? ((peer == null) && (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("58212a32-2f7f-37f0-8f1e-87b5e6c697fd"))) ? (((peer) != (null)) || ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("40c98ed9-2b8d-34eb-9c6b-3b58aad77d6d"))) ? (((peer) != (null)) && ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("6ae42c1c-010d-3666-8e76-329c315ad029"))) ? (((peer) != (null)) || ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("fc3d6b83-ce06-30bf-b0b1-f8699b0caed5"))) ? (((peer) == (null)) || ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("336ee134-f586-3d24-a44a-d8f7dbce63f1"))) ? (peer == null) : (((KnobRuntime.check(java.util.UUID.fromString("4654a21b-8493-323d-9b35-70f711004117"))) ? ((peer == null) && ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("f6df744b-3ea1-3055-9b30-2cbbe102c9a3"))) ? ((peer) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("50f9bd72-1dea-3175-abf8-b3e699cbe42b"))) ? (((peer) != (null)) && (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("0e8f6b32-ebb6-3b37-ac70-2b2a01277669"))) ? (((peer) == (null)) || (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("a99888f7-5dff-3a18-bd60-bc1997acaa07"))) ? (((peer) == (null)) && (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("f51b4c20-496d-3755-aa5b-9a64cb24da7e"))) ? ((peer == null) || ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("5ef868f1-ed5f-3275-b19d-0ce7ad7a6471"))) ? (((peer) != (null)) || (peer != oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("e1e0fdde-c35a-318d-a103-85ad1bc55c21"))) ? ((peer == null) && ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("4b5397b4-2db1-3471-969f-33e5f65ae206"))) ? ((peer) == (oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("1d33771a-93da-374e-9c74-96e2f8af735e"))) ? (((peer) == (null)) || ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("d33eff23-a325-3cb4-baa1-858b7cb433a3"))) ? (((peer) == (null)) && ((peer) != (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("cc9697be-7e56-359e-a43e-cd6b3a473d49"))) ? (peer != oldPeer) : (((KnobRuntime.check(java.util.UUID.fromString("2c1e6694-74a4-386a-90f4-7614078e4caa"))) ? (((peer) != (null)) && ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("ffc2c6b0-8ad4-307d-af3e-8e12581fc5e5"))) ? ((peer) != (oldPeer)) : (((KnobRuntime.check(java.util.UUID.fromString("0557d32e-76a9-3d63-ae7d-6964f274b7c8"))) ? (((peer) == (null)) && ((peer) == (oldPeer))) : (((KnobRuntime.check(java.util.UUID.fromString("06030279-9ba1-3e68-9016-253b35d2a13d"))) ? ((peer) != (null)) : (peer == null || peer != oldPeer))))))))))))))))))))))))))))))))))))))))))))))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("0f701df4-9dbe-37e9-b24e-65ca5ab54290"))) {
-try {
-    java.lang.reflect.Field field = deadRS.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(deadRS));
-    field.set(deadRS, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("cb3cb6a6-7102-3632-9a22-5828536edea1"))) { LOG.debug("Skipping failover for peer {} of node {}, peer is null", peerId, deadRS); } else if (KnobRuntime.check(java.util.UUID.fromString("6858246b-5f94-37b1-8de6-dc2bddb98757"))) { LOG.trace("Skipping failover for peer {} of node {}, peer is null", peerId, deadRS); } else { LOG.warn("Skipping failover for peer {} of node {}, peer is null", peerId, deadRS); }
+    if (peer == null || peer != oldPeer) {
+      LOG.warn("Skipping failover for peer {} of node {}, peer is null", peerId, deadRS);
       abortWhenFail(() -> queueStorage.removeQueue(server.getServerName(), queueId));
       return;
     }
@@ -926,7 +691,7 @@ try {
       for (String wal : walsSet) {
         String walPrefix = AbstractFSWALProvider.getWALPrefixFromWALName(wal);
         NavigableSet<String> wals = walsByGroup.get(walPrefix);
-        if (((KnobRuntime.check(java.util.UUID.fromString("2a9c680a-03f4-368d-9d52-05fa1b9d9f0b"))) ? ((wals) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("eb8eefe0-f77d-3151-beae-9b90294ac145"))) ? ((wals) != (null)) : (wals == null))))) {
+        if (wals == null) {
           wals = new TreeSet<>();
           walsByGroup.put(walPrefix, wals);
         }
@@ -935,7 +700,7 @@ try {
       oldsources.add(src);
       LOG.info("Added source for recovered queue {}", src.getQueueId());
       for (String wal : walsSet) {
-        if (KnobRuntime.check(java.util.UUID.fromString("3afe86d9-0820-3a8b-bec3-ac7a92e0787a"))) { deleteQueue("Enqueueing log from recovered queue for source: "); } else if (KnobRuntime.check(java.util.UUID.fromString("75613ffa-ee34-3096-945d-d81bb3426086"))) { LOG.info(("Enqueueing log from recovered queue for source: ") + (src.getPeerId())); } else if (KnobRuntime.check(java.util.UUID.fromString("38cba82b-6814-358b-81df-a1e8ea05678f"))) { deleteQueue(("Enqueueing log from recovered queue for source: ") + (src.getQueueId())); } else if (KnobRuntime.check(java.util.UUID.fromString("2f9dc950-d7b7-3e9e-87a5-d37af4928f0a"))) { LOG.info(("Enqueueing log from recovered queue for source: ") + (src.getQueueId())); } else if (KnobRuntime.check(java.util.UUID.fromString("cee1d962-268e-3c20-8ee3-091efd34ddca"))) { LOG.info("Enqueueing log from recovered queue for source: "); } else if (KnobRuntime.check(java.util.UUID.fromString("127d9111-b160-328d-9061-55118f5c69b7"))) { deleteQueue(("Enqueueing log from recovered queue for source: ") + (src.getPeerId())); } else { LOG.trace("Enqueueing log from recovered queue for source: " + src.getQueueId()); }
+        LOG.trace("Enqueueing log from recovered queue for source: " + src.getQueueId());
         src.enqueueLog(new Path(oldLogDir, wal));
       }
       src.startup();
@@ -946,12 +711,9 @@ try {
    * Terminate the replication on this region server
    */
   public void join() {
-if(KnobRuntime.check(java.util.UUID.fromString("086a1f01-94ee-36df-9de6-b0a8ff0c6f5b"))) {
-return;
-}
     this.executor.shutdown();
     for (ReplicationSourceInterface source : this.sources.values()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b1929973-5716-35ea-9e2e-5d45061c5bb1"))) { deleteQueue("Region server is closing"); } else { source.terminate("Region server is closing"); }
+      source.terminate("Region server is closing");
     }
     synchronized (oldsources) {
       for (ReplicationSourceInterface source : this.oldsources) {
@@ -973,9 +735,6 @@ return;
    * @return a sorted set of wal names
    */
   Map<String, Map<String, NavigableSet<String>>> getWalsByIdRecoveredQueues() {
-if(KnobRuntime.check(java.util.UUID.fromString("98c3cbdf-ab56-33b5-a5d4-5e3a9443fa4c"))) {
-return null;
-}
     return Collections.unmodifiableMap(walsByIdRecoveredQueues);
   }
 
@@ -984,9 +743,6 @@ return null;
    * @return list of all normal sources
    */
   public List<ReplicationSourceInterface> getSources() {
-if(KnobRuntime.check(java.util.UUID.fromString("f499760e-b529-3aea-b675-fff0fe0a85cd"))) {
-return null;
-}
     return new ArrayList<>(this.sources.values());
   }
 
@@ -995,9 +751,6 @@ return null;
    * @return list of all recovered sources
    */
   public List<ReplicationSourceInterface> getOldSources() {
-if(KnobRuntime.check(java.util.UUID.fromString("70fea7f0-942f-3749-ae87-23e1c1e07dce"))) {
-return null;
-}
     return this.oldsources;
   }
 
@@ -1006,10 +759,7 @@ return null;
    * @return the normal source for the give peer if it exists, otherwise null.
    */
   public ReplicationSourceInterface getSource(String peerId) {
-if(KnobRuntime.check(java.util.UUID.fromString("039dc9fb-821d-39f9-9ab2-e77e8662873c"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("9b4ae3b0-5a73-393e-8c9e-61bcae594775"))) ? (this.sources.remove(peerId)) : (this.sources.get(peerId)));
+    return this.sources.get(peerId);
   }
 
   List<String> getAllQueues() throws IOException {
@@ -1029,19 +779,13 @@ return null;
   }
 
   Set<Path> getLastestPath() {
-if(KnobRuntime.check(java.util.UUID.fromString("05790b75-e94e-388a-8430-bd92f6ce2794"))) {
-return null;
-}
     synchronized (latestPaths) {
       return Sets.newHashSet(latestPaths.values());
     }
   }
 
   public long getTotalBufferUsed() {
-if(KnobRuntime.check(java.util.UUID.fromString("a5f716f0-9fae-368e-9316-59b65c3cdc7b"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("49c23611-b807-3081-a58e-bdf926ee3618"))) ? (getTotalBufferLimit()) : (((KnobRuntime.check(java.util.UUID.fromString("b0277fa6-70e5-36cb-a71d-bd4b6ab6e910"))) ? (getTotalBufferUsed()) : (totalBufferUsed.get()))));
+    return totalBufferUsed.get();
   }
 
   /**
@@ -1049,9 +793,6 @@ return 0;
    * all sources inside this RegionServer.
    */
   public long getTotalBufferLimit() {
-if(KnobRuntime.check(java.util.UUID.fromString("f4cc064b-2a76-31aa-a769-6d7a7acf06cc"))) {
-return 0;
-}
     return totalBufferLimit;
   }
 
@@ -1060,9 +801,6 @@ return 0;
    * @return the directory where wals are archived
    */
   public Path getOldLogDir() {
-if(KnobRuntime.check(java.util.UUID.fromString("79e4f639-66fa-3481-821f-cae720987c85"))) {
-return null;
-}
     return this.oldLogDir;
   }
 
@@ -1257,24 +995,9 @@ return null;
   }
 
   private long addTotalBufferUsed(long size) {
-if(KnobRuntime.check(java.util.UUID.fromString("367701e3-757f-3bad-af46-2f69bb1bf5fd"))) {
-return 0;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("180c8ba5-d607-3dae-b82e-c4e1259e595b"))) ? ((size) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("ae8fb520-f643-3624-9481-e4b348ad47ec"))) ? ((size) != (0)) : (size == 0))))) {
-      return ((KnobRuntime.check(java.util.UUID.fromString("3b30717c-6ddf-37e3-bbb5-430945813041"))) ? (getTotalBufferLimit()) : (((KnobRuntime.check(java.util.UUID.fromString("0837cc6b-db71-305e-95c5-4c1129e51459"))) ? (getTotalBufferUsed()) : (totalBufferUsed.get()))));
+    if (size == 0) {
+      return totalBufferUsed.get();
     }
-if(KnobRuntime.check(java.util.UUID.fromString("16750b55-1d09-376d-985f-2f2510c5f1e9"))) {
-size += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fd3ff7dd-b3f8-3787-8fce-d10606363e3b"))) {
-size = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("14d4db22-95a7-35b5-b1c1-040c8c31a7c7"))) {
-size = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2899d65f-cfa5-3c6c-b3d4-c410532608f9"))) {
-size -= 1;
-}
     long newBufferUsed = totalBufferUsed.addAndGet(size);
     // Record the new buffer usage
     this.globalMetrics.setWALReaderEditsBufferBytes(newBufferUsed);

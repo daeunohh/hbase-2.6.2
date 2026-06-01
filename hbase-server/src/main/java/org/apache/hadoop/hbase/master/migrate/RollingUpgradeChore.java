@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.migrate;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -82,9 +81,6 @@ public class RollingUpgradeChore extends ScheduledChore {
 
   @Override
   protected void chore() {
-if(KnobRuntime.check(java.util.UUID.fromString("8bfff2ef-85e1-352f-bb58-f926dec9b353"))) {
-return;
-}
     if (isCompletelyMigrateSFT(CONCURRENT_PROCEDURES_COUNT)) {
       LOG.info("All Rolling-Upgrade tasks are complete, shutdown RollingUpgradeChore!");
       shutdown();
@@ -92,12 +88,6 @@ return;
   }
 
   private boolean isCompletelyMigrateSFT(int concurrentCount) {
-if(KnobRuntime.check(java.util.UUID.fromString("a4a923dc-83a3-3e81-93e8-88cabcfd17d4"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("26a0dacc-4be2-3b3d-9e78-157f6dcbcf00"))) {
-return true;
-}
     Iterator<InitializeStoreFileTrackerProcedure> iter = processingProcs.iterator();
     while (iter.hasNext()) {
       InitializeStoreFileTrackerProcedure proc = iter.next();
@@ -113,27 +103,6 @@ return true;
 
     Map<String, TableDescriptor> migrateSFTTables;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("f71af560-1259-3b90-8e38-42e6df9598f1"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b7d084ec-41a6-3c03-930c-89ae8d68e0fd"))) {
-concurrentCount -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("07c34d1c-16e2-3ab8-a1c2-e22d91a4f6dd"))) {
-concurrentCount /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("478e2f74-a995-3e82-b1f6-f237852d354b"))) {
-concurrentCount *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e40c7f64-e4e4-3a25-9bad-1904187e6fa6"))) {
-concurrentCount += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f38acaf8-4bcc-34b5-9033-05727a8490d7"))) {
-concurrentCount = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("aec54b6c-ccfd-33af-b0e0-6be740683d6b"))) {
-concurrentCount = 0;
-}
       migrateSFTTables = tableDescriptors.getAll().entrySet().stream().filter(entry -> {
         TableDescriptor td = entry.getValue();
         return StringUtils.isEmpty(td.getValue(StoreFileTrackerFactory.TRACKER_IMPL));

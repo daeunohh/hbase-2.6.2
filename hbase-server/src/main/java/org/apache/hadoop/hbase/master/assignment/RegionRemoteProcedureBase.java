@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -202,90 +201,7 @@ public abstract class RegionRemoteProcedureBase extends Procedure<MasterProcedur
   // should be called with RegionStateNode locked, to avoid race with the execute method below
   void reportTransition(MasterProcedureEnv env, RegionStateNode regionNode, ServerName serverName,
     TransitionCode transitionCode, long seqId) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("4e44084a-9bfb-36a4-a580-ac40a543bb71"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("811a6327-628d-3924-9fe8-671aeb1c9519"))) {
-try {
-    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(serverName));
-    field.set(serverName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a614eb87-6556-351b-ac9e-82ac97fa8c53"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("17d8ba1b-7672-3651-a2a6-5adaedb23bf7"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("332fb572-71b0-36a2-9f00-bbf3d5154f31"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6fa6ae2d-6175-363b-9274-0c298809c1d2"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("11eeabea-5a64-3dfe-803e-67ba5616077d"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e392d3c1-29fc-34c5-bfaa-2484fb2e2b7c"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6b9afb5b-4cf4-3605-b0c5-648196c7f6e7"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("b913657f-a1d8-38e2-94a2-6285d2ac65ca"))) ? ((state) == (RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH)) : (((KnobRuntime.check(java.util.UUID.fromString("058fe44e-c8ef-3e44-a6f8-54c5e363ccce"))) ? ((state) != (RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH)) : (state != RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH))))) {
+    if (state != RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH) {
       // should be a retry
       return;
     }
@@ -305,28 +221,6 @@ try {
     // on a OpenRegionProcedure forever. See HBASE-22060 and HBASE-22074 for more details.
     boolean succ = false;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("b78b2f57-1be1-31e8-becd-0efb08b9e66d"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e732b652-5e21-392c-a65f-7d91a786f100"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       persistAndWake(env, regionNode);
       succ = true;
     } finally {
@@ -337,84 +231,6 @@ try {
       }
     }
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("b4e1ae83-6bba-3338-9c1e-e1eaa5b1db19"))) {
-seqId -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b86d3959-986c-39a3-ab4f-5a6565f809a9"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("219fed3b-967c-36ed-8331-3de56596721c"))) {
-seqId = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ae1b86ed-36ff-3989-b38d-c49c1bd34862"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ef3c1aa8-2fb6-33e9-9759-1b0dff424c2d"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("86f0380b-65c1-3118-a738-2968c9b4d543"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("466b8cdc-bab2-37ec-95c3-55295d0e8018"))) {
-seqId = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("551cb26f-bb87-37dd-ab2e-645e8c21e7ac"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("87b59b39-11c7-35c1-9105-ef127d781398"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("56428683-f25b-31d7-8e8a-3d2015e602ca"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       updateTransitionWithoutPersistingToMeta(env, regionNode, transitionCode, seqId);
     } catch (IOException e) {
       throw new AssertionError("should not happen", e);
@@ -422,43 +238,7 @@ try {
   }
 
   void serverCrashed(MasterProcedureEnv env, RegionStateNode regionNode, ServerName serverName) {
-if(KnobRuntime.check(java.util.UUID.fromString("816999dc-e7da-3074-935c-7e93c7c011eb"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("df7884eb-3724-3d17-9723-0f17f6845044"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("493b623b-17b2-3faf-b762-7b61c25e2302"))) {
-try {
-    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(serverName));
-    field.set(serverName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("24115899-8543-3705-9c4a-435c9ba50995"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("6cf2c43b-279f-300a-800d-54a9bd65f8e8"))) ? ((state) != (RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_SERVER_CRASH)) : (((KnobRuntime.check(java.util.UUID.fromString("5c37d743-041d-3be8-ad9b-8aa740831ad4"))) ? ((state) == (RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_SERVER_CRASH)) : (state == RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_SERVER_CRASH))))) {
+    if (state == RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_SERVER_CRASH) {
       // should be a retry
       return;
     }
@@ -507,7 +287,7 @@ return;
   protected Procedure<MasterProcedureEnv>[] execute(MasterProcedureEnv env)
     throws ProcedureYieldException, ProcedureSuspendedException, InterruptedException {
     RegionStateNode regionNode = getRegionNode(env);
-    if (KnobRuntime.check(java.util.UUID.fromString("245984a8-5b5b-3216-b26b-7538ef8202fa"))) { regionNode.unlock(); } else { regionNode.lock(); }
+    regionNode.lock();
     try {
       switch (state) {
         case REGION_REMOTE_PROCEDURE_DISPATCH: {
@@ -516,17 +296,6 @@ return;
           // on the event.
           ProcedureEvent<?> event = regionNode.getProcedureEvent();
           try {
-if(KnobRuntime.check(java.util.UUID.fromString("eab5a88f-af29-387e-bc79-56b21e5e4103"))) {
-try {
-    java.lang.reflect.Field field = targetServer.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(targetServer));
-    field.set(targetServer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             env.getRemoteDispatcher().addOperationToNode(targetServer, this);
           } catch (FailedRemoteDispatchException e) {
             LOG.warn("Can not add remote operation {} for region {} to server {}, this usually "
@@ -540,32 +309,7 @@ try {
           throw new ProcedureSuspendedException();
         }
         case REGION_REMOTE_PROCEDURE_REPORT_SUCCEED:
-if(KnobRuntime.check(java.util.UUID.fromString("08c83987-63c6-3711-a985-7f217d331060"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fde06767-aa96-3d4c-ac91-9c3b9e8e6607"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6d6f0938-2060-3cad-9229-d9605ed640b1"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("73ad5672-43d5-39e1-97d2-6949b44623b3"))) { env.getAssignmentManager().regionClosedAbnormally(regionNode); } else { env.getAssignmentManager().persistToMeta(regionNode); }
+          env.getAssignmentManager().persistToMeta(regionNode);
           unattach(env);
           return null;
         case REGION_REMOTE_PROCEDURE_DISPATCH_FAIL:
@@ -573,49 +317,18 @@ try {
           unattach(env);
           return null;
         case REGION_REMOTE_PROCEDURE_SERVER_CRASH:
-if(KnobRuntime.check(java.util.UUID.fromString("2126fb86-a77a-3c01-a0e3-01ea6b2ed06a"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("771cfed2-a1ea-3712-9c98-43053962287a"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("lastUpdate");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9e8a8b5e-a381-3b69-be69-b484f8917256"))) {
-try {
-    java.lang.reflect.Field field = regionNode.getClass().getDeclaredField("openSeqNum");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(regionNode));
-    field.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("23080963-c3ab-3bf4-8f62-8182c200c181"))) { env.getAssignmentManager().persistToMeta(regionNode); } else { env.getAssignmentManager().regionClosedAbnormally(regionNode); }
+          env.getAssignmentManager().regionClosedAbnormally(regionNode);
           unattach(env);
           return null;
         default:
           throw new IllegalStateException("Unknown state: " + state);
       }
     } catch (IOException e) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("05059bc2-7222-3d9a-bbb7-8374098c6da6"))) ? ((retryCounter) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("514e2270-311e-3f9f-a5bc-5636b7a3fc30"))) ? ((retryCounter) == (null)) : (retryCounter == null))))) {
+      if (retryCounter == null) {
         retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
       }
       long backoff = retryCounter.getBackoffTimeAndIncrementAttempts();
       LOG.warn("Failed updating meta, suspend {}secs {}; {};", backoff / 1000, this, regionNode, e);
-if(KnobRuntime.check(java.util.UUID.fromString("2a871377-f1b0-3c31-8d25-d10609ffc966"))) {
-backoff += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ea99ac44-0a6e-31bd-a873-186b3a9898df"))) {
-backoff = 0;
-}
       setTimeout(Math.toIntExact(backoff));
       setState(ProcedureProtos.ProcedureState.WAITING_TIMEOUT);
       skipPersistence();
@@ -634,71 +347,15 @@ backoff = 0;
 
   @Override
   public boolean storeInDispatchedQueue() {
-if(KnobRuntime.check(java.util.UUID.fromString("da6e4629-a048-30f3-b785-9296f7a8b348"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ecfcf730-91df-3daf-89a7-96b710580817"))) {
-return true;
-}
     return false;
   }
 
   @Override
   protected void serializeStateData(ProcedureStateSerializer serializer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("45d35f67-720f-3f4d-84e3-fc82c740a754"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("69abd09a-637f-3c75-b558-7199ec81ebc2"))) {
-return;
-}
     RegionRemoteProcedureBaseStateData.Builder builder =
       RegionRemoteProcedureBaseStateData.newBuilder().setRegion(ProtobufUtil.toRegionInfo(region))
         .setTargetServer(ProtobufUtil.toServerName(targetServer)).setState(state);
     if (transitionCode != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("cc0879c1-13db-3206-ad69-3c46777aed4e"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0ec46b59-0243-3808-8e26-5fa6703a9a65"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("70be4d56-8d62-3965-ab16-f1f34b860872"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3621abdb-5666-3189-b901-490ccf3f5f54"))) {
-try {
-    java.lang.reflect.Field field = transitionCode.getClass().getDeclaredField("value");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(transitionCode));
-    field.set(transitionCode, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       builder.setTransitionCode(transitionCode);
       builder.setSeqId(seqId);
     }

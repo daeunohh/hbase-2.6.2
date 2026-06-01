@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.conf.Configuration;
@@ -68,47 +67,11 @@ public final class SyncFutureCache {
    */
   public void offer(SyncFuture syncFuture) {
     // It is ok to overwrite an existing mapping.
-if(KnobRuntime.check(java.util.UUID.fromString("39ab777e-1c87-38bf-b5b7-b47a3e691151"))) {
-try {
-    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("doneTxid");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(syncFuture));
-    field.set(syncFuture, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e05b4cef-ac43-3316-b66e-dea37e86e39b"))) {
-try {
-    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("txid");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(syncFuture));
-    field.set(syncFuture, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0d6e96f3-4640-398c-ae74-32c813c578c7"))) {
-try {
-    java.lang.reflect.Field field = syncFuture.getClass().getDeclaredField("forceSync");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(syncFuture);
-    field.set(syncFuture, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("4b2f9aa5-ac68-3370-a05a-f3d3423b69f9"))) { syncFutureCache.asMap().put(Thread.currentThread(), syncFuture); } else { syncFutureCache.asMap().put(syncFuture.getThread(), syncFuture); }
+    syncFutureCache.asMap().put(syncFuture.getThread(), syncFuture);
   }
 
   public void clear() {
-if(KnobRuntime.check(java.util.UUID.fromString("f93eda4d-76a8-3af1-9616-9aac7a716423"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("ca40b018-ac2d-3390-9373-3f9107650cfc"))) ? ((syncFutureCache) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ced15c83-1ad9-37f6-85eb-0ae466dbd960"))) ? ((syncFutureCache) != (null)) : (syncFutureCache != null))))) {
+    if (syncFutureCache != null) {
       syncFutureCache.invalidateAll();
     }
   }

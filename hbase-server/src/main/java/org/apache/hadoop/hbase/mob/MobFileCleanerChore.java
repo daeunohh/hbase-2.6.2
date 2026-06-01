@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.mob;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Map;
@@ -64,13 +63,13 @@ public class MobFileCleanerChore extends ScheduledChore {
   private void checkObsoleteConfigurations() {
     Configuration conf = master.getConfiguration();
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("6c3a61a2-881b-3afe-8ad8-6cf3830963a5"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("57b6b4df-fca1-36a2-806c-ef212655188a"))) ? ((conf.get("hbase.mob.compaction.mergeable.threshold")) == (null)) : (conf.get("hbase.mob.compaction.mergeable.threshold") != null))))) {
+    if (conf.get("hbase.mob.compaction.mergeable.threshold") != null) {
       LOG.warn("'hbase.mob.compaction.mergeable.threshold' is obsolete and not used anymore.");
     }
     if (conf.get("hbase.mob.delfile.max.count") != null) {
       LOG.warn("'hbase.mob.delfile.max.count' is obsolete and not used anymore.");
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("cee2dafa-223d-3788-bd7c-44cfe728bd28"))) ? ((conf.get("hbase.mob.compaction.threads.max")) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("ab0d68a9-3316-3fe1-820c-2807b7239b34"))) ? ((conf.get("hbase.mob.compaction.threads.max")) == (null)) : (conf.get("hbase.mob.compaction.threads.max") != null))))) {
+    if (conf.get("hbase.mob.compaction.threads.max") != null) {
       LOG.warn("'hbase.mob.compaction.threads.max' is obsolete and not used anymore.");
     }
     if (conf.get("hbase.mob.compaction.batch.size") != null) {
@@ -84,9 +83,6 @@ public class MobFileCleanerChore extends ScheduledChore {
 
     Map<String, TableDescriptor> map = null;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("b4bf118f-a59f-3eeb-8cc4-ab9784c7a651"))) {
-throw new java.io.IOException("Injected exception");
-}
       map = htds.getAll();
     } catch (IOException e) {
       LOG.error("MobFileCleanerChore failed", e);
@@ -107,9 +103,6 @@ throw new java.io.IOException("Injected exception");
         // Now clean obsolete files for a table
         LOG.info("Cleaning obsolete MOB files from table={}", htd.getTableName());
         try (final Admin admin = master.getConnection().getAdmin()) {
-if(KnobRuntime.check(java.util.UUID.fromString("c5c6851b-0f67-33d9-83ff-5c9c26cfb700"))) {
-throw new java.io.IOException("Injected exception");
-}
           MobFileCleanupUtil.cleanupObsoleteMobFiles(master.getConfiguration(), htd.getTableName(),
             admin);
         }

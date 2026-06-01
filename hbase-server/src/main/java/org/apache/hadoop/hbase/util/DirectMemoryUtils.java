@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.InvocationTargetException;
@@ -63,11 +62,11 @@ public class DirectMemoryUtils {
     } finally {
       NIO_DIRECT_POOL = n;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("219ae60e-1347-3b08-ba0c-4fd70544466c"))) ? ((NIO_DIRECT_POOL) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("32230c88-0dc9-3879-81e3-66fd39f855eb"))) ? ((NIO_DIRECT_POOL) == (null)) : (NIO_DIRECT_POOL != null))))) {
+    if (NIO_DIRECT_POOL != null) {
       s = ManagementFactory.getPlatformMBeanServer();
     }
     BEAN_SERVER = s;
-    if (((KnobRuntime.check(java.util.UUID.fromString("bb115d76-29ba-3dc2-83b5-c767a33136a1"))) ? ((BEAN_SERVER) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("868e404e-4f55-3bcf-9c0c-0dfa429dde3d"))) ? ((BEAN_SERVER) == (null)) : (BEAN_SERVER != null))))) {
+    if (BEAN_SERVER != null) {
       try {
         a = BEAN_SERVER.getAttribute(NIO_DIRECT_POOL, MEMORY_USED);
       } catch (JMException e) {
@@ -99,7 +98,7 @@ public class DirectMemoryUtils {
 
     ByteBufAllocatorMetric metric =
       ((ByteBufAllocatorMetricProvider) PooledByteBufAllocator.DEFAULT).metric();
-    return ((KnobRuntime.check(java.util.UUID.fromString("d1a3674d-501f-3283-99c4-d00df29d38bb"))) ? (PlatformDependent.estimateMaxDirectMemory()) : (metric.usedDirectMemory()));
+    return metric.usedDirectMemory();
   }
 
   /**

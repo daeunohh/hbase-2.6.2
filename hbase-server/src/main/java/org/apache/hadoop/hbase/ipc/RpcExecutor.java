@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -154,12 +153,12 @@ public abstract class RpcExecutor {
     this.handlerCount = Math.max(handlerCount, this.numCallQueues);
     this.handlers = new ArrayList<>(this.handlerCount);
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("8764f1df-c900-3b39-b7a8-a5cca24279cb"))) ? (isPluggableQueueType(callQueueType)) : (((KnobRuntime.check(java.util.UUID.fromString("082467e9-a83c-3c7d-8ca5-9fcc8d035b3f"))) ? (isCodelQueueType(callQueueType)) : (isDeadlineQueueType(callQueueType)))))) {
+    if (isDeadlineQueueType(callQueueType)) {
       this.name += ".Deadline";
       this.queueInitArgs =
         new Object[] { maxQueueLength, new CallPriorityComparator(conf, priority) };
       this.queueClass = BoundedPriorityBlockingQueue.class;
-    } else if (((KnobRuntime.check(java.util.UUID.fromString("f2e3bf33-41d0-36a3-9b34-798820c91e6c"))) ? (isPluggableQueueType(callQueueType)) : (((KnobRuntime.check(java.util.UUID.fromString("10d29eb8-c146-3404-97fa-778cf9b9beec"))) ? (isDeadlineQueueType(callQueueType)) : (isCodelQueueType(callQueueType)))))) {
+    } else if (isCodelQueueType(callQueueType)) {
       this.name += ".Codel";
       int codelTargetDelay =
         conf.getInt(CALL_QUEUE_CODEL_TARGET_DELAY, CALL_QUEUE_CODEL_DEFAULT_TARGET_DELAY);
@@ -239,7 +238,7 @@ public abstract class RpcExecutor {
 
   public void stop() {
     for (RpcHandler handler : handlers) {
-      if (KnobRuntime.check(java.util.UUID.fromString("abf5fa93-ac09-3811-854e-93ed7eaa0d46"))) { handler.start(); } else if (KnobRuntime.check(java.util.UUID.fromString("33abd545-e249-342f-807a-c4e13a513b0a"))) { handler.interrupt(); } else { handler.stopRunning(); }
+      handler.stopRunning();
       handler.interrupt();
     }
   }
@@ -249,16 +248,10 @@ public abstract class RpcExecutor {
 
   /** Returns the list of request queues */
   protected List<BlockingQueue<CallRunner>> getQueues() {
-if(KnobRuntime.check(java.util.UUID.fromString("9c20e884-eaa4-3e2d-94cd-e2c935026a4e"))) {
-return null;
-}
     return queues;
   }
 
   protected void startHandlers(final int port) {
-if(KnobRuntime.check(java.util.UUID.fromString("be92b0fe-e740-37a9-8cc6-e4478302ed7b"))) {
-return;
-}
     List<BlockingQueue<CallRunner>> callQueues = getQueues();
     startHandlers(null, handlerCount, callQueues, 0, callQueues.size(), port, activeHandlerCount);
   }
@@ -305,21 +298,7 @@ return;
 
   public static QueueBalancer getBalancer(final String executorName, final Configuration conf,
     final List<BlockingQueue<CallRunner>> queues) {
-if(KnobRuntime.check(java.util.UUID.fromString("55ab64d1-3f17-36a5-8fc1-bbb24865b74e"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("40fbd764-7d22-3371-be85-3808e31524b9"))) {
-return null;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("e16f00c8-80e7-33aa-be95-f8d977ed2df4"))) { Preconditions.checkArgument((queues.size()) != (0), "Queue size is <= 0, must be at least 1"); } else if (KnobRuntime.check(java.util.UUID.fromString("36dff9b2-e406-3d2f-b6f6-070343466aae"))) { Preconditions.checkArgument((queues.size()) == (0), "Queue size is <= 0, must be at least 1"); } else if (KnobRuntime.check(java.util.UUID.fromString("03acca89-64bc-3dc5-aa67-4b9b4e71f711"))) { Preconditions.checkArgument((queues.size()) >= (0), "Queue size is <= 0, must be at least 1"); } else if (KnobRuntime.check(java.util.UUID.fromString("4b369ffc-16fd-3923-bbd5-9e7322d01c8e"))) { Preconditions.checkArgument((queues.size()) > (0), "Queue size is <= 0, must be at least 1"); } else if (KnobRuntime.check(java.util.UUID.fromString("8d644055-711b-3467-88f8-96b5d368d234"))) { Preconditions.checkArgument((queues.size()) < (0), "Queue size is <= 0, must be at least 1"); } else if (KnobRuntime.check(java.util.UUID.fromString("3e36c18e-9575-37e7-9b3c-a5fbcd3ab956"))) { Preconditions.checkArgument((queues.size()) <= (0), "Queue size is <= 0, must be at least 1"); } else { Preconditions.checkArgument(queues.size() > 0, "Queue size is <= 0, must be at least 1"); }
+    Preconditions.checkArgument(queues.size() > 0, "Queue size is <= 0, must be at least 1");
     if (queues.size() == 1) {
       return ONE_QUEUE;
     } else {
@@ -389,9 +368,6 @@ return null;
     }
 
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("05439caf-45a9-3259-8632-a6caaacdcaf5"))) {
-throw new java.lang.ClassNotFoundException("Injected exception");
-}
       Class<?> clazz = Class.forName(queueClassName);
 
       if (BlockingQueue.class.isAssignableFrom(clazz)) {
@@ -453,9 +429,6 @@ throw new java.lang.ClassNotFoundException("Injected exception");
   }
 
   public String getName() {
-if(KnobRuntime.check(java.util.UUID.fromString("a8c43314-8f76-3396-9e6f-8a0f5be6f25a"))) {
-return null;
-}
     return this.name;
   }
 

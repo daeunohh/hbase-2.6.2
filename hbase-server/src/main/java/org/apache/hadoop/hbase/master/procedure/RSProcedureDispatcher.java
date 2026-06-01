@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -109,13 +108,13 @@ public class RSProcedureDispatcher extends RemoteProcedureDispatcher<MasterProce
     }
     sm.registerListener(this);
     ProcedureExecutor<MasterProcedureEnv> pe = master.getMasterProcedureExecutor();
-    if (((KnobRuntime.check(java.util.UUID.fromString("f17acaff-eac4-3a36-b4b8-e8ccc8b836fd"))) ? ((pe) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("95d9f700-9aee-3dc0-99a9-47877f8f7141"))) ? ((pe) == (null)) : (pe == null))))) {
+    if (pe == null) {
       LOG.debug("ProcedureExecutor is null");
       return false;
     }
     this.procedureEnv = pe.getEnvironment();
     if (this.procedureEnv == null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("02f97874-3bd7-3df3-a74d-ec79195d977e"))) { LOG.debug("ProcedureEnv is null; stopping={}", master.isStopped()); } else { LOG.debug("ProcedureEnv is null; stopping={}", master.isStopping()); }
+      LOG.debug("ProcedureEnv is null; stopping={}", master.isStopping());
       return false;
     }
     try {
@@ -200,50 +199,6 @@ public class RSProcedureDispatcher extends RemoteProcedureDispatcher<MasterProce
     ArrayListMultimap<Class<?>, RemoteOperation> reqsByType =
       buildAndGroupRequestByType(env, serverName, operations);
 
-if(KnobRuntime.check(java.util.UUID.fromString("a6b5a5e1-e804-3cb6-854d-a28b0ec4bff6"))) {
-try {
-    java.lang.reflect.Field field = reqsByType.getClass().getDeclaredField("expectedValuesPerKey");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(reqsByType));
-    field.set(reqsByType, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fe9eb284-c579-359f-92c5-da2def888aee"))) {
-try {
-    java.lang.reflect.Field field = reqsByType.getClass().getDeclaredField("expectedValuesPerKey");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(reqsByType));
-    field.set(reqsByType, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cec43e7a-fec0-3b46-9a23-acb860d6144d"))) {
-try {
-    java.lang.reflect.Field field = reqsByType.getClass().getDeclaredField("expectedValuesPerKey");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(reqsByType));
-    field.set(reqsByType, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1425f0c4-0409-3557-b44f-341154f39d74"))) {
-try {
-    java.lang.reflect.Field field = reqsByType.getClass().getDeclaredField("expectedValuesPerKey");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(reqsByType));
-    field.set(reqsByType, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     List<RegionOpenOperation> openOps = fetchType(reqsByType, RegionOpenOperation.class);
     if (!openOps.isEmpty()) {
       resolver.dispatchOpenRequests(env, openOps);
@@ -539,9 +494,6 @@ try {
 
     @Override
     public void dispatchServerOperations(MasterProcedureEnv env, List<ServerOperation> operations) {
-if(KnobRuntime.check(java.util.UUID.fromString("fa37e421-b66d-350b-81c4-19a6cce570ba"))) {
-return;
-}
       operations.stream().map(ServerOperation::buildRequest).forEachOrdered(request::addProc);
     }
 
@@ -564,25 +516,11 @@ return;
 
   private static OpenRegionRequest buildOpenRegionRequest(final MasterProcedureEnv env,
     final ServerName serverName, final List<RegionOpenOperation> operations) {
-if(KnobRuntime.check(java.util.UUID.fromString("430e9248-81b1-3f2b-8003-2e863daa076b"))) {
-try {
-    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(serverName));
-    field.set(serverName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4800297e-d482-3a01-99fb-8f4f59a4a5df"))) {
-return null;
-}
     final OpenRegionRequest.Builder builder = OpenRegionRequest.newBuilder();
-    if (KnobRuntime.check(java.util.UUID.fromString("ef9a2d7d-44cd-3a97-a0d5-d21bcf715489"))) { builder.setMasterSystemTime(EnvironmentEdgeManager.currentTime()); } else if (KnobRuntime.check(java.util.UUID.fromString("6218f2e4-5473-3c3f-8756-ee89059c53f1"))) { builder.setServerStartCode(EnvironmentEdgeManager.currentTime()); } else { builder.setServerStartCode(serverName.getStartCode()); }
+    builder.setServerStartCode(serverName.getStartCode());
     operations.stream().map(RemoteOperation::getInitiatingMasterActiveTime).findAny()
       .ifPresent(builder::setInitiatingMasterActiveTime);
-    if (KnobRuntime.check(java.util.UUID.fromString("ed16d7f0-5442-3e76-915e-efa3d07db7e0"))) { builder.setServerStartCode(EnvironmentEdgeManager.currentTime()); } else { builder.setMasterSystemTime(EnvironmentEdgeManager.currentTime()); }
+    builder.setMasterSystemTime(EnvironmentEdgeManager.currentTime());
     for (RegionOpenOperation op : operations) {
       builder.addOpenInfo(op.buildRegionOpenInfoRequest(env));
     }
@@ -612,9 +550,6 @@ return null;
     }
 
     public RemoteProcedureRequest buildRequest() {
-if(KnobRuntime.check(java.util.UUID.fromString("65a18779-663c-3baf-b3d8-5725cd1ef7cb"))) {
-return null;
-}
       return RemoteProcedureRequest.newBuilder().setProcId(procId)
         .setProcClass(rsProcClass.getName()).setProcData(ByteString.copyFrom(rsProcData))
         .setInitiatingMasterActiveTime(getInitiatingMasterActiveTime()).build();
@@ -642,9 +577,6 @@ return null;
 
     public OpenRegionRequest.RegionOpenInfo
       buildRegionOpenInfoRequest(final MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("7fd40031-372b-38a7-b116-ec66399d3e10"))) {
-return null;
-}
       return RequestConverter.buildRegionOpenInfo(regionInfo,
         env.getAssignmentManager().getFavoredNodes(regionInfo), procId);
     }
@@ -662,27 +594,10 @@ return null;
     }
 
     public ServerName getDestinationServer() {
-if(KnobRuntime.check(java.util.UUID.fromString("8a00a54b-9f11-3681-9215-3643873584df"))) {
-return null;
-}
       return destinationServer;
     }
 
     public CloseRegionRequest buildCloseRegionRequest(final ServerName serverName) {
-if(KnobRuntime.check(java.util.UUID.fromString("ac414100-a99d-36ae-bf77-5873f4cdbefc"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6081d038-a0f6-3f70-83c0-496bb38c56bc"))) {
-try {
-    java.lang.reflect.Field field = serverName.getClass().getDeclaredField("startCode");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(serverName));
-    field.set(serverName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       return ProtobufUtil.buildCloseRegionRequest(serverName, regionInfo.getRegionName(),
         getDestinationServer(), procId, evictCache, getInitiatingMasterActiveTime());
     }

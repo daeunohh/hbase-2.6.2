@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.replication.master.ReplicationSinkTrackerTableCreator.OFFSET_COLUMN;
 import static org.apache.hadoop.hbase.replication.master.ReplicationSinkTrackerTableCreator.REPLICATION_SINK_TRACKER_ENABLED_DEFAULT;
@@ -153,12 +152,6 @@ public class ReplicationSink {
   }
 
   private WALEntrySinkFilter setupWALEntrySinkFilter() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("8b9431e7-afcf-37aa-b1b2-31549104a90a"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("213a8c16-cfe2-3f20-b382-672e2870eb1d"))) {
-return null;
-}
     Class<?> walEntryFilterClass =
       this.conf.getClass(WALEntrySinkFilter.WAL_ENTRY_FILTER_KEY, null);
     WALEntrySinkFilter filter = null;
@@ -180,9 +173,6 @@ return null;
    * timeout and numTries.
    */
   private void decorateConf() {
-if(KnobRuntime.check(java.util.UUID.fromString("81ea99ee-f2e5-39f2-b85f-6141c254ba68"))) {
-return;
-}
     this.conf.setInt(HConstants.HBASE_CLIENT_RETRIES_NUMBER,
       this.conf.getInt("replication.sink.client.retries.number", 4));
     this.conf.setInt(HConstants.HBASE_CLIENT_OPERATION_TIMEOUT,
@@ -212,12 +202,6 @@ return;
   public void replicateEntries(List<WALEntry> entries, final CellScanner cells,
     String replicationClusterId, String sourceBaseNamespaceDirPath,
     String sourceHFileArchiveDirPath) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("8f1d3745-50a4-3c49-85f6-4075dc498476"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("72bef392-c4cb-36df-ad8c-44e1c237abea"))) {
-return;
-}
     if (entries.isEmpty()) return;
     // Very simple optimization where we batch sequences of rows going
     // to the same table.
@@ -253,9 +237,6 @@ return;
           // Throw index out of bounds if our cell count is off
           if (!cells.advance()) {
             this.metrics.incrementFailedBatches();
-if(KnobRuntime.check(java.util.UUID.fromString("294c6eaa-2af2-352e-ae49-604f023b624a"))) {
-throw new java.io.IOException("Injected exception");
-}
             throw new ArrayIndexOutOfBoundsException("Expected=" + count + ", index=" + i);
           }
           Cell cell = cells.current();
@@ -286,7 +267,7 @@ throw new java.io.IOException("Injected exception");
             addToHashMultiMap(rowMap, table, clusterIds, put);
           } else {
             // Handle wal replication
-            if (((KnobRuntime.check(java.util.UUID.fromString("c43a559a-ecb5-375a-9ff5-777bcda27665"))) ? (CellUtil.matchingRows(previousCell, cell)) : (isNewRowOrType(previousCell, cell)))) {
+            if (isNewRowOrType(previousCell, cell)) {
               // Create new mutation
               mutation = CellUtil.isDelete(cell)
                 ? new Delete(cell.getRowArray(), cell.getRowOffset(), cell.getRowLength())
@@ -296,279 +277,17 @@ throw new java.io.IOException("Injected exception");
                 clusterIds.add(toUUID(clusterId));
               }
               mutation.setClusterIds(clusterIds);
-              if (((KnobRuntime.check(java.util.UUID.fromString("e486451e-894c-3d50-b1f1-ba95a5c9be5e"))) ? ((rsServerHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("897f1593-4bcc-360b-960e-e8d6da063bb8"))) ? ((rsServerHost) == (null)) : (rsServerHost != null))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("9ed1c5f0-f92b-3973-a6c5-3022d8a35f6b"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("20f1b943-9e02-32d7-a6e3-843b24bbec64"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("df5d3bd9-bf62-3a67-804d-2857593cc42c"))) {
-try {
-    java.lang.reflect.Field field = mutation.getClass().getDeclaredField("ts");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(mutation));
-    field.set(mutation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4da3e114-841f-35b8-a2c9-d34b18eb1146"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8deef9fd-5ae4-3721-ae37-6a23de2b4561"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("78cf96f9-7ddb-3d71-a66b-5c6cb61097f6"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d2e32160-4754-3775-8b21-b9ecdcd2cc53"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("048b9d2f-ea00-3887-aaa7-8d3dd7d82531"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d6b6a565-091e-336c-a1a7-aebd3117f227"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("18610e11-dd82-3a54-95f1-314f8bdd454e"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-                if (KnobRuntime.check(java.util.UUID.fromString("8178bd3b-70d8-3da3-b878-935021b3b93c"))) { rsServerHost.postReplicationSinkBatchMutate(entry, mutation); } else { rsServerHost.preReplicationSinkBatchMutate(entry, mutation); }
+              if (rsServerHost != null) {
+                rsServerHost.preReplicationSinkBatchMutate(entry, mutation);
                 mutationsToWalEntriesPairs.getFirst().add(mutation);
-if(KnobRuntime.check(java.util.UUID.fromString("eb7538dc-ab02-3dd8-b49e-01a57c245f5b"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ae0e78d6-d350-379d-9ab8-6e0b31f54064"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("46fd3966-0095-38c8-be94-c40dc36f7722"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e61b81e7-7de1-390d-9798-8bcf6f1b916c"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ceefb4ce-56e0-31da-8dc2-92a3d60e22ac"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("893f2af9-9542-3cf1-bbcf-67498270ebc9"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("bitField0_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f88fc38b-d45f-3f0a-85a8-88917b3c2861"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8e1174f1-b67d-3c0c-a116-1d9783ffe098"))) {
-try {
-    java.lang.reflect.Field field = entry.getClass().getDeclaredField("associatedCellCount_");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(entry));
-    field.set(entry, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
                 mutationsToWalEntriesPairs.getSecond().add(entry);
               }
-if(KnobRuntime.check(java.util.UUID.fromString("b33799a6-e4d1-3368-80da-3b15c28399ee"))) {
-try {
-    java.lang.reflect.Field field = table.getClass().getDeclaredField("systemTable");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(table);
-    field.set(table, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("08e8995b-5472-3306-8b9c-62bce17639c8"))) {
-try {
-    java.lang.reflect.Field field = mutation.getClass().getDeclaredField("ts");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(mutation));
-    field.set(mutation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b8a65bbf-4696-3abe-9946-2047b8588776"))) {
-try {
-    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(table));
-    field.set(table, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3ad459e8-1779-3bae-a297-7d57d3bad9cf"))) {
-try {
-    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(table));
-    field.set(table, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e37482f4-a389-38cf-a704-45b330fdb766"))) {
-try {
-    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(table));
-    field.set(table, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("10ec7e5a-8ae0-34a0-a2c6-e87e1a5f208c"))) {
-try {
-    java.lang.reflect.Field field = table.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(table));
-    field.set(table, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
               addToHashMultiMap(rowMap, table, clusterIds, mutation);
             }
             if (CellUtil.isDelete(cell)) {
-if(KnobRuntime.check(java.util.UUID.fromString("2ba289b9-3f5d-3043-91c2-3d8d93e48ac1"))) {
-throw new java.io.IOException("Injected exception");
-}
               ((Delete) mutation).add(cell);
             } else {
-if(KnobRuntime.check(java.util.UUID.fromString("48ccc018-57b3-3fd5-a225-12ffa8ecb37c"))) {
-throw new java.io.IOException("Injected exception");
-}
-              if (KnobRuntime.check(java.util.UUID.fromString("48685f0c-dcee-320d-9606-e1359b78ae51"))) { processReplicationMarkerEntry(cell); } else { ((Put) mutation).add(cell); }
+              ((Put) mutation).add(cell);
             }
             previousCell = cell;
           }
@@ -578,17 +297,14 @@ throw new java.io.IOException("Injected exception");
 
       // TODO Replicating mutations and bulk loaded data can be made parallel
       if (!rowMap.isEmpty()) {
-        if (KnobRuntime.check(java.util.UUID.fromString("7c39e798-8c0d-3530-8b88-9857e771565d"))) { LOG.warn("Started replicating mutations."); } else { LOG.debug("Started replicating mutations."); }
+        LOG.debug("Started replicating mutations.");
         for (Entry<TableName, Map<List<UUID>, List<Row>>> entry : rowMap.entrySet()) {
-if(KnobRuntime.check(java.util.UUID.fromString("11dec306-be93-3585-b7d9-f631138c1e0f"))) {
-throw new java.io.IOException("Injected exception");
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("c66e5696-1d0b-3592-bc20-6547c8a04caa"))) { batch(entry.getKey(), entry.getValue().values(), 0); } else { batch(entry.getKey(), entry.getValue().values(), rowSizeWarnThreshold); }
+          batch(entry.getKey(), entry.getValue().values(), rowSizeWarnThreshold);
         }
         LOG.debug("Finished replicating mutations.");
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("e7299483-4062-3e79-9dfe-ca1169edf148"))) ? ((rsServerHost) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a0ad5181-8e4a-33d9-8622-f307f2deef65"))) ? ((rsServerHost) == (null)) : (rsServerHost != null))))) {
+      if (rsServerHost != null) {
         List<Mutation> mutations = mutationsToWalEntriesPairs.getFirst();
         List<WALEntry> walEntries = mutationsToWalEntriesPairs.getSecond();
         for (int i = 0; i < mutations.size(); i++) {
@@ -619,7 +335,7 @@ throw new java.io.IOException("Injected exception");
       this.totalReplicatedEdits.addAndGet(totalReplicated);
     } catch (IOException ex) {
       LOG.error("Unable to accept edit because:", ex);
-      if (KnobRuntime.check(java.util.UUID.fromString("2429b7cf-907c-3e9f-a11c-3de61a49e909"))) { decorateConf(); } else { this.metrics.incrementFailedBatches(); }
+      this.metrics.incrementFailedBatches();
       throw ex;
     }
   }
@@ -732,9 +448,6 @@ throw new java.io.IOException("Injected exception");
    */
   private <K1, K2, V> List<V> addToHashMultiMap(Map<K1, Map<K2, List<V>>> map, K1 key1, K2 key2,
     V value) {
-if(KnobRuntime.check(java.util.UUID.fromString("bf9cb82c-2113-31ac-a0d6-169b0a4fcd3b"))) {
-return null;
-}
     Map<K2, List<V>> innerMap = map.computeIfAbsent(key1, k -> new HashMap<>());
     List<V> values = innerMap.computeIfAbsent(key2, k -> new ArrayList<>());
     values.add(value);
@@ -745,13 +458,10 @@ return null;
    * stop the thread pool executor. It is called when the regionserver is stopped.
    */
   public void stopReplicationSinkServices() {
-if(KnobRuntime.check(java.util.UUID.fromString("72a178d1-3a51-3fe1-8b89-501369b53fb8"))) {
-return;
-}
     try {
-      if (((KnobRuntime.check(java.util.UUID.fromString("b81a49f5-f6c7-361f-86b8-d81740fed313"))) ? ((this.sharedConnection) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("310ddc81-f90f-3c2a-8fda-aee46dbff452"))) ? ((this.sharedConnection) != (null)) : (this.sharedConnection != null))))) {
+      if (this.sharedConnection != null) {
         synchronized (sharedConnectionLock) {
-          if (((KnobRuntime.check(java.util.UUID.fromString("3f1c31cc-a108-3abd-b287-8350aca8d93e"))) ? ((this.sharedConnection) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("eb7eac95-eb3c-3858-86e4-4aeadd8a7552"))) ? ((this.sharedConnection) == (null)) : (this.sharedConnection != null))))) {
+          if (this.sharedConnection != null) {
             this.sharedConnection.close();
             this.sharedConnection = null;
           }
@@ -773,7 +483,7 @@ return;
       }
     } catch (IOException e) {
       // ignoring as we are closing.
-      if (KnobRuntime.check(java.util.UUID.fromString("5fe8cf0c-bac8-3bd4-a3d7-266f3b3b4f2e"))) { LOG.error("IOException while closing the sharedAsyncConnection", e); } else { LOG.warn("IOException while closing the sharedAsyncConnection", e); }
+      LOG.warn("IOException while closing the sharedAsyncConnection", e);
     }
   }
 
@@ -788,53 +498,6 @@ return;
     if (allRows.isEmpty()) {
       return;
     }
-if(KnobRuntime.check(java.util.UUID.fromString("62d04a94-fd20-37c4-9dde-609e5b4efdb8"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a8e43a85-b6b0-3369-86a6-0142a636c425"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("eab4a984-6b1d-3a21-98cf-4a7d538f2ef8"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bf93a9cd-12d4-32b6-869c-4d667fca7015"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("390b1457-7c89-38c5-94de-febfaeaec89f"))) {
-throw new java.io.IOException("Injected exception");
-}
     AsyncTable<?> table = getAsyncConnection().getTable(tableName);
     List<Future<?>> futures = new ArrayList<>();
     for (List<Row> rows : allRows) {
@@ -863,7 +526,7 @@ throw new java.io.IOException("Injected exception");
         } else {
           ioe = e;
         }
-        if (((KnobRuntime.check(java.util.UUID.fromString("5148fdc8-9e69-378b-865a-f27c4dc00996"))) ? ((error) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("43864d68-9b2b-3f08-bd15-1ed2461e3704"))) ? ((error) == (null)) : (error == null))))) {
+        if (error == null) {
           error = ioe;
         } else {
           error.addSuppressed(ioe);
@@ -881,10 +544,10 @@ throw new java.io.IOException("Injected exception");
   private Connection getConnection() throws IOException {
     // See https://en.wikipedia.org/wiki/Double-checked_locking
     Connection connection = sharedConnection;
-    if (((KnobRuntime.check(java.util.UUID.fromString("1176aa8a-6ea1-3fd3-bd17-e62f8e8fe1ad"))) ? ((connection) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("3d7e949b-01de-3c92-97a2-47181a371d97"))) ? ((connection) != (null)) : (connection == null))))) {
+    if (connection == null) {
       synchronized (sharedConnectionLock) {
         connection = sharedConnection;
-        if (((KnobRuntime.check(java.util.UUID.fromString("c35d0680-506e-3bd4-ba69-b37b623ef76d"))) ? ((connection) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("1e56a042-b503-3c4a-b66f-c5978e3851af"))) ? ((connection) != (null)) : (connection == null))))) {
+        if (connection == null) {
           connection = ConnectionFactory.createConnection(conf);
           sharedConnection = connection;
         }

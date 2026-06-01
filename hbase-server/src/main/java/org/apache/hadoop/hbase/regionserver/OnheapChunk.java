@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.nio.ByteBuffer;
 import org.apache.hadoop.hbase.regionserver.ChunkCreator.ChunkType;
@@ -38,10 +37,7 @@ public class OnheapChunk extends Chunk {
 
   @Override
   void allocateDataBuffer() {
-if(KnobRuntime.check(java.util.UUID.fromString("2249ee05-0f7f-3e26-9f1e-309225448569"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("9c7e646e-12a6-35ee-8ca3-d68d96ec266c"))) ? ((data) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("70ddf8d9-57ac-3f09-9f63-df2d17be00ac"))) ? ((data) != (null)) : (data == null))))) {
+    if (data == null) {
       data = ByteBuffer.allocate(this.size);
       data.putInt(0, this.getId());
     }

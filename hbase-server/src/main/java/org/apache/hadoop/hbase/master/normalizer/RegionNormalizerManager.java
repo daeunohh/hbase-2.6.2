@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
@@ -68,33 +67,8 @@ public class RegionNormalizerManager implements PropagatingConfigurationObserver
 
   @Override
   public void registerChildren(ConfigurationManager manager) {
-if(KnobRuntime.check(java.util.UUID.fromString("e127a30c-e9a7-3136-a8a9-15ac1b362d87"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("0f257896-b486-3e8c-9552-ab756d28b1c8"))) ? ((worker) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5bcf8b76-b667-3c1a-8b00-7781e73ee170"))) ? ((worker) != (null)) : (worker != null))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("e053b360-2ab6-3a11-ae91-0307b0cd9842"))) {
-try {
-    java.lang.reflect.Field field = worker.getClass().getDeclaredField("mergePlanCount");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(worker));
-    field.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3d355000-8209-385f-b822-45e962e39fcb"))) {
-try {
-    java.lang.reflect.Field field = worker.getClass().getDeclaredField("splitPlanCount");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(worker));
-    field.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("189bff12-3539-329e-be47-07ec92ddcdd8"))) { manager.deregisterObserver(worker); } else { manager.registerObserver(worker); }
+    if (worker != null) {
+      manager.registerObserver(worker);
     }
   }
 
@@ -111,37 +85,12 @@ try {
   }
 
   public void start() {
-if(KnobRuntime.check(java.util.UUID.fromString("9972b88f-b269-394b-a88a-15be9ac3a04a"))) {
-return;
-}
     synchronized (startStopLock) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("47a58afc-f175-37d1-a688-304f7ad937cc"))) ? (!started) : (((KnobRuntime.check(java.util.UUID.fromString("91f3b045-1488-3526-bebb-b7b52f31b575"))) ? (true) : (started))))) {
+      if (started) {
         return;
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("3a1d2fa9-3585-397a-93cf-ce027e703d31"))) ? ((worker) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6f02f2ce-4195-38e2-b302-baa3f83fd2e2"))) ? ((worker) == (null)) : (worker != null))))) {
+      if (worker != null) {
         // worker will be null when master is in maintenance mode.
-if(KnobRuntime.check(java.util.UUID.fromString("338ec256-d322-39bf-9267-6a0723beee01"))) {
-try {
-    java.lang.reflect.Field field = worker.getClass().getDeclaredField("splitPlanCount");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(worker));
-    field.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7b752a85-03b9-39e1-886c-91cae33ec8bc"))) {
-try {
-    java.lang.reflect.Field field = worker.getClass().getDeclaredField("mergePlanCount");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(worker));
-    field.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         pool.submit(worker);
       }
       started = true;
@@ -149,14 +98,11 @@ try {
   }
 
   public void stop() {
-if(KnobRuntime.check(java.util.UUID.fromString("4553ab19-66cd-3371-83f8-98e54e6d59bb"))) {
-return;
-}
     synchronized (startStopLock) {
       if (!started) {
         throw new IllegalStateException("calling `stop` without first calling `start`.");
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("908d22fc-e58d-3614-afcb-bdb284abe8db"))) ? (!stopped) : (((KnobRuntime.check(java.util.UUID.fromString("a69f5df4-35c5-3b87-a56e-c8aa78941040"))) ? (true) : (stopped))))) {
+      if (stopped) {
         return;
       }
       pool.shutdownNow(); // shutdownNow to interrupt the worker thread sitting on `take()`
@@ -165,9 +111,6 @@ return;
   }
 
   public ScheduledChore getRegionNormalizerChore() {
-if(KnobRuntime.check(java.util.UUID.fromString("36a86da2-a566-33bf-8210-f7b2b1dbc5fb"))) {
-return null;
-}
     return regionNormalizerChore;
   }
 
@@ -211,9 +154,6 @@ return null;
    * Return the number of times a {@link SplitNormalizationPlan} has been submitted.
    */
   public long getSplitPlanCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("6bef4a1b-36c1-3039-8234-e7d8d78f9e49"))) {
-return 0;
-}
     return worker == null ? 0 : worker.getSplitPlanCount();
   }
 
@@ -221,9 +161,6 @@ return 0;
    * Return the number of times a {@link MergeNormalizationPlan} has been submitted.
    */
   public long getMergePlanCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("3fc75032-6af9-33d4-b3cc-8be7f22b6cd4"))) {
-return 0;
-}
     return worker == null ? 0 : worker.getMergePlanCount();
   }
 

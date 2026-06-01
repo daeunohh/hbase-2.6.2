@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -124,58 +123,14 @@ public class CompoundBloomFilterWriter extends CompoundBloomFilterBase
     readyChunk.chunkId = numChunks - 1;
     readyChunk.chunk = chunk;
     readyChunk.firstKey = firstKeyInChunk;
-if(KnobRuntime.check(java.util.UUID.fromString("1667836e-2a31-3a53-98b8-b9e36ce40ecc"))) {
-try {
-    java.lang.reflect.Field field = readyChunk.getClass().getDeclaredField("chunkId");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(readyChunk));
-    field.set(readyChunk, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e9c059d8-06d0-3c95-bfcd-992f8c393a9a"))) {
-try {
-    java.lang.reflect.Field field = readyChunk.getClass().getDeclaredField("chunkId");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(readyChunk));
-    field.set(readyChunk, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6db0e4b1-5c05-31e7-bf4d-86cfbde51cf5"))) {
-try {
-    java.lang.reflect.Field field = readyChunk.getClass().getDeclaredField("chunkId");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(readyChunk));
-    field.set(readyChunk, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("66e52ca5-3781-3379-881c-3b78112cf172"))) {
-try {
-    java.lang.reflect.Field field = readyChunk.getClass().getDeclaredField("chunkId");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(readyChunk));
-    field.set(readyChunk, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("8a8abef4-970b-32ce-9022-8951f9a3bc65"))) { readyChunks.add(new ReadyChunk()); } else { readyChunks.add(readyChunk); }
+    readyChunks.add(readyChunk);
 
     long prevMaxKeys = chunk.getMaxKeys();
     long prevByteSize = chunk.getByteSize();
 
-    if (KnobRuntime.check(java.util.UUID.fromString("df707909-0af4-314e-8ff0-67df852dd42c"))) { allocateNewChunk(); } else if (KnobRuntime.check(java.util.UUID.fromString("28eb5f37-7c8f-3890-a2a2-ebe6771e7e0c"))) { chunk.allocBloom(); } else { chunk.compactBloom(); }
+    chunk.compactBloom();
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("ee98955e-3491-3baf-b1a2-1c0720d97081"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) != (chunk.getMaxKeys()))) : (((KnobRuntime.check(java.util.UUID.fromString("859f0d8e-1276-3b66-8a12-c6a76405b070"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) != (chunk.getMaxKeys()))) : (((KnobRuntime.check(java.util.UUID.fromString("fd1fd0f7-69cb-3ae3-be53-c691b63aec43"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) == (chunk.getKeyCount()))) : (((KnobRuntime.check(java.util.UUID.fromString("45a0d24d-effd-3029-a4a3-186e644e7d84"))) ? ((prevByteSize) != (chunk.getMaxKeys())) : (((KnobRuntime.check(java.util.UUID.fromString("44de9591-c9d5-3602-b5db-45324b223afd"))) ? ((prevByteSize) == (chunk.getMaxKeys())) : (((KnobRuntime.check(java.util.UUID.fromString("432c2100-5f89-30e1-aa3c-0074190164dd"))) ? ((prevByteSize) == (chunk.getByteSize())) : (((KnobRuntime.check(java.util.UUID.fromString("60e2d52a-e162-3e99-a392-5638c4adc833"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) != (chunk.getKeyCount()))) : (((KnobRuntime.check(java.util.UUID.fromString("b2aef795-0af1-32b6-bd06-c8a7ab7fa17b"))) ? (LOG.isTraceEnabled()) : (((KnobRuntime.check(java.util.UUID.fromString("65568574-335e-3f3f-89e8-5ec0d5782fd9"))) ? ((prevByteSize) != (chunk.getKeyCount())) : (((KnobRuntime.check(java.util.UUID.fromString("d7047182-838a-3332-847f-ef1171090dd7"))) ? ((LOG.isTraceEnabled()) || (prevByteSize != chunk.getByteSize())) : (((KnobRuntime.check(java.util.UUID.fromString("30e80849-1689-3d59-bdc7-9cf6721d5ab7"))) ? (prevByteSize != chunk.getByteSize()) : (((KnobRuntime.check(java.util.UUID.fromString("271dbb0a-4c5c-3000-b406-383209973892"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) == (chunk.getMaxKeys()))) : (((KnobRuntime.check(java.util.UUID.fromString("324751fd-8e36-39f6-a4d7-248a73cd50f4"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) == (chunk.getByteSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("33077c38-a2d4-34a5-8468-682ffa4dc79b"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) != (chunk.getKeyCount()))) : (((KnobRuntime.check(java.util.UUID.fromString("ffd7b576-8405-35b3-9544-1fe26d177115"))) ? ((prevByteSize) == (chunk.getKeyCount())) : (((KnobRuntime.check(java.util.UUID.fromString("ad3ffd2b-972e-3d44-bcfa-d61cedf0a891"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) == (chunk.getMaxKeys()))) : (((KnobRuntime.check(java.util.UUID.fromString("d06ec57f-e5ad-390d-9c2a-bdfa1add2dda"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) != (chunk.getByteSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("871f6fbe-5189-3b17-836b-aa83e9c52030"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) == (chunk.getKeyCount()))) : (((KnobRuntime.check(java.util.UUID.fromString("be80bd9c-d9e3-3b45-8af9-80141e0c5ded"))) ? ((prevByteSize) != (chunk.getByteSize())) : (((KnobRuntime.check(java.util.UUID.fromString("0571b449-ff08-3478-8ffb-b4979798088b"))) ? ((LOG.isTraceEnabled()) && (prevByteSize != chunk.getByteSize())) : (((KnobRuntime.check(java.util.UUID.fromString("a54b9029-018f-3fa7-8f78-8f787c728e38"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) != (chunk.getByteSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("1be94024-e019-3274-8ad2-ffdefa958eed"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) == (chunk.getByteSize()))) : (LOG.isTraceEnabled() && prevByteSize != chunk.getByteSize()))))))))))))))))))))))))))))))))))))))))))))) {
+    if (LOG.isTraceEnabled() && prevByteSize != chunk.getByteSize()) {
       LOG.trace("Compacted Bloom chunk #" + readyChunk.chunkId + " from [" + prevMaxKeys
         + " max keys, " + prevByteSize + " bytes] to [" + chunk.getMaxKeys() + " max keys, "
         + chunk.getByteSize() + " bytes]");
@@ -195,7 +150,7 @@ try {
 
     enqueueReadyChunk(false);
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("594a77ff-9bd9-34fe-b2c1-f2e71e03ac77"))) ? ((chunk) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("32bc3529-c18a-3da8-816f-073b00999027"))) ? ((chunk) == (null)) : (chunk == null))))) {
+    if (chunk == null) {
       if (firstKeyInChunk != null) {
         throw new IllegalStateException(
           "First key in chunk already set: " + Bytes.toStringBinary(firstKeyInChunk));
@@ -286,30 +241,15 @@ try {
     public void write(DataOutput out) throws IOException {
       out.writeInt(VERSION);
 
-if(KnobRuntime.check(java.util.UUID.fromString("85fc8ff4-0042-3df9-b3f5-2a7ba9446ecf"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("8299a5a0-ea2c-37d8-ab1b-b1ceecb2104b"))) { out.writeLong(getMaxKeys()); } else if (KnobRuntime.check(java.util.UUID.fromString("c6cb9d2c-c0bb-329f-b5eb-fd16a1110c6f"))) { out.writeLong(getKeyCount()); } else { out.writeLong(getByteSize()); }
+      out.writeLong(getByteSize());
       out.writeInt(prevChunk.getHashCount());
-if(KnobRuntime.check(java.util.UUID.fromString("9a2cc776-848c-3f3a-bfd1-3106b44a5adc"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("9ef7de02-e3ea-3bc8-ae9c-e31be7817979"))) { out.writeInt(prevChunk.getHashCount()); } else { out.writeInt(prevChunk.getHashType()); }
-if(KnobRuntime.check(java.util.UUID.fromString("56380a57-167c-37dc-87c9-38564bc12b31"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("e9e80d0d-5201-3066-af01-38e25353518e"))) { out.writeLong(getMaxKeys()); } else if (KnobRuntime.check(java.util.UUID.fromString("e9d89425-d6e5-30da-8fe5-697202546a98"))) { out.writeLong(getByteSize()); } else { out.writeLong(getKeyCount()); }
-if(KnobRuntime.check(java.util.UUID.fromString("7272ed35-fd0a-3826-88df-94057c311725"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("74801b62-76ad-3b34-97c2-1a9ea73aedb3"))) { out.writeLong(getKeyCount()); } else if (KnobRuntime.check(java.util.UUID.fromString("dbbf0e09-58c1-3d31-82fb-d32e93d0d0f6"))) { out.writeLong(getByteSize()); } else { out.writeLong(getMaxKeys()); }
+      out.writeInt(prevChunk.getHashType());
+      out.writeLong(getKeyCount());
+      out.writeLong(getMaxKeys());
 
       // Fields that don't have equivalents in ByteBloomFilter.
       out.writeInt(numChunks);
       if (comparator != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("f669ddc9-796b-3f16-bdc4-08f1a211d96f"))) {
-throw new java.io.IOException("Injected exception");
-}
         Bytes.writeByteArray(out, Bytes.toBytes(comparator.getClass().getName()));
       } else {
         // Internally writes a 0 vint if the byte[] is null

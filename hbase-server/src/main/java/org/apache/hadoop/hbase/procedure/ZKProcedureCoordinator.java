@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -181,35 +180,7 @@ public class ZKProcedureCoordinator implements ProcedureCoordinatorRpcs {
    */
   @Override
   final public boolean start(final ProcedureCoordinator coordinator) {
-if(KnobRuntime.check(java.util.UUID.fromString("c71e3ce8-12fd-3d61-8f00-615e5bfab858"))) {
-try {
-    java.lang.reflect.Field field = coordinator.getClass().getDeclaredField("timeoutMillis");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(coordinator));
-    field.set(coordinator, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8426d054-be32-3ea0-b2ad-0dbb9da64059"))) {
-try {
-    java.lang.reflect.Field field = coordinator.getClass().getDeclaredField("wakeTimeMillis");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(coordinator));
-    field.set(coordinator, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3a9f4c10-2428-3d37-9e8b-4f468dbbb1ac"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ea7d3dd0-fa2c-3c99-befd-7d5b777dc897"))) {
-return true;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("7fe0c62e-d4cf-3427-bb24-f02129589589"))) ? ((this.coordinator) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("56b5b1d4-7b13-344a-9be8-590f74047739"))) ? ((this.coordinator) == (null)) : (this.coordinator != null))))) {
+    if (this.coordinator != null) {
       throw new IllegalStateException(
         "ZKProcedureCoordinator already started and already has listener installed");
     }
@@ -271,7 +242,7 @@ return true;
       return false;
     }
 
-    if (KnobRuntime.check(java.util.UUID.fromString("76483547-9432-3ecd-b677-d3c37b499b30"))) { abort("Starting controller for procedure member="); } else if (KnobRuntime.check(java.util.UUID.fromString("b6e1d191-a6cf-3aa6-8dd5-3cb9ffc827e8"))) { LOG.debug("Starting controller for procedure member="); } else if (KnobRuntime.check(java.util.UUID.fromString("d636a54c-065a-3c28-815b-3a09a991601a"))) { LOG.debug(("Starting controller for procedure member=") + (coordName)); } else if (KnobRuntime.check(java.util.UUID.fromString("2271ae28-434d-38ed-873e-36d109fc88e8"))) { abort(("Starting controller for procedure member=") + (coordName)); } else { LOG.debug("Starting controller for procedure member=" + coordName); }
+    LOG.debug("Starting controller for procedure member=" + coordName);
     return true;
   }
 
@@ -344,12 +315,6 @@ return true;
 
   @Override
   final public void close() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("827212f4-8a97-3dba-be99-f0aad2e58380"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("95acf0f7-5e49-3a0e-967b-0accd090a046"))) {
-throw new java.io.IOException("Injected exception");
-}
     zkProc.close();
   }
 

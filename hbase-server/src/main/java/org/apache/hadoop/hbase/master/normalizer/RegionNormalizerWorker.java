@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -85,24 +84,15 @@ class RegionNormalizerWorker implements PropagatingConfigurationObserver, Runnab
   }
 
   private boolean extractDefaultNormalizerValue(final Configuration configuration) {
-if(KnobRuntime.check(java.util.UUID.fromString("cc60e64d-65f8-3add-ac14-296e461bb97d"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e53ada4d-d853-32e7-8dff-6b9ff28aaa33"))) {
-return false;
-}
     String s = configuration.get(HBASE_TABLE_NORMALIZATION_ENABLED);
     return Boolean.parseBoolean(s);
   }
 
   @Override
   public void registerChildren(ConfigurationManager manager) {
-if(KnobRuntime.check(java.util.UUID.fromString("bfe47758-3e8f-340b-813b-7dcff88d1c62"))) {
-return;
-}
     if (regionNormalizer instanceof ConfigurationObserver) {
       final ConfigurationObserver observer = (ConfigurationObserver) regionNormalizer;
-      if (KnobRuntime.check(java.util.UUID.fromString("9ebc3d39-6d6a-3ad9-8d3b-e54a3ace3b6f"))) { manager.deregisterObserver(observer); } else { manager.registerObserver(observer); }
+      manager.registerObserver(observer);
     }
   }
 
@@ -131,20 +121,14 @@ return;
   }
 
   private static RateLimiter loadRateLimiter(final Configuration configuration) {
-if(KnobRuntime.check(java.util.UUID.fromString("afe9b6d3-1ab5-3755-94ab-a2eebf12cc28"))) {
-return null;
-}
     return RateLimiter.create(loadRateLimit(configuration));
   }
 
   private static long loadRateLimit(final Configuration configuration) {
-if(KnobRuntime.check(java.util.UUID.fromString("cd100e29-61c3-322d-9aac-35e803599052"))) {
-return 0;
-}
     long rateLimitBytes =
       configuration.getLongBytes(RATE_LIMIT_BYTES_PER_SEC_KEY, RATE_UNLIMITED_BYTES);
     long rateLimitMbs = rateLimitBytes / 1_000_000L;
-    if (((KnobRuntime.check(java.util.UUID.fromString("090f6c8d-901e-3286-8dd1-1cbb3ae59c93"))) ? ((rateLimitMbs) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("d17b5929-88ac-3b98-b559-c6ace901493e"))) ? ((rateLimitMbs) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e8473513-fe46-3e6d-99e8-81a2a2447239"))) ? ((rateLimitMbs) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("ff44c03a-f714-3652-a306-e66576edaf22"))) ? ((rateLimitMbs) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("66b44351-2ded-3ad9-9818-7e654974701b"))) ? ((rateLimitMbs) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0b00b1cb-eb67-3f2b-8edc-9fc5660315df"))) ? ((rateLimitMbs) > (0)) : (rateLimitMbs <= 0))))))))))))) {
+    if (rateLimitMbs <= 0) {
       LOG.warn("Configured value {}={} is <= 1MB. Falling back to default.",
         RATE_LIMIT_BYTES_PER_SEC_KEY, rateLimitBytes);
       rateLimitBytes = RATE_UNLIMITED_BYTES;
@@ -152,7 +136,7 @@ return 0;
     }
     LOG.info("Normalizer rate limit set to {}",
       rateLimitBytes == RATE_UNLIMITED_BYTES ? "unlimited" : rateLimitMbs + " MB/sec");
-    return ((KnobRuntime.check(java.util.UUID.fromString("10e02a18-21b9-3947-b3e1-6adea37e6f89"))) ? (1_000_000L) : (rateLimitMbs));
+    return rateLimitMbs;
   }
 
   /**
@@ -176,9 +160,6 @@ return 0;
    * @see RegionNormalizerManager#getSplitPlanCount()
    */
   long getSplitPlanCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("c6a0d620-9678-3238-8fd3-8a165aee791f"))) {
-return 0;
-}
     return splitPlanCount;
   }
 
@@ -186,9 +167,6 @@ return 0;
    * @see RegionNormalizerManager#getMergePlanCount()
    */
   long getMergePlanCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("5e196e7b-3c30-3862-89e5-f5031ca98855"))) {
-return 0;
-}
     return mergePlanCount;
   }
 

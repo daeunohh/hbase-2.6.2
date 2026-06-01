@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -80,105 +79,6 @@ public final class SegmentFactory {
   public MutableSegment createMutableSegment(final Configuration conf, CellComparator comparator,
     MemStoreSizing memstoreSizing) {
     MemStoreLAB memStoreLAB = MemStoreLAB.newInstance(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("5861056a-0b57-371f-9bb2-7d456ea80abd"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("CHUNK_SIZE_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9a0230e5-c70f-3000-bff6-4bd7df5c8d38"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("CHUNK_SIZE_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("27aa0c42-cc63-34ef-b6cf-6200b4fc4835"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fd4403ee-93e5-3926-a7ad-d81ba0c28222"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("MAX_ALLOC_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f26ee875-74f2-3f0a-a7c0-974c258316fa"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("CHUNK_SIZE_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7e7c3f32-36eb-3039-8cd1-9fb80f94f138"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("CHUNK_SIZE_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0d9ca040-ab0a-3d29-9c36-e264abaa69ae"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("MAX_ALLOC_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8a8cfa6d-e4fd-3bc2-a568-8a576a0c0261"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("MAX_ALLOC_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e14b9400-9080-36e0-9ab5-942c872352bb"))) {
-try {
-    java.lang.reflect.Field field = memStoreLAB.getClass().getDeclaredField("MAX_ALLOC_DEFAULT");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(memStoreLAB));
-    field.set(memStoreLAB, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return generateMutableSegment(conf, comparator, memStoreLAB, memstoreSizing);
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -200,7 +199,7 @@ public final class StoreUtils {
       return 0L;
     }
     StoreFileReader reader = file.getReader();
-    if (((KnobRuntime.check(java.util.UUID.fromString("19b03cb8-b4c7-3d56-a8b2-0a78aed2e5d3"))) ? ((reader) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("753a7519-d8c0-378d-b042-1d911dc64631"))) ? ((reader) == (null)) : (reader == null))))) {
+    if (reader == null) {
       return 0L;
     }
     return f.applyAsLong(reader);

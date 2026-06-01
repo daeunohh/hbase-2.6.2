@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -111,23 +110,6 @@ public class HFileLink extends FileLink {
    */
   public static final HFileLink buildFromHFileLinkPattern(Configuration conf, Path hFileLinkPattern)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("3d04ac3c-1ce1-368c-842f-300f26c5b9cc"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("929fbdfa-2ac5-3175-8400-8b5648d30750"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("31388ceb-2213-3848-a94e-b38dfdba9324"))) {
-throw new java.io.IOException("Injected exception");
-}
     return buildFromHFileLinkPattern(CommonFSUtils.getRootDir(conf),
       HFileArchiveUtil.getArchivePath(conf), hFileLinkPattern);
   }
@@ -139,9 +121,6 @@ throw new java.io.IOException("Injected exception");
    */
   public final static HFileLink buildFromHFileLinkPattern(final Path rootDir, final Path archiveDir,
     final Path hFileLinkPattern) {
-if(KnobRuntime.check(java.util.UUID.fromString("8eec8f68-f4f8-32ab-b896-98d8ab781d7d"))) {
-return null;
-}
     Path hfilePath = getHFileLinkPatternRelativePath(hFileLinkPattern);
     Path tempPath = new Path(new Path(rootDir, HConstants.HBASE_TEMP_DIRECTORY), hfilePath);
     Path originPath = new Path(rootDir, hfilePath);
@@ -231,9 +210,6 @@ return null;
    * @throws IOException on unexpected error.
    */
   private static Path getHFileLinkPatternRelativePath(final Path path) {
-if(KnobRuntime.check(java.util.UUID.fromString("f201359c-28e6-3c1b-996f-58c378e09301"))) {
-return null;
-}
     // table=region-hfile
     Matcher m = REF_OR_HFILE_LINK_PATTERN.matcher(path.getName());
     if (!m.matches()) {
@@ -245,50 +221,6 @@ return null;
     String regionName = m.group(3);
     String hfileName = m.group(4);
     String familyName = path.getParent().getName();
-if(KnobRuntime.check(java.util.UUID.fromString("1c0ffbda-594d-308f-832d-61bbe06b10a8"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("75a2f07f-acba-395f-9ac2-db7e7e399e08"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dd4fa1d7-2769-3fdd-8e9e-9ce940f3b695"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0d45570c-c83e-3196-8d04-5bb63b17491e"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Path tableDir = CommonFSUtils.getTableDir(new Path("./"), tableName);
     return new Path(tableDir, new Path(regionName, new Path(familyName, hfileName)));
   }
@@ -299,9 +231,6 @@ try {
    * @return the name of the referenced HFile
    */
   public static String getReferencedHFileName(final String fileName) {
-if(KnobRuntime.check(java.util.UUID.fromString("bbc617d7-afea-33bb-9677-4a4987979005"))) {
-return null;
-}
     Matcher m = REF_OR_HFILE_LINK_PATTERN.matcher(fileName);
     if (!m.matches()) {
       throw new IllegalArgumentException(fileName + " is not a valid HFileLink name!");
@@ -356,53 +285,6 @@ return null;
    */
   public static String createHFileLinkName(final TableName tableName, final String regionName,
     final String hfileName) {
-if(KnobRuntime.check(java.util.UUID.fromString("f56f93fb-7b1c-3b59-8c8d-3692c244e3e2"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0a649577-5393-3b80-853e-420cd7490c42"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("279e766f-2bfe-3d50-9043-c23fb847efd5"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e7c1fdd0-0741-3fa0-b047-b6dffa46a3b1"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("76b13fda-5c9b-3b06-a013-64459e18c694"))) {
-return null;
-}
     String s = String.format("%s=%s-%s",
       tableName.getNameAsString().replace(TableName.NAMESPACE_DELIM, '='), regionName, hfileName);
     return s;
@@ -424,23 +306,6 @@ return null;
   public static String create(final Configuration conf, final FileSystem fs,
     final Path dstFamilyPath, final RegionInfo hfileRegionInfo, final String hfileName)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("68669b9a-05f9-314d-88b0-c37cb38a9718"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ded91a88-a852-369e-8fe6-cb371d29c96b"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4fa690c7-83b2-3494-97f2-3df6a0faf10b"))) {
-throw new java.io.IOException("Injected exception");
-}
     return create(conf, fs, dstFamilyPath, hfileRegionInfo, hfileName, true);
   }
 
@@ -461,23 +326,6 @@ throw new java.io.IOException("Injected exception");
   public static String create(final Configuration conf, final FileSystem fs,
     final Path dstFamilyPath, final RegionInfo hfileRegionInfo, final String hfileName,
     final boolean createBackRef) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("c578b372-619a-32d8-8255-be7497986ac1"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("590863e1-19f3-3ece-a4f5-1cb782f47e0f"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("396bbf29-47e4-32ae-906f-21b108a936e4"))) {
-throw new java.io.IOException("Injected exception");
-}
     TableName linkedTable = hfileRegionInfo.getTable();
     String linkedRegion = hfileRegionInfo.getEncodedName();
     return create(conf, fs, dstFamilyPath, linkedTable, linkedRegion, hfileName, createBackRef);

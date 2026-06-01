@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.normalizer.RegionNormalizerWorker.CUMULATIVE_SIZE_LIMIT_MB_KEY;
 import static org.apache.hadoop.hbase.master.normalizer.RegionNormalizerWorker.DEFAULT_CUMULATIVE_SIZE_LIMIT_MB;
@@ -101,21 +100,7 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
 
   @Override
   public void setConf(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("2cc13556-51b7-3c01-bacf-9d37cb5c3c9b"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ce00848d-ca97-3cc7-9fa9-82a2ac523e5d"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("f22de7a5-e52d-3cbd-8b8c-23e14625722b"))) ? ((conf) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2083961c-85d1-3348-8a2a-fbd103b6e4ff"))) ? ((conf) == (null)) : (conf == null))))) {
+    if (conf == null) {
       return;
     }
     normalizerConfiguration = new NormalizerConfiguration(conf, normalizerConfiguration);
@@ -128,95 +113,39 @@ try {
   }
 
   private static int parseMergeMinRegionCount(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("50d1e46e-36d1-32c1-aa11-9ce699e430cf"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("95ed5d2f-a80d-3278-8f50-aacaae2eace8"))) {
-return 0;
-}
     final int parsedValue = conf.getInt(MERGE_MIN_REGION_COUNT_KEY, DEFAULT_MERGE_MIN_REGION_COUNT);
     final int settledValue = Math.max(1, parsedValue);
-    if (((KnobRuntime.check(java.util.UUID.fromString("f8e19bd5-bd9e-3dc1-ae49-7c7d1bb28df8"))) ? ((parsedValue) != (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("b198cb88-cda8-383d-9ec5-8b27f8052d7b"))) ? ((1) == (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("92a27ae0-f44f-31f5-9c21-a3e28861328e"))) ? ((parsedValue) == (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("0abe0afc-1002-3186-bfb6-32cc41707ecc"))) ? ((parsedValue) == (1)) : (((KnobRuntime.check(java.util.UUID.fromString("b8bff2d5-3fd0-348c-aa33-b19f26419853"))) ? ((parsedValue) != (1)) : (((KnobRuntime.check(java.util.UUID.fromString("dbfa43f1-2d9a-3c0a-ad4c-3cb46cc49588"))) ? ((1) != (settledValue)) : (parsedValue != settledValue))))))))))))) {
+    if (parsedValue != settledValue) {
       warnInvalidValue(MERGE_MIN_REGION_COUNT_KEY, parsedValue, settledValue);
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("7726e845-45b9-3d99-b377-b6200c77a1db"))) ? (1) : (settledValue));
+    return settledValue;
   }
 
   private static Period parseMergeMinRegionAge(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("61fdd813-c9d0-3c63-9fb8-8e42b1edf675"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("93298df8-e7b9-3708-af34-29d3dc92813a"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     final int parsedValue =
       conf.getInt(MERGE_MIN_REGION_AGE_DAYS_KEY, DEFAULT_MERGE_MIN_REGION_AGE_DAYS);
     final int settledValue = Math.max(0, parsedValue);
-    if (((KnobRuntime.check(java.util.UUID.fromString("911e01a8-56f3-3088-bcd5-6d00311d2eef"))) ? ((parsedValue) == (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("38412716-0e52-3342-a999-c12acb5004c4"))) ? ((0) == (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("f3200b1a-7363-3f5b-b63c-2bbb41e915b7"))) ? ((parsedValue) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("448fba3e-7f1b-3af6-b530-c9c095d52780"))) ? ((parsedValue) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b725ba71-ec8a-35b0-b6dc-789f39f27e2d"))) ? ((0) != (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("beecd432-8b80-3f63-8f13-aff903f316e9"))) ? ((parsedValue) != (settledValue)) : (parsedValue != settledValue))))))))))))) {
+    if (parsedValue != settledValue) {
       warnInvalidValue(MERGE_MIN_REGION_AGE_DAYS_KEY, parsedValue, settledValue);
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("8ca5ca36-13fb-325d-832a-499477dc7eb0"))) ? (Period.ofDays(0)) : (Period.ofDays(settledValue)));
+    return Period.ofDays(settledValue);
   }
 
   private static long parseMergeMinRegionSizeMb(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("d78eab3a-4260-30f7-b1ba-996a8ca0850e"))) {
-return 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3458ba7a-7d5d-3547-ba0d-6c668ac2d08d"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     final long parsedValue =
       conf.getLong(MERGE_MIN_REGION_SIZE_MB_KEY, DEFAULT_MERGE_MIN_REGION_SIZE_MB);
     final long settledValue = Math.max(0, parsedValue);
-    if (((KnobRuntime.check(java.util.UUID.fromString("576d2058-f7f4-3762-bada-c32976e655a7"))) ? ((parsedValue) != (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("07a062b9-6609-3b7f-8a3b-3dc74f6fd8f6"))) ? ((parsedValue) == (settledValue)) : (parsedValue != settledValue))))) {
+    if (parsedValue != settledValue) {
       warnInvalidValue(MERGE_MIN_REGION_SIZE_MB_KEY, parsedValue, settledValue);
     }
     return settledValue;
   }
 
   private static long parseMergeRequestMaxNumberOfRegionsCount(final Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("919a3886-6b4c-353b-9297-fb591749953e"))) {
-return 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("076d1f6d-2ce4-3283-bb99-96c1e2a0c43c"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     final long parsedValue = conf.getLong(MERGE_REQUEST_MAX_NUMBER_OF_REGIONS_COUNT_KEY,
       DEFAULT_MERGE_REQUEST_MAX_NUMBER_OF_REGIONS_COUNT);
     final long settledValue = Math.max(2, parsedValue);
-    if (((KnobRuntime.check(java.util.UUID.fromString("2c7de245-8dfd-3c73-922c-d71b49505f70"))) ? ((parsedValue) != (settledValue)) : (((KnobRuntime.check(java.util.UUID.fromString("68b940d5-f529-38b5-b258-a842445432dc"))) ? ((parsedValue) == (settledValue)) : (parsedValue != settledValue))))) {
+    if (parsedValue != settledValue) {
       warnInvalidValue(MERGE_REQUEST_MAX_NUMBER_OF_REGIONS_COUNT_KEY, parsedValue, settledValue);
     }
     return settledValue;
@@ -230,11 +159,8 @@ try {
 
   private static <T> void logConfigurationUpdated(final String key, final T oldValue,
     final T newValue) {
-if(KnobRuntime.check(java.util.UUID.fromString("865f08cc-430d-3b5a-bd38-545c88df850b"))) {
-return;
-}
     if (!Objects.equals(oldValue, newValue)) {
-      if (KnobRuntime.check(java.util.UUID.fromString("8fedaa47-c193-3079-989f-b8b21cd96879"))) { LOG.warn("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); } else if (KnobRuntime.check(java.util.UUID.fromString("8271b885-56d7-3618-8a44-237590c5a6b7"))) { LOG.debug("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); } else { LOG.info("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); }
+      LOG.info("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue);
     }
   }
 
@@ -279,9 +205,6 @@ return;
 
   @Override
   public void setMasterServices(final MasterServices masterServices) {
-if(KnobRuntime.check(java.util.UUID.fromString("2d0c4a97-46b4-35e7-b41b-ee1463da5034"))) {
-return;
-}
     this.masterServices = masterServices;
   }
 
@@ -643,11 +566,11 @@ return;
     }
 
     public boolean isSplitEnabled() {
-      return ((KnobRuntime.check(java.util.UUID.fromString("22e2977b-8177-3e7e-92ce-1cf7bc37db80"))) ? (!splitEnabled) : (splitEnabled));
+      return splitEnabled;
     }
 
     public boolean isMergeEnabled() {
-      return ((KnobRuntime.check(java.util.UUID.fromString("615c2151-7d9c-3ec2-8e73-23b51435676c"))) ? (!mergeEnabled) : (mergeEnabled));
+      return mergeEnabled;
     }
 
     public int getMergeMinRegionCount() {

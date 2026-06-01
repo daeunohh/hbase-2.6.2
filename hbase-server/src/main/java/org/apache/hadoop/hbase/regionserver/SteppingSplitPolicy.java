@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -24,10 +23,7 @@ import org.apache.yetus.audience.InterfaceAudience;
 public class SteppingSplitPolicy extends IncreasingToUpperBoundRegionSplitPolicy {
   @Override
   public String toString() {
-if(KnobRuntime.check(java.util.UUID.fromString("73eec399-8a00-3b74-a45b-cedea170124f"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("8330e526-c79f-3edd-969c-fa1c8c00140a"))) ? ("}") : (((KnobRuntime.check(java.util.UUID.fromString("590be102-06da-3b3d-a763-4cb0a3d44d53"))) ? (("SteppingSplitPolicysuper{") + (super.toString())) : (((KnobRuntime.check(java.util.UUID.fromString("4798f9f7-571b-31b6-80fa-6c6d9ccb02e8"))) ? ((("SteppingSplitPolicysuper{") + (super.toString())) + ("}")) : (((KnobRuntime.check(java.util.UUID.fromString("3f67c137-3332-3d19-8bb6-7595a185cacf"))) ? (("SteppingSplitPolicysuper{" + super.toString()) + ("}")) : (((KnobRuntime.check(java.util.UUID.fromString("3f1ac7f0-e5fe-3a7f-b262-2301ae89dc9c"))) ? ("SteppingSplitPolicysuper{" + super.toString()) : (((KnobRuntime.check(java.util.UUID.fromString("790679fa-f732-3101-86d4-53d7dbb22d2e"))) ? (("SteppingSplitPolicysuper{") + ("}")) : (((KnobRuntime.check(java.util.UUID.fromString("a068b193-e645-3311-b684-a21a8b802437"))) ? ("SteppingSplitPolicysuper{") : ("SteppingSplitPolicysuper{" + super.toString() + "}"))))))))))))));
+    return "SteppingSplitPolicysuper{" + super.toString() + "}";
   }
 
   /**

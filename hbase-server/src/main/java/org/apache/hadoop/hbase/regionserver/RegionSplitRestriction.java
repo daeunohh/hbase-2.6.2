@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -80,25 +79,8 @@ public abstract class RegionSplitRestriction {
    */
   public static RegionSplitRestriction create(TableDescriptor tableDescriptor, Configuration conf)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9937e975-b21c-30ae-87d4-e3ff7bd6ee44"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("74f5f5d1-bbf7-33d1-94df-a0f49bfce32c"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cdec4783-25da-3db1-96a4-861041cad033"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     String type = tableDescriptor.getValue(RESTRICTION_TYPE_KEY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("e62e4c2c-908c-3039-8fe3-94637dbcb2d7"))) ? ((type) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("c080d080-253f-3a00-9bc3-daef0ff4b37b"))) ? ((type) == (null)) : (type == null))))) {
+    if (type == null) {
       type = conf.get(RESTRICTION_TYPE_KEY, RESTRICTION_TYPE_NONE);
     }
 
@@ -119,20 +101,6 @@ try {
         ret = new NoRegionSplitRestriction();
         break;
     }
-if(KnobRuntime.check(java.util.UUID.fromString("a8065ca3-af7a-36d9-8a6e-2c048d8c2d14"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6851d211-7c90-36c2-a116-8065ff5a2056"))) {
-throw new java.io.IOException("Injected exception");
-}
     ret.initialize(tableDescriptor, conf);
     return ret;
   }

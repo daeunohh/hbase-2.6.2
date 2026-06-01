@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -39,31 +38,11 @@ public class TimeToLiveHFileCleaner extends BaseTimeToLiveFileCleaner {
 
   @Override
   protected long getTtlMs(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("90c219d4-7dac-3fff-9cbe-bd902bd424c8"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("39fbe025-3679-3dde-ad4e-7b584675708b"))) {
-return 0;
-}
     return conf.getLong(TTL_CONF_KEY, DEFAULT_TTL);
   }
 
   @Override
   protected boolean valiateFilename(Path file) {
-if(KnobRuntime.check(java.util.UUID.fromString("d34bc902-4ebf-3d1f-8224-e800bb9874d9"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("28c4df9f-bb74-393c-ac8f-8f2421e86813"))) {
-return false;
-}
     return HFileLink.isBackReferencesDir(file) || HFileLink.isBackReferencesDir(file.getParent())
       || StoreFileInfo.validateStoreFileName(file.getName());
   }

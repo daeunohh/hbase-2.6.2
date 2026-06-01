@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -109,7 +108,7 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
     long nonceGroup, long nonce) throws IOException {
     this.region = region;
     this.maxResultSize = scan.getMaxResultSize();
-    if (((KnobRuntime.check(java.util.UUID.fromString("72334933-716f-39f1-acef-3d2b0462bf2d"))) ? (scan.doLoadColumnFamiliesOnDemand()) : (((KnobRuntime.check(java.util.UUID.fromString("f81029fb-8bcb-3007-bb64-a9b34b792cae"))) ? (scan.includeStopRow()) : (scan.hasFilter()))))) {
+    if (scan.hasFilter()) {
       this.filter = new FilterWrapper(scan.getFilter());
     } else {
       this.filter = null;
@@ -131,9 +130,9 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
     long mvccReadPoint = PackagePrivateFieldAccessor.getMvccReadPoint(scan);
     this.scannerReadPoints = region.scannerReadPoints;
     this.rsServices = region.getRegionServerServices();
-    if (KnobRuntime.check(java.util.UUID.fromString("fbcd430a-3a2d-3a4f-bd5a-e2c448542993"))) { region.smallestReadPointCalcLock.unlock(ReadPointCalculationLock.LockType.RECORDING_LOCK); } else { region.smallestReadPointCalcLock.lock(ReadPointCalculationLock.LockType.RECORDING_LOCK); }
+    region.smallestReadPointCalcLock.lock(ReadPointCalculationLock.LockType.RECORDING_LOCK);
     try {
-      if (((KnobRuntime.check(java.util.UUID.fromString("cddac9f6-2ab8-3f0b-9bcc-ad63dadbb0bf"))) ? ((mvccReadPoint) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("19202950-3c15-32e7-a261-e4000e51be7d"))) ? ((mvccReadPoint) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("f05b93d6-c11f-3ad6-a5d3-90f5708a24b5"))) ? ((mvccReadPoint) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a29385df-664a-371a-a2a4-6d371e37a5a8"))) ? ((mvccReadPoint) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("10732fc0-31a4-3fdd-92d7-fafb58263f19"))) ? ((mvccReadPoint) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("47084837-99d5-3e44-87a5-9d2308d56ad8"))) ? ((mvccReadPoint) >= (0)) : (mvccReadPoint > 0))))))))))))) {
+      if (mvccReadPoint > 0) {
         this.readPt = mvccReadPoint;
       } else if (hasNonce(region, nonce)) {
         this.readPt = rsServices.getNonceManager().getMvccFromOperationContext(nonceGroup, nonce);
@@ -142,7 +141,7 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
       }
       scannerReadPoints.put(this, this.readPt);
     } finally {
-      if (KnobRuntime.check(java.util.UUID.fromString("4104876f-4b2c-3fe7-b418-5edaac028257"))) { region.smallestReadPointCalcLock.lock(ReadPointCalculationLock.LockType.RECORDING_LOCK); } else { region.smallestReadPointCalcLock.unlock(ReadPointCalculationLock.LockType.RECORDING_LOCK); }
+      region.smallestReadPointCalcLock.unlock(ReadPointCalculationLock.LockType.RECORDING_LOCK);
     }
     initializeScanners(scan, additionalScanners);
   }
@@ -170,9 +169,6 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
           this.filter == null || !scan.doLoadColumnFamiliesOnDemand()
             || this.filter.isFamilyEssential(entry.getKey())
         ) {
-if(KnobRuntime.check(java.util.UUID.fromString("101cee1b-412c-35ea-b343-9c512cce66d0"))) {
-throw new java.io.IOException("Injected exception");
-}
           scanners.add(scanner);
         } else {
           joinedScanners.add(scanner);
@@ -193,9 +189,6 @@ throw new java.io.IOException("Injected exception");
   }
 
   private IOException handleException(List<KeyValueScanner> instantiatedScanners, Throwable t) {
-if(KnobRuntime.check(java.util.UUID.fromString("97afddad-729b-3754-b35d-1e895934123b"))) {
-return null;
-}
     // remove scaner read point before throw the exception
     scannerReadPoints.remove(this);
     if (storeHeap != null) {
@@ -246,15 +239,6 @@ return null;
 
   @Override
   public boolean next(List<Cell> outResults) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("24395209-767c-37e1-ae9e-e9cf88e9f92b"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("51125f5f-37e5-328a-8d5c-956cc2177eea"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c04bd90e-6339-3118-a276-00a3ea00a9c0"))) {
-throw new java.io.IOException("Injected exception");
-}
     // apply the batching limit by default
     return next(outResults, defaultScannerContext);
   }
@@ -262,38 +246,7 @@ throw new java.io.IOException("Injected exception");
   @Override
   public synchronized boolean next(List<Cell> outResults, ScannerContext scannerContext)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("49d48f9a-a318-38bd-b5f7-b511643ffbf9"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b7aac7d6-95da-3989-9846-6aebaded8973"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ea4c0aac-1c7d-386b-ae7b-3ebec9f2c5f0"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("791efe5e-bcee-3fc1-ad21-83a25dbc522f"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ef536eeb-c3c2-3b37-8303-9379daf4a954"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("0cd453b6-b809-3ca6-b759-d1ce1814552b"))) ? (!this.filterClosed) : (this.filterClosed))) {
+    if (this.filterClosed) {
       throw new UnknownScannerException("Scanner was closed (timed out?) "
         + "after we renewed it. Could be caused by a very slow scanner "
         + "or a lengthy garbage collection");
@@ -308,15 +261,6 @@ try {
 
   @Override
   public boolean nextRaw(List<Cell> outResults) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("1abda8e1-0d11-35ac-b9bc-cc36a419b226"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("51a9462c-7f4a-33a4-bb1e-55cd914d4513"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("986dac85-aa82-3fb2-817c-3bc99b7c03fd"))) {
-throw new java.io.IOException("Injected exception");
-}
     // Use the RegionScanner's context by default
     return nextRaw(outResults, defaultScannerContext);
   }
@@ -334,31 +278,6 @@ throw new java.io.IOException("Injected exception");
       moreValues = nextInternal(outResults, scannerContext);
     } else {
       List<Cell> tmpList = new ArrayList<>();
-if(KnobRuntime.check(java.util.UUID.fromString("c985dbe3-615d-35bc-a20a-e26cfd97f19d"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("74b39847-6f50-3639-9dc5-75fa9a7b51c8"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("66a018ea-2d99-3645-9ea8-97bbe5c697b0"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       moreValues = nextInternal(tmpList, scannerContext);
       outResults.addAll(tmpList);
     }
@@ -377,48 +296,14 @@ try {
 
     if (isFilterDoneInternal()) {
       moreValues = false;
-if(KnobRuntime.check(java.util.UUID.fromString("e92733b7-a6e0-3e78-95c8-dd0461138f87"))) {
-throw new java.io.IOException("Injected exception");
-}
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("a6f588cc-9a65-39b0-bafa-61cef4ebe82d"))) ? (!moreValues) : (moreValues));
+    return moreValues;
   }
 
   /** Returns true if more cells exist after this batch, false if scanner is done */
   private boolean populateFromJoinedHeap(List<Cell> results, ScannerContext scannerContext)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2c2c3967-ec5f-33f4-b7ad-037cfb77031d"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b6cd5681-b17f-311a-9ebd-38a49fd03671"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3f423593-9efb-39b2-b63a-c40af7e476f9"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f6188793-c96d-333b-8677-1e46555d75c4"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("58bfbe68-8e49-3343-97ee-2f82029db1af"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-    assert ((KnobRuntime.check(java.util.UUID.fromString("683f180d-53e1-3a21-b9cc-9357b27936a6"))) ? ((joinedContinuationRow) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5aaf187f-c262-3452-80aa-b76705143723"))) ? ((joinedContinuationRow) != (null)) : (joinedContinuationRow != null))));
+    assert joinedContinuationRow != null;
     boolean moreValues =
       populateResult(results, this.joinedHeap, scannerContext, joinedContinuationRow);
 
@@ -448,83 +333,33 @@ try {
     do {
       // Check for thread interrupt status in case we have been signaled from
       // #interruptRegionOperation.
-if(KnobRuntime.check(java.util.UUID.fromString("36c4b6d3-3ebe-3586-93d0-97572281c8f0"))) {
-throw new java.io.InterruptedIOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("3e670307-4661-3ea9-a3dd-1c14a7c2f193"))) { resetFilters(); } else { region.checkInterrupt(); }
+      region.checkInterrupt();
 
       // We want to maintain any progress that is made towards the limits while scanning across
       // different column families. To do this, we toggle the keep progress flag on during calls
       // to the StoreScanner to ensure that any progress made thus far is not wiped away.
       scannerContext.setKeepProgress(true);
-if(KnobRuntime.check(java.util.UUID.fromString("d9f07e44-7668-381b-8cdd-e88b0e0b9e8b"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dfe96a88-d4e2-34f5-bc40-a51d4779ee6b"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("86e96fd6-10e7-3af7-87ca-773de897fbb2"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("6c6ebdcc-9037-33e2-836b-415e5d1d3895"))) { nextRaw(results, scannerContext); } else if (KnobRuntime.check(java.util.UUID.fromString("188e7ef6-14f4-3dc9-84bc-671d3c7c6950"))) { next(results, scannerContext); } else { heap.next(results, scannerContext); }
+      heap.next(results, scannerContext);
       scannerContext.setKeepProgress(tmpKeepProgress);
 
       nextKv = heap.peek();
       moreCellsInRow = moreCellsInRow(nextKv, currentRowCell);
       if (!moreCellsInRow) {
-if(KnobRuntime.check(java.util.UUID.fromString("069c5ee3-1c47-3d65-a63a-ab79957777a1"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("651b889a-0d3d-35da-9541-6fb37c04dca4"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("d06ec356-3df1-39c0-88dc-701b1be42184"))) { incrementCountOfRowsFilteredMetric(scannerContext); } else { incrementCountOfRowsScannedMetric(scannerContext); }
+        incrementCountOfRowsScannedMetric(scannerContext);
       }
       if (moreCellsInRow && scannerContext.checkBatchLimit(limitScope)) {
-        return ((KnobRuntime.check(java.util.UUID.fromString("10a572f8-9694-3e85-8f05-3d5d87f1636b"))) ? (isFilterDoneInternal()) : (scannerContext.setScannerState(NextState.BATCH_LIMIT_REACHED).hasMoreValues()));
-      } else if (((KnobRuntime.check(java.util.UUID.fromString("f9697c5a-f6ca-30b6-880d-3abdb77c5fd5"))) ? (scannerContext.checkAnyLimitReached(limitScope)) : (((KnobRuntime.check(java.util.UUID.fromString("9ffca9bc-4f23-382e-9acc-c6c16590ff82"))) ? (scannerContext.checkBatchLimit(limitScope)) : (scannerContext.checkSizeLimit(limitScope)))))) {
+        return scannerContext.setScannerState(NextState.BATCH_LIMIT_REACHED).hasMoreValues();
+      } else if (scannerContext.checkSizeLimit(limitScope)) {
         ScannerContext.NextState state =
           moreCellsInRow ? NextState.SIZE_LIMIT_REACHED_MID_ROW : NextState.SIZE_LIMIT_REACHED;
         return scannerContext.setScannerState(state).hasMoreValues();
-      } else if (((KnobRuntime.check(java.util.UUID.fromString("bb2283b0-4a2a-32ea-aa67-048d0c264353"))) ? (scannerContext.checkAnyLimitReached(limitScope)) : (((KnobRuntime.check(java.util.UUID.fromString("0cd4543c-43ca-39c2-ad68-8a133439f5b7"))) ? (scannerContext.checkSizeLimit(limitScope)) : (((KnobRuntime.check(java.util.UUID.fromString("62f7d82c-444a-3cee-9fdb-af5c89fb26c6"))) ? (scannerContext.checkBatchLimit(limitScope)) : (scannerContext.checkTimeLimit(limitScope)))))))) {
+      } else if (scannerContext.checkTimeLimit(limitScope)) {
         ScannerContext.NextState state =
           moreCellsInRow ? NextState.TIME_LIMIT_REACHED_MID_ROW : NextState.TIME_LIMIT_REACHED;
         return scannerContext.setScannerState(state).hasMoreValues();
       }
     } while (moreCellsInRow);
-    return ((KnobRuntime.check(java.util.UUID.fromString("301b2b54-0191-3af5-8b4a-d41fea49d288"))) ? ((nextKv) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("7ac10576-6cc4-3a01-974d-cf7408fccc6d"))) ? ((nextKv) != (null)) : (nextKv != null))));
+    return nextKv != null;
   }
 
   /**
@@ -540,15 +375,6 @@ try {
   /** Returns True if a filter rules the scanner is over, done. */
   @Override
   public synchronized boolean isFilterDone() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("75a136a1-97a0-3c6a-804a-217fffdf6665"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("73b49573-c352-343a-af7f-d0e4d5312977"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a1ee8b72-a3d0-3d9a-b376-f388d276ceea"))) {
-throw new java.io.IOException("Injected exception");
-}
     return isFilterDoneInternal();
   }
 
@@ -563,7 +389,7 @@ throw new java.io.IOException("Injected exception");
       // is still processing the request. We should abort aggressively
       // in that case.
       long afterTime = rpcCall.get().disconnectSince();
-      if (((KnobRuntime.check(java.util.UUID.fromString("b1f2c837-5ee9-32ce-9431-58f4e3e1328a"))) ? ((afterTime) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6e263a40-dbc2-37cd-bdca-8139c0e457db"))) ? ((afterTime) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("5f4c4398-4465-36f6-a92e-90098da61aef"))) ? ((afterTime) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3de5f3f8-eef0-332a-b2b0-477f21aea79c"))) ? ((afterTime) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("31d727ae-e037-3d33-851c-b521b844a8c1"))) ? ((afterTime) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("63bc6a0f-5636-329f-9333-82c78baf0e6f"))) ? ((afterTime) == (0)) : (afterTime >= 0))))))))))))) {
+      if (afterTime >= 0) {
         throw new CallerDisconnectedException(
           "Aborting on region " + getRegionInfo().getRegionNameAsString() + ", call " + this
             + " after " + afterTime + " ms, since " + "caller disconnected");
@@ -575,7 +401,7 @@ throw new java.io.IOException("Injected exception");
     long initialSizeProgress, long initialHeapSizeProgress) {
     // Starting to scan a new row. Reset the scanner progress according to whether or not
     // progress should be kept.
-    if (((KnobRuntime.check(java.util.UUID.fromString("54aebcf3-9d13-3bb3-ace1-9e104dddee97"))) ? (scannerContext.mayHaveMoreCellsInRow()) : (scannerContext.getKeepProgress()))) {
+    if (scannerContext.getKeepProgress()) {
       // Progress should be kept. Reset to initial values seen at start of method invocation.
       scannerContext.setProgress(initialBatchProgress, initialSizeProgress,
         initialHeapSizeProgress);
@@ -586,38 +412,7 @@ throw new java.io.IOException("Injected exception");
 
   private boolean nextInternal(List<Cell> results, ScannerContext scannerContext)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f646d3c3-ac79-3805-9594-f933a3d8f389"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cf4209c1-8184-3203-8c4e-decb8d083255"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4afe53d0-3c48-306b-afba-f0308dc8f371"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b1552b46-7f14-3570-b340-6150efa3c189"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9d7f55f8-5392-348b-a8a7-769954ca882e"))) {
-return false;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("94941342-c162-3497-adb3-f23192063e1c"))) { Preconditions.checkArgument(isFilterDoneInternal(), "First parameter should be an empty list"); } else { Preconditions.checkArgument(results.isEmpty(), "First parameter should be an empty list"); }
+    Preconditions.checkArgument(results.isEmpty(), "First parameter should be an empty list");
     Preconditions.checkArgument(scannerContext != null, "Scanner context cannot be null");
     Optional<RpcCall> rpcCall = RpcServer.getCurrentCall();
 
@@ -643,10 +438,7 @@ return false;
 
       // Check for thread interrupt status in case we have been signaled from
       // #interruptRegionOperation.
-if(KnobRuntime.check(java.util.UUID.fromString("bd724873-04c7-3b4b-8123-4ff056d96c13"))) {
-throw new java.io.InterruptedIOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("d3512ed4-5a9d-31a7-b567-88a18520fc02"))) { resetFilters(); } else { region.checkInterrupt(); }
+      region.checkInterrupt();
 
       // Let's see what we have in the storeHeap.
       Cell current = this.storeHeap.peek();
@@ -662,13 +454,13 @@ throw new java.io.InterruptedIOException("Injected exception");
       // would prevent the filters from being evaluated. Thus, if it is true, change the
       // scope of any limits that could potentially create partial results to
       // LimitScope.BETWEEN_ROWS so that those limits are not reached mid-row
-      if (((KnobRuntime.check(java.util.UUID.fromString("94d37e00-7160-3a61-ad49-ba78153a0e0a"))) ? (!hasFilterRow) : (((KnobRuntime.check(java.util.UUID.fromString("54cc6727-afbc-3206-a33d-684649f5b8c7"))) ? (isFilterDoneInternal()) : (((KnobRuntime.check(java.util.UUID.fromString("239d3aac-ae86-3f1f-b454-0d73f0a266b4"))) ? (filterRow()) : (((KnobRuntime.check(java.util.UUID.fromString("12b03526-5a3d-3095-998f-cb2090f337da"))) ? (true) : (hasFilterRow))))))))) {
+      if (hasFilterRow) {
         if (LOG.isTraceEnabled()) {
           LOG.trace("filter#hasFilterRow is true which prevents partial results from being "
             + " formed. Changing scope of limits that may create partials");
         }
         scannerContext.setSizeLimitScope(LimitScope.BETWEEN_ROWS);
-        if (KnobRuntime.check(java.util.UUID.fromString("45964290-dd67-3efb-9f79-3db08a367c94"))) { scannerContext.setSizeLimitScope(LimitScope.BETWEEN_ROWS); } else { scannerContext.setTimeLimitScope(LimitScope.BETWEEN_ROWS); }
+        scannerContext.setTimeLimitScope(LimitScope.BETWEEN_ROWS);
         limitScope = LimitScope.BETWEEN_ROWS;
       }
 
@@ -689,35 +481,13 @@ throw new java.io.InterruptedIOException("Injected exception");
           if (hasFilterRow) {
             filter.filterRowCells(results);
           }
-          return ((KnobRuntime.check(java.util.UUID.fromString("28b1b344-206e-30b7-bdee-18dfe54e53a2"))) ? (isFilterDoneInternal()) : (scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues()));
+          return scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues();
         }
 
         // Check if rowkey filter wants to exclude this row. If so, loop to next.
         // Technically, if we hit limits before on this row, we don't need this call.
         if (filterRowKey(current)) {
-if(KnobRuntime.check(java.util.UUID.fromString("75c609c8-0713-3e7f-bb63-0544c0add390"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5411eae7-9f28-3f07-90b5-21666effc49e"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("ad4c7f44-796c-34e4-8a0a-e38fc2f2cc85"))) { incrementCountOfRowsScannedMetric(scannerContext); } else { incrementCountOfRowsFilteredMetric(scannerContext); }
+          incrementCountOfRowsFilteredMetric(scannerContext);
           // early check, see HBASE-16296
           if (isFilterDoneInternal()) {
             return scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues();
@@ -764,44 +534,11 @@ try {
         // First filter with the filterRow(List).
         FilterWrapper.FilterRowRetCode ret = FilterWrapper.FilterRowRetCode.NOT_CALLED;
         if (hasFilterRow) {
-if(KnobRuntime.check(java.util.UUID.fromString("2dd8ec5d-3e5f-376f-8eb8-04f1a2d25f7d"))) {
-throw new java.io.IOException("Injected exception");
-}
           ret = filter.filterRowCellsWithRet(results);
 
           // We don't know how the results have changed after being filtered. Must set progress
           // according to contents of results now.
-          if (((KnobRuntime.check(java.util.UUID.fromString("bc166c35-11a2-3ccc-bb5b-79e94f435317"))) ? (isFilterDoneInternal()) : (((KnobRuntime.check(java.util.UUID.fromString("2772919f-87c8-3548-9ebe-ebf0f2736484"))) ? (scannerContext.mayHaveMoreCellsInRow()) : (scannerContext.getKeepProgress()))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("cdc3ee30-9a7b-30c0-a087-b5965b0c8104"))) {
-initialBatchProgress = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9509074b-9e05-3071-bc76-92aecb20e441"))) {
-initialBatchProgress /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c466da19-ffe6-364d-b8a6-c8ee4133b876"))) {
-initialHeapSizeProgress += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c3937685-a469-3772-be57-666948bd6e3c"))) {
-initialBatchProgress = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b922c88f-3e95-322e-9d40-262a497d18ac"))) {
-initialSizeProgress = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3dd1c46a-ca5a-38c1-a708-9b5fc06f3a88"))) {
-initialHeapSizeProgress = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a7631190-1812-3fd6-83d6-0507ba877c10"))) {
-initialBatchProgress *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5f011de9-50be-379d-8264-9c2895b78be0"))) {
-initialSizeProgress += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("87110dc2-6619-3685-abce-6d2863cd6b6b"))) {
-initialBatchProgress -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("41075672-6518-3fd0-9473-8f5870ea3118"))) {
-initialBatchProgress += 1;
-}
+          if (scannerContext.getKeepProgress()) {
             scannerContext.setProgress(initialBatchProgress, initialSizeProgress,
               initialHeapSizeProgress);
           } else {
@@ -845,7 +582,7 @@ initialBatchProgress += 1;
             joinedContinuationRow = current;
             populateFromJoinedHeap(results, scannerContext);
 
-            if (((KnobRuntime.check(java.util.UUID.fromString("ec6f7c7f-7d7a-378e-8c33-6ef9d2c0fa81"))) ? (scannerContext.checkSizeLimit(LimitScope.BETWEEN_CELLS)) : (((KnobRuntime.check(java.util.UUID.fromString("77b6922b-7e51-3529-a899-c49299bda07f"))) ? (scannerContext.checkBatchLimit(LimitScope.BETWEEN_CELLS)) : (scannerContext.checkAnyLimitReached(LimitScope.BETWEEN_CELLS)))))) {
+            if (scannerContext.checkAnyLimitReached(LimitScope.BETWEEN_CELLS)) {
               return true;
             }
           }
@@ -893,31 +630,6 @@ initialBatchProgress += 1;
   }
 
   private void incrementCountOfRowsFilteredMetric(ScannerContext scannerContext) {
-if(KnobRuntime.check(java.util.UUID.fromString("75a68fdf-b6d2-3f2a-9279-418644958ec7"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("skippingRow");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("17274f6d-92aa-32ea-81f8-436b1133ec7a"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("be85783f-4d94-3291-b95f-8e0949c02db3"))) {
-try {
-    java.lang.reflect.Field field = scannerContext.getClass().getDeclaredField("keepProgress");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(scannerContext);
-    field.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     region.filteredReadRequestsCount.increment();
     if (region.getMetrics() != null) {
       region.getMetrics().updateFilteredRecords();
@@ -1009,7 +721,7 @@ try {
     scannerContext.setSkippingRow(true);
 
     Cell next;
-    while (((KnobRuntime.check(java.util.UUID.fromString("e0731f90-ad2c-39f7-869e-06162bd83e17"))) ? (((next = this.storeHeap.peek()) != null) && (CellUtil.matchingRows(next, curRowCell))) : (((KnobRuntime.check(java.util.UUID.fromString("e5c065c6-0622-3a7c-97f4-a50273762462"))) ? ((((next = this.storeHeap.peek())) != (null)) || (CellUtil.matchingRows(next, curRowCell))) : (((KnobRuntime.check(java.util.UUID.fromString("9c278c00-5d44-3442-bb03-6f98430a8166"))) ? ((next = this.storeHeap.peek()) != null) : (((KnobRuntime.check(java.util.UUID.fromString("c86b0a3f-df25-3cc6-ac90-20c8bb25875d"))) ? ((((next = this.storeHeap.peek())) == (null)) && (CellUtil.matchingRows(next, curRowCell))) : (((KnobRuntime.check(java.util.UUID.fromString("dcebeb7e-882e-3ffe-a50a-bcae2ec869c3"))) ? (((next = this.storeHeap.peek()) != null) || (CellUtil.matchingRows(next, curRowCell))) : (((KnobRuntime.check(java.util.UUID.fromString("6c792f32-7093-33c0-ba8f-15871579e7f0"))) ? (((next = this.storeHeap.peek())) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("c98d97df-6e4f-329a-9c05-e65bcfa5ea7d"))) ? (((next = this.storeHeap.peek())) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("63f34d77-fd37-3594-a14b-2132715de54d"))) ? ((((next = this.storeHeap.peek())) == (null)) || (CellUtil.matchingRows(next, curRowCell))) : (((KnobRuntime.check(java.util.UUID.fromString("8075c1b4-2ac9-3fe5-a6ca-5a72cd3e9f1f"))) ? ((((next = this.storeHeap.peek())) != (null)) && (CellUtil.matchingRows(next, curRowCell))) : ((next = this.storeHeap.peek()) != null && CellUtil.matchingRows(next, curRowCell)))))))))))))))))))) {
+    while ((next = this.storeHeap.peek()) != null && CellUtil.matchingRows(next, curRowCell)) {
       // Check for thread interrupt status in case we have been signaled from
       // #interruptRegionOperation.
       region.checkInterrupt();
@@ -1017,9 +729,6 @@ try {
     }
 
     scannerContext.setSkippingRow(false);
-if(KnobRuntime.check(java.util.UUID.fromString("839676ca-9c46-37b5-82fb-986057a45e9b"))) {
-throw new java.io.IOException("Injected exception");
-}
     resetFilters();
 
     // Calling the hook in CP which allows it to do a fast forward
@@ -1028,16 +737,10 @@ throw new java.io.IOException("Injected exception");
   }
 
   protected boolean shouldStop(Cell currentRowCell) {
-if(KnobRuntime.check(java.util.UUID.fromString("9171fe81-2967-3a99-85ce-cfdf0f98f23c"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1610141a-b0e9-3556-a0c7-f9eaf3910bc8"))) {
-return true;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("0af505e9-777c-3077-84a9-ded8b28d8e73"))) ? ((currentRowCell) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a38e2c40-7d4d-3349-8b53-4b59eccd3f50"))) ? ((currentRowCell) == (null)) : (currentRowCell == null))))) {
+    if (currentRowCell == null) {
       return true;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("0692373d-e9a2-3733-935b-3a58d632e472"))) ? ((stopRow) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("bdafb145-4555-3af5-a819-ad3badf9beb1"))) ? (((stopRow) != (null)) || (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (((KnobRuntime.check(java.util.UUID.fromString("13a9d792-0bdc-379e-83cc-ea31ee3e56a0"))) ? (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW)) : (((KnobRuntime.check(java.util.UUID.fromString("b6a9f863-4987-33dc-baba-94f740699d20"))) ? (stopRow == null) : (((KnobRuntime.check(java.util.UUID.fromString("80f1b1a8-be3a-3536-bcce-1d2e642e33cc"))) ? ((stopRow) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("caae22e5-367e-3ffc-ba31-b7ebad52e98d"))) ? (((stopRow) == (null)) && (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (((KnobRuntime.check(java.util.UUID.fromString("09ff3f3f-b7e9-37bc-b005-e6bbb4fa6d5f"))) ? (((stopRow) != (null)) && (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (((KnobRuntime.check(java.util.UUID.fromString("4a2b5de2-0d4c-3d4e-9ac2-da2c680c427b"))) ? ((stopRow == null) || (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (((KnobRuntime.check(java.util.UUID.fromString("87fe8045-81ac-33fd-a4c6-4ad37997472e"))) ? ((stopRow == null) && (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (((KnobRuntime.check(java.util.UUID.fromString("b90d89c8-a174-3a22-bfbc-085e544454ee"))) ? (((stopRow) == (null)) || (Bytes.equals(stopRow, HConstants.EMPTY_END_ROW))) : (stopRow == null || Bytes.equals(stopRow, HConstants.EMPTY_END_ROW)))))))))))))))))))))) {
+    if (stopRow == null || Bytes.equals(stopRow, HConstants.EMPTY_END_ROW)) {
       return false;
     }
     int c = comparator.compareRows(currentRowCell, stopRow, 0, stopRow.length);

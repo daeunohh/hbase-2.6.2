@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -277,17 +276,11 @@ public class HStoreFile implements StoreFile {
    *         reference.
    */
   public StoreFileInfo getFileInfo() {
-if(KnobRuntime.check(java.util.UUID.fromString("dbe70b20-71eb-3154-a927-89826a6c7684"))) {
-return null;
-}
     return this.fileInfo;
   }
 
   @Override
   public Path getPath() {
-if(KnobRuntime.check(java.util.UUID.fromString("4e1801db-97b4-3503-a2da-1317a3154b26"))) {
-return null;
-}
     return this.fileInfo.getPath();
   }
 
@@ -404,22 +397,10 @@ return null;
   private void open() throws IOException {
     fileInfo.initHDFSBlocksDistribution();
     long readahead = fileInfo.isNoReadahead() ? 0L : -1L;
-if(KnobRuntime.check(java.util.UUID.fromString("f30a6d60-253a-3c7b-b6de-4fabf8e6c74e"))) {
-readahead = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("483fec6a-7c5b-3c38-bc6b-ad1560341389"))) {
-readahead = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("85d5fc80-9e86-3e07-9c55-87834407a417"))) {
-readahead -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("80c44afe-9fb1-3219-88a0-42385ded7fa0"))) {
-throw new java.io.IOException("Injected exception");
-}
     ReaderContext context = fileInfo.createReaderContext(false, readahead, ReaderType.PREAD);
     fileInfo.initHFileInfo(context);
     StoreFileReader reader = fileInfo.preStoreFileReaderOpen(context, cacheConf);
-    if (((KnobRuntime.check(java.util.UUID.fromString("84445f29-b662-3e1c-ba49-3e71b93970ec"))) ? ((reader) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("4ff35997-136a-3ea3-b562-48add87e1531"))) ? ((reader) != (null)) : (reader == null))))) {
+    if (reader == null) {
       reader = fileInfo.createReader(context, cacheConf);
       fileInfo.getHFileInfo().initMetaAndIndex(reader.getHFileReader());
     }
@@ -432,14 +413,11 @@ throw new java.io.IOException("Injected exception");
     }
 
     // Load up indices and fileinfo. This also loads Bloom filter type.
-if(KnobRuntime.check(java.util.UUID.fromString("d30d633c-32ed-3b1a-8bbe-9b2eae0fece2"))) {
-throw new java.io.IOException("Injected exception");
-}
     metadataMap = Collections.unmodifiableMap(initialReader.loadFileInfo());
 
     // Read in our metadata.
     byte[] b = metadataMap.get(MAX_SEQ_ID_KEY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("a26a765b-2454-3400-9c84-39880bb5f447"))) ? ((b) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("caad9162-dd4d-38cf-9a0e-b2c7a57c088c"))) ? ((b) != (null)) : (b != null))))) {
+    if (b != null) {
       // By convention, if halfhfile, top half has a sequence number > bottom
       // half. Thats why we add one in below. Its done for case the two halves
       // are ever merged back together --rare. Without it, on open of store,
@@ -454,7 +432,7 @@ throw new java.io.IOException("Injected exception");
     if (isBulkLoadResult()) {
       // For bulkloads, we have to parse the sequenceid from the path name
       OptionalLong sequenceId = StoreFileInfo.getBulkloadSeqId(this.getPath());
-      if (((KnobRuntime.check(java.util.UUID.fromString("1b418ae6-4df8-362b-b0cc-d49bbd32d715"))) ? (isBulkLoadResult()) : (((KnobRuntime.check(java.util.UUID.fromString("8a0b31ac-51f3-3395-b24d-117c10cc11e2"))) ? (isReference()) : (sequenceId.isPresent()))))) {
+      if (sequenceId.isPresent()) {
         this.sequenceid = sequenceId.getAsLong();
         // Handle reference files as done above.
         if (fileInfo.isTopReference()) {
@@ -500,7 +478,7 @@ throw new java.io.IOException("Injected exception");
     this.excludeFromMinorCompaction = (b != null && Bytes.toBoolean(b));
 
     b = metadataMap.get(HISTORICAL_KEY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("bcee8f6d-95bb-38dd-a151-6030e8052a4b"))) ? ((b) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("2d44f9fc-1eeb-3016-998c-46405c6af283"))) ? ((b) != (null)) : (b != null))))) {
+    if (b != null) {
       isHistorical = Bytes.toBoolean(b);
     }
     BloomType hfileBloomType = initialReader.getBloomFilterType();
@@ -511,7 +489,7 @@ throw new java.io.IOException("Injected exception");
           + hfileBloomType + ", but " + cfBloomType + " specified in column family "
           + "configuration");
       }
-    } else if (((KnobRuntime.check(java.util.UUID.fromString("6649e218-7365-3890-b1e2-fd8ef7bbcf64"))) ? ((hfileBloomType) != (BloomType.NONE)) : (((KnobRuntime.check(java.util.UUID.fromString("8f2ea986-8d13-37a2-ad77-db454f1a4a65"))) ? ((hfileBloomType) == (BloomType.NONE)) : (hfileBloomType != BloomType.NONE))))) {
+    } else if (hfileBloomType != BloomType.NONE) {
       LOG.info(
         "Bloom filter turned off by CF config for " + initialReader.getHFileReader().getName());
     }
@@ -532,7 +510,7 @@ throw new java.io.IOException("Injected exception");
       byte[] data = metadataMap.get(COMPACTION_EVENT_KEY);
       this.compactedStoreFiles.addAll(ProtobufUtil.toCompactedStoreFiles(data));
     } catch (IOException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b476a8fd-607d-39a5-a5cb-3b53af5e3a1e"))) { LOG.warn("Error reading compacted storefiles from meta data", e); } else { LOG.error("Error reading compacted storefiles from meta data", e); }
+      LOG.error("Error reading compacted storefiles from meta data", e);
     }
 
     // initialize so we can reuse them after reader closed.
@@ -545,13 +523,7 @@ throw new java.io.IOException("Injected exception");
    * Initialize the reader used for pread.
    */
   public void initReader() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("33b8c56e-8c5c-3f4c-ae4a-68dabf07ea50"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9ce70140-b9cd-3bed-a57a-9cf3c847a8f6"))) {
-throw new java.io.IOException("Injected exception");
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("33d1574c-a64e-3dcd-a61d-b651c3678f4d"))) ? ((initialReader) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("bbae43e0-5eb8-3080-8411-da1fea072450"))) ? ((initialReader) == (null)) : (initialReader == null))))) {
+    if (initialReader == null) {
       synchronized (this) {
         if (initialReader == null) {
           try {
@@ -559,19 +531,7 @@ throw new java.io.IOException("Injected exception");
           } catch (Exception e) {
             try {
               boolean evictOnClose = cacheConf != null ? cacheConf.shouldEvictOnClose() : true;
-if(KnobRuntime.check(java.util.UUID.fromString("ae507346-00de-3e2b-9dfc-8b59b55dd65b"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("811824f5-b880-3fbf-a0a6-365a8d8d63b9"))) {
-evictOnClose = true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f953d1e1-04af-3c00-b0c6-16ecca466cab"))) {
-evictOnClose = !evictOnClose;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1c72b136-6337-3d81-8193-8437f6024db3"))) {
-evictOnClose = false;
-}
-              if (KnobRuntime.check(java.util.UUID.fromString("5ec25a02-c53c-30c1-8eb1-ecce47ee54f1"))) { closeStoreFile(!evictOnClose); } else if (KnobRuntime.check(java.util.UUID.fromString("ed714fd1-ac9a-3931-95a0-320df1fa413a"))) { closeStoreFile(true); } else if (KnobRuntime.check(java.util.UUID.fromString("ec7b369e-975f-3c7a-b71e-f97db4ed9915"))) { this.closeStoreFile(!evictOnClose); } else if (KnobRuntime.check(java.util.UUID.fromString("cff2871d-a633-375b-9f69-81fc852523fd"))) { this.closeStoreFile(true); } else { this.closeStoreFile(evictOnClose); }
+              this.closeStoreFile(evictOnClose);
             } catch (IOException ee) {
               LOG.warn("failed to close reader", ee);
             }
@@ -646,9 +606,6 @@ evictOnClose = false;
   }
 
   public void markCompactedAway() {
-if(KnobRuntime.check(java.util.UUID.fromString("772afd50-76cd-3c6a-a39e-fd7b79c23001"))) {
-return;
-}
     this.compactedAway = true;
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import edu.umd.cs.findbugs.annotations.Nullable;
@@ -124,28 +123,11 @@ public class FSTableDescriptors implements TableDescriptors {
   public static TableDescriptor tryUpdateAndGetMetaTableDescriptor(Configuration conf,
     FileSystem fs, Path rootdir) throws IOException {
     // see if we already have meta descriptor on fs. Write one if not.
-if(KnobRuntime.check(java.util.UUID.fromString("7b37bc7f-4b61-32d0-843c-4cc54aee5011"))) {
-throw new java.io.IOException("Injected exception");
-}
     Optional<Pair<FileStatus, TableDescriptor>> opt = getTableDescriptorFromFs(fs,
       CommonFSUtils.getTableDir(rootdir, TableName.META_TABLE_NAME), false);
     if (opt.isPresent()) {
       return opt.get().getSecond();
     }
-if(KnobRuntime.check(java.util.UUID.fromString("74160e98-55ba-32ba-bc83-4573849b54d2"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b31da44a-8d97-34d2-bc4c-d36466f6d451"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     TableDescriptorBuilder builder = createMetaTableDescriptorBuilder(conf);
     TableDescriptor td = StoreFileTrackerFactory.updateWithTrackerConfigs(conf, builder.build());
     LOG.info("Creating new hbase:meta table descriptor {}", td);
@@ -169,9 +151,6 @@ try {
   }
 
   public static ColumnFamilyDescriptor getReplBarrierFamilyDescForMeta() {
-if(KnobRuntime.check(java.util.UUID.fromString("cd45ab11-ac82-3f3b-8ac2-3c739625a0f9"))) {
-return null;
-}
     return ColumnFamilyDescriptorBuilder.newBuilder(HConstants.REPLICATION_BARRIER_FAMILY)
       .setMaxVersions(HConstants.ALL_VERSIONS).setInMemory(true)
       .setScope(HConstants.REPLICATION_SCOPE_LOCAL)
@@ -181,23 +160,6 @@ return null;
 
   public static TableDescriptorBuilder createMetaTableDescriptorBuilder(final Configuration conf)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("7d7343e1-be20-348b-b056-74db74a66fdb"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e56b7c82-77d8-3ef4-9bc0-6c91c955d6fe"))) {
-try {
-    java.lang.reflect.Field field = conf.getClass().getDeclaredField("loadDefaults");
-    field.setAccessible(true);
-    boolean oldValue = (boolean)field.get(conf);
-    field.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("08662f88-0df2-30cf-9950-3d911d486f50"))) {
-throw new java.io.IOException("Injected exception");
-}
     // TODO We used to set CacheDataInL1 for META table. When we have BucketCache in file mode, now
     // the META table data goes to File mode BC only. Test how that affect the system. If too much,
     // we have to rethink about adding back the setCacheDataInL1 for META table CFs.
@@ -240,63 +202,16 @@ throw new java.io.IOException("Injected exception");
         return cachedtdm;
       }
       // we do not need to go to fs any more
-      if (((KnobRuntime.check(java.util.UUID.fromString("2ce4e651-5067-3f51-b59a-351bed044493"))) ? (!fsvisited) : (fsvisited))) {
+      if (fsvisited) {
         return null;
       }
     }
     TableDescriptor tdmt = null;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("e27e7ad7-b490-3d8f-90f5-6097fec06d7f"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d45b1326-a802-3e6b-af34-299334df5680"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b8e3b29a-49ec-3638-bb17-645f2cca2887"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3a9793f1-c842-3d8a-801c-7e197706c5e7"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bcabbb38-c2ac-38f5-819f-cde5d4881a11"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       tdmt = getTableDescriptorFromFs(fs, getTableDir(tableName), fsreadonly).map(Pair::getSecond)
         .orElse(null);
     } catch (IOException ioe) {
-      if (KnobRuntime.check(java.util.UUID.fromString("d35e7adf-7b20-355d-b598-4677c7665cb2"))) { LOG.debug(("Exception during readTableDecriptor. Current table name = ") + (tableName), ioe); } else if (KnobRuntime.check(java.util.UUID.fromString("ad9fe460-42c3-3fdf-a17b-19f44a882128"))) { LOG.debug("Exception during readTableDecriptor. Current table name = ", ioe); } else { LOG.debug("Exception during readTableDecriptor. Current table name = " + tableName, ioe); }
+      LOG.debug("Exception during readTableDecriptor. Current table name = " + tableName, ioe);
     }
     // last HTD written wins
     if (usecache && tdmt != null) {
@@ -317,12 +232,9 @@ try {
         tds.put(entry.getKey().getNameWithNamespaceInclAsString(), entry.getValue());
       }
     } else {
-      if (KnobRuntime.check(java.util.UUID.fromString("0c71ffcb-b0b5-3a4d-bcef-89584f87fb80"))) { LOG.info("Fetching table descriptors from the filesystem."); } else { LOG.trace("Fetching table descriptors from the filesystem."); }
+      LOG.trace("Fetching table descriptors from the filesystem.");
       boolean allvisited = usecache;
-if(KnobRuntime.check(java.util.UUID.fromString("a5f716ab-14e6-3d2e-97e6-31e5144bba4a"))) {
-throw new java.io.IOException("Injected exception");
-}
-      for (Path d : ((KnobRuntime.check(java.util.UUID.fromString("d1f5a438-fbc1-3356-865e-9d8cf12cad11"))) ? (FSUtils.getLocalTableDirs(fs, rootdir)) : (FSUtils.getTableDirs(fs, rootdir)))) {
+      for (Path d : FSUtils.getTableDirs(fs, rootdir)) {
         TableDescriptor htd = get(CommonFSUtils.getTableName(d));
         if (htd == null) {
           allvisited = false;
@@ -341,12 +253,6 @@ throw new java.io.IOException("Injected exception");
    */
   @Override
   public Map<String, TableDescriptor> getByNamespace(String name) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("e1780ee4-b680-3f99-aa4c-a50d5c4c3cc6"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7dfd94f2-5c82-35be-9d70-1766361bc3ac"))) {
-return null;
-}
     Map<String, TableDescriptor> htds = new TreeMap<>();
     List<Path> tableDirs =
       FSUtils.getLocalTableDirs(fs, CommonFSUtils.getNamespaceDir(rootdir, name));
@@ -362,12 +268,6 @@ return null;
 
   @Override
   public void update(TableDescriptor td, boolean cacheOnly) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("a338e4b6-fceb-3590-92ca-1e17e6e9d2ee"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("90d913a0-b6b5-3256-b033-6804f92a71c4"))) {
-throw new java.io.IOException("Injected exception");
-}
     // TODO: in fact this method will only be called at master side, so fsreadonly and usecache will
     // always be true. In general, we'd better have a ReadOnlyFSTableDesciptors for HRegionServer
     // but now, HMaster extends HRegionServer, so unless making use of generic, we can not have
@@ -525,60 +425,7 @@ throw new java.io.IOException("Injected exception");
    */
   public static TableDescriptor getTableDescriptorFromFs(FileSystem fs, Path hbaseRootDir,
     TableName tableName) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("68658746-7708-316a-a6f6-320e5c996d48"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2c500440-b754-3fc5-841d-fca348d28d52"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e9e01405-f21d-3c1b-8690-0f5272f1785c"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("611e72e6-b2d7-39ef-8f10-eef7cf7ee6c1"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0f7af697-2465-3275-9793-c78e76bc40f7"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7992418b-901a-3651-b911-b77bf91632fe"))) {
-try {
-    java.lang.reflect.Field field = tableName.getClass().getDeclaredField("hashCode");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(tableName));
-    field.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Path tableDir = CommonFSUtils.getTableDir(hbaseRootDir, tableName);
-if(KnobRuntime.check(java.util.UUID.fromString("4489b07f-1474-38d2-8312-4defb6fbca06"))) {
-throw new java.io.IOException("Injected exception");
-}
     return getTableDescriptorFromFs(fs, tableDir);
   }
 
@@ -601,11 +448,8 @@ throw new java.io.IOException("Injected exception");
   private static Optional<Pair<FileStatus, TableDescriptor>> getTableDescriptorFromFs(FileSystem fs,
     Path tableDir, boolean readonly) throws IOException {
     Path tableInfoDir = new Path(tableDir, TABLEINFO_DIR);
-if(KnobRuntime.check(java.util.UUID.fromString("d9e433e4-029f-388c-b1e0-fa4c0385f5b5"))) {
-throw new java.io.IOException("Injected exception");
-}
     FileStatus[] descFiles = CommonFSUtils.listStatus(fs, tableInfoDir, TABLEINFO_PATHFILTER);
-    if (((KnobRuntime.check(java.util.UUID.fromString("3a987b98-a1f3-3388-ac31-25c25a7372fc"))) ? ((descFiles.length) != (1)) : (((KnobRuntime.check(java.util.UUID.fromString("a456f896-9292-3173-8863-e5e5214d65ec"))) ? ((descFiles == null) && ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("c909f8f6-075a-317e-92c4-669ea062c164"))) ? (((descFiles) != (null)) || ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("3bc54bd2-bdca-3e70-85e6-6ed9b93a5668"))) ? ((descFiles.length) <= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("e2e26c76-1f05-38fe-836e-cb21282e292c"))) ? (((descFiles) != (null)) && ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("e064e57b-ef1c-3085-a8cd-677af3842061"))) ? (((descFiles) != (null)) && (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("6e6af068-3898-33c4-9130-98f679082b16"))) ? (((descFiles) == (null)) || ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("9c04aca0-eb1d-341b-b3bf-11f028a7418d"))) ? ((descFiles == null) || ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("ee0586ca-2127-339e-9775-6f8a84bdd91d"))) ? (((descFiles) == (null)) && ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("9d88740a-26e6-39a4-ade6-99e2e64ae049"))) ? (((descFiles) != (null)) || ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("ecd1a0cd-d244-35ef-b632-30e771a3bcd1"))) ? (((descFiles) != (null)) && ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("6ebbfe5b-b33f-3392-8c59-0afaf7a938e7"))) ? (((descFiles) == (null)) || ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("c40df5c5-4166-3889-98d6-f786ba4ad091"))) ? (((descFiles) == (null)) || ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("503e0f74-f0e7-3fde-9c36-9cdaefb7ff35"))) ? ((descFiles == null) && ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("fb2177db-5c0f-3bf8-b44a-f2e0269d27f5"))) ? ((descFiles == null) || ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("c6a8fd54-d254-35d3-ab7a-f1c2a2bfc0bb"))) ? (((descFiles) != (null)) && ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("3ff0455a-32c2-36e5-8ff6-3d7f42e3b276"))) ? (descFiles.length < 1) : (((KnobRuntime.check(java.util.UUID.fromString("37ef2179-7f68-3832-a0f3-4d8a653b4ff4"))) ? (((descFiles) != (null)) && ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("b0e5cbfc-7bee-3706-9ee2-24ef340477ec"))) ? (((descFiles) != (null)) || ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("d379f5e0-cb53-32d7-8691-6b70f3d83814"))) ? ((descFiles.length) > (1)) : (((KnobRuntime.check(java.util.UUID.fromString("cfea9f3b-7c41-33e5-bb87-70ad712b3f77"))) ? (((descFiles) != (null)) && ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("bd850a89-45b3-309b-8f03-7fa71ace3ea6"))) ? ((descFiles == null) || ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("2b89b555-0d32-308e-a0df-10097dbc848f"))) ? ((descFiles) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("016af10c-f003-3f00-b795-78727ae79c39"))) ? (((descFiles) == (null)) && ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("e27acca4-438f-3296-a234-fbb004031820"))) ? (((descFiles) != (null)) || (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("f117e870-623b-3d60-929c-cea91c4c757e"))) ? ((descFiles == null) || ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("e3897e49-35e1-38b0-b2fa-d5503cb6fb63"))) ? (((descFiles) == (null)) && ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("3a39b003-e033-3b41-9e61-b3a0f4aba67f"))) ? (((descFiles) != (null)) || ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("451cabcc-8845-3026-9bc9-033abac8a9d9"))) ? ((descFiles.length) >= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("bd057454-8e32-3794-a723-457c21503ffd"))) ? (((descFiles) == (null)) || ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("8aa33f0e-f268-395a-a7ef-f9701e23c1e3"))) ? ((descFiles.length) == (1)) : (((KnobRuntime.check(java.util.UUID.fromString("caad393e-54e6-33c4-9d8c-04336578d14a"))) ? (((descFiles) != (null)) || ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("8ae2c6a5-e030-30c2-b311-1297edfd1921"))) ? (((descFiles) == (null)) && ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("84e449e8-f259-3d31-93e8-6b7fc04f2311"))) ? ((descFiles == null) && ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("8553688b-44e6-34e3-a3df-3bf9327dd901"))) ? ((descFiles == null) || ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("93b9e973-b877-3881-95a6-c83afba2388f"))) ? (((descFiles) != (null)) || ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("5bbafe1f-e4ca-336d-8a13-8928ca255ecc"))) ? ((descFiles == null) || ((descFiles.length) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("11b4fbc4-8fbe-3bd4-85b3-8f6f7b36869d"))) ? (((descFiles) == (null)) && (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("49c762ad-12f5-3921-b7cb-26ea4801a30c"))) ? ((descFiles == null) && ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("3bf7ae2e-200f-3313-9c15-b28963536dc7"))) ? (((descFiles) == (null)) && ((descFiles.length) < (1))) : (((KnobRuntime.check(java.util.UUID.fromString("e39bd308-e154-3e18-a301-949bec722eb4"))) ? (((descFiles) == (null)) || ((descFiles.length) != (1))) : (((KnobRuntime.check(java.util.UUID.fromString("3704dc8c-4465-3051-871d-943a06f57809"))) ? (((descFiles) != (null)) && ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("87337c46-c1f0-383e-95fc-b1cfdffd2dae"))) ? ((descFiles.length) < (1)) : (((KnobRuntime.check(java.util.UUID.fromString("cdc42094-f657-3119-8cca-53ecfd8a4367"))) ? ((descFiles == null) && ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("9ccdca81-95b0-38b3-99f3-400d46910fa1"))) ? ((descFiles) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("629d46c9-c510-3ef6-ac91-1cfd314633fc"))) ? ((descFiles == null) && (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("d5f9c805-d2e0-3a71-b1f3-898c2cf91e8e"))) ? ((descFiles == null) && ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("ff1cd663-268b-3264-b030-cb95e68332b8"))) ? (((descFiles) == (null)) || ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("81310671-3552-340b-95af-b1b6b0de512b"))) ? (((descFiles) == (null)) && ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("7125ec02-36fe-3371-8681-5f173da73351"))) ? (descFiles == null) : (((KnobRuntime.check(java.util.UUID.fromString("e6d7e771-45be-3a5a-a504-1a47876912b7"))) ? (((descFiles) == (null)) || (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("c870ba4f-5425-3d52-bfe8-98c8b0939cff"))) ? ((descFiles == null) || (descFiles.length < 1)) : (descFiles == null || descFiles.length < 1))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
+    if (descFiles == null || descFiles.length < 1) {
       return Optional.empty();
     }
     Arrays.sort(descFiles, TABLEINFO_FILESTATUS_COMPARATOR);
@@ -689,78 +533,6 @@ throw new java.io.IOException("Injected exception");
    */
   private static Path writeTableDescriptor(final FileSystem fs, final TableDescriptor td,
     final Path tableDir, final FileStatus currentDescriptorFile) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("85545e6a-6579-3e1a-b2d3-dc4ee433be65"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("length");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b4d9adbc-b9fe-368f-92cb-e76e4e19c46b"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("blocksize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9e09c61b-0542-3a9e-aaf9-7b9c4bc4fbaa"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cf196538-ea2e-3371-ad40-f54e8d2bedd2"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("blocksize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("087c6276-c392-3820-950e-25d5838aae95"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("access_time");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("85ac54ae-7c3c-331e-99dd-7ed45cabac68"))) {
-return null;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b00fde9a-923c-3018-b9da-b7738c298b67"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("modification_time");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("68935182-e011-35e9-ba5b-de0bc5444312"))) {
-try {
-    java.lang.reflect.Field field = currentDescriptorFile.getClass().getDeclaredField("blocksize");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(currentDescriptorFile));
-    field.set(currentDescriptorFile, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // Here we will write to the final directory directly to avoid renaming as on OSS renaming is
     // not atomic and has performance issue. The reason why we could do this is that, in the below
     // code we will not overwrite existing files, we will write a new file instead. And when
@@ -783,30 +555,9 @@ try {
       String fileName = getTableInfoFileName(newSequenceId, bytes);
       Path filePath = new Path(tableInfoDir, fileName);
       try (FSDataOutputStream out = fs.create(filePath, false)) {
-if(KnobRuntime.check(java.util.UUID.fromString("0bcb1ccd-722c-39ef-8fba-ddfeaffa14d3"))) {
-throw new java.io.IOException("Injected exception");
-}
         out.write(bytes);
       } catch (FileAlreadyExistsException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("9a102392-2253-384b-8c04-fb76eb0cc466"))) {
-maxAttempts -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9effa86a-ebeb-3db7-8863-c2cdf17d43f1"))) {
-maxAttempts = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("49971e47-7d52-36be-988a-35eb12219f5b"))) {
-maxAttempts /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cbfd13f7-f299-3b79-92b5-0a8707889d21"))) {
-maxAttempts = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5ac122f3-a7ea-3098-bfc3-d51ba6d83b41"))) {
-maxAttempts += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3c3fb57d-ccf4-3a04-8266-a4f7fe9d25ca"))) {
-maxAttempts *= 2;
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("8e6bb005-fac5-340b-bbc9-dca6581106f5"))) { LOG.debug("{} exists; retrying up to {} times", filePath, 0, e); } else if (KnobRuntime.check(java.util.UUID.fromString("883e724c-8854-3680-99ed-94aec11a002f"))) { LOG.debug("{} exists; retrying up to {} times", filePath, 10, e); } else if (KnobRuntime.check(java.util.UUID.fromString("f413d0a6-822f-31fe-96d9-86573df3afc2"))) { LOG.debug("{} exists; retrying up to {} times", filePath, 1, e); } else { LOG.debug("{} exists; retrying up to {} times", filePath, maxAttempts, e); }
+        LOG.debug("{} exists; retrying up to {} times", filePath, maxAttempts, e);
         continue;
       } catch (IOException e) {
         LOG.debug("Failed write {}; retrying up to {} times", filePath, maxAttempts, e);
@@ -833,29 +584,8 @@ maxAttempts *= 2;
    */
   public boolean createTableDescriptor(TableDescriptor htd, boolean forceCreation)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("d7cf1e96-9923-3fef-8792-a65ef8d8efc6"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cb9b145d-1a40-3b82-b13c-b6b4317dc38d"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ce4d6a13-63cf-3c24-afa8-0ed4a507891e"))) {
-return false;
-}
     Path tableDir = getTableDir(htd.getTableName());
-if(KnobRuntime.check(java.util.UUID.fromString("5c1b9c76-f80b-3ef5-9dae-1a527246843f"))) {
-forceCreation = true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f520fdea-0edb-3e64-9877-4f5697ee3321"))) {
-forceCreation = false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cc7140e4-38fd-3cb3-97ff-8ac897b49cff"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("90ebb61b-f565-3afc-81ff-842fc5053af5"))) {
-forceCreation = !forceCreation;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("f0c2e098-25b7-331e-8904-814085fef258"))) ? (createTableDescriptorForTableDirectory(tableDir, htd, !forceCreation)) : (createTableDescriptorForTableDirectory(tableDir, htd, forceCreation)));
+    return createTableDescriptorForTableDirectory(tableDir, htd, forceCreation);
   }
 
   /**
@@ -892,21 +622,12 @@ forceCreation = !forceCreation;
    */
   public static boolean createTableDescriptorForTableDirectory(FileSystem fs, Path tableDir,
     TableDescriptor htd, boolean forceCreation) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("da936530-08e9-3e15-9c01-78f08b35bab2"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7a76e880-241b-3c17-be77-7cd7d821e9c6"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4b2dbd46-4959-3f6e-82e6-fbbd2f4fdf0d"))) {
-return false;
-}
     Optional<Pair<FileStatus, TableDescriptor>> opt = getTableDescriptorFromFs(fs, tableDir, false);
     if (opt.isPresent()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("1c0b80e8-6a98-32a2-8103-63451f318c2c"))) { LOG.info("Current path={}", opt.get().getFirst()); } else { LOG.debug("Current path={}", opt.get().getFirst()); }
+      LOG.debug("Current path={}", opt.get().getFirst());
       if (!forceCreation) {
         if (htd.equals(opt.get().getSecond())) {
-          if (KnobRuntime.check(java.util.UUID.fromString("847b78d9-8c3c-347f-8c5b-5286561bdd2a"))) { LOG.info("TableInfo already exists.. Skipping creation"); } else { LOG.trace("TableInfo already exists.. Skipping creation"); }
+          LOG.trace("TableInfo already exists.. Skipping creation");
           return false;
         }
       }

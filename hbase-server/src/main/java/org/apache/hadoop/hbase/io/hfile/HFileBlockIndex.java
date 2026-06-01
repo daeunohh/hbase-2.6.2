@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
@@ -843,17 +842,8 @@ public class HFileBlockIndex {
       // If index size is zero, no index was written.
       if (numEntries > 0) {
         for (int i = 0; i < numEntries; ++i) {
-if(KnobRuntime.check(java.util.UUID.fromString("9ac2e196-f86e-328b-9a5b-fc7ed18facef"))) {
-throw new java.io.IOException("Injected exception");
-}
           long offset = in.readLong();
-if(KnobRuntime.check(java.util.UUID.fromString("78e6d4cf-3220-3783-afb2-e785adb766cb"))) {
-throw new java.io.IOException("Injected exception");
-}
           int dataSize = in.readInt();
-if(KnobRuntime.check(java.util.UUID.fromString("11fe346e-516a-3c21-a8c8-c38abf798a6a"))) {
-throw new java.io.IOException("Injected exception");
-}
           byte[] key = Bytes.readByteArray(in);
           add(key, offset, dataSize);
         }
@@ -910,7 +900,7 @@ throw new java.io.IOException("Injected exception");
 
       heapSize = calculateHeapSizeForBlockKeys(heapSize);
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("ac0657db-d8eb-34c3-894d-cce2a6283dfc"))) ? ((blockOffsets) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("0158688e-cfe4-3e5d-b366-d0fb1535a2be"))) ? ((blockOffsets) == (null)) : (blockOffsets != null))))) {
+      if (blockOffsets != null) {
         heapSize += ClassSize.align(ClassSize.ARRAY + blockOffsets.length * Bytes.SIZEOF_LONG);
       }
 
@@ -918,18 +908,6 @@ throw new java.io.IOException("Injected exception");
         heapSize += ClassSize.align(ClassSize.ARRAY + blockDataSizes.length * Bytes.SIZEOF_INT);
       }
 
-if(KnobRuntime.check(java.util.UUID.fromString("5c5f65ed-0a79-3baa-89fb-5472680a0853"))) {
-heapSize += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5ed0ae7f-b91e-3b95-881f-d5b66357d84e"))) {
-heapSize = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("97d0c166-7029-3a8d-9436-11aac0fb7e18"))) {
-heapSize = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("62ff62b5-8c71-326f-b570-4aedfd17f90f"))) {
-heapSize -= 1;
-}
       return ClassSize.align(heapSize);
     }
 
@@ -1033,20 +1011,14 @@ heapSize -= 1;
     }
 
     public void setMaxChunkSize(int maxChunkSize) {
-if(KnobRuntime.check(java.util.UUID.fromString("bf8687ca-93f0-374a-97b7-2e7d0492b3bf"))) {
-return;
-}
-      if (((KnobRuntime.check(java.util.UUID.fromString("ab1e7688-07c0-336f-b908-9da1cdbbd741"))) ? ((maxChunkSize) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("faeec7a5-0aed-38c0-828a-fd6542b7807e"))) ? ((maxChunkSize) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4fe19b93-af83-3e5d-a184-a30689d3d838"))) ? ((maxChunkSize) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e109441e-dbf9-3c31-a898-017707108f77"))) ? ((maxChunkSize) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("36e206f1-9258-3d87-b7ae-ec61dd69f960"))) ? ((maxChunkSize) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("27d40d81-75c7-3454-be7b-7585d0e891aa"))) ? ((maxChunkSize) < (0)) : (maxChunkSize <= 0))))))))))))) {
+      if (maxChunkSize <= 0) {
         throw new IllegalArgumentException("Invalid maximum index block size");
       }
       this.maxChunkSize = maxChunkSize;
     }
 
     public void setMinIndexNumEntries(int minIndexNumEntries) {
-if(KnobRuntime.check(java.util.UUID.fromString("a9ed4fff-0010-389d-88e0-a9774859eecb"))) {
-return;
-}
-      if (((KnobRuntime.check(java.util.UUID.fromString("7491f473-5312-3789-8465-553f267c79f8"))) ? ((minIndexNumEntries) > (1)) : (((KnobRuntime.check(java.util.UUID.fromString("6e919fc8-ba12-3d18-93ef-e8a3a30f00d4"))) ? ((minIndexNumEntries) < (1)) : (((KnobRuntime.check(java.util.UUID.fromString("c1a0d2ad-d1ac-3fb9-9d64-82c125d10ee5"))) ? ((minIndexNumEntries) == (1)) : (((KnobRuntime.check(java.util.UUID.fromString("d217a3f6-c840-394a-8bb6-c1ce56078b0a"))) ? ((minIndexNumEntries) >= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("4846b752-ded1-337e-b168-a27f81f5e93e"))) ? ((minIndexNumEntries) <= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("542edb56-06f3-36c1-814d-82fbaf9a52e0"))) ? ((minIndexNumEntries) != (1)) : (minIndexNumEntries <= 1))))))))))))) {
+      if (minIndexNumEntries <= 1) {
         throw new IllegalArgumentException("Invalid maximum index level, should be >= 2");
       }
       this.minIndexNumEntries = minIndexNumEntries;
@@ -1072,9 +1044,6 @@ return;
 
       // We need to get mid-key metadata before we create intermediate
       // indexes and overwrite the root chunk.
-if(KnobRuntime.check(java.util.UUID.fromString("4fff4b1b-1f74-3004-b632-6876ed979188"))) {
-throw new java.io.IOException("Injected exception");
-}
       byte[] midKeyMetadata = numLevels > 1 ? rootChunk.getMidKeyMetadata() : null;
 
       if (curInlineChunk != null) {
@@ -1098,262 +1067,9 @@ throw new java.io.IOException("Injected exception");
         indexBlockEncoder.encode(rootChunk, true, blockStream);
         if (midKeyMetadata != null) blockStream.write(midKeyMetadata);
         blockWriter.writeHeaderAndData(out);
-        if (((KnobRuntime.check(java.util.UUID.fromString("99b427e7-3d8a-3181-bd3c-bbb184713d56"))) ? ((cacheConf) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("6baf5565-e58a-3df4-b54c-4cf93e20abf0"))) ? ((cacheConf) == (null)) : (cacheConf != null))))) {
+        if (cacheConf != null) {
           cacheConf.getBlockCache().ifPresent(cache -> {
             HFileBlock blockForCaching = blockWriter.getBlockForCaching(cacheConf);
-if(KnobRuntime.check(java.util.UUID.fromString("13fc8838-9ece-317c-9da8-93d354d015cb"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("701935cb-6d85-3c8c-b97b-465cfdedc0c7"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("aa6911d6-61d8-3bf6-b9be-db56a185e264"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bcbcb640-5d6c-3264-bf3f-6ca88dab95b4"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("73524ae9-e8f4-3a96-8343-62d264cf5654"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2700a5e7-2d9c-3f13-9066-1824654e757d"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4bd40aa8-c5ef-332e-8099-51cc1a2013b9"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("prevBlockOffset");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b3f74fa8-b2e2-39e7-9df2-84b492b74bf6"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("nextBlockOnDiskSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dd8a0fa9-f7ff-3b56-aedf-8a2f34e61c9f"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("offset");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e9f1c25a-7c0a-323e-ba11-50889ccff7c9"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1595dc9f-9cb6-3b56-b014-1b4822d48949"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("offset");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0dad5b1e-eff7-3fd0-9919-961b184607a9"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("nextBlockOnDiskSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("11094eb9-4241-3c89-bd87-2c0574389875"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("22ccaa83-7eb4-3fdc-bba5-638220c3f323"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b26ad2a3-2b4f-3e72-b8f0-fad1159b0edf"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("nextBlockOnDiskSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("56d04cba-582c-37bb-a492-3e5fee83a22a"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("551daf03-4730-33d3-9060-32efee63d31a"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f9055c68-8df5-3efd-9550-21b3a4b235f4"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("26295228-595e-3242-8e9e-87bd25da940c"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4c682129-e7d2-3820-bd6f-651eace9be51"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fc63c239-a91b-36f6-aa5f-1993052d0c85"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("aeede3be-1cc9-355d-ac64-eed059fcedd8"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b99f740c-cf5e-3ffc-9576-a3ac3ceac488"))) {
-try {
-    java.lang.reflect.Field field = blockForCaching.getClass().getDeclaredField("nextBlockOnDiskSize");
-    field.setAccessible(true);
-    int oldValue = ((int)field.get(blockForCaching));
-    field.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             cache.cacheBlock(new BlockCacheKey(nameForCaching, rootLevelIndexPos, true,
               blockForCaching.getBlockType()), blockForCaching);
             // Index blocks always go to LRU, which then converts any off-heap buffer to on-heap,
@@ -1398,9 +1114,6 @@ try {
         LOG.trace("Wrote a single-level " + description + " index with " + rootChunk.getNumEntries()
           + " entries, " + rootChunk.getRootSize() + " bytes");
       }
-if(KnobRuntime.check(java.util.UUID.fromString("2daf6dfd-b5e2-3de6-af40-30043f543592"))) {
-throw new java.io.IOException("Injected exception");
-}
       indexBlockEncoder.encode(rootChunk, true, out);
     }
 
@@ -1524,7 +1237,7 @@ throw new java.io.IOException("Injected exception");
 
         return true;
       } else {
-        return ((KnobRuntime.check(java.util.UUID.fromString("521dcbd0-23b7-3c7a-aafa-0b9bb78139f4"))) ? ((curInlineChunk.getNonRootSize()) <= (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("ca11de5c-60c1-3204-a645-34d0faecbab9"))) ? ((curInlineChunk.getNonRootSize()) < (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("c3b40732-e87a-3bc5-9870-8d6cd5d006d3"))) ? ((curInlineChunk.getNumEntries()) > (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("23cd54dc-660c-32c2-9161-a681cbb6c232"))) ? ((curInlineChunk.getNonRootSize()) >= (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("751ebeed-163b-31f3-b60b-ab303db1a149"))) ? ((curInlineChunk.getNonRootSize()) == (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("074aa1da-b14b-30af-b9ad-00b3900d84de"))) ? ((curInlineChunk.getNumEntries()) < (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("e5bc4064-7229-3ad7-9211-9ba36b898af3"))) ? ((curInlineChunk.getNumEntries()) <= (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("f056249b-bd45-394f-ab13-c2eef93c2ee4"))) ? ((curInlineChunk.getNumEntries()) >= (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("f51fe63c-20c7-3f1e-8be1-cae36ebdc198"))) ? ((curInlineChunk.getNumEntries()) != (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("9f5f11ff-079e-3000-b7cc-103897c18f03"))) ? ((curInlineChunk.getNonRootSize()) != (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("94521962-2bc9-39eb-b9a0-156530d444a7"))) ? ((curInlineChunk.getNonRootSize()) > (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("a51d282d-9652-3a24-8e4e-d37da816d3b4"))) ? ((curInlineChunk.getNumEntries()) == (maxChunkSize)) : (curInlineChunk.getNonRootSize() >= maxChunkSize))))))))))))))))))))))));
+        return curInlineChunk.getNonRootSize() >= maxChunkSize;
       }
     }
 
@@ -1601,13 +1314,7 @@ throw new java.io.IOException("Injected exception");
      * @throws IOException if we happened to write a multi-level index.
      */
     public void ensureSingleLevel() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("dbbd13dd-1846-33c5-bd9a-ad3e4dba1135"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("687c9085-3951-3beb-8c2f-9ad0490d36f1"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (((KnobRuntime.check(java.util.UUID.fromString("cccc5c81-8267-3db1-8111-5cdfb7237fbf"))) ? ((numLevels) < (1)) : (((KnobRuntime.check(java.util.UUID.fromString("6269d65b-b00a-34fe-8787-a347c856b23a"))) ? ((numLevels) != (1)) : (((KnobRuntime.check(java.util.UUID.fromString("3bd292ce-8706-3572-b9af-b31bf31b8a13"))) ? ((numLevels) == (1)) : (((KnobRuntime.check(java.util.UUID.fromString("becaee72-17c3-3621-86ea-f1986991f71b"))) ? ((numLevels) >= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("d0a4dd38-9cf5-3548-8c3c-b28ea2374cf9"))) ? ((numLevels) <= (1)) : (((KnobRuntime.check(java.util.UUID.fromString("f7856063-529d-357b-aa7a-597fd0378f25"))) ? ((numLevels) > (1)) : (numLevels > 1))))))))))))) {
+      if (numLevels > 1) {
         throw new IOException(
           "Wrote a " + numLevels + "-level index with " + rootChunk.getNumEntries()
             + " root-level entries, but " + "this is expected to be a single-level block index.");
@@ -1696,50 +1403,14 @@ throw new java.io.IOException("Injected exception");
         + WritableUtils.getVIntSize(firstKey.length) + firstKey.length;
 
       blockKeys.add(firstKey);
-if(KnobRuntime.check(java.util.UUID.fromString("70a3f153-bd03-3c72-b2d1-b17ac205d9ab"))) {
-blockOffset = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("56bfbc66-150d-34eb-bf4f-d1ee4c274f16"))) {
-blockOffset = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0aeef902-13c7-36fc-b577-7ee051bb531b"))) {
-blockOffset -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("61c8cea0-67c2-321e-82c0-b6e61fc2dd15"))) {
-blockOffset += 1;
-}
       blockOffsets.add(blockOffset);
-if(KnobRuntime.check(java.util.UUID.fromString("3020f8f7-49fc-3fc0-b010-54e1adc2c64c"))) {
-onDiskDataSize = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bc68cd33-8f82-3f12-807f-b1ac69bb3ff4"))) {
-onDiskDataSize *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("579402e6-4855-389a-b99d-4c4eb89a93d9"))) {
-onDiskDataSize /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4cb544ba-32e0-3d51-8507-6d2025c1e97f"))) {
-onDiskDataSize += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c4ae16f2-e066-3a4f-aed0-06853d317406"))) {
-onDiskDataSize -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e009e7da-2e1d-3f91-ae6b-a1002934b352"))) {
-onDiskDataSize = 0;
-}
       onDiskDataSizes.add(onDiskDataSize);
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("0a50667d-6f76-3512-89d6-a6fb8c8070b7"))) ? ((curTotalNumSubEntries) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("b8d435b4-2dd4-38fb-a54e-f793dd7cd24b"))) ? ((curTotalNumSubEntries) != (-1)) : (curTotalNumSubEntries != -1))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("8971825a-94e1-309b-9435-550921e66339"))) {
-curTotalNumSubEntries = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1a1ba8aa-86d6-359b-8c81-cf09e68c2f02"))) {
-curTotalNumSubEntries += 1;
-}
+      if (curTotalNumSubEntries != -1) {
         numSubEntriesAt.add(curTotalNumSubEntries);
 
         // Make sure the parallel arrays are in sync.
-        if (((KnobRuntime.check(java.util.UUID.fromString("82da6415-8819-3c1d-aad5-1c649aaf2831"))) ? ((numSubEntriesAt.size()) != (blockKeys.size())) : (((KnobRuntime.check(java.util.UUID.fromString("e6a14585-5db2-3920-8731-8fb0bc2263cd"))) ? ((numSubEntriesAt.size()) == (blockKeys.size())) : (numSubEntriesAt.size() != blockKeys.size()))))) {
+        if (numSubEntriesAt.size() != blockKeys.size()) {
           throw new IllegalStateException("Only have key/value count " + "stats for "
             + numSubEntriesAt.size() + " block index " + "entries out of " + blockKeys.size());
         }
@@ -1846,9 +1517,6 @@ curTotalNumSubEntries += 1;
 
     @Override
     public int getCurTotalNonRootEntrySize() {
-if(KnobRuntime.check(java.util.UUID.fromString("eebde34b-5935-3ab6-8fdb-a47d71f0b7a4"))) {
-return 0;
-}
       return curTotalNonRootEntrySize;
     }
 

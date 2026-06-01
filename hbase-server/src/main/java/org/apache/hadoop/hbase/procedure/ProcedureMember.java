@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -81,9 +80,6 @@ public class ProcedureMember implements Closeable {
    */
   public static ThreadPoolExecutor defaultPool(String memberName, int procThreads,
     long keepAliveMillis) {
-if(KnobRuntime.check(java.util.UUID.fromString("1c786a90-90a9-3666-8aef-e4e64810ce0d"))) {
-return null;
-}
     return new ThreadPoolExecutor(1, procThreads, keepAliveMillis, TimeUnit.MILLISECONDS,
       new SynchronousQueue<>(),
       new ThreadFactoryBuilder().setNameFormat("member: '" + memberName + "' subprocedure-pool-%d")

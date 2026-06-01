@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.hadoop.hbase.client.Mutation;
@@ -64,10 +63,7 @@ public class MiniBatchOperationInProgress<T> {
 
   /** Returns The number of operations(Mutations) involved in this batch. */
   public int size() {
-if(KnobRuntime.check(java.util.UUID.fromString("687b70bc-41d0-3a39-8d52-56c5ed8c48e0"))) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("90d3b94e-9df0-3fe1-a8b7-b2b39ba112f8"))) ? (this.lastIndexExclusive) : (((KnobRuntime.check(java.util.UUID.fromString("6aeddb74-4661-359e-90bc-d08e70ff8932"))) ? (this.firstIndex) : (((KnobRuntime.check(java.util.UUID.fromString("08d4b5a5-ea63-305d-a813-4ec61cf9bd14"))) ? ((this.lastIndexExclusive) - (this.firstIndex)) : (this.lastIndexExclusive - this.firstIndex))))));
+    return this.lastIndexExclusive - this.firstIndex;
   }
 
   /** Returns The operation(Mutation) at the specified position. */
@@ -152,9 +148,6 @@ return 0;
   }
 
   public void incrementNumOfPuts() {
-if(KnobRuntime.check(java.util.UUID.fromString("9092fbf4-664b-328f-89d1-b27cc0e1155c"))) {
-return;
-}
     this.numOfPuts += 1;
   }
 
@@ -163,9 +156,6 @@ return;
   }
 
   public void incrementNumOfDeletes() {
-if(KnobRuntime.check(java.util.UUID.fromString("0d51b9ce-f046-3d83-a777-3e71002f7b19"))) {
-return;
-}
     this.numOfDeletes += 1;
   }
 
@@ -174,9 +164,6 @@ return;
   }
 
   public void incrementNumOfIncrements() {
-if(KnobRuntime.check(java.util.UUID.fromString("d2b1bcf2-8dd2-3afe-ae53-e363755bbdae"))) {
-return;
-}
     this.numOfIncrements += 1;
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.NavigableMap;
 import org.apache.hadoop.hbase.Cell;
@@ -45,12 +44,6 @@ public class ScopeWALEntryFilter implements WALEntryFilter, WALCellFilter {
   }
 
   private boolean hasGlobalScope(NavigableMap<byte[], Integer> scopes, byte[] family) {
-if(KnobRuntime.check(java.util.UUID.fromString("98460b51-55dc-36b9-836e-152f6ba69cb7"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c94c4069-c417-362f-aeb4-9f28bc2e445c"))) {
-return false;
-}
     Integer scope = scopes.get(family);
     return scope != null && scope.intValue() == HConstants.REPLICATION_SCOPE_GLOBAL;
   }
@@ -66,12 +59,6 @@ return false;
       return bulkLoadFilter.filterCell(cell, new Predicate<byte[]>() {
         @Override
         public boolean apply(byte[] family) {
-if(KnobRuntime.check(java.util.UUID.fromString("d7e98c00-0e0d-3d78-ba14-7b0882bc4e7a"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d02737c0-c5ad-3986-aa39-f29029c5692a"))) {
-return false;
-}
           return !hasGlobalScope(scopes, family);
         }
       });

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -75,17 +74,6 @@ public class ZKPermissionWatcher extends ZKListener implements Closeable {
   public void start() throws KeeperException {
     try {
       watcher.registerListener(this);
-if(KnobRuntime.check(java.util.UUID.fromString("4afd95a2-47ed-30c2-ad64-6029b669ee11"))) {
-try {
-    java.lang.reflect.Field field = watcher.getClass().getDeclaredField("zkSyncTimeout");
-    field.setAccessible(true);
-    long oldValue = ((long)field.get(watcher));
-    field.set(watcher, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (ZKUtil.watchAndCheckExists(watcher, aclZNode)) {
         try {
           executor.submit(new Callable<Void>() {
@@ -110,24 +98,18 @@ try {
         }
       }
     } finally {
-      if (KnobRuntime.check(java.util.UUID.fromString("67612adc-4778-3f27-ad29-9baac2514831"))) { waitUntilStarted(); } else { initialized.countDown(); }
+      initialized.countDown();
     }
   }
 
   @Override
   public void close() {
-if(KnobRuntime.check(java.util.UUID.fromString("88499276-f535-3b2d-b01a-cebbf4700de7"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("4301e5db-21e0-33d5-8b29-00e988b89a26"))) { waitUntilStarted(); } else { executor.shutdown(); }
+    executor.shutdown();
   }
 
   private void waitUntilStarted() {
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("8d8d13af-24f5-3df8-9bd9-3ccb173b23b7"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("f1be0fc9-f97b-37a4-87c5-fa6bd1cb15a4"))) { initialized.countDown(); } else if (KnobRuntime.check(java.util.UUID.fromString("d6cc98eb-a0fb-33a4-9c5e-ef0870c631ca"))) { waitUntilStarted(); } else { initialized.await(); }
+      initialized.await();
     } catch (InterruptedException e) {
       LOG.warn("Interrupted while waiting for start", e);
       Thread.currentThread().interrupt();
@@ -136,9 +118,6 @@ throw new java.lang.InterruptedException("Injected exception");
 
   @Override
   public void nodeCreated(String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("dd4640f9-9efd-37e0-a308-bc10064b39a5"))) {
-return;
-}
     waitUntilStarted();
     if (path.equals(aclZNode)) {
       asyncProcessNodeUpdate(new Runnable() {
@@ -160,11 +139,8 @@ return;
 
   @Override
   public void nodeDeleted(final String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("4f3aac44-e67d-327d-8d95-bc4138521836"))) {
-return;
-}
     waitUntilStarted();
-    if (((KnobRuntime.check(java.util.UUID.fromString("9eb23cff-ab4f-34d5-b9d8-fcfb358bf220"))) ? (aclZNode.equals(ZKUtil.getNodeName(path))) : (aclZNode.equals(ZKUtil.getParent(path))))) {
+    if (aclZNode.equals(ZKUtil.getParent(path))) {
       asyncProcessNodeUpdate(new Runnable() {
         @Override
         public void run() {
@@ -181,11 +157,8 @@ return;
 
   @Override
   public void nodeDataChanged(final String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("f11dafbb-3d01-31d9-8e8b-eca139b19e98"))) {
-return;
-}
     waitUntilStarted();
-    if (((KnobRuntime.check(java.util.UUID.fromString("254c8c9b-b993-363a-a33c-d0cfcf900766"))) ? (aclZNode.equals(ZKUtil.getNodeName(path))) : (aclZNode.equals(ZKUtil.getParent(path))))) {
+    if (aclZNode.equals(ZKUtil.getParent(path))) {
       asyncProcessNodeUpdate(new Runnable() {
         @Override
         public void run() {
@@ -208,9 +181,6 @@ return;
 
   @Override
   public void nodeChildrenChanged(final String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("0769c0b4-a4d0-398f-aa7e-02c4ad159819"))) {
-return;
-}
     waitUntilStarted();
     if (path.equals(aclZNode)) {
       // preempt any existing nodeChildrenChanged event processing

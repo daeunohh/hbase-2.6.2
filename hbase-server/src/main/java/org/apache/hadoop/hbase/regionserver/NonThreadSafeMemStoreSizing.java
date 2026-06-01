@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -47,18 +46,12 @@ class NonThreadSafeMemStoreSizing implements MemStoreSizing {
 
   @Override
   public MemStoreSize getMemStoreSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("3f6b60b9-c970-311c-9365-74443f24b0a5"))) {
-return null;
-}
     return new MemStoreSize(this.dataSize, this.heapSize, this.offHeapSize, this.cellsCount);
   }
 
   @Override
   public long incMemStoreSize(long dataSizeDelta, long heapSizeDelta, long offHeapSizeDelta,
     int cellsCountDelta) {
-if(KnobRuntime.check(java.util.UUID.fromString("82d5d508-0125-36ab-931f-bddfd194070a"))) {
-return 0;
-}
     this.offHeapSize += offHeapSizeDelta;
     this.heapSize += heapSizeDelta;
     this.dataSize += dataSizeDelta;
@@ -77,41 +70,26 @@ return 0;
 
   @Override
   public long getDataSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("3c5dc154-73d2-3cda-bd1c-fc37b9427492"))) {
-return 0;
-}
     return dataSize;
   }
 
   @Override
   public long getHeapSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("dd380660-4ea7-34fd-a972-81e4a87164c6"))) {
-return 0;
-}
     return heapSize;
   }
 
   @Override
   public long getOffHeapSize() {
-if(KnobRuntime.check(java.util.UUID.fromString("75e41c4c-3aa4-3a9d-9931-bf81c948c767"))) {
-return 0;
-}
     return offHeapSize;
   }
 
   @Override
   public int getCellsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("a7e01c34-f1f2-3ff3-8253-b7f063d7d64e"))) {
-return 0;
-}
     return cellsCount;
   }
 
   @Override
   public String toString() {
-if(KnobRuntime.check(java.util.UUID.fromString("8d3314cf-49e0-324e-aa2a-5ad32c723206"))) {
-return null;
-}
     return getMemStoreSize().toString();
   }
 }
