@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.hfile.BlockCompressedSizePredicator.MAX_BLOCK_SIZE_UNCOMPRESSED;
 
@@ -339,7 +340,7 @@ public class HFileWriterImpl implements HFile.Writer {
         || blockWriter.blockSizeWritten() >= hFileContext.getBlocksize();
     }
     shouldFinishBlock &= blockWriter.checkBoundariesWithPredicate();
-    if (shouldFinishBlock) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("03ab9647-5aa1-3df6-ae5c-a7dfb73b2642"))) ? (!shouldFinishBlock) : (shouldFinishBlock))) {
       finishBlock();
       writeInlineBlocks(false);
       newBlock();

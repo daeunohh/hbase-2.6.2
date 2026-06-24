@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -587,7 +588,7 @@ public class SnapshotManager extends MasterProcedureManager implements Stoppable
    */
   private static void updateWorkingDirAclsIfRequired(Path workingDir, FileSystem workingDirFS)
     throws IOException {
-    if (workingDir.getParent() == null || workingDir.getParent().getParent() == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("0df3784c-008e-3083-a0fd-b76865f3a581"))) ? ((workingDir.getParent() == null) || ((workingDir.getParent().getParent()) == (null))) : (workingDir.getParent() == null || workingDir.getParent().getParent() == null))) {
       return;
     }
     AclStatus snapshotWorkingParentDirStatus;

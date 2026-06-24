@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -317,7 +318,7 @@ public class SplitTableRegionProcedure
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_WRITE_MAX_SEQUENCE_ID_FILE);
           break;
         case SPLIT_TABLE_REGION_WRITE_MAX_SEQUENCE_ID_FILE:
-          writeMaxSequenceIdFile(env);
+          if (KnobRuntime.check(java.util.UUID.fromString("21935eaa-a5c4-341d-a422-36c1c7b8718e"))) { removeNonDefaultReplicas(env); } else { writeMaxSequenceIdFile(env); }
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_PRE_OPERATION_BEFORE_META);
           break;
         case SPLIT_TABLE_REGION_PRE_OPERATION_BEFORE_META:

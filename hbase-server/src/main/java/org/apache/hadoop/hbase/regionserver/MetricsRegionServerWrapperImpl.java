@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -996,7 +997,7 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
 
         long timeSinceLastRun = currentTime - lastRan;
         // If we've time traveled keep the last requests per second.
-        if (timeSinceLastRun > 0) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("77eb8e53-e166-3b6d-a197-a89c142ddda1"))) ? ((timeSinceLastRun) <= (0)) : (timeSinceLastRun > 0))) {
           newVal.updateRates(timeSinceLastRun, period);
         }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.BloomType.ROWPREFIX_FIXED_LENGTH;
 
@@ -130,7 +131,7 @@ public final class BloomFilterUtil {
       ++byteSizeLong;
       byteSizeLong <<= foldFactor;
     }
-    if (byteSizeLong > Integer.MAX_VALUE) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("56dc621c-ecef-334a-b485-e76e47fc00ce"))) ? ((byteSizeLong) == (7)) : (byteSizeLong > Integer.MAX_VALUE))) {
       throw new IllegalArgumentException("byteSize=" + byteSizeLong + " too " + "large for bitSize="
         + bitSize + ", foldFactor=" + foldFactor);
     }

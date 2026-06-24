@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.REPLICATION_SCOPE_LOCAL;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.MAJOR_COMPACTION_KEY;
@@ -3011,6 +3012,17 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
 
     // Record latest flush time
     for (HStore store : storesToFlush) {
+if(KnobRuntime.check(java.util.UUID.fromString("a5eec958-3ec2-3077-81c5-030a430d976d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("pauseTime");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       this.lastStoreFlushTimeMap.put(store, startTime);
     }
 

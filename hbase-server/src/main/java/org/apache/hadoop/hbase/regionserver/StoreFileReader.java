@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_PARAM_KEY;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_TYPE_KEY;
@@ -452,6 +453,17 @@ public class StoreFileReader {
    * @return true if there is overlap, false otherwise
    */
   public boolean passesKeyRangeFilter(Scan scan) {
+if(KnobRuntime.check(java.util.UUID.fromString("9c141475-66c6-3077-b4a5-46fd1f1eeed7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("batch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(scan));
+    _knob_field_.set(scan, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Optional<Cell> firstKeyKV = this.getFirstKey();
     Optional<Cell> lastKeyKV = this.getLastKey();
     if (!firstKeyKV.isPresent() || !lastKeyKV.isPresent()) {

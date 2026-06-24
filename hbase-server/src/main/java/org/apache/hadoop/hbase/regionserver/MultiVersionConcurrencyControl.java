@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicLong;
@@ -221,7 +222,7 @@ public class MultiVersionConcurrencyControl {
     int count = 0;
     synchronized (readWaiters) {
       while (readPoint.get() < e.getWriteNumber()) {
-        if (count % 100 == 0 && count > 0) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("ff6d672b-2e0b-3fe9-a92d-b010c92101bd"))) ? ((((count) % (100)) != (0)) || ((count % 100) > (0))) : (count % 100 == 0 && count > 0))) {
           long totalWaitTillNow = READPOINT_ADVANCE_WAIT_TIME * count;
           LOG.warn("STUCK for : " + totalWaitTillNow + " millis. " + this);
         }

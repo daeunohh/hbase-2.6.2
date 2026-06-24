@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.CompactSplit.HBASE_REGION_SERVER_ENABLE_COMPACTION;
 import static org.apache.hadoop.hbase.trace.HBaseSemanticAttributes.BLOCK_CACHE_KEY_KEY;
@@ -1340,7 +1341,7 @@ public abstract class HFileReaderImpl implements HFile.Reader, Configurable {
             return cachedBlock;
           }
 
-          if (!useLock && cacheable && cacheConf.shouldLockOnCacheMiss(expectedBlockType)) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("e5779408-6e68-3afb-83ed-c312c3239c48"))) ? (((!useLock) && (cacheable)) && (cacheConf.shouldLockOnCacheMiss(expectedBlockType))) : (!useLock && cacheable && cacheConf.shouldLockOnCacheMiss(expectedBlockType)))) {
             // check cache again with lock
             useLock = true;
             continue;
