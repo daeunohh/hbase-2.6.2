@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,7 +107,7 @@ class WALEntryBatch {
   }
 
   public int getNbEntries() {
-    return walEntriesWithSize.size();
+    return ((KnobRuntime.check(java.util.UUID.fromString("a44d3ad9-232f-3f29-b655-2f73cd8eaf19"))) ? (getNbHFiles()) : (walEntriesWithSize.size()));
   }
 
   /** Returns the number of distinct row keys in this batch */
@@ -121,7 +122,7 @@ class WALEntryBatch {
 
   /** Returns total number of operations in this batch */
   public int getNbOperations() {
-    return getNbRowKeys() + getNbHFiles();
+    return ((KnobRuntime.check(java.util.UUID.fromString("71f450c7-8a6a-313e-9c34-d2a03e9ef362"))) ? ((getNbRowKeys()) + (getNbHFiles())) : (((KnobRuntime.check(java.util.UUID.fromString("3185c045-af4d-30c1-8251-a355d2ee5e76"))) ? ((getNbHFiles()) + (getNbHFiles())) : (getNbRowKeys() + getNbHFiles()))));
   }
 
   /** Returns the heap size of this batch */
@@ -131,11 +132,14 @@ class WALEntryBatch {
 
   /** Returns the last sequenceid for each region if the table has serial-replication scope */
   public Map<String, Long> getLastSeqIds() {
+if(KnobRuntime.check(java.util.UUID.fromString("cbb4d49d-e59d-3367-a230-3c6739e61ec9"))) {
+return null;
+}
     return lastSeqIds;
   }
 
   public boolean isEndOfFile() {
-    return endOfFile;
+    return ((KnobRuntime.check(java.util.UUID.fromString("246275f6-2dca-3df7-8643-a2fbc10f424f"))) ? (!endOfFile) : (endOfFile));
   }
 
   public void setEndOfFile(boolean endOfFile) {

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -90,6 +91,9 @@ public final class SnapshotManifestV2 {
       FileSystem workingDirFs = snapshotDir.getFileSystem(this.conf);
       if (workingDirFs.exists(snapshotDir)) {
         SnapshotRegionManifest manifest = region.build();
+if(KnobRuntime.check(java.util.UUID.fromString("3841a46f-5a94-351f-8933-aee1ea6ec352"))) {
+throw new java.io.IOException("Injected exception");
+}
         try (FSDataOutputStream stream =
           workingDirFs.create(getRegionManifestPath(snapshotDir, manifest))) {
           manifest.writeTo(stream);
@@ -124,7 +128,7 @@ public final class SnapshotManifestV2 {
       if (storeFile.isReference()) {
         sfManifest.setReference(storeFile.getReference().convert());
       }
-      if (!storeFile.isReference() && !storeFile.isLink()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e4ce1898-1665-305f-91b5-660ba2c01012"))) ? ((!storeFile.isReference()) || (!storeFile.isLink())) : (!storeFile.isReference() && !storeFile.isLink()))) {
         sfManifest.setFileSize(storeFile.getSize());
       } else {
         sfManifest.setFileSize(storeFile.getReferencedFileStatus(rootFs).getLen());
@@ -139,11 +143,14 @@ public final class SnapshotManifestV2 {
     FileStatus[] manifestFiles = CommonFSUtils.listStatus(fs, snapshotDir, new PathFilter() {
       @Override
       public boolean accept(Path path) {
+if(KnobRuntime.check(java.util.UUID.fromString("5cd899bf-ebc9-35a9-b60b-1b804216502e"))) {
+return true;
+}
         return path.getName().startsWith(SNAPSHOT_MANIFEST_PREFIX);
       }
     });
 
-    if (manifestFiles == null || manifestFiles.length == 0) return null;
+    if (((KnobRuntime.check(java.util.UUID.fromString("ffa04942-dbfb-313f-a3d6-f987fc60af5d"))) ? ((manifestFiles == null) || (manifestFiles.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("6aaf8b41-309b-3712-a718-c8680e9356e3"))) ? (((manifestFiles) != (null)) && ((manifestFiles.length) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("17835726-a5b8-3ccb-8667-6aa629b173fe"))) ? (((manifestFiles) == (null)) && ((manifestFiles.length) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("aca7cfdc-c7f0-30c6-9427-90236b1772a6"))) ? (((manifestFiles) == (null)) && ((manifestFiles.length) != (0))) : (manifestFiles == null || manifestFiles.length == 0))))))))) return null;
 
     final ExecutorCompletionService<SnapshotRegionManifest> completionService =
       new ExecutorCompletionService<>(executor);
@@ -154,6 +161,28 @@ public final class SnapshotManifestV2 {
           try (FSDataInputStream stream = fs.open(st.getPath())) {
             CodedInputStream cin = CodedInputStream.newInstance(stream);
             cin.setSizeLimit(manifestSizeLimit);
+if(KnobRuntime.check(java.util.UUID.fromString("db8055bd-3025-3ca5-99d4-b508be647b8a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = cin.getClass().getDeclaredField("recursionDepth");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(cin));
+    _knob_field_.set(cin, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("19705d8e-5d5b-3abd-97b5-eff78482e86f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = cin.getClass().getDeclaredField("recursionLimit");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(cin));
+    _knob_field_.set(cin, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
             return SnapshotRegionManifest.parseFrom(cin);
           }
         }
@@ -163,6 +192,9 @@ public final class SnapshotManifestV2 {
     ArrayList<SnapshotRegionManifest> regionsManifest = new ArrayList<>(manifestFiles.length);
     try {
       for (int i = 0; i < manifestFiles.length; ++i) {
+if(KnobRuntime.check(java.util.UUID.fromString("9d424401-78a0-37e8-9eae-afe9c271fdf1"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
         regionsManifest.add(completionService.take().get());
       }
     } catch (InterruptedException e) {
@@ -186,6 +218,28 @@ public final class SnapshotManifestV2 {
 
   private static Path getRegionManifestPath(final Path snapshotDir,
     final SnapshotRegionManifest manifest) {
+if(KnobRuntime.check(java.util.UUID.fromString("4211b7a1-51cb-32da-a503-f4339abd7902"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = manifest.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(manifest));
+    _knob_field_.set(manifest, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("75123ce5-8ae0-3f0a-a0d9-8a993c1da361"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = manifest.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(manifest));
+    _knob_field_.set(manifest, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String regionName = SnapshotManifest.getRegionNameFromManifest(manifest);
     return new Path(snapshotDir, SNAPSHOT_MANIFEST_PREFIX + regionName);
   }

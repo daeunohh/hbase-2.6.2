@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -114,7 +115,7 @@ public abstract class ProcedurePrepareLatch {
         throw (InterruptedIOException) new InterruptedIOException().initCause(e);
       }
 
-      if (exception != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("8d991531-c4cc-3c52-94d2-20bafaff2624"))) ? ((exception) == (null)) : (exception != null))) {
         throw exception;
       }
     }

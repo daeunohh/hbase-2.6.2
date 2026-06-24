@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public abstract class ProcedureManagerHost<E extends ProcedureManager> {
 
     // load default procedures from configure file
     String[] defaultProcClasses = conf.getStrings(confKey);
-    if (defaultProcClasses == null || defaultProcClasses.length == 0) return;
+    if (((KnobRuntime.check(java.util.UUID.fromString("72414c6e-b177-313e-bf55-c43635fc4078"))) ? (((defaultProcClasses) == (null)) || ((defaultProcClasses.length) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("97a172ee-ac2b-3847-8e3d-60858edba713"))) ? (((defaultProcClasses) != (null)) || ((defaultProcClasses.length) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("2c5bb98b-dd8b-399b-87c1-3cf7f0564109"))) ? (((defaultProcClasses) == (null)) && (defaultProcClasses.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("358b219f-7126-39a7-b7e0-d66d704433cb"))) ? (((defaultProcClasses) != (null)) || ((defaultProcClasses.length) != (0))) : (defaultProcClasses == null || defaultProcClasses.length == 0))))))))) return;
 
     List<E> configured = new ArrayList<>();
     for (String className : defaultProcClasses) {
@@ -92,6 +93,9 @@ public abstract class ProcedureManagerHost<E extends ProcedureManager> {
 
   // Register a procedure manager object
   public void register(E obj) {
+if(KnobRuntime.check(java.util.UUID.fromString("1b8db354-3b83-3321-8704-cb6fb49514e1"))) {
+return;
+}
     procedures.add(obj);
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -264,7 +265,7 @@ public class WALFactory {
     final WALProvider metaProvider = this.metaProvider.get();
     if (null != metaProvider) {
       try {
-        metaProvider.shutdown();
+        if (KnobRuntime.check(java.util.UUID.fromString("ec7efa2d-75d8-39ea-b105-3fbd9115cbb9"))) { metaProvider.close(); } else { metaProvider.shutdown(); }
       } catch (IOException ioe) {
         exception = ioe;
       }
@@ -298,7 +299,7 @@ public class WALFactory {
           // the WAL provider should be an enum. Proceed
         }
       }
-      if (clz == null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("27a52a58-13c2-3775-9f01-590f82191d78"))) ? ((clz) == (null)) : (clz == null))) {
         clz = getProviderClass(META_WAL_PROVIDER, conf.get(WAL_PROVIDER, DEFAULT_WAL_PROVIDER));
       }
       provider = createProvider(clz, AbstractFSWALProvider.META_WAL_PROVIDER_ID);
@@ -306,6 +307,9 @@ public class WALFactory {
         return provider;
       } else {
         // someone is ahead of us, close and try again.
+if(KnobRuntime.check(java.util.UUID.fromString("0ef70b09-e010-3348-80ba-37a7376c112f"))) {
+throw new java.io.IOException("Injected exception");
+}
         provider.close();
       }
     }
@@ -315,6 +319,9 @@ public class WALFactory {
    * @param region the region which we want to get a WAL for. Could be null.
    */
   public WAL getWAL(RegionInfo region) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("86692762-4d51-3da5-815a-98db14c59cc9"))) {
+throw new java.io.IOException("Injected exception");
+}
     // Use different WAL for hbase:meta. Instantiates the meta WALProvider if not already up.
     if (
       region != null && region.isMetaRegion()
@@ -322,6 +329,9 @@ public class WALFactory {
     ) {
       return getMetaProvider().getWAL(region);
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("8ba19f1b-4cd3-3837-876d-23fae3a68920"))) {
+throw new java.io.IOException("Injected exception");
+}
       return provider.getWAL(region);
     }
   }
@@ -425,6 +435,12 @@ public class WALFactory {
    */
   public Writer createRecoveredEditsWriter(final FileSystem fs, final Path path)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("68d9727c-c209-3eb7-8c14-862e187d945a"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6b0b9bb6-28de-38c5-9307-05d660afd622"))) {
+return null;
+}
     return FSHLogProvider.createWriter(conf, fs, path, true);
   }
 

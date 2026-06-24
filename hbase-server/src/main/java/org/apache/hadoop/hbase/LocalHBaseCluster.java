@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.security.PrivilegedExceptionAction;
@@ -387,7 +388,7 @@ public class LocalHBaseCluster {
         }
       }
     }
-    if (this.masterThreads != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a611a144-89af-3ca5-9703-27895bb9cc81"))) ? ((this.masterThreads) != (null)) : (this.masterThreads != null))) {
       for (Thread t : this.masterThreads) {
         if (t.isAlive()) {
           try {

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -180,6 +181,9 @@ public class ZKProcedureCoordinator implements ProcedureCoordinatorRpcs {
    */
   @Override
   final public boolean start(final ProcedureCoordinator coordinator) {
+if(KnobRuntime.check(java.util.UUID.fromString("ea7d3dd0-fa2c-3c99-befd-7d5b777dc897"))) {
+return true;
+}
     if (this.coordinator != null) {
       throw new IllegalStateException(
         "ZKProcedureCoordinator already started and already has listener installed");
@@ -315,6 +319,9 @@ public class ZKProcedureCoordinator implements ProcedureCoordinatorRpcs {
 
   @Override
   final public void close() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("827212f4-8a97-3dba-be99-f0aad2e58380"))) {
+return;
+}
     zkProc.close();
   }
 

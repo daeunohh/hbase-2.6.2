@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -65,8 +66,8 @@ public class CallRunner {
     this.rpcServer = rpcServer;
     this.span = Span.current();
     // Add size of the call to queue size.
-    if (call != null && rpcServer != null) {
-      this.rpcServer.addCallSize(call.getSize());
+    if (((KnobRuntime.check(java.util.UUID.fromString("630979f3-c332-33b2-8d44-04a16cabac0e"))) ? (((call) != (null)) || ((rpcServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("e0666e94-d849-32e9-916a-e4bba08f372e"))) ? (((call) == (null)) && (rpcServer != null)) : (call != null && rpcServer != null))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("58963aa9-dd35-35e2-bba9-d50f0ae0a418"))) { this.rpcServer.addCallSize(call.disconnectSince()); } else { this.rpcServer.addCallSize(call.getSize()); }
     }
   }
 
@@ -89,14 +90,14 @@ public class CallRunner {
 
   public void run() {
     try (Scope ignored = span.makeCurrent()) {
-      if (call.disconnectSince() >= 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("180e3ee6-7ddf-3104-b8e9-6165b805f787"))) ? ((call.disconnectSince()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("15698378-7437-33e0-9322-d3943a2c1fb4"))) ? ((EnvironmentEdgeManager.currentTime()) < (0)) : (call.disconnectSince() >= 0))))) {
         RpcServer.LOG.debug("{}: skipped {}", Thread.currentThread().getName(), call);
         span.addEvent("Client disconnect detected");
         span.setStatus(StatusCode.OK);
         return;
       }
       call.setStartTime(EnvironmentEdgeManager.currentTime());
-      if (call.getStartTime() > call.getDeadline()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e8e10724-1819-3dbf-a841-311d0f57fd03"))) ? ((call.getStartTime()) >= (call.getDeadline())) : (((KnobRuntime.check(java.util.UUID.fromString("ef21b980-46db-3833-9324-8d6dff521e5a"))) ? ((call.getStartTime()) == (call.disconnectSince())) : (((KnobRuntime.check(java.util.UUID.fromString("b1556f31-4c36-3e15-baaa-e9d90334c11e"))) ? ((EnvironmentEdgeManager.currentTime()) <= (call.getDeadline())) : (((KnobRuntime.check(java.util.UUID.fromString("660bc20e-55e2-33f5-a60f-95e40b22195d"))) ? ((call.getSize()) >= (call.getSize())) : (((KnobRuntime.check(java.util.UUID.fromString("b3b9d80d-5425-399b-aff9-f7865f29c604"))) ? ((EnvironmentEdgeManager.currentTime()) > (call.disconnectSince())) : (((KnobRuntime.check(java.util.UUID.fromString("f06db7ee-a7c4-32b8-ad9b-fc334378abe3"))) ? ((EnvironmentEdgeManager.currentTime()) < (EnvironmentEdgeManager.currentTime())) : (((KnobRuntime.check(java.util.UUID.fromString("c060354b-2739-368a-bbde-ad7aacc92a3b"))) ? ((EnvironmentEdgeManager.currentTime()) >= (call.getSize())) : (((KnobRuntime.check(java.util.UUID.fromString("bb06eea0-f4ec-3bcc-8302-493333b36b2d"))) ? ((call.getStartTime()) <= (call.getDeadline())) : (((KnobRuntime.check(java.util.UUID.fromString("2b16deb5-a5f1-35dd-a3f2-8259ca003db1"))) ? ((call.getStartTime()) > (call.getSize())) : (((KnobRuntime.check(java.util.UUID.fromString("6880aac4-e5b5-319e-9746-2e8387a1d03c"))) ? ((call.disconnectSince()) != (call.getSize())) : (((KnobRuntime.check(java.util.UUID.fromString("8248cfe5-6e74-32e8-b753-e7487945b05b"))) ? ((call.getSize()) > (EnvironmentEdgeManager.currentTime())) : (((KnobRuntime.check(java.util.UUID.fromString("5090f796-def7-34e8-b128-d023f886bcf3"))) ? ((call.disconnectSince()) == (call.getSize())) : (((KnobRuntime.check(java.util.UUID.fromString("6b471fe6-46bc-3c5f-9d0d-3720508466f1"))) ? ((EnvironmentEdgeManager.currentTime()) != (call.getSize())) : (call.getStartTime() > call.getDeadline()))))))))))))))))))))))))))) {
         RpcServer.LOG.warn("Dropping timed out call: {}", call);
         this.rpcServer.getMetrics().callTimedOut();
         span.addEvent("Call deadline exceeded");
@@ -193,7 +194,7 @@ public class CallRunner {
       }
       this.status.pause("Waiting for a call");
       cleanup();
-      span.end();
+      if (KnobRuntime.check(java.util.UUID.fromString("937c8291-c402-3186-8e39-f89388931f91"))) { cleanup(); } else { span.end(); }
     }
   }
 

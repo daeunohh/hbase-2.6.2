@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -33,6 +34,28 @@ class PeerQueue extends Queue<String> {
 
   @Override
   public boolean requireExclusiveLock(Procedure<?> proc) {
+if(KnobRuntime.check(java.util.UUID.fromString("db7412f0-de15-330c-95ec-d0032d573f48"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f2baa44f-d092-3519-8f8f-42bab4522077"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return requirePeerExclusiveLock((PeerProcedureInterface) proc);
   }
 

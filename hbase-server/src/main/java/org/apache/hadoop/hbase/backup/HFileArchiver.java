@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.backup;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -117,7 +118,7 @@ public class HFileArchiver {
     throws IOException {
     // otherwise, we archive the files
     // make sure we can archive
-    if (tableDir == null || regionDir == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2dd55c1c-ff12-35ec-8d56-d6c8ca988281"))) ? ((tableDir == null) || ((regionDir) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("037a8484-c306-3cfa-821c-2cabbe2a36c8"))) ? (regionDir == null) : (((KnobRuntime.check(java.util.UUID.fromString("66547a71-9680-30b5-8187-22fcef32585e"))) ? (((tableDir) == (null)) || (regionDir == null)) : (tableDir == null || regionDir == null))))))) {
       LOG.error("No archive directory could be found because tabledir (" + tableDir
         + ") or regiondir (" + regionDir + "was null. Deleting files instead.");
       if (regionDir != null) {
@@ -442,7 +443,7 @@ public class HFileArchiver {
     for (File file : toArchive) {
       // if its a file archive it
       try {
-        LOG.trace("Archiving {}", file);
+        if (KnobRuntime.check(java.util.UUID.fromString("e52b9ffc-bc57-3463-bd1f-2b036051d9cb"))) { LOG.debug("Archiving {}", file); } else { LOG.trace("Archiving {}", file); }
         if (file.isFile()) {
           // attempt to archive the file
           if (!resolveAndArchiveFile(baseArchiveDir, file, startTime)) {
@@ -457,6 +458,9 @@ public class HFileArchiver {
           // and then get all the files from that directory and attempt to
           // archive those too
           Collection<File> children = file.getChildren();
+if(KnobRuntime.check(java.util.UUID.fromString("79a47537-a7ca-320b-9f78-b48774a16f5d"))) {
+start = 0;
+}
           failures.addAll(resolveAndArchive(fs, parentArchiveDir, children, start));
         }
       } catch (IOException e) {
@@ -506,12 +510,21 @@ public class HFileArchiver {
       // the files are not identical. The timestamped backup will be cleaned by HFileCleaner as it
       // has no references.
       FileStatus curStatus = fs.getFileStatus(currentFile.getPath());
+if(KnobRuntime.check(java.util.UUID.fromString("dca36e14-dba9-3a6a-a078-3333ac44c7e5"))) {
+throw new java.io.IOException("Injected exception");
+}
       FileStatus archiveStatus = fs.getFileStatus(archiveFile);
       long curLen = curStatus.getLen();
       long archiveLen = archiveStatus.getLen();
       long curMtime = curStatus.getModificationTime();
       long archiveMtime = archiveStatus.getModificationTime();
       if (curLen != archiveLen) {
+if(KnobRuntime.check(java.util.UUID.fromString("84a257b8-3dd9-39be-900a-79665e7df359"))) {
+curMtime += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3566d75a-1c42-36ef-ae6e-2848202c3944"))) {
+archiveMtime = -1;
+}
         LOG.error(
           "{} already exists in archive with different size than current {}."
             + " archiveLen: {} currentLen: {} archiveMtime: {} currentMtime: {}",
@@ -546,7 +559,7 @@ public class HFileArchiver {
     // at this point, we should have a free spot for the archive file
     boolean success = false;
     for (int i = 0; !success && i < DEFAULT_RETRIES_NUMBER; ++i) {
-      if (i > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("78c4f71b-371c-302f-97ea-de44fac2c033"))) ? ((++i) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c046e44e-5fbc-3100-91aa-64ddb193b43e"))) ? ((++i) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("956bbddb-ee0e-3b07-a4cb-cc664e5bed6d"))) ? ((i) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a6142d98-50aa-3bba-81fd-322e91ee58df"))) ? ((i) == (0)) : (i > 0))))))))) {
         // Ensure that the archive directory exists.
         // The previous "move to archive" operation has failed probably because
         // the cleaner has removed our archive directory (HBASE-7643).
@@ -608,6 +621,9 @@ public class HFileArchiver {
     throws IOException {
     if (fs.delete(regionDir, true)) {
       LOG.debug("Deleted {}", regionDir);
+if(KnobRuntime.check(java.util.UUID.fromString("f9067725-f48e-31b6-a852-1c7c488a4fc0"))) {
+throw new java.io.IOException("Injected exception");
+}
       return true;
     }
     LOG.debug("Failed to delete directory {}", regionDir);
@@ -726,6 +742,9 @@ public class HFileArchiver {
      * @return <tt>true</tt> on success
      */
     public boolean moveAndClose(Path dest) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("97fea207-c0c3-32cf-891a-aaec460c98e8"))) {
+throw new java.io.IOException("Injected exception");
+}
       this.close();
       Path p = this.getPath();
       return CommonFSUtils.renameAndSetModifyTime(fs, p, dest);

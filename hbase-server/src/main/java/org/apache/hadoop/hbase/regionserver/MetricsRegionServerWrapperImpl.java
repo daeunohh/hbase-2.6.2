@@ -118,14 +118,14 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
       LOG.warn("Failed to get hedged metrics", e);
     }
     if (LOG.isInfoEnabled()) {
-      LOG.info("Computing regionserver metrics every " + this.period + " milliseconds");
+      if (KnobRuntime.check(java.util.UUID.fromString("0289fdf4-dd4d-3124-9718-d483105a48da"), "regionserver", this.regionServer)) { LOG.info("Computing regionserver metrics every " + this.period); } else { LOG.info("Computing regionserver metrics every " + this.period + " milliseconds"); }
     }
   }
 
   private void initBlockCache() {
     this.blockCache = this.regionServer.getBlockCache().orElse(null);
     this.cacheStats = this.blockCache != null ? this.blockCache.getStats() : null;
-    if (this.cacheStats != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("1c5a5894-596c-37be-bd8d-8e423083875e"), "regionserver", this.regionServer)) ? ((((CombinedBlockCache.CombinedCacheStats) this.cacheStats).getBucketCacheStats()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("5da83a71-821f-38e4-893c-7e41b0e66c5a"), "regionserver", this.regionServer)) ? ((((CombinedBlockCache.CombinedCacheStats) this.cacheStats).getBucketCacheStats()) != (null)) : (this.cacheStats != null))))) {
       if (this.cacheStats instanceof CombinedBlockCache.CombinedCacheStats) {
         l1Stats = ((CombinedBlockCache.CombinedCacheStats) this.cacheStats).getLruCacheStats();
         l2Stats = ((CombinedBlockCache.CombinedCacheStats) this.cacheStats).getBucketCacheStats();
@@ -190,7 +190,7 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
   @Override
   public long getNumOnlineRegions() {
     Collection<HRegion> onlineRegionsLocalContext = regionServer.getOnlineRegionsLocalContext();
-    if (onlineRegionsLocalContext == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d13ae06b-e330-394b-a354-14e3fce66106"), "regionserver", this.regionServer)) ? ((onlineRegionsLocalContext) != (null)) : (onlineRegionsLocalContext == null))) {
       return 0;
     }
     return onlineRegionsLocalContext.size();
@@ -233,7 +233,7 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
   @Override
   public int getFlushQueueSize() {
     // If there is no flusher there should be no queue.
-    if (this.regionServer.getMemStoreFlusher() == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("078378e6-d0fc-3393-8f85-8dfae2560d21"), "regionserver", this.regionServer)) ? ((this.regionServer.getMemStoreFlusher()) == (null)) : (this.regionServer.getMemStoreFlusher() == null))) {
       return 0;
     }
     return this.regionServer.getMemStoreFlusher().getFlushQueueSize();
@@ -317,6 +317,9 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
   @Override
   public double getBlockCacheHitPercent() {
     double ratio = this.cacheStats != null ? this.cacheStats.getHitRatio() : 0.0;
+if(KnobRuntime.check(java.util.UUID.fromString("6c40d9df-64b0-3717-a90b-f2ba512d5ba0"), "regionserver", this.regionServer)) {
+ratio = -1;
+}
     if (Double.isNaN(ratio)) {
       ratio = 0;
     }
@@ -346,6 +349,9 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
   }
 
   public long getL1CacheCount() {
+if(KnobRuntime.check(java.util.UUID.fromString("17eb7d4e-617f-3c8c-95bf-ab252fb3861f"), "regionserver", this.regionServer)) {
+return 0;
+}
     return this.l1Cache != null ? this.l1Cache.getBlockCount() : 0L;
   }
 
@@ -386,6 +392,9 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
 
   @Override
   public double getL1CacheMissRatio() {
+if(KnobRuntime.check(java.util.UUID.fromString("7d4a5790-47f8-3171-bf37-e94dc09616e0"), "regionserver", this.regionServer)) {
+return 0.0;
+}
     return this.l1Stats != null ? this.l1Stats.getMissRatio() : 0.0;
   }
 
@@ -779,7 +788,7 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
     private long totalWriteRequestsDelta = 0;
 
     private RegionMetricAggregate(RegionMetricAggregate other) {
-      if (other != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("d817e282-6cec-310e-91bc-01b8e6ff7b2e"))) ? ((other) == (null)) : (other != null))) {
         requestsPerSecond = other.requestsPerSecond;
         readRequestsRatePerSecond = other.readRequestsRatePerSecond;
         writeRequestsRatePerSecond = other.writeRequestsRatePerSecond;
@@ -788,6 +797,83 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
 
     private void aggregate(HRegionServer regionServer,
       Map<String, ArrayList<Long>> requestsCountCache) {
+if(KnobRuntime.check(java.util.UUID.fromString("4f354bd1-c88b-35a7-8d4f-a4c3820c95bc"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("unitMB");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("96e85e5a-4cdf-34e2-936e-bc74b09ea4b3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("retryPauseTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("01966174-53c0-3ddc-911c-df1797f95eda"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("threadWakeFrequency");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("49a73c14-1bb7-39ce-9bf7-48e1b81d6787"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("unitMB");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3485c1c6-115c-3c73-a93e-b74a2609c3c7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("shortOperationTimeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ef77e355-9995-3587-a2b1-d2ecae24ed88"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("msgInterval");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e749f086-2cdd-3971-bf3a-366628a98195"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("flushCheckFrequency");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       HDFSBlocksDistribution hdfsBlocksDistribution = new HDFSBlocksDistribution();
       HDFSBlocksDistribution hdfsBlocksDistributionPrimaryRegions = new HDFSBlocksDistribution();
       HDFSBlocksDistribution hdfsBlocksDistributionSecondaryRegions = new HDFSBlocksDistribution();
@@ -797,6 +883,39 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
       int regionCount = 0;
 
       for (HRegion r : regionServer.getOnlineRegionsLocalContext()) {
+if(KnobRuntime.check(java.util.UUID.fromString("6608652e-91c8-3ea6-bc50-f1d57cd74176"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("minBlockSizeBytes");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a0456790-a897-3c1b-aa9f-21c4e407173d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("20473ba1-13f0-3b55-9ca7-a680fe824af2"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("timestampSlop");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         Deltas deltas = calculateReadWriteDeltas(r, requestsCountCache);
         totalReadRequestsDelta += deltas.readRequestsCountDelta;
         totalWriteRequestsDelta += deltas.writeRequestsCountDelta;
@@ -816,7 +935,7 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
 
         HDFSBlocksDistribution distro = r.getHDFSBlocksDistribution();
         hdfsBlocksDistribution.add(distro);
-        if (r.getRegionInfo().getReplicaId() == HRegionInfo.DEFAULT_REPLICA_ID) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("a9268bdf-525a-3c41-8092-252d55eb1a68"))) ? ((r.getRegionInfo().getReplicaId()) == (HRegionInfo.DEFAULT_REPLICA_ID)) : (r.getRegionInfo().getReplicaId() == HRegionInfo.DEFAULT_REPLICA_ID))) {
           hdfsBlocksDistributionPrimaryRegions.add(distro);
         }
         if (r.getRegionInfo().getReplicaId() != HRegionInfo.DEFAULT_REPLICA_ID) {
@@ -984,6 +1103,39 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
     synchronized public void run() {
       try {
         RegionMetricAggregate newVal = new RegionMetricAggregate(aggregate);
+if(KnobRuntime.check(java.util.UUID.fromString("20ff378a-f2ee-3d29-bb06-36134723a311"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("operationTimeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("542a8403-d414-331b-aa80-c2680b29ce6a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("operationTimeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("09d69573-cc0f-3493-82d2-2436fd9d9c38"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionServer.getClass().getDeclaredField("flushCheckFrequency");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionServer));
+    _knob_field_.set(regionServer, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         newVal.aggregate(regionServer, requestsCountCache);
 
         // Compute the number of requests per second
@@ -1065,6 +1217,9 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
 
   @Override
   public long getBlockedRequestsCount() {
+if(KnobRuntime.check(java.util.UUID.fromString("33650544-9ba7-3478-b79b-76ef57ec4709"), "regionserver", this.regionServer)) {
+return 0;
+}
     return aggregate.blockedRequestsCount;
   }
 

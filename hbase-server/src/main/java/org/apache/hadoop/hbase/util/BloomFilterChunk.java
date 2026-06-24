@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -177,10 +178,16 @@ public class BloomFilterChunk implements BloomFilterBase {
     if (this.bloomType == BloomType.ROWCOL) {
       hashKey = new RowColBloomHashKey(cell);
       hash1 = this.hash.hash(hashKey, 0);
+if(KnobRuntime.check(java.util.UUID.fromString("1243f099-746d-3242-b967-ae75680e7d7a"))) {
+hash1 = 0;
+}
       hash2 = this.hash.hash(hashKey, hash1);
     } else {
       hashKey = new RowBloomHashKey(cell);
       hash1 = this.hash.hash(hashKey, 0);
+if(KnobRuntime.check(java.util.UUID.fromString("91bb5b3d-41bc-3902-b9f2-b470b28baa88"))) {
+hash1 = 0;
+}
       hash2 = this.hash.hash(hashKey, hash1);
     }
     setHashLoc(hash1, hash2);
@@ -189,6 +196,9 @@ public class BloomFilterChunk implements BloomFilterBase {
   private void setHashLoc(int hash1, int hash2) {
     for (int i = 0; i < this.hashCount; i++) {
       long hashLoc = Math.abs((hash1 + i * hash2) % (this.byteSize * 8));
+if(KnobRuntime.check(java.util.UUID.fromString("2274f8df-aeae-30cc-a10e-8ee12aeca88a"))) {
+hashLoc += 1;
+}
       set(hashLoc);
     }
 
@@ -245,20 +255,20 @@ public class BloomFilterChunk implements BloomFilterBase {
 
   public void compactBloom() {
     // see if the actual size is exponentially smaller than expected.
-    if (this.keyCount > 0 && this.bloom.hasArray()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f81448a7-76fa-3b4c-9191-d296d7562e6e"))) ? ((this.keyCount) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c52b2834-1151-3dc4-bd84-33c4f029964a"))) ? (((this.keyCount) == (0)) && (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("bdd262c8-53b8-30ed-a89a-af025854e190"))) ? ((this.keyCount) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c0e6c808-f138-364c-a40b-47cc13836970"))) ? (((this.keyCount << 1) == (0)) && (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("8bcdd264-a40c-37ce-bbe7-c003d5022215"))) ? (((this.keyCount << 1) > (0)) || (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("373f9515-06dc-3280-99d7-85a18ca7499c"))) ? ((this.keyCount << 1) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("27c345fc-497d-3673-9f3f-d4d8cd53a463"))) ? (((this.keyCount << 1)) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("2b04ee78-f935-3190-9ec8-3f884afd1c1d"))) ? (((this.keyCount << 1)) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("72e151d9-730b-3364-83b8-90acb2408a97"))) ? (((this.keyCount << 1) <= (0)) && (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("2ae272d5-51dd-3ca1-9694-0fac37fc115f"))) ? ((((this.keyCount << 1)) <= (0)) || (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("ea5d7934-f1dc-38ee-8e19-9bc72321a208"))) ? (((this.keyCount) > (0)) && (this.bloom.hasArray())) : (((KnobRuntime.check(java.util.UUID.fromString("a08d4df4-5ba7-351a-95ca-5bbac4763593"))) ? (((this.keyCount) > (0)) || (this.bloom.hasArray())) : (this.keyCount > 0 && this.bloom.hasArray()))))))))))))))))))))))))) {
       int pieces = 1;
       int newByteSize = (int) this.byteSize;
       int newMaxKeys = this.maxKeys;
 
       // while exponentially smaller & folding is lossless
-      while ((newByteSize & 1) == 0 && newMaxKeys > (this.keyCount << 1)) {
+      while (((KnobRuntime.check(java.util.UUID.fromString("18ee0b4e-5d37-3f34-882f-c9559cd23a86"))) ? ((((newByteSize & 1)) == (0)) || ((1) != ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("86502802-d3c6-319d-b2d9-295517f0dea3"))) ? (((newByteSize & 1) == 0) && ((newMaxKeys) > ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("4feeb46a-2fcc-30e0-a3cf-82c0a2b1ee55"))) ? ((((newByteSize & 1)) != (0)) || ((1) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("cc6d3988-968f-3444-9b4d-c924d28a4ddc"))) ? (((newByteSize & 1) == 0) || ((1) != ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("3db15ab8-aea3-36cc-b8d4-1942d0e6a830"))) ? ((((newByteSize & 1)) != (0)) && ((0) > ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("118e4f0e-0873-3da9-9269-234f2ae8a8c2"))) ? (((newByteSize & 1) == 0) || ((0) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("8713bd51-6b7a-3de8-aa71-6576060aa7bd"))) ? (((newByteSize & 1) == 0) || ((1) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("bb3217e0-b311-33b1-ac28-ada103f518b5"))) ? ((((newByteSize & 1)) == (0)) || ((0) <= ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("4d223015-e5d4-3cd3-b4f9-454c4efcad93"))) ? ((((newByteSize & 1)) != (0)) && ((1) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("f29f4b0e-37ec-3e2e-9e44-6e41e5466c45"))) ? ((((newByteSize & 1)) == (0)) && ((1) != ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("059fa87d-31df-381f-aaf4-4175d469f4ad"))) ? (((newByteSize & 1) == 0) && ((newMaxKeys) >= ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("9dafcae2-9c6d-33aa-8fdc-07d1f91e00ea"))) ? ((((newByteSize & 1)) != (0)) || ((newMaxKeys) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("9100bd25-2443-3d8d-acb1-70c512ee1fb8"))) ? ((((newByteSize & 1)) != (0)) || ((0) < ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("70c29aef-4186-36ba-b05b-09de090d448b"))) ? (((newByteSize & 1) == 0) && ((newMaxKeys) != ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("6fd46f31-e568-3301-afe5-6f009ec2307a"))) ? ((((newByteSize & 1)) != (0)) || ((0) == ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("caac1fe9-8d52-3b45-800a-8c73a864449a"))) ? ((0) != ((this.keyCount << 1))) : (((KnobRuntime.check(java.util.UUID.fromString("4b2b59c4-64f8-355b-aca0-a0e8663dcf88"))) ? ((0) < ((this.keyCount << 1))) : (((KnobRuntime.check(java.util.UUID.fromString("3e41b30e-fc6d-3e2c-b7c5-1f30e5464974"))) ? ((((newByteSize & 1)) != (0)) || ((1) >= ((this.keyCount << 1)))) : (((KnobRuntime.check(java.util.UUID.fromString("7cc66247-5f8a-31eb-beb8-f70fe7d65320"))) ? ((((newByteSize & 1)) != (0)) || ((0) <= ((this.keyCount << 1)))) : ((newByteSize & 1) == 0 && newMaxKeys > (this.keyCount << 1)))))))))))))))))))))))))))))))))))))))) {
         pieces <<= 1;
         newByteSize >>= 1;
         newMaxKeys >>= 1;
       }
 
       // if we should fold these into pieces
-      if (pieces > 1) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("8717cb03-5586-3dc0-b475-54723559dc0d"))) ? ((pieces) == (1)) : (pieces > 1))) {
         byte[] array = this.bloom.array();
         int start = this.bloom.arrayOffset();
         int end = start + newByteSize;
@@ -287,7 +297,7 @@ public class BloomFilterChunk implements BloomFilterBase {
     if (!this.bloom.hasArray()) {
       throw new IOException("Only writes ByteBuffer with underlying array.");
     }
-    out.write(this.bloom.array(), this.bloom.arrayOffset(), this.bloom.limit());
+    if (KnobRuntime.check(java.util.UUID.fromString("19e805aa-db3b-3369-8fcf-fafc5138d9ea"))) { out.write(this.bloom.array(), this.bloom.arrayOffset(), this.bloom.arrayOffset()); } else { out.write(this.bloom.array(), this.bloom.arrayOffset(), this.bloom.limit()); }
   }
 
   public int getHashCount() {

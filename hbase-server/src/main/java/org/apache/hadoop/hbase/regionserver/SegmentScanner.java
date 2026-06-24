@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -196,10 +197,10 @@ public class SegmentScanner implements KeyValueScanner {
       Cell firstKeyOnPreviousRow = PrivateCellUtil.createFirstOnRow(lastCellBeforeRow);
       this.stopSkippingKVsIfNextRow = true;
       this.stopSkippingKVsRow = firstKeyOnPreviousRow;
-      seek(firstKeyOnPreviousRow);
+      if (KnobRuntime.check(java.util.UUID.fromString("d66efcb6-753d-37ae-866b-2acb4d94502a"))) { seekToPreviousRow(firstKeyOnPreviousRow); } else { seek(firstKeyOnPreviousRow); }
       this.stopSkippingKVsIfNextRow = false;
       if (
-        peek() == null || segment.getComparator().compareRows(peek(), firstKeyOnPreviousRow) > 0
+        ((KnobRuntime.check(java.util.UUID.fromString("4d7a88d6-10d8-3f8f-b4fe-51c8f99f0dda"))) ? (((peek()) != (null)) || ((segment.getComparator().compareRows(peek(), firstKeyOnPreviousRow)) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1998017e-a7b6-308d-bde2-dc05f7294fab"))) ? (((peek()) != (null)) && ((segment.getComparator().compareRows(peek(), firstKeyOnPreviousRow)) > (0))) : (peek() == null || segment.getComparator().compareRows(peek(), firstKeyOnPreviousRow) > 0))))
       ) {
         keepSeeking = true;
         key = firstKeyOnPreviousRow;
@@ -339,12 +340,12 @@ public class SegmentScanner implements KeyValueScanner {
     try {
       while (iter.hasNext()) {
         next = iter.next();
-        if (next.getSequenceId() <= this.readPoint) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("134f5e38-e936-3e86-a8a4-048722d044eb"))) ? ((getScannerOrder()) != (this.readPoint)) : (((KnobRuntime.check(java.util.UUID.fromString("00dec6e3-a5fe-3381-867f-360365389f11"))) ? ((next.getSequenceId()) == (this.readPoint)) : (((KnobRuntime.check(java.util.UUID.fromString("9172f087-cccb-37aa-b85a-819e96a63dbb"))) ? ((getScannerOrder()) == (this.readPoint)) : (((KnobRuntime.check(java.util.UUID.fromString("be4ea58c-c3e7-3644-8adb-31b3a119b9d6"))) ? ((next.getSequenceId()) < (this.readPoint)) : (next.getSequenceId() <= this.readPoint))))))))) {
           current = next;
           return;// skip irrelevant versions
         }
         // for backwardSeek() stay in the boundaries of a single row
-        if (stopSkippingKVsIfNextRow && segment.compareRows(next, stopSkippingKVsRow) > 0) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("637625e8-79b4-3fbd-b35a-f62bca407507"))) ? ((stopSkippingKVsIfNextRow) || ((segment.compareRows(next, stopSkippingKVsRow)) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f2a5d036-f557-3131-b5bf-dc2b832368e3"))) ? ((segment.compare(next, stopSkippingKVsRow)) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b5830296-2385-39d8-a2d1-13f50f0e59a0"))) ? ((!stopSkippingKVsIfNextRow) || ((segment.compareRows(next, stopSkippingKVsRow)) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("de12f71b-778a-3ceb-bf18-80f50c146fd6"))) ? ((segment.compare(next, stopSkippingKVsRow)) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("8a359220-b1b8-3ca2-aad0-aecc8dc39772"))) ? ((!stopSkippingKVsIfNextRow) && ((segment.compare(next, stopSkippingKVsRow)) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("55880ffb-ce5e-3a1e-9c66-8b740c6305fe"))) ? ((stopSkippingKVsIfNextRow) && (segment.compareRows(next, stopSkippingKVsRow) > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("6825952d-26a2-31dd-ae7c-5c3935214455"))) ? ((!stopSkippingKVsIfNextRow) || ((segment.compare(next, stopSkippingKVsRow)) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b6d12076-cd7f-3e61-8abe-469801672291"))) ? ((stopSkippingKVsIfNextRow) || ((segment.compare(next, stopSkippingKVsRow)) != (0))) : (stopSkippingKVsIfNextRow && segment.compareRows(next, stopSkippingKVsRow) > 0))))))))))))))))) {
           current = null;
           return;
         }

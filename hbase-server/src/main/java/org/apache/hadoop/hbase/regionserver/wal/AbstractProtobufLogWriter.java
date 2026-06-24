@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.wal.AbstractFSWAL.WAL_AVOID_LOCAL_WRITES_DEFAULT;
 import static org.apache.hadoop.hbase.regionserver.wal.AbstractFSWAL.WAL_AVOID_LOCAL_WRITES_KEY;
@@ -81,6 +82,17 @@ public abstract class AbstractProtobufLogWriter {
 
   private WALHeader buildWALHeader(Configuration conf, WALHeader.Builder builder)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("058ec444-1298-355a-a558-557bd2d6f47e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     builder.setWriterClsName(getWriterClassName());
     builder.setCellCodecClsName(WALCellCodec.getWALCellCodecClass(conf).getName());
     return builder.build();
@@ -129,8 +141,22 @@ public abstract class AbstractProtobufLogWriter {
   }
 
   private boolean initializeCompressionContext(Configuration conf, Path path) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("15af8450-90cf-367e-805b-3fb7e874d162"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("47bada76-62dd-3466-b88e-f95286df1728"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     boolean doCompress = conf.getBoolean(HConstants.ENABLE_WAL_COMPRESSION, false);
-    if (doCompress) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2781f40b-5c12-3300-8c14-d60fae19b2a3"))) ? (false) : (doCompress))) {
       try {
         final boolean useTagCompression =
           conf.getBoolean(CompressionContext.ENABLE_WAL_TAGS_COMPRESSION, true);
@@ -168,12 +194,29 @@ public abstract class AbstractProtobufLogWriter {
       boolean noLocalWrite =
         conf.getBoolean(WAL_AVOID_LOCAL_WRITES_KEY, WAL_AVOID_LOCAL_WRITES_DEFAULT);
 
-      initOutput(fs, path, overwritable, bufferSize, replication, blocksize, monitor, noLocalWrite);
+if(KnobRuntime.check(java.util.UUID.fromString("c1a629ab-e1a4-3172-a0e2-38fd88bb84d7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = monitor.getClass().getDeclaredField("minSlowDetectCount");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(monitor));
+    _knob_field_.set(monitor, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("46f381ae-f280-335a-bec0-26884d75b659"))) {
+bufferSize *= 2;
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("47c67ecd-ea90-3475-96c5-49be52514773"))) { initOutput(fs, path, overwritable, bufferSize, replication, blocksize, monitor, false); } else if (KnobRuntime.check(java.util.UUID.fromString("e8c3a754-e217-3838-a124-3cd07a8f5e40"))) { initOutput(fs, path, true, bufferSize, replication, blocksize, monitor, noLocalWrite); } else { initOutput(fs, path, overwritable, bufferSize, replication, blocksize, monitor, noLocalWrite); }
 
       boolean doTagCompress =
         doCompress && conf.getBoolean(CompressionContext.ENABLE_WAL_TAGS_COMPRESSION, true);
       boolean doValueCompress =
         doCompress && conf.getBoolean(CompressionContext.ENABLE_WAL_VALUE_COMPRESSION, false);
+if(KnobRuntime.check(java.util.UUID.fromString("0061fae4-808b-3961-819f-f781d61285ce"))) {
+doValueCompress = false;
+}
       WALHeader.Builder headerBuilder = WALHeader.newBuilder().setHasCompression(doCompress)
         .setHasTagCompression(doTagCompress).setHasValueCompression(doValueCompress);
       if (doValueCompress) {
@@ -184,8 +227,19 @@ public abstract class AbstractProtobufLogWriter {
         length.set(writeMagicAndWALHeader(PB_WAL_MAGIC, buildSecureWALHeader(conf, headerBuilder)));
         secureInitAfterHeader(doCompress, encryptor);
       } else {
+if(KnobRuntime.check(java.util.UUID.fromString("77807ec8-43fb-3153-ad5d-9d5df37313a0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = headerBuilder.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(headerBuilder));
+    _knob_field_.set(headerBuilder, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         length.set(writeMagicAndWALHeader(PB_WAL_MAGIC, buildWALHeader(conf, headerBuilder)));
-        initAfterHeader(doCompress);
+        if (KnobRuntime.check(java.util.UUID.fromString("78c8ca20-8018-3422-b3a5-445338c7f96f"))) { initAfterHeader(true); } else if (KnobRuntime.check(java.util.UUID.fromString("eae83165-e86f-33c2-aade-903c457f04c3"))) { initAfterHeader(false); } else { initAfterHeader(doCompress); }
       }
 
       // instantiate trailer to default value.

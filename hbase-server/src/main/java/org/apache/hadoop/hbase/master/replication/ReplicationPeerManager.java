@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -356,7 +357,7 @@ public class ReplicationPeerManager implements ConfigurationObserver {
    */
   private void checkNamespacesAndTableCfsConfigConflict(Set<String> namespaces,
     Map<TableName, ? extends Collection<String>> tableCfs) throws DoNotRetryIOException {
-    if (namespaces == null || namespaces.isEmpty()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("236fc613-cec4-34b0-be42-92b9b845381d"))) ? (namespaces == null) : (((KnobRuntime.check(java.util.UUID.fromString("7ca731ab-c390-32ed-a3c3-ddbf6f5490d5"))) ? (((namespaces) != (null)) || (namespaces.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("2bf5bbe9-e97f-3447-b503-3e59b698b5e5"))) ? (namespaces.isEmpty()) : (namespaces == null || namespaces.isEmpty()))))))) {
       return;
     }
     if (tableCfs == null || tableCfs.isEmpty()) {
@@ -416,6 +417,17 @@ public class ReplicationPeerManager implements ConfigurationObserver {
   }
 
   public List<String> getSerialPeerIdsBelongsTo(TableName tableName) {
+if(KnobRuntime.check(java.util.UUID.fromString("2248eb1a-4bfa-389a-875b-6263125cf880"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return peers.values().stream().filter(p -> p.getPeerConfig().isSerial())
       .filter(p -> p.getPeerConfig().needToReplicate(tableName)).map(p -> p.getPeerId())
       .collect(Collectors.toList());

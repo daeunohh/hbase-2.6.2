@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.DEFAULT_HBASE_ENABLE_SEPARATE_CHILD_REGIONS;
 
@@ -69,6 +70,17 @@ final class AssignmentManagerUtil {
   static GetRegionInfoResponse getRegionInfoResponse(final MasterProcedureEnv env,
     final ServerName regionLocation, final RegionInfo hri, boolean includeBestSplitRow)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c6ab70a0-d788-3a4f-b45a-98cdc06cb35a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLocation.getClass().getDeclaredField("startCode");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionLocation));
+    _knob_field_.set(regionLocation, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     // TODO: There is no timeout on this controller. Set one!
     HBaseRpcController controller =
       env.getMasterServices().getClusterConnection().getRpcControllerFactory().newController();

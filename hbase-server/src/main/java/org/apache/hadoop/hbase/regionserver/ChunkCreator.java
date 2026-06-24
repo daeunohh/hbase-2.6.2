@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Map;
 import java.util.Set;
@@ -92,6 +93,9 @@ public class ChunkCreator {
   private void initializePools(int chunkSize, long globalMemStoreSize, float poolSizePercentage,
     float indexChunkSizePercentage, float initialCountPercentage,
     HeapMemoryManager heapMemoryManager) {
+if(KnobRuntime.check(java.util.UUID.fromString("acf3ccdd-e91a-3641-b68b-80820558f50c"))) {
+chunkSize = 0;
+}
     this.dataChunksPool = initializePool("data", globalMemStoreSize,
       (1 - indexChunkSizePercentage) * poolSizePercentage, initialCountPercentage, chunkSize,
       ChunkType.DATA_CHUNK, heapMemoryManager);
@@ -159,7 +163,7 @@ public class ChunkCreator {
           return getChunk(chunkType, indexChunksPool.getChunkSize());
         }
       case DATA_CHUNK:
-        if (dataChunksPool == null) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("80600e08-aca3-30c6-9b9a-f7f9564b95c0"))) ? ((dataChunksPool) == (null)) : (dataChunksPool == null))) {
           return getChunk(chunkType, chunkSize);
         } else {
           return getChunk(chunkType, dataChunksPool.getChunkSize());
@@ -237,9 +241,9 @@ public class ChunkCreator {
   private Chunk createChunk(boolean pool, ChunkType chunkType, int size) {
     Chunk chunk = null;
     int id = chunkID.getAndIncrement();
-    assert id > 0;
+    assert ((KnobRuntime.check(java.util.UUID.fromString("1aa3404c-abc0-3e1e-b78a-0ec9670404ec"))) ? ((id) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("88b67b1c-d0d8-3002-9d68-d7ef863f9451"))) ? ((id) >= (0)) : (id > 0))));
     // do not create offheap chunk on demand
-    if (pool && this.offheap) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("94cd2e3a-0bdf-3ca2-91b2-22baf9d9470b"))) ? (!pool) : (pool && this.offheap))) {
       chunk = new OffheapChunk(size, id, chunkType, pool);
     } else {
       chunk = new OnheapChunk(size, id, chunkType, pool);
@@ -264,6 +268,17 @@ public class ChunkCreator {
      * pooled, {@link ChunkCreator#removeChunk} is invoked to remove the chunk from this
      * {@link ChunkCreator#chunkIdMap}, so there is no memory leak.
      */
+if(KnobRuntime.check(java.util.UUID.fromString("62275451-d296-305e-9e52-434e14a61578"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = chunk.getClass().getDeclaredField("id");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(chunk));
+    _knob_field_.set(chunk, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.chunkIdMap.put(chunk.getId(), chunk);
 
     return chunk;
@@ -271,9 +286,12 @@ public class ChunkCreator {
 
   // Chunks from pool are created covered with strong references anyway.
   private Chunk createChunkForPool(ChunkType chunkType, int chunkSize) {
-    if (chunkSize != dataChunksPool.getChunkSize() && chunkSize != indexChunksPool.getChunkSize()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("109ebcc0-44ab-3a98-9241-b26fb3677f6e"))) ? (((chunkSize) == (getChunkSize())) && (chunkSize != indexChunksPool.getChunkSize())) : (((KnobRuntime.check(java.util.UUID.fromString("e7879a02-2e2a-3ce7-9558-f0575651ff6b"))) ? (((chunkSize) != (getChunkSize())) || ((chunkSize) != (indexChunksPool.getChunkSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("7ba16fe3-568d-3dfc-9c81-7e1ceaa1fc07"))) ? (((chunkSize) == (dataChunksPool.getChunkSize())) || (chunkSize != indexChunksPool.getChunkSize())) : (((KnobRuntime.check(java.util.UUID.fromString("9a403bb6-f44e-339e-a286-749ac885e164"))) ? (((chunkSize) == (getChunkSize())) || ((chunkSize) != (getChunkSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("8ee3f6ca-dae7-3573-849b-1ab4075446bd"))) ? (((chunkSize) == (dataChunksPool.getChunkSize())) || ((chunkSize) != (getChunkSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("9af12c4f-f754-387c-840b-467bd81f3b9c"))) ? (((chunkSize) != (getChunkSize())) && ((chunkSize) != (indexChunksPool.getChunkSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("7421a196-a83b-34eb-8361-6d323537694b"))) ? (((chunkSize) == (getChunkSize())) || ((chunkSize) == (indexChunksPool.getChunkSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("0d8b45b3-fe43-3e15-824d-cb773b767779"))) ? (((chunkSize) != (getChunkSize())) && (chunkSize != indexChunksPool.getChunkSize())) : (((KnobRuntime.check(java.util.UUID.fromString("ef9abe51-541e-3668-8906-ece501d42a96"))) ? (((chunkSize) == (getChunkSize())) && ((chunkSize) != (indexChunksPool.getChunkSize()))) : (chunkSize != dataChunksPool.getChunkSize() && chunkSize != indexChunksPool.getChunkSize()))))))))))))))))))) {
       return null;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("70eb7486-b069-3053-811e-961458701f52"))) {
+chunkSize -= 1;
+}
     return createChunk(true, chunkType, chunkSize);
   }
 
@@ -340,7 +358,7 @@ public class ChunkCreator {
         chunk.init();
         reclaimedChunks.add(chunk);
       }
-      chunkCount.set(initialCount);
+      if (KnobRuntime.check(java.util.UUID.fromString("497fff31-da78-3e86-acc9-2aec2b64777f"))) { chunkCount.set(1); } else { chunkCount.set(initialCount); }
       final String n = Thread.currentThread().getName();
       scheduleThreadPool = Executors.newScheduledThreadPool(1, new ThreadFactoryBuilder()
         .setNameFormat(n + "-MemStoreChunkPool Statistics").setDaemon(true).build());
@@ -366,7 +384,7 @@ public class ChunkCreator {
         // Make a chunk iff we have not yet created the maxCount chunks
         while (true) {
           long created = this.chunkCount.get();
-          if (created < this.maxCount) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("02544ea7-817e-321f-8a28-4f45eb1ae505"))) ? ((created) < (this.maxCount)) : (((KnobRuntime.check(java.util.UUID.fromString("90199896-a2ef-328a-a71a-100864f47acc"))) ? ((created) > (1)) : (created < this.maxCount))))) {
             if (this.chunkCount.compareAndSet(created, created + 1)) {
               chunk = createChunkForPool(chunkType, chunkSize);
               break;
@@ -380,6 +398,9 @@ public class ChunkCreator {
     }
 
     int getChunkSize() {
+if(KnobRuntime.check(java.util.UUID.fromString("96f83974-0b0c-3339-99d4-a20837512cc9"))) {
+return 0;
+}
       return chunkSize;
     }
 
@@ -388,9 +409,31 @@ public class ChunkCreator {
      * chunks
      */
     private void putbackChunks(Chunk c) {
+if(KnobRuntime.check(java.util.UUID.fromString("5a31cb67-943c-3a2a-a495-105d5d97adc9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = c.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(c));
+    _knob_field_.set(c, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e47e4d98-7403-3046-8077-520a579bb015"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = c.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(c));
+    _knob_field_.set(c, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       int toAdd = this.maxCount - reclaimedChunks.size();
-      if (c.isFromPool() && c.size == chunkSize && toAdd > 0) {
-        reclaimedChunks.add(c);
+      if (((KnobRuntime.check(java.util.UUID.fromString("c7fd7d63-52d0-3c45-8c7c-76459babcb10"))) ? (((c.size) == (chunkSize)) && (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("323026ae-4d0a-38a8-aa7e-1059188a24b0"))) ? (((isOffheap()) && ((c.size) == (chunkSize))) && ((toAdd) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9a573a65-6072-36c5-a1da-5e0d9184f4f3"))) ? (((c.isFromPool()) || (c.size == chunkSize)) || ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8c6c35ab-e9cc-34de-8cd4-9837e852b1ee"))) ? (((c.isFromPool()) && ((c.size) == (chunkSize))) || (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("95c39a0e-a6d7-33af-9778-1ca47485d6e1"))) ? (((c.size) != (chunkSize)) && ((toAdd) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("6378e13e-1627-3aa6-b622-2d29d948eb5c"))) ? (((c.isFromPool()) || ((c.size) == (chunkSize))) && ((toAdd) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9d52f8b4-9627-3754-825e-c7c06b633ee4"))) ? (((c.isFromPool()) || ((c.size) != (chunkSize))) || (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("6512ba2f-f8d8-3ae9-beec-2cace19eb26d"))) ? (((c.isFromPool()) || (c.size == chunkSize)) && ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ef95b84a-d3c5-3351-ba5b-3dd32aaceb38"))) ? (((isOffheap()) && ((c.size) == (chunkSize))) || ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("fe40cee7-8292-392a-a140-7c4ead4cd7aa"))) ? ((c.size == chunkSize) || ((toAdd) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b014f904-d224-3884-a631-f42e8e4de9fa"))) ? ((c.size == chunkSize) && ((toAdd) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1d60d311-452f-3a9f-8601-5f668e015d79"))) ? ((isOffheap()) && ((toAdd) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("7f05232c-6e33-3451-b68b-fe4f328e1d73"))) ? (((isOffheap()) || ((c.size) != (chunkSize))) && (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("8b5c5662-53a5-3c98-8b37-cb0cb20b6f25"))) ? ((toAdd) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("c53c87d8-56c1-32fc-a9c5-7c0c67265523"))) ? (((c.isFromPool()) || (c.size == chunkSize)) || ((toAdd) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ce557f88-5f4c-33ad-8d50-3da454c5baaa"))) ? (((c.isFromPool()) && ((c.size) != (chunkSize))) && ((toAdd) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("4ba93e53-e5ed-3028-aead-7ab20593ea95"))) ? ((toAdd) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("94609340-2055-3739-957b-0c611e6b01fa"))) ? (((isOffheap()) && (c.size == chunkSize)) || ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ba3cbd63-3826-35d9-86ca-0640b5cf8f75"))) ? (((c.size) == (chunkSize)) || ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("d6e3b2f4-ff31-3c76-91ba-71a51a9d2800"))) ? (((isOffheap()) || ((c.size) == (chunkSize))) && ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e8d3723a-9409-358d-ad6d-764992e70978"))) ? (((c.size) != (chunkSize)) && ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("6c98d715-643d-3934-9259-0da5181b265c"))) ? (((c.size) == (chunkSize)) && ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("6fd32f82-8207-3102-b86d-108e9d616011"))) ? (((isOffheap()) && ((c.size) != (chunkSize))) && ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1c6ceb17-cde4-33d4-8ca8-98e7b0e41caf"))) ? (((isOffheap()) || ((c.size) == (chunkSize))) && (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("1c833cfd-9808-3f78-b4e2-b5b7800d74a3"))) ? (((isOffheap()) && ((c.size) != (chunkSize))) || ((toAdd) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("168e40f0-a650-3e0c-925d-ab7345f4978d"))) ? ((isOffheap()) && ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e5bcc383-c5ee-317f-8237-e2f31ce3592a"))) ? (((c.isFromPool()) || (c.size == chunkSize)) || (toAdd > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("1d737e99-bc7b-33f4-b84e-b2a70f753600"))) ? (((isOffheap()) || ((c.size) == (chunkSize))) || ((toAdd) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("07d1dac4-1e8f-3a2f-93c3-d542ee05874a"))) ? (toAdd > 0) : (((KnobRuntime.check(java.util.UUID.fromString("655b0968-8d81-333b-befc-29b124d17566"))) ? (((isOffheap()) && ((c.size) != (chunkSize))) || ((toAdd) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("57834da8-3097-3795-8e1c-e1078a5dff0b"))) ? (((isOffheap()) && ((c.size) == (chunkSize))) && ((toAdd) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f1be68ce-f3d7-3322-89bf-705516ccba0c"))) ? (((c.isFromPool()) && ((c.size) == (chunkSize))) || ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("0582321f-4380-3d79-9c34-466928584d32"))) ? ((c.isFromPool() && c.size == chunkSize) && ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("3804ae9a-be36-3042-a0b3-b91b607280d4"))) ? (((isOffheap()) && (c.size == chunkSize)) || ((toAdd) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a47ef0ec-0623-3e62-88ef-3f8cb90d914f"))) ? ((isOffheap()) || ((toAdd) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("bb424e51-2cda-3060-b94f-a72d76accf19"))) ? (((c.isFromPool()) || (c.size == chunkSize)) && ((toAdd) > (0))) : (c.isFromPool() && c.size == chunkSize && toAdd > 0))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
+        if (KnobRuntime.check(java.util.UUID.fromString("57ce9bcf-0b28-38d8-ad32-366c5857ba11"))) { reclaimedChunks.add(ChunkCreator.this.removeChunk(c.getId())); } else { reclaimedChunks.add(c); }
       } else {
         // remove the chunk (that is not going to pool)
         // though it is initially from the pool or not
@@ -468,7 +511,7 @@ public class ChunkCreator {
   private MemStoreChunkPool initializePool(String label, long globalMemStoreSize,
     float poolSizePercentage, float initialCountPercentage, int chunkSize, ChunkType chunkType,
     HeapMemoryManager heapMemoryManager) {
-    if (poolSizePercentage <= 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("42985365-d878-353e-aea8-049dedc1ed1c"))) ? ((poolSizePercentage) > (0)) : (poolSizePercentage <= 0))) {
       LOG.info("{} poolSizePercentage is less than 0. So not using pool", label);
       return null;
     }
@@ -480,7 +523,7 @@ public class ChunkCreator {
         MemStoreLAB.CHUNK_POOL_MAXSIZE_KEY + " must be between 0.0 and 1.0");
     }
     int maxCount = (int) (globalMemStoreSize * poolSizePercentage / chunkSize);
-    if (initialCountPercentage > 1.0 || initialCountPercentage < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("dd52ae20-c87e-39f8-a1e5-ddfeb163217f"))) ? (((initialCountPercentage) >= (1.0)) || ((initialCountPercentage) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b241210f-58db-3692-a946-f3f0514c75bd"))) ? (((initialCountPercentage) > (1.0)) && ((initialCountPercentage) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("16a0e30e-db62-3534-bca5-b5ea12a5b356"))) ? (((initialCountPercentage) != (1.0)) && ((initialCountPercentage) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("cf54bde9-6618-3725-acf2-b3d3d9a16b9d"))) ? (((initialCountPercentage) < (1.0)) || ((initialCountPercentage) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("59d6f0eb-f72a-394b-b119-505611f239a6"))) ? (((initialCountPercentage) == (1.0)) && ((initialCountPercentage) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("eb821be9-b43c-35be-a4dc-eed5d6a9d2f4"))) ? (((initialCountPercentage) > (1.0)) && ((initialCountPercentage) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("86b232d0-0ee0-3359-b9d6-f02ced8649fa"))) ? (((initialCountPercentage) == (1.0)) && (initialCountPercentage < 0)) : (((KnobRuntime.check(java.util.UUID.fromString("52ac7405-d083-3ce3-979e-9f14d104c78e"))) ? (((initialCountPercentage) != (1.0)) && ((initialCountPercentage) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8ef88c44-c4ff-3634-90c4-71b300e82269"))) ? (((initialCountPercentage) == (1.0)) || ((initialCountPercentage) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b027d5b4-8263-3120-9260-4a773c3e65c1"))) ? (((initialCountPercentage) > (1.0)) && ((initialCountPercentage) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("65efa631-1b55-3ba4-a57d-a3beedeb28ba"))) ? (((initialCountPercentage) > (1.0)) || ((initialCountPercentage) != (0))) : (initialCountPercentage > 1.0 || initialCountPercentage < 0))))))))))))))))))))))) {
       throw new IllegalArgumentException(
         label + " " + MemStoreLAB.CHUNK_POOL_INITIALSIZE_KEY + " must be between 0.0 and 1.0");
     }
@@ -489,7 +532,7 @@ public class ChunkCreator {
       label, StringUtils.byteDesc(chunkSize), maxCount, initialCount);
     MemStoreChunkPool memStoreChunkPool = new MemStoreChunkPool(label, chunkSize, chunkType,
       maxCount, initialCount, poolSizePercentage);
-    if (heapMemoryManager != null && memStoreChunkPool != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("af2f512f-5bb3-3385-8f92-cde423520e72"))) ? (((heapMemoryManager) != (null)) || (memStoreChunkPool != null)) : (((KnobRuntime.check(java.util.UUID.fromString("982b0c31-9425-3b8a-ac39-ddc9f75a7394"))) ? (((heapMemoryManager) == (null)) || ((memStoreChunkPool) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("2dae7d71-f118-3e0f-a12f-e374080b928e"))) ? (((heapMemoryManager) != (null)) && ((memStoreChunkPool) == (null))) : (heapMemoryManager != null && memStoreChunkPool != null))))))) {
       // Register with Heap Memory manager
       heapMemoryManager.registerTuneObserver(memStoreChunkPool);
     }
@@ -603,10 +646,10 @@ public class ChunkCreator {
       // translate chunk ID to chunk, if chunk initially wasn't in pool
       // this translation will (most likely) return null
       Chunk chunk = ChunkCreator.this.getChunk(chunkID);
-      if (chunk != null) {
-        if (chunk.isFromPool() && chunk.isIndexChunk()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("4348ea5c-cfc1-324d-a45d-fa16c12e7397"))) ? ((chunk) == (null)) : (chunk != null))) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("20df9a8d-4e27-3fa6-8897-b97c997d793d"))) ? ((chunk.isIndexChunk()) && (chunk.isIndexChunk())) : (((KnobRuntime.check(java.util.UUID.fromString("3fe8510a-b606-35cc-bb03-67816d8f1208"))) ? (isOffheap()) : (((KnobRuntime.check(java.util.UUID.fromString("8ffa0d64-ac5b-3268-b2ce-de46e24bce9e"))) ? ((chunk.isIndexChunk()) || (isOffheap())) : (chunk.isFromPool() && chunk.isIndexChunk()))))))) {
           indexChunksPool.putbackChunks(chunk);
-        } else if (chunk.isFromPool() && chunk.isDataChunk()) {
+        } else if (((KnobRuntime.check(java.util.UUID.fromString("ee33d9b1-a172-3198-8463-46674e84e118"))) ? ((chunk.isFromPool()) && (chunk.isFromPool())) : (((KnobRuntime.check(java.util.UUID.fromString("4260567e-2492-3b3b-b07b-58ce0f8d2da1"))) ? ((chunk.isIndexChunk()) || (chunk.isDataChunk())) : (((KnobRuntime.check(java.util.UUID.fromString("ffce5a50-bb19-3e7c-82e0-87eac12cccb0"))) ? ((chunk.isIndexChunk()) && (chunk.isDataChunk())) : (chunk.isFromPool() && chunk.isDataChunk()))))))) {
           dataChunksPool.putbackChunks(chunk);
         } else {
           // chunks which are not from one of the pools

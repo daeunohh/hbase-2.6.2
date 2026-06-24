@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -78,6 +79,9 @@ public final class MasterProcedureUtil {
     }
 
     protected NonceKey getNonceKey() {
+if(KnobRuntime.check(java.util.UUID.fromString("2b6cc4e6-d31c-3657-8306-fc624b9215fd"))) {
+return null;
+}
       return nonceKey;
     }
 

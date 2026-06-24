@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.RpcCallback;
 import com.google.protobuf.RpcController;
@@ -115,6 +116,28 @@ public class MultiRowMutationEndpoint extends MultiRowMutationService implements
       List<MutationProto> mutateRequestList = request.getMutationRequestList();
       List<Mutation> mutations = new ArrayList<>(mutateRequestList.size());
       for (MutationProto m : mutateRequestList) {
+if(KnobRuntime.check(java.util.UUID.fromString("1a215eb8-9f9f-38dc-95c2-9d8b04357c0a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = m.getClass().getDeclaredField("memoizedSerializedSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(m));
+    _knob_field_.set(m, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("27f80fd5-fdaf-36a1-aed7-47b16f1bc348"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = m.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(m));
+    _knob_field_.set(m, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         mutations.add(ProtobufUtil.toMutation(m));
       }
 
@@ -137,7 +160,7 @@ public class MultiRowMutationEndpoint extends MultiRowMutationService implements
         rowsToLock.add(m.getRow());
       }
 
-      if (request.getConditionCount() > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("6848f546-c14f-30ee-b945-1cbe70bf1cb8"))) ? ((request.getConditionCount()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e227689e-af78-312b-af0e-2d2d3c233482"))) ? ((request.getConditionCount()) < (0)) : (request.getConditionCount() > 0))))) {
         // Get row locks for the mutations and the conditions
         rowLocks = new ArrayList<>();
         for (ClientProtos.Condition condition : request.getConditionList()) {

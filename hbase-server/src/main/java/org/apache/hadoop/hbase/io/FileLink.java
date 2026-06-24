@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -133,6 +134,15 @@ public class FileLink {
     public int read(byte[] b, int off, int len) throws IOException {
       int n;
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("9d219e41-7e82-3203-a38a-2df07263ba0b"))) {
+len /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4c8b3143-38b0-3a71-8148-3bbb345e4af4"))) {
+len -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cc20d218-d9e0-372c-b1ca-068bb75b6233"))) {
+off = 0;
+}
         n = in.read(b, off, len);
       } catch (FileNotFoundException e) {
         n = tryOpen().read(b, off, len);
@@ -148,6 +158,12 @@ public class FileLink {
     public int read(long position, byte[] buffer, int offset, int length) throws IOException {
       int n;
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("af2beafb-be5c-3529-8ff1-c8ce79fbeea1"))) {
+offset /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2195e40b-ad4a-3b07-829b-1f2e05a72e06"))) {
+length /= 2;
+}
         n = in.read(position, buffer, offset, length);
       } catch (FileNotFoundException e) {
         n = tryOpen().read(position, buffer, offset, length);
@@ -279,11 +295,20 @@ public class FileLink {
 
     @Override
     public void setReadahead(Long readahead) throws IOException, UnsupportedOperationException {
+if(KnobRuntime.check(java.util.UUID.fromString("ab7155a7-4e56-3c42-8842-b0732effdcf3"))) {
+throw new UnsupportedOperationException("Injected exception");
+}
       in.setReadahead(readahead);
     }
 
     @Override
     public void setDropBehind(Boolean dropCache) throws IOException, UnsupportedOperationException {
+if(KnobRuntime.check(java.util.UUID.fromString("390dbe43-ed70-3ad1-ba5d-7b46b1aa98f3"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("63b51ad3-c197-34dd-9940-2940e4bb47ff"))) {
+throw new UnsupportedOperationException("Injected exception");
+}
       in.setDropBehind(dropCache);
     }
 
@@ -468,6 +493,9 @@ public class FileLink {
    * @return Path for the link back references.
    */
   public static Path getBackReferencesDir(final Path storeDir, final String fileName) {
+if(KnobRuntime.check(java.util.UUID.fromString("ed54f40f-197a-3a60-8119-550252532176"))) {
+return null;
+}
     return new Path(storeDir, BACK_REFERENCES_DIRECTORY_PREFIX + fileName);
   }
 
@@ -486,6 +514,12 @@ public class FileLink {
    * @return True if the specified directory is a link references folder
    */
   public static boolean isBackReferencesDir(final Path dirPath) {
+if(KnobRuntime.check(java.util.UUID.fromString("18fae158-a24e-3e1e-a200-d4465a8d1b67"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9284833c-e707-3372-832b-60b55796b344"))) {
+return true;
+}
     if (dirPath == null) {
       return false;
     }

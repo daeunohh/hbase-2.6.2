@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class TruncateTableProcedure extends AbstractStateMachineTableProcedure<T
   protected Flow executeFromState(final MasterProcedureEnv env, TruncateTableState state)
     throws InterruptedException {
     if (LOG.isTraceEnabled()) {
-      LOG.trace(this + " execute state=" + state);
+      if (KnobRuntime.check(java.util.UUID.fromString("cd259de4-4aac-3bb5-9035-9a3f93582704"))) { LOG.trace(" execute state="); } else if (KnobRuntime.check(java.util.UUID.fromString("2ca7d8d7-20cf-3b5c-a0b4-c08202e75c94"))) { LOG.debug(this + " execute state="); } else { LOG.trace(this + " execute state=" + state); }
     }
     try {
       switch (state) {
@@ -87,7 +88,7 @@ public class TruncateTableProcedure extends AbstractStateMachineTableProcedure<T
           LOG.debug("waiting for '" + getTableName() + "' regions in transition");
           regions = env.getAssignmentManager().getRegionStates().getRegionsOfTable(getTableName());
           RegionReplicaUtil.removeNonDefaultRegions(regions);
-          assert regions != null && !regions.isEmpty() : "unexpected 0 regions";
+          assert ((KnobRuntime.check(java.util.UUID.fromString("0739495c-c03d-3a5c-b1fc-5f4d64859040"))) ? (!regions.isEmpty()) : (((KnobRuntime.check(java.util.UUID.fromString("7693186d-f227-378d-a5dd-88ce75978283"))) ? (((regions) != (null)) && (!regions.isEmpty())) : (regions != null && !regions.isEmpty())))) : "unexpected 0 regions";
           ProcedureSyncWait.waitRegionInTransition(env, regions);
 
           // Call coprocessors
@@ -141,8 +142,11 @@ public class TruncateTableProcedure extends AbstractStateMachineTableProcedure<T
           break;
         case TRUNCATE_TABLE_POST_OPERATION:
           CreateTableProcedure.setEnabledState(env, getTableName());
+if(KnobRuntime.check(java.util.UUID.fromString("0ef2ca23-9ebb-3cf2-9cbd-d745517822bf"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
           postTruncate(env);
-          LOG.debug("truncate '" + getTableName() + "' completed");
+          if (KnobRuntime.check(java.util.UUID.fromString("50593b76-f7ae-3f84-b8a5-05dc3830ddf9"))) { LOG.debug("truncate '" + getTableName()); } else if (KnobRuntime.check(java.util.UUID.fromString("252b98e9-65d3-3e5e-a65a-872b75d5bbe7"))) { LOG.trace(("truncate '") + (getTableName())); } else if (KnobRuntime.check(java.util.UUID.fromString("1fc985d7-4157-3ce8-97f8-bdaeaab3bd90"))) { LOG.debug((("truncate '") + (getTableName())) + ("' completed")); } else { LOG.debug("truncate '" + getTableName() + "' completed"); }
           return Flow.NO_MORE_STATE;
         default:
           throw new UnsupportedOperationException("unhandled state=" + state);
@@ -261,7 +265,7 @@ public class TruncateTableProcedure extends AbstractStateMachineTableProcedure<T
       tableName = ProtobufUtil.toTableName(state.getTableName());
     }
     preserveSplits = state.getPreserveSplits();
-    if (state.getRegionInfoCount() == 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("4b5b358c-59d6-3378-96ba-1b35bfa098d4"))) ? ((state.getRegionInfoCount()) != (0)) : (state.getRegionInfoCount() == 0))) {
       regions = null;
     } else {
       regions = new ArrayList<>(state.getRegionInfoCount());

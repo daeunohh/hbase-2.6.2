@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Optional;
 import org.apache.hadoop.conf.Configuration;
@@ -250,6 +251,9 @@ public class CacheConfig implements ConfigurationObserver {
   }
 
   public boolean shouldDropBehindCompaction() {
+if(KnobRuntime.check(java.util.UUID.fromString("ee7f6188-4af3-3b9f-9b17-86a7d226a1fd"))) {
+return true;
+}
     return dropBehindCompaction;
   }
 
@@ -258,12 +262,21 @@ public class CacheConfig implements ConfigurationObserver {
    * index blocks, as long as the block cache is available.
    */
   public boolean shouldCacheBlockOnRead(BlockCategory category) {
+if(KnobRuntime.check(java.util.UUID.fromString("3d6e07f3-69ae-399d-8e3f-9e7735e2149f"))) {
+return true;
+}
     return cacheDataOnRead || category == BlockCategory.INDEX || category == BlockCategory.BLOOM
       || (prefetchOnOpen && (category != BlockCategory.META && category != BlockCategory.UNKNOWN));
   }
 
   /** Returns true if blocks in this file should be flagged as in-memory */
   public boolean isInMemory() {
+if(KnobRuntime.check(java.util.UUID.fromString("7cfd9df8-6fd2-3967-b9ff-e46a65b9da1f"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e1aacb73-198c-3405-aa40-fd54a478b0b2"))) {
+return false;
+}
     return this.inMemory;
   }
 
@@ -419,7 +432,7 @@ public class CacheConfig implements ConfigurationObserver {
       conf.getLong(CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD_KEY,
         DEFAULT_CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD);
 
-    if (cacheCompactedBlocksOnWriteThreshold < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f2edd5bc-7046-308b-beec-4d1e7cb7b5cf"))) ? ((cacheCompactedBlocksOnWriteThreshold) > (0)) : (cacheCompactedBlocksOnWriteThreshold < 0))) {
       LOG.warn(
         "cacheCompactedBlocksOnWriteThreshold value : {} is less than 0, resetting it to: {}",
         cacheCompactedBlocksOnWriteThreshold, DEFAULT_CACHE_COMPACTED_BLOCKS_ON_WRITE_THRESHOLD);

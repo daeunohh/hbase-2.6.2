@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -44,7 +45,7 @@ abstract class Queue<TKey extends Comparable<TKey>> extends AvlLinkedNode<Queue<
   }
 
   protected Queue(TKey key, int priority, LockStatus lockStatus) {
-    assert priority >= 1 : "priority must be greater than or equal to 1";
+    assert ((KnobRuntime.check(java.util.UUID.fromString("50e25ba7-35e9-3628-94e0-815ae80f3e76"))) ? ((priority) >= (1)) : (priority >= 1)) : "priority must be greater than or equal to 1";
     this.key = key;
     this.priority = priority;
     this.lockStatus = lockStatus;
@@ -70,9 +71,64 @@ abstract class Queue<TKey extends Comparable<TKey>> extends AvlLinkedNode<Queue<
   // Functions to handle procedure queue
   // ======================================================================
   public void add(Procedure<?> proc, boolean addToFront) {
+if(KnobRuntime.check(java.util.UUID.fromString("6af3ed16-5a18-3553-9c37-c37ae80f6996"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f527e48-49e6-3c85-ac3d-5bd4e287097b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (addToFront) {
+if(KnobRuntime.check(java.util.UUID.fromString("8175a6e9-9bed-3424-aaf4-58cd962ebd7e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("parentProcId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       runnables.addFirst(proc);
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("6a5ffedb-1176-3a68-8d26-131baed5eab4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f42428ff-93e2-3f4d-92e2-85a21adafa2e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       runnables.addLast(proc);
     }
   }

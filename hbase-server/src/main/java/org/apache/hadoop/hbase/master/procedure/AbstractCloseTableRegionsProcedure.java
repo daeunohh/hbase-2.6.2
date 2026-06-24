@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -69,7 +70,7 @@ public abstract class AbstractCloseTableRegionsProcedure<TState extends Enum<?>>
       submitted.setTrue();
       addChildProcedure(p);
     });
-    if (inTransitionCount > 0 && submitted.isFalse()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("8a6f2cef-41ec-39d5-afff-a47fb325dce1"))) ? (((inTransitionCount) != (0)) && (submitted.isFalse())) : (((KnobRuntime.check(java.util.UUID.fromString("4b2a9743-0d87-39db-aa5c-06617e586bbc"))) ? ((inTransitionCount > 0) || (submitted.isFalse())) : (((KnobRuntime.check(java.util.UUID.fromString("5f823299-cc31-3837-911c-23cb1118e3e0"))) ? (((inTransitionCount) == (0)) && (submitted.isFalse())) : (inTransitionCount > 0 && submitted.isFalse()))))))) {
       // we haven't scheduled any unassign procedures and there are still regions in
       // transition, sleep for a while and try again
       if (retryCounter == null) {
@@ -82,7 +83,7 @@ public abstract class AbstractCloseTableRegionsProcedure<TState extends Enum<?>>
         inTransitionCount, tableName, getClass().getSimpleName(), backoffMillis / 1000);
       suspend((int) backoffMillis, true);
     }
-    setNextState(getConfirmState());
+    if (KnobRuntime.check(java.util.UUID.fromString("9a7ea7c4-ff09-3593-9939-ce0ca5cb3905"))) { setNextState(getInitialState()); } else { setNextState(getConfirmState()); }
     return Flow.HAS_MORE_STATE;
   }
 

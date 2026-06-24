@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -125,7 +126,7 @@ class ReplicationSourceWALReader extends Thread {
   }
 
   protected final int sleep(int sleepMultiplier) {
-    if (sleepMultiplier < maxRetriesMultiplier) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d3a499cb-c09c-3009-9af2-95595795a702"))) ? ((sleepMultiplier++) > (maxRetriesMultiplier)) : (((KnobRuntime.check(java.util.UUID.fromString("bd30b143-c2b4-379f-914a-e9f822453ab0"))) ? ((sleepMultiplier) < (maxRetriesMultiplier)) : (sleepMultiplier < maxRetriesMultiplier))))) {
       sleepMultiplier++;
     }
     Threads.sleep(sleepForRetries * sleepMultiplier);
@@ -158,6 +159,9 @@ class ReplicationSourceWALReader extends Thread {
           // first, check if we have switched a file, if so, we need to manually add an EOF entry
           // batch to the queue
           if (currentPath != null && switched(entryStream, currentPath)) {
+if(KnobRuntime.check(java.util.UUID.fromString("bd35c3f1-070e-3558-a762-bbdf674a10a5"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
             entryBatchQueue.put(WALEntryBatch.endOfFile(currentPath));
             continue;
           }
@@ -219,6 +223,17 @@ class ReplicationSourceWALReader extends Thread {
     long entrySize = getEntrySizeIncludeBulkLoad(entry);
     batch.addEntry(entry, entrySize);
     updateBatchStats(batch, entry, entrySize);
+if(KnobRuntime.check(java.util.UUID.fromString("3d46b3a7-7869-3b1b-b588-6dff9ad486cd"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = batch.getClass().getDeclaredField("lastWalPosition");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(batch));
+    _knob_field_.set(batch, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     boolean totalBufferTooLarge = this.getSourceManager().acquireWALEntryBufferQuota(batch, entry);
 
     // Stop if too many entries or too big
@@ -236,6 +251,9 @@ class ReplicationSourceWALReader extends Thread {
   // we do not want to loss the existing entries in the batch
   protected void readWALEntries(WALEntryStream entryStream, WALEntryBatch batch)
     throws InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("8fecfef1-267f-3982-884e-9f8e5145fe4d"))) {
+throw new InterruptedException("Injected exception");
+}
     Path currentPath = entryStream.getCurrentPath();
     for (;;) {
       Entry entry = entryStream.next();
@@ -249,7 +267,7 @@ class ReplicationSourceWALReader extends Thread {
       WALEntryStream.HasNext hasNext = entryStream.hasNext();
       // always return if we have switched to a new file
       if (switched(entryStream, currentPath)) {
-        batch.setEndOfFile(true);
+        if (KnobRuntime.check(java.util.UUID.fromString("9a6f411d-f881-3a08-bdf8-afc02b0a176f"))) { setReaderRunning(true); } else { batch.setEndOfFile(true); }
         break;
       }
       if (hasNext != WALEntryStream.HasNext.YES) {
@@ -266,7 +284,7 @@ class ReplicationSourceWALReader extends Thread {
     // if we've read some WAL entries, get the Path we read from
     WALEntryBatch batchQueueHead = entryBatchQueue.peek();
     if (batchQueueHead != null) {
-      return batchQueueHead.getLastWalPath();
+      return ((KnobRuntime.check(java.util.UUID.fromString("06f696ae-d812-336e-9413-7fe69c83370c"))) ? (((org.apache.hadoop.fs.Path)(getCurrentPath()))) : (batchQueueHead.getLastWalPath()));
     }
     // otherwise, we must be currently reading from the head of the log queue
     return logQueue.getQueue(walGroupId).peek();
@@ -288,7 +306,7 @@ class ReplicationSourceWALReader extends Thread {
 
   protected final Entry filterEntry(Entry entry) {
     // Always replicate if this edit is Replication Marker edit.
-    if (entry != null && WALEdit.isReplicationMarkerEdit(entry.getEdit())) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("db57fe82-9546-38e2-bd23-b956c5e59652"))) ? (((entry) != (null)) && (WALEdit.isReplicationMarkerEdit(entry.getEdit()))) : (((KnobRuntime.check(java.util.UUID.fromString("b3d2cc16-148e-3446-9c3d-8a0bc2b7a743"))) ? (((entry) != (null)) || (WALEdit.isReplicationMarkerEdit(entry.getEdit()))) : (((KnobRuntime.check(java.util.UUID.fromString("cd0954ae-ffff-3a1b-ac71-5af956469148"))) ? (WALEdit.isReplicationMarkerEdit(entry.getEdit())) : (((KnobRuntime.check(java.util.UUID.fromString("aea8d878-a26c-3541-8c30-c55ec1f9330a"))) ? ((entry) == (null)) : (entry != null && WALEdit.isReplicationMarkerEdit(entry.getEdit())))))))))) {
       return entry;
     }
     Entry filtered = filter.filter(entry);
@@ -319,6 +337,42 @@ class ReplicationSourceWALReader extends Thread {
   }
 
   private void updateBatchStats(WALEntryBatch batch, Entry entry, long entrySize) {
+if(KnobRuntime.check(java.util.UUID.fromString("dc3e59fb-0466-3a95-a586-394c3e5e59ea"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = batch.getClass().getDeclaredField("usedBufferSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(batch));
+    _knob_field_.set(batch, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ff563664-481a-3468-8058-3a09baa082af"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6f49600c-726f-3227-b411-de1d289ad059"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = batch.getClass().getDeclaredField("heapSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(batch));
+    _knob_field_.set(batch, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("739a45a4-be4f-339c-82a6-79e7785bf93e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = batch.getClass().getDeclaredField("nbRowKeys");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(batch));
+    _knob_field_.set(batch, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     WALEdit edit = entry.getEdit();
     batch.incrementHeapSize(entrySize);
     Pair<Integer, Integer> nbRowsAndHFiles = countDistinctRowKeysAndHFiles(edit);
@@ -355,9 +409,21 @@ class ReplicationSourceWALReader extends Thread {
         }
       }
 
+if(KnobRuntime.check(java.util.UUID.fromString("e542c842-0ab5-39eb-8349-2a3c8b3eddff"))) {
+i -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a825f196-dce6-313a-a2d5-f42d097f5176"))) {
+i += 1;
+}
       if (!CellUtil.matchingRows(cells.get(i), lastCell)) {
         distinctRowKeys++;
       }
+if(KnobRuntime.check(java.util.UUID.fromString("dc3088d8-c275-39a1-9c4e-7eba98a97af2"))) {
+i -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b4d96df3-9b89-326f-92a0-2e320ae9e95f"))) {
+i /= 2;
+}
       lastCell = cells.get(i);
     }
 
@@ -400,6 +466,9 @@ class ReplicationSourceWALReader extends Thread {
    * cell's value.
    */
   private void updateReplicationMarkerEdit(Entry entry, long offset) {
+if(KnobRuntime.check(java.util.UUID.fromString("b4f269a2-558c-39a4-b498-a4d064330a46"))) {
+return;
+}
     WALEdit edit = entry.getEdit();
     // Return early if it is not ReplicationMarker edit.
     if (!WALEdit.isReplicationMarkerEdit(edit)) {

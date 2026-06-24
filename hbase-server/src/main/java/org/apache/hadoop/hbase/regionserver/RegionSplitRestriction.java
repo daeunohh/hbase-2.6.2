@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -101,6 +102,9 @@ public abstract class RegionSplitRestriction {
         ret = new NoRegionSplitRestriction();
         break;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("6851d211-7c90-36c2-a116-8065ff5a2056"))) {
+throw new java.io.IOException("Injected exception");
+}
     ret.initialize(tableDescriptor, conf);
     return ret;
   }

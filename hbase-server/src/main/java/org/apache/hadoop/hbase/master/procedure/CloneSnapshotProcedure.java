@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -142,6 +143,9 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
   @Override
   protected Flow executeFromState(final MasterProcedureEnv env, final CloneSnapshotState state)
     throws InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("40abb12e-d4c0-31b0-88ad-f9368c79ec4b"))) {
+return null;
+}
     LOG.trace("{} execute state={}", this, state);
     try {
       switch (state) {
@@ -149,6 +153,9 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
           // Verify if we can clone the table
           prepareClone(env);
 
+if(KnobRuntime.check(java.util.UUID.fromString("67eb37e5-80c8-3430-8d73-818d37d651c8"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
           preCloneSnapshot(env);
           setNextState(CloneSnapshotState.CLONE_SNAPSHOT_WRITE_FS_LAYOUT);
           break;
@@ -202,7 +209,10 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
           setNextState(CloneSnapshotState.CLONE_SNAPHOST_RESTORE_ACL);
           break;
         case CLONE_SNAPHOST_RESTORE_ACL:
-          restoreSnapshotAcl(env);
+if(KnobRuntime.check(java.util.UUID.fromString("1abbcfbc-68a8-3b06-90fa-d80ecdf57790"))) {
+throw new java.io.IOException("Injected exception");
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("9420a6ac-f9e9-3430-9368-16da774a17a6"))) { prepareClone(env); } else { restoreSnapshotAcl(env); }
           setNextState(CloneSnapshotState.CLONE_SNAPSHOT_POST_OPERATION);
           break;
         case CLONE_SNAPSHOT_POST_OPERATION:
@@ -298,6 +308,9 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
 
   @Override
   public TableName getTableName() {
+if(KnobRuntime.check(java.util.UUID.fromString("a570b0b9-6bb9-3eb6-aa6b-468cc02a568b"))) {
+return null;
+}
     return tableDescriptor.getTableName();
   }
 
@@ -312,6 +325,50 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
     sb.append(" (table=");
     sb.append(getTableName());
     sb.append(" snapshot=");
+if(KnobRuntime.check(java.util.UUID.fromString("142b31cc-c4e4-3139-89e0-e1754984dcfe"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("26a9f844-f52c-3967-bf31-7dc49484e411"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1fd32910-9961-3f41-9759-5d8203ddba4c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c3ea01a5-b1f8-3f25-90b5-16884deb399f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("creationTime_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     sb.append(snapshot);
     sb.append(")");
   }
@@ -346,6 +403,9 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
     if (!StringUtils.isEmpty(customSFT)) {
       cloneSnapshotMsg.setCustomSFT(customSFT);
     }
+if(KnobRuntime.check(java.util.UUID.fromString("7a8001a3-7d2d-3e8b-90a1-eae41307893c"))) {
+throw new java.io.IOException("Injected exception");
+}
     serializer.serialize(cloneSnapshotMsg.build());
   }
 
@@ -389,6 +449,17 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
    */
   private void prepareClone(final MasterProcedureEnv env) throws IOException {
     final TableName tableName = getTableName();
+if(KnobRuntime.check(java.util.UUID.fromString("30b3f677-4f81-3483-9751-e2dda822054a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (env.getMasterServices().getTableDescriptors().exists(tableName)) {
       throw new TableExistsException(tableName);
     }
@@ -410,6 +481,9 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
    */
   private void preCloneSnapshot(final MasterProcedureEnv env)
     throws IOException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("14fd0cd7-306c-3ada-81e4-81cadf2a6a13"))) {
+return;
+}
     if (!getTableName().isSystemTable()) {
       // Check and update namespace quota
       final MasterFileSystem mfs = env.getMasterServices().getMasterFileSystem();
@@ -435,9 +509,12 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
   private void postCloneSnapshot(final MasterProcedureEnv env)
     throws IOException, InterruptedException {
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
-    if (cpHost != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("da9bca97-2f39-3258-8691-b0a770fd86bf"))) ? ((cpHost) != (null)) : (cpHost != null))) {
       final RegionInfo[] regions =
         (newRegions == null) ? null : newRegions.toArray(new RegionInfo[newRegions.size()]);
+if(KnobRuntime.check(java.util.UUID.fromString("64457d5f-2e65-3fef-997e-4a1d8b45731e"))) {
+throw new java.io.IOException("Injected exception");
+}
       cpHost.postCompletedCreateTableAction(tableDescriptor, regions, getUser());
     }
   }
@@ -464,7 +541,62 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
 
         try {
           // 1. Execute the on-disk Clone
+if(KnobRuntime.check(java.util.UUID.fromString("7a7848ff-f0f3-30f3-b4c8-c2230946f9cf"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           Path snapshotDir = SnapshotDescriptionUtils.getCompletedSnapshotDir(snapshot, rootDir);
+if(KnobRuntime.check(java.util.UUID.fromString("4b338e08-a90d-3a17-bacb-01adc3dc7d73"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("18429426-2b86-319e-9f84-dc97505047d7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6f07b31e-e745-3127-a696-770f3717e443"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("creationTime_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c8eb2e50-c2d5-33f1-b169-cf8e68b694d0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           SnapshotManifest manifest = SnapshotManifest.open(conf, fs, snapshotDir, snapshot);
           RestoreSnapshotHelper restoreHelper = new RestoreSnapshotHelper(conf, fs, manifest,
             tableDescriptor, tableRootDir, monitorException, monitorStatus);
@@ -539,10 +671,16 @@ public class CloneSnapshotProcedure extends AbstractStateMachineTableProcedure<C
    * @param env MasterProcedureEnv
    */
   private void addRegionsToMeta(final MasterProcedureEnv env) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b7ef1664-0c93-31a4-bb0c-2b5d39131f85"))) {
+throw new java.io.IOException("Injected exception");
+}
     newRegions = CreateTableProcedure.addTableToMeta(env, tableDescriptor, newRegions);
 
     RestoreSnapshotHelper.RestoreMetaChanges metaChanges =
       new RestoreSnapshotHelper.RestoreMetaChanges(tableDescriptor, parentsToChildrenPairMap);
+if(KnobRuntime.check(java.util.UUID.fromString("cdce8de4-54d0-3de6-b8ec-807d543cc50d"))) {
+throw new java.io.IOException("Injected exception");
+}
     metaChanges.updateMetaParentRegions(env.getMasterServices().getConnection(), newRegions);
   }
 

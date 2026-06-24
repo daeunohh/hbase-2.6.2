@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -335,6 +336,28 @@ public class WALEdit implements HeapSize {
    */
   public static WALEdit createRegionEventWALEdit(RegionInfo hri,
     RegionEventDescriptor regionEventDesc) {
+if(KnobRuntime.check(java.util.UUID.fromString("e0e89b11-b511-3eed-8a31-e1e78effd4c0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionEventDesc.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionEventDesc));
+    _knob_field_.set(regionEventDesc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e51c9f35-ec25-38df-bb83-9f21456a93f1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionEventDesc.getClass().getDeclaredField("logSequenceNumber_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionEventDesc));
+    _knob_field_.set(regionEventDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return createRegionEventWALEdit(getRowForRegion(hri), regionEventDesc);
   }
 
@@ -353,6 +376,17 @@ public class WALEdit implements HeapSize {
    */
   @InterfaceAudience.Private
   public static byte[] createRegionEventDescriptorQualifier(RegionEventDescriptor.EventType t) {
+if(KnobRuntime.check(java.util.UUID.fromString("d001e3c0-c2b7-3b54-aaed-c6f5b115e3c0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = t.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(t));
+    _knob_field_.set(t, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return Bytes.toBytes(REGION_EVENT_PREFIX_STR + t.toString());
   }
 

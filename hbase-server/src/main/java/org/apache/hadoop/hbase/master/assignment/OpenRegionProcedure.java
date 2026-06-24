@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.ServerName;
@@ -53,6 +54,9 @@ public class OpenRegionProcedure extends RegionRemoteProcedureBase {
 
   @Override
   public TableOperationType getTableOperationType() {
+if(KnobRuntime.check(java.util.UUID.fromString("5d3d0e4e-5acd-340f-bc5f-3a99a6fe4fc7"))) {
+return null;
+}
     return TableOperationType.REGION_ASSIGN;
   }
 
@@ -81,13 +85,52 @@ public class OpenRegionProcedure extends RegionRemoteProcedureBase {
 
   private void regionOpenedWithoutPersistingToMeta(AssignmentManager am, RegionStateNode regionNode,
     TransitionCode transitionCode, long openSeqNum) throws IOException {
-    if (openSeqNum < regionNode.getOpenSeqNum()) {
+if(KnobRuntime.check(java.util.UUID.fromString("015790ad-3edd-374e-9f52-3f42692c8eb8"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("43b699b9-af8b-3bb7-b198-de2d146e2622"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = am.getClass().getDeclaredField("assignMaxAttempts");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(am));
+    _knob_field_.set(am, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c07ce83a-c530-3ac8-98b7-7c2016b790e3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionNode.getClass().getDeclaredField("openSeqNum");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionNode));
+    _knob_field_.set(regionNode, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7a092cda-9554-3725-aa27-c55d2ec0e0cd"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = am.getClass().getDeclaredField("assignDispatchWaitQueueMaxSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(am));
+    _knob_field_.set(am, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("273ba052-04ae-33e1-97dc-02bdbbd5e6ad"))) ? ((getProcId()) >= (regionNode.getOpenSeqNum())) : (((KnobRuntime.check(java.util.UUID.fromString("660d128d-6c17-33c2-9d6c-df35b023646f"))) ? ((openSeqNum) == (regionNode.getOpenSeqNum())) : (openSeqNum < regionNode.getOpenSeqNum()))))) {
       LOG.warn(
         "Received report {} transition from {} for {}, pid={} but the new openSeqNum {}"
           + " is less than the current one {}, ignoring...",
         transitionCode, targetServer, regionNode, getProcId(), openSeqNum,
         regionNode.getOpenSeqNum());
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("0757b471-b202-3295-b98e-25d6b429b498"))) {
+openSeqNum -= 1;
+}
       regionNode.setOpenSeqNum(openSeqNum);
     }
     am.regionOpenedWithoutPersistingToMeta(regionNode);
@@ -96,6 +139,28 @@ public class OpenRegionProcedure extends RegionRemoteProcedureBase {
   @Override
   protected void checkTransition(RegionStateNode regionNode, TransitionCode transitionCode,
     long openSeqNum) throws UnexpectedStateException {
+if(KnobRuntime.check(java.util.UUID.fromString("2235528f-8761-365b-9fac-b92f30a812a7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = transitionCode.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(transitionCode));
+    _knob_field_.set(transitionCode, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b1a20b3c-54d1-3c37-b17b-90c3559637f0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = transitionCode.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(transitionCode));
+    _knob_field_.set(transitionCode, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     switch (transitionCode) {
       case OPENED:
         if (openSeqNum < 0) {
@@ -115,6 +180,28 @@ public class OpenRegionProcedure extends RegionRemoteProcedureBase {
   @Override
   protected void updateTransitionWithoutPersistingToMeta(MasterProcedureEnv env,
     RegionStateNode regionNode, TransitionCode transitionCode, long openSeqNum) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("dd524936-3294-3b71-a033-31ed370ba641"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionNode.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionNode));
+    _knob_field_.set(regionNode, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("10763dea-ae08-325f-87fd-c37a7d7707c8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = transitionCode.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(transitionCode));
+    _knob_field_.set(transitionCode, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (transitionCode == TransitionCode.OPENED) {
       regionOpenedWithoutPersistingToMeta(env.getAssignmentManager(), regionNode, transitionCode,
         openSeqNum);

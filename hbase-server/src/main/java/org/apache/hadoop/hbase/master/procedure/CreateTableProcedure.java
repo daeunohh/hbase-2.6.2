@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -332,6 +333,9 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
 
   protected static List<RegionInfo> createFsLayout(final MasterProcedureEnv env,
     final TableDescriptor tableDescriptor, final List<RegionInfo> newRegions) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("1fe6e3c1-e2b3-3347-a235-214b2f900f67"))) {
+return null;
+}
     return createFsLayout(env, tableDescriptor, newRegions, new CreateHdfsRegions() {
       @Override
       public List<RegionInfo> createHdfsRegions(final MasterProcedureEnv env,
@@ -399,6 +403,17 @@ public class CreateTableProcedure extends AbstractStateMachineTableProcedure<Cre
   protected static void setEnabledState(final MasterProcedureEnv env, final TableName tableName)
     throws IOException {
     // Enable table
+if(KnobRuntime.check(java.util.UUID.fromString("c432d998-92ca-310e-aaa3-3f17eb5a6ffa"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.ENABLED);
   }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.DefaultStoreEngine.DEFAULT_COMPACTOR_CLASS_KEY;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_PARAM_KEY;
@@ -160,6 +161,17 @@ public class StoreFileWriter implements CellSink, ShipperListener {
   }
 
   public static boolean shouldEnableHistoricalCompactionFiles(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("e0bc11c4-4997-377a-8573-f59fd122789b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (
       conf.getBoolean(ENABLE_HISTORICAL_COMPACTION_FILES,
         DEFAULT_ENABLE_HISTORICAL_COMPACTION_FILES)
@@ -532,7 +544,7 @@ public class StoreFileWriter implements CellSink, ShipperListener {
       generalBloomFilterWriter = BloomFilterFactory.createGeneralBloomAtWrite(conf, cacheConf,
         bloomType, (int) Math.min(maxKeys, Integer.MAX_VALUE), writer);
 
-      if (generalBloomFilterWriter != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("551e7eff-a71d-3ad5-92dc-ba0e19a824ad"))) ? ((generalBloomFilterWriter) == (null)) : (generalBloomFilterWriter != null))) {
         this.bloomType = bloomType;
         this.bloomParam = BloomFilterUtil.getBloomFilterParam(bloomType, conf);
         if (LOG.isTraceEnabled()) {
@@ -750,6 +762,9 @@ public class StoreFileWriter implements CellSink, ShipperListener {
     }
 
     private boolean closeGeneralBloomFilter() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("21943a18-e029-3ad7-8538-70c6f0a52102"))) {
+throw new java.io.IOException("Injected exception");
+}
       boolean hasGeneralBloom = closeBloomFilter(generalBloomFilterWriter);
 
       // add the general Bloom filter writer and append file info
@@ -899,6 +914,17 @@ public class StoreFileWriter implements CellSink, ShipperListener {
     }
 
     public Builder withFileContext(HFileContext fileContext) {
+if(KnobRuntime.check(java.util.UUID.fromString("5c2735e9-32b7-3e74-b6f7-2795dbe4ba5e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fileContext.getClass().getDeclaredField("bytesPerChecksum");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fileContext));
+    _knob_field_.set(fileContext, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       this.fileContext = fileContext;
       return this;
     }

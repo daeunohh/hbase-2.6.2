@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HConstants;
 import org.apache.hadoop.hbase.TableName;
@@ -98,6 +99,17 @@ public class MasterAnnotationReadingPriorityFunction extends AnnotationReadingPr
     }
 
     // Handle the rest of the different reasons to change priority.
+if(KnobRuntime.check(java.util.UUID.fromString("d4ec43aa-a9bc-3e24-8f03-20790e23a1a2"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(header));
+    _knob_field_.set(header, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return getBasePriority(header, param);
   }
 }

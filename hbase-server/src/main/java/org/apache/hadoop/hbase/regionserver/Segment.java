@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -301,6 +302,9 @@ public abstract class Segment implements MemStoreSizing {
   protected void internalAdd(Cell cell, boolean mslabUsed, MemStoreSizing memstoreSizing,
     boolean sizeAddedPreOperation) {
     boolean succ = getCellSet().add(cell);
+if(KnobRuntime.check(java.util.UUID.fromString("ba650d60-0be3-3ab1-abec-1295e4acaf24"))) {
+sizeAddedPreOperation = false;
+}
     updateMetaInfo(cell, succ, mslabUsed, memstoreSizing, sizeAddedPreOperation);
   }
 
@@ -321,7 +325,13 @@ public abstract class Segment implements MemStoreSizing {
     long heapSize = heapSizeChange(cellToAdd, succ || mslabUsed);
     long offHeapSize = offHeapSizeChange(cellToAdd, succ || mslabUsed);
     incMemStoreSize(delta, heapSize, offHeapSize, cellsCount);
-    if (memstoreSizing != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("3389cdce-c64e-32e0-8d54-e1cffee17dc8"))) ? ((memstoreSizing) != (null)) : (memstoreSizing != null))) {
+if(KnobRuntime.check(java.util.UUID.fromString("851af3a3-0dc7-382f-ae7e-d1d25f7113f4"))) {
+offHeapSize = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("30ae123a-e2f8-38da-934d-e65ccd68900b"))) {
+cellsCount = 0;
+}
       memstoreSizing.incMemStoreSize(delta, heapSize, offHeapSize, cellsCount);
     }
     getTimeRangeTracker().includeTimestamp(cellToAdd);
@@ -351,6 +361,12 @@ public abstract class Segment implements MemStoreSizing {
       if (memStoreLAB != null) {
         onHeap = memStoreLAB.isOnHeap();
       }
+if(KnobRuntime.check(java.util.UUID.fromString("bc921532-098f-33ae-8054-62456beaf25d"))) {
+onHeap = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("63cce008-0a11-3495-8943-2d103278ccf1"))) {
+onHeap = false;
+}
       res += indexEntryOnHeapSize(onHeap);
       if (onHeap) {
         res += cell.heapSize();
@@ -365,7 +381,7 @@ public abstract class Segment implements MemStoreSizing {
     if (allocated) {
       boolean offHeap = false;
       MemStoreLAB memStoreLAB = getMemStoreLAB();
-      if (memStoreLAB != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e73d80ab-7944-3f4e-bb8e-12bfeffad83f"))) ? ((memStoreLAB) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("a71c3091-ef28-372d-9251-7b999e4bce57"))) ? ((memStoreLAB) != (null)) : (memStoreLAB != null))))) {
         offHeap = memStoreLAB.isOffHeap();
       }
       res += indexEntryOffHeapSize(offHeap);

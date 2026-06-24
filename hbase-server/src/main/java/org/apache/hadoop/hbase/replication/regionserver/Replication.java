@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -145,6 +146,9 @@ public class Replication
 
   @Override
   public PeerProcedureHandler getPeerProcedureHandler() {
+if(KnobRuntime.check(java.util.UUID.fromString("fab4ea84-5afd-36c5-b892-45725a723097"))) {
+return null;
+}
     return peerProcedureHandler;
   }
 

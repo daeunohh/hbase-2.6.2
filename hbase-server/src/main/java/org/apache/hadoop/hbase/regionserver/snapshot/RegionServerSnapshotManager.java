@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -123,7 +124,7 @@ public class RegionServerSnapshotManager extends RegionServerProcedureManager {
    */
   @Override
   public void start() {
-    LOG.debug("Start Snapshot Manager " + rss.getServerName().toString());
+    if (KnobRuntime.check(java.util.UUID.fromString("2ff8d2f3-59af-3e8f-a5ac-47802d745813"))) { LOG.debug("Start Snapshot Manager "); } else { LOG.debug("Start Snapshot Manager " + rss.getServerName().toString()); }
     this.memberRpcs.start(rss.getServerName().toString(), member);
   }
 
@@ -133,6 +134,9 @@ public class RegionServerSnapshotManager extends RegionServerProcedureManager {
    */
   @Override
   public void stop(boolean force) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("0c16ebc5-1f3a-34ff-9170-76322ec5c733"))) {
+return;
+}
     String mode = force ? "abruptly" : "gracefully";
     LOG.info("Stopping RegionServerSnapshotManager " + mode + ".");
 

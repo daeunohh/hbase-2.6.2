@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -42,6 +43,9 @@ class NettyRpcServerResponseEncoder extends ChannelOutboundHandlerAdapter {
   @Override
   public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)
     throws Exception {
+if(KnobRuntime.check(java.util.UUID.fromString("9fba2d37-cd12-32eb-9e2c-171b92b28d4b"))) {
+return;
+}
     if (msg instanceof RpcResponse) {
       RpcResponse resp = (RpcResponse) msg;
       BufferChain buf = resp.getResponse();

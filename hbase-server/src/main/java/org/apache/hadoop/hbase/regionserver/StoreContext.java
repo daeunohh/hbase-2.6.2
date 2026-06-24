@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.net.InetSocketAddress;
 import java.util.Collection;
@@ -95,6 +96,9 @@ public final class StoreContext implements HeapSize {
   }
 
   public InetSocketAddress[] getFavoredNodes() {
+if(KnobRuntime.check(java.util.UUID.fromString("77e2b11d-7801-36b1-9971-68b510c005fa"))) {
+return null;
+}
     return favoredNodesSupplier.get();
   }
 
@@ -163,11 +167,47 @@ public final class StoreContext implements HeapSize {
     }
 
     public Builder withCacheConfig(CacheConfig cacheConf) {
+if(KnobRuntime.check(java.util.UUID.fromString("5ef74d0d-c936-3fdb-a8ef-541b0ed0f4bb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheIndexesOnWrite");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(cacheConf);
+    _knob_field_.set(cacheConf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0b57811f-c997-3a51-975f-b270f6c065c1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheCompactedDataOnWriteThreshold");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(cacheConf));
+    _knob_field_.set(cacheConf, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1f938eda-5c5d-3345-9ada-27e0659d5236"))) {
+return null;
+}
       this.cacheConf = cacheConf;
       return this;
     }
 
     public Builder withRegionFileSystem(HRegionFileSystem regionFileSystem) {
+if(KnobRuntime.check(java.util.UUID.fromString("3434ac75-04b4-3afe-aef4-4d40c5f0285b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionFileSystem.getClass().getDeclaredField("hdfsClientRetriesNumber");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionFileSystem));
+    _knob_field_.set(regionFileSystem, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       this.regionFileSystem = regionFileSystem;
       return this;
     }
@@ -178,6 +218,9 @@ public final class StoreContext implements HeapSize {
     }
 
     public Builder withBloomType(BloomType bloomFilterType) {
+if(KnobRuntime.check(java.util.UUID.fromString("e3f32536-af2e-3867-bac9-ab48243d1d4e"))) {
+return null;
+}
       this.bloomFilterType = bloomFilterType;
       return this;
     }
@@ -194,6 +237,9 @@ public final class StoreContext implements HeapSize {
     }
 
     public Builder withColumnFamilyDescriptor(ColumnFamilyDescriptor family) {
+if(KnobRuntime.check(java.util.UUID.fromString("555dafcc-3201-3902-86e9-6f21e2d83e91"))) {
+return null;
+}
       this.family = family;
       return this;
     }
@@ -209,6 +255,9 @@ public final class StoreContext implements HeapSize {
     }
 
     public StoreContext build() {
+if(KnobRuntime.check(java.util.UUID.fromString("ddf8b39d-a261-326d-8c5e-4fb24cdf81f5"))) {
+return null;
+}
       return new StoreContext(this);
     }
   }

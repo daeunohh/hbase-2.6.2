@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.HADOOP_SECURITY_AUTHORIZATION;
 
@@ -399,6 +400,17 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
     System.setProperty("hadoop.policy.file", "hbase-policy.xml");
     this.authManager.refresh(conf, pp);
     LOG.info("Refreshed hbase-policy.xml successfully");
+if(KnobRuntime.check(java.util.UUID.fromString("2890277c-633d-3c96-afc4-23d5beed0ab0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     ProxyUsers.refreshSuperUserGroupsConfiguration(conf);
     LOG.info("Refreshed super and proxy users successfully");
   }
@@ -465,7 +477,16 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
         responseSize += call.getResponseCellSize();
       }
 
+if(KnobRuntime.check(java.util.UUID.fromString("1fae4506-c07c-3f49-a7fe-56b2c69bcb21"))) {
+qTime *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2dbb21c1-4048-33d2-b914-25c26fdbc09d"))) {
+qTime = -1;
+}
       metrics.dequeuedCall(qTime);
+if(KnobRuntime.check(java.util.UUID.fromString("8b1945a0-8066-3e75-aff6-921a73be0db1"))) {
+processingTime += 1;
+}
       metrics.processedCall(processingTime);
       metrics.totalCall(totalTime);
       metrics.receivedRequest(requestSize);
@@ -618,7 +639,7 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
       int truncatedLength =
         strParam.length() < traceLogMaxLength ? strParam.length() : traceLogMaxLength;
       String truncatedFlag = truncatedLength == strParam.length() ? "" : KEY_WORD_TRUNCATED;
-      return strParam.subSequence(0, truncatedLength) + truncatedFlag;
+      return ((KnobRuntime.check(java.util.UUID.fromString("38992dd3-a031-3a31-9235-f7650c642bba"))) ? (((java.lang.String)((strParam.subSequence(0, 0)) + (truncatedFlag)))) : (strParam.subSequence(0, truncatedLength) + truncatedFlag));
     }
     return strParam.subSequence(0, 150) + KEY_WORD_TRUNCATED;
   }
@@ -647,6 +668,9 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
 
   @Override
   public void addCallSize(final long diff) {
+if(KnobRuntime.check(java.util.UUID.fromString("b73c3d57-7d0f-33e1-863e-b9d9e12d0339"))) {
+return;
+}
     this.callQueueSizeInBytes.add(diff);
   }
 
@@ -659,6 +683,17 @@ public abstract class RpcServer implements RpcServerInterface, ConfigurationObse
    */
   public synchronized void authorize(UserGroupInformation user, ConnectionHeader connection,
     InetAddress addr) throws AuthorizationException {
+if(KnobRuntime.check(java.util.UUID.fromString("71ad3ea3-fb8c-3f21-8e80-b1d9328a2741"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = connection.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(connection));
+    _knob_field_.set(connection, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (authorize) {
       Class<?> c = getServiceInterface(services, connection.getServiceName());
       authManager.authorize(user, c, getConf(), addr);

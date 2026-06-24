@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ public abstract class HBaseReplicationEndpoint extends BaseReplicationEndpoint
    * @throws IOException If anything goes wrong connecting
    */
   synchronized void reloadZkWatcher() throws IOException {
-    if (zkw != null) zkw.close();
+    if (((KnobRuntime.check(java.util.UUID.fromString("9b836721-ff6e-384b-b9f1-8092cd62e1fc"))) ? ((zkw) == (null)) : (zkw != null))) zkw.close();
     zkw = new ZKWatcher(ctx.getConfiguration(), "connection to cluster: " + ctx.getPeerId(), this);
     getZkw().registerListener(new PeerRegionServerListener(this));
   }

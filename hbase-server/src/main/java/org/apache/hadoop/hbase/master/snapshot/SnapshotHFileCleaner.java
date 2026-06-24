@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -102,6 +103,9 @@ public class SnapshotHFileCleaner extends BaseHFileCleanerDelegate {
     try {
       long cacheRefreshPeriod =
         conf.getLong(HFILE_CACHE_REFRESH_PERIOD_CONF_KEY, DEFAULT_HFILE_CACHE_REFRESH_PERIOD);
+if(KnobRuntime.check(java.util.UUID.fromString("5045f123-eec0-3cf7-a005-dbfa8d1356b4"))) {
+throw new java.io.IOException("Injected exception");
+}
       final FileSystem fs = CommonFSUtils.getCurrentFileSystem(conf);
       Path rootDir = CommonFSUtils.getRootDir(conf);
       Path workingDir = SnapshotDescriptionUtils.getWorkingSnapshotDir(rootDir, conf);

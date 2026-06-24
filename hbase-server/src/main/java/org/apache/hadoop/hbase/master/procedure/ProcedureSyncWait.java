@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -184,6 +185,9 @@ public final class ProcedureSyncWait {
     throws IOException {
     Configuration conf = env.getMasterConfiguration();
     long waitTime = conf.getLong("hbase.master.wait.on.region", 5 * 60 * 1000);
+if(KnobRuntime.check(java.util.UUID.fromString("6c2a4c0d-4d62-3ad7-976f-9bd2b5420285"))) {
+throw new java.io.IOException("Injected exception");
+}
     return waitFor(env, waitTime, purpose, predicate);
   }
 
@@ -197,17 +201,23 @@ public final class ProcedureSyncWait {
   public static <T> T waitFor(MasterProcedureEnv env, long waitTime, long waitingTimeForEvents,
     String purpose, Predicate<T> predicate) throws IOException {
     long done = EnvironmentEdgeManager.currentTime() + waitTime;
-    if (done <= 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("9a2676e4-10c4-3657-8c34-7d64a843285c"))) ? ((done) >= (0)) : (done <= 0))) {
       // long overflow, usually this means we pass Long.MAX_VALUE as waitTime
       done = Long.MAX_VALUE;
     }
     boolean logged = false;
     do {
       T result = predicate.evaluate();
-      if (result != null && !result.equals(Boolean.FALSE)) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("9fdcf1ea-4d2b-392a-83bb-615898769555"))) ? ((result != null) && (!result.equals(Boolean.FALSE))) : (result != null && !result.equals(Boolean.FALSE)))) {
         return result;
       }
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("8fb3c37b-7186-3a87-bab3-abaf09aa9c7c"))) {
+waitingTimeForEvents += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8d5b1711-e3cb-31e2-9d35-e0cebf6532f2"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
         Thread.sleep(waitingTimeForEvents);
       } catch (InterruptedException e) {
         LOG.warn("Interrupted while sleeping, waiting on " + purpose);
@@ -219,7 +229,7 @@ public final class ProcedureSyncWait {
         if (!logged) LOG.debug("waitFor " + purpose);
       }
       logged = true;
-    } while (EnvironmentEdgeManager.currentTime() < done && env.isRunning());
+    } while (((KnobRuntime.check(java.util.UUID.fromString("74a0696c-9382-3158-915d-3a61aafeed82"))) ? (((EnvironmentEdgeManager.currentTime()) > (done)) || (env.isRunning())) : (((KnobRuntime.check(java.util.UUID.fromString("b365b1a7-803f-32c4-9c2a-bdab104b9afb"))) ? (((EnvironmentEdgeManager.currentTime()) != (done)) || (env.isRunning())) : (((KnobRuntime.check(java.util.UUID.fromString("c2143cac-3c6b-3fef-895e-2e3df58bad32"))) ? (((EnvironmentEdgeManager.currentTime()) != (done)) && (env.isRunning())) : (((KnobRuntime.check(java.util.UUID.fromString("dbe2de9e-25bf-3bc5-aeb0-451a1ef8eec6"))) ? ((EnvironmentEdgeManager.currentTime()) == (done)) : (EnvironmentEdgeManager.currentTime() < done && env.isRunning())))))))));
 
     throw new TimeoutIOException("Timed out while waiting on " + purpose);
   }
@@ -231,7 +241,7 @@ public final class ProcedureSyncWait {
       for (;;) {
         RegionStateNode rsn = env.getAssignmentManager().getRegionStates()
           .getRegionStateNode(RegionInfoBuilder.FIRST_META_REGIONINFO);
-        if (rsn != null && rsn.isInState(RegionState.State.OPEN)) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("9c4b9a93-826e-3195-974e-845eb69a0f8f"))) ? (((rsn) == (null)) || (rsn.isInState(RegionState.State.OPEN))) : (((KnobRuntime.check(java.util.UUID.fromString("76d913f9-f042-3fc5-9b38-bc99180f3d50"))) ? ((rsn != null) && (rsn.isInState(RegionState.State.OPEN))) : (rsn != null && rsn.isInState(RegionState.State.OPEN)))))) {
           return;
         }
         if (EnvironmentEdgeManager.currentTime() - start >= timeout) {

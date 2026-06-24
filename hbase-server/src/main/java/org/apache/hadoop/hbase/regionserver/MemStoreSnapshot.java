@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -83,6 +84,9 @@ public class MemStoreSnapshot {
    *         over the snapshot.
    */
   public List<KeyValueScanner> getScanners() {
+if(KnobRuntime.check(java.util.UUID.fromString("86cebbbc-c942-33ea-ae35-d4a08b64c341"))) {
+return null;
+}
     return snapshotImmutableSegment.getSnapshotScanners();
   }
 

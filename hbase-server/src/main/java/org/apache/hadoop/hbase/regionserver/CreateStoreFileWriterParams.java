@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.function.Consumer;
 import org.apache.hadoop.fs.Path;
@@ -64,6 +65,9 @@ public final class CreateStoreFileWriterParams {
    * Set the compression algorithm to use
    */
   public CreateStoreFileWriterParams compression(Compression.Algorithm compression) {
+if(KnobRuntime.check(java.util.UUID.fromString("0da1b048-37b8-39d6-9e77-a9c251a55ab5"))) {
+return null;
+}
     this.compression = compression;
     return this;
   }
@@ -81,6 +85,9 @@ public final class CreateStoreFileWriterParams {
   }
 
   public boolean includeMVCCReadpoint() {
+if(KnobRuntime.check(java.util.UUID.fromString("f42ba5a1-174b-3a6d-baf0-c9580cf18af0"))) {
+return false;
+}
     return includeMVCCReadpoint;
   }
 
@@ -93,7 +100,7 @@ public final class CreateStoreFileWriterParams {
   }
 
   public boolean includesTag() {
-    return includesTag;
+    return ((KnobRuntime.check(java.util.UUID.fromString("0b448676-f064-36b0-a6e0-301c417842c3"))) ? (!includesTag) : (includesTag));
   }
 
   /**
@@ -132,6 +139,9 @@ public final class CreateStoreFileWriterParams {
   }
 
   public Consumer<Path> writerCreationTracker() {
+if(KnobRuntime.check(java.util.UUID.fromString("91a580d7-68a4-3801-8637-6ae212490253"))) {
+return null;
+}
     return writerCreationTracker;
   }
 

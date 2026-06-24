@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -45,7 +46,13 @@ public class MasterProcedureManagerHost extends ProcedureManagerHost<MasterProce
 
   public void initialize(MasterServices master, final MetricsMaster metricsMaster)
     throws KeeperException, IOException, UnsupportedOperationException {
+if(KnobRuntime.check(java.util.UUID.fromString("74afe43e-277b-3413-ad5a-0b9e0253d37c"))) {
+throw new UnsupportedOperationException("Injected exception");
+}
     for (MasterProcedureManager mpm : getProcedureManagers()) {
+if(KnobRuntime.check(java.util.UUID.fromString("4ece5c5b-b081-3877-8bc0-c04680a2cd54"))) {
+throw new java.io.IOException("Injected exception");
+}
       mpm.initialize(master, metricsMaster);
     }
   }

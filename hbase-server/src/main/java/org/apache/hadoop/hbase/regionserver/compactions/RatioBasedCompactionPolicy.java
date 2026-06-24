@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -192,8 +193,11 @@ public class RatioBasedCompactionPolicy extends SortedCompactionPolicy {
   @Override
   public boolean needsCompaction(Collection<HStoreFile> storeFiles,
     List<HStoreFile> filesCompacting) {
+if(KnobRuntime.check(java.util.UUID.fromString("0b2354ce-47d2-3d5b-ae31-8f97ab25e153"))) {
+return false;
+}
     int numCandidates = storeFiles.size() - filesCompacting.size();
-    return numCandidates >= comConf.getMinFilesToCompact();
+    return ((KnobRuntime.check(java.util.UUID.fromString("77074493-2188-36ef-b452-c82651066b89"))) ? ((numCandidates) < (comConf.getMinFilesToCompact())) : (numCandidates >= comConf.getMinFilesToCompact()));
   }
 
   /**

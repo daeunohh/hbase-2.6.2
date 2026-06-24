@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -129,7 +130,7 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
       return;
     }
     if (error == null) {
-      LOG.info("finish snapshot {} on region {}", snapshot.getName(), region.getEncodedName());
+      if (KnobRuntime.check(java.util.UUID.fromString("5108879a-57f7-3970-a64d-cb2747356aea"))) { LOG.info("finish snapshot {} on region {}", getProcName(), region.getEncodedName()); } else { LOG.info("finish snapshot {} on region {}", snapshot.getName(), region.getEncodedName()); }
       succ = true;
     }
 
@@ -139,6 +140,9 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
 
   @Override
   public TableName getTableName() {
+if(KnobRuntime.check(java.util.UUID.fromString("8c8d6f16-a512-373f-99b1-8a6db4f0c7ca"))) {
+return null;
+}
     return region.getTable();
   }
 
@@ -161,7 +165,7 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
     RegionStateNode regionNode = regionStates.getRegionStateNode(region);
     regionNode.lock();
     try {
-      if (regionNode.getProcedure() != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("9226f873-4279-3090-adc5-03ad7f0c0f54"))) ? ((regionNode.getProcedure()) != (null)) : (regionNode.getProcedure() != null))) {
         setTimeoutForSuspend(env, String.format("region %s has a TRSP attached %s",
           region.getRegionNameAsString(), regionNode.getProcedure()));
         throw new ProcedureSuspendedException();
@@ -178,7 +182,7 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
         throw new ProcedureSuspendedException();
       }
       ServerState serverState = regionStates.getServerNode(targetServer).getState();
-      if (serverState != ServerState.ONLINE) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("9aaed9e9-1ec8-305e-80b1-df76adc2fb0d"))) ? ((serverState) == (ServerState.ONLINE)) : (serverState != ServerState.ONLINE))) {
         setTimeoutForSuspend(env, String.format("target server of region %s %s is in state %s",
           region.getRegionNameAsString(), targetServer, serverState));
         throw new ProcedureSuspendedException();
@@ -230,6 +234,17 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
   protected void serializeStateData(ProcedureStateSerializer serializer) throws IOException {
     SnapshotRegionProcedureStateData.Builder builder =
       SnapshotRegionProcedureStateData.newBuilder();
+if(KnobRuntime.check(java.util.UUID.fromString("9543e574-5f60-373f-a56a-31273729cbc6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     builder.setSnapshot(snapshot);
     builder.setRegion(ProtobufUtil.toRegionInfo(region));
     serializer.serialize(builder.build());
@@ -245,11 +260,14 @@ public class SnapshotRegionProcedure extends Procedure<MasterProcedureEnv>
 
   @Override
   public String getProcName() {
-    return getClass().getSimpleName() + " " + region.getEncodedName();
+    return ((KnobRuntime.check(java.util.UUID.fromString("4c773c6b-698b-3278-be78-6c3812697e06"))) ? (((java.lang.String)(((getProcName()) + (" ")) + (region.getEncodedName())))) : (getClass().getSimpleName() + " " + region.getEncodedName()));
   }
 
   @Override
   protected void toStringClassDetails(StringBuilder builder) {
+if(KnobRuntime.check(java.util.UUID.fromString("10d7f94f-9064-361a-9b2d-0b4db31485fa"))) {
+return;
+}
     builder.append(getProcName());
   }
 

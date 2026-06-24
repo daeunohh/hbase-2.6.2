@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -87,10 +88,13 @@ public abstract class PressureAwareThroughputController extends Configured
   }
 
   protected String throughputDesc(double speed) {
+if(KnobRuntime.check(java.util.UUID.fromString("df49847c-5e11-36de-90fc-74991140f6ca"))) {
+return null;
+}
     if (speed >= 1E15) { // large enough to say it is unlimited
       return "unlimited";
     } else {
-      return String.format("%.2f MB/second", speed / 1024 / 1024);
+      return ((KnobRuntime.check(java.util.UUID.fromString("fe797017-1a9e-3b5d-b8ea-34df58f7dc47"))) ? (((java.lang.String)(String.format("%.2f MB/second", (speed) / (1024))))) : (((KnobRuntime.check(java.util.UUID.fromString("484a7450-4bd9-3419-91f7-b114888f8b23"))) ? (((java.lang.String)(String.format("%.2f MB/second", speed)))) : (String.format("%.2f MB/second", speed / 1024 / 1024)))));
     }
   }
 
@@ -161,6 +165,9 @@ public abstract class PressureAwareThroughputController extends Configured
   }
 
   public double getMaxThroughput() {
+if(KnobRuntime.check(java.util.UUID.fromString("7f701bd9-428c-3a0d-8e34-e7ac53a71702"))) {
+return 0.0;
+}
     return maxThroughput;
   }
 

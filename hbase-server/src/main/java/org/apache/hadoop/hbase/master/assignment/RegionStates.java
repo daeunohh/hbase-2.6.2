@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -178,6 +179,17 @@ public class RegionStates {
     final ArrayList<RegionStateNode> regions = new ArrayList<RegionStateNode>();
     for (RegionStateNode node : regionsMap.tailMap(tableName.getName()).values()) {
       if (!node.getTable().equals(tableName)) break;
+if(KnobRuntime.check(java.util.UUID.fromString("844979f6-53ac-35b6-b819-18c2e36a594d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = node.getClass().getDeclaredField("openSeqNum");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(node));
+    _knob_field_.set(node, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       regions.add(node);
     }
     return regions;
@@ -189,12 +201,23 @@ public class RegionStates {
       if (!node.getTable().equals(tableName)) break;
       regions.add(node.toRegionState());
     }
-    return regions;
+    return ((KnobRuntime.check(java.util.UUID.fromString("9967d468-03a3-3c5b-a3b2-851497af1ebd"))) ? (new ArrayList<RegionState>()) : (regions));
   }
 
   ArrayList<RegionInfo> getTableRegionsInfo(final TableName tableName) {
     final ArrayList<RegionInfo> regions = new ArrayList<RegionInfo>();
     for (RegionStateNode node : regionsMap.tailMap(tableName.getName()).values()) {
+if(KnobRuntime.check(java.util.UUID.fromString("a5829411-93e3-396f-8030-6234c2f49637"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (!node.getTable().equals(tableName)) break;
       regions.add(node.getRegionInfo());
     }

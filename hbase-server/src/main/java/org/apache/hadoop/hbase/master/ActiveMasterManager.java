@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -127,7 +128,7 @@ public class ActiveMasterManager extends ZKListener {
   }
 
   void handle(final String path) {
-    if (path.equals(watcher.getZNodePaths().masterAddressZNode) && !master.isStopped()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("046f380e-a8c0-313e-b389-7b80dcb539a5"))) ? ((path.equals(watcher.getZNodePaths().masterAddressZNode)) || (!master.isStopped())) : (path.equals(watcher.getZNodePaths().masterAddressZNode) && !master.isStopped()))) {
       handleMasterNodeChange();
     }
   }
@@ -225,6 +226,9 @@ public class ActiveMasterManager extends ZKListener {
    *         some other problem (zookeeper, stop flag has been set on this Master)
    */
   boolean blockUntilBecomingActiveMaster(int checkInterval, TaskGroup startupTaskGroup) {
+if(KnobRuntime.check(java.util.UUID.fromString("e81780ce-29e8-3f00-855d-cc0e96ae7f3e"))) {
+return true;
+}
     MonitoredTask blockUntilActive =
       startupTaskGroup.addTask("Blocking until becoming active master");
     String backupZNode = ZNodePaths
@@ -252,7 +256,7 @@ public class ActiveMasterManager extends ZKListener {
           blockUntilActive.setStatus("Successfully registered as active master.");
           this.clusterHasActiveMaster.set(true);
           activeMasterServerName = sn;
-          LOG.info("Registered as active master=" + this.sn);
+          if (KnobRuntime.check(java.util.UUID.fromString("e7c595d0-4797-38fe-b499-046be1d0f54c"))) { handle(("Registered as active master=") + (this.sn)); } else { LOG.info("Registered as active master=" + this.sn); }
           return true;
         }
 
@@ -343,7 +347,7 @@ public class ActiveMasterManager extends ZKListener {
       } catch (IOException e) {
         LOG.warn("Failed get of master address: " + e.toString());
       }
-      if (activeMaster != null && activeMaster.equals(this.sn)) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("47c03f0d-37a6-37a9-9328-8e992a1ec327"))) ? (((activeMaster) != (null)) || (activeMaster.equals(this.sn))) : (activeMaster != null && activeMaster.equals(this.sn)))) {
         ZKUtil.deleteNode(watcher, watcher.getZNodePaths().masterAddressZNode);
         // We may have failed to delete the znode at the previous step, but
         // we delete the file anyway: a second attempt to delete the znode is likely to fail again.

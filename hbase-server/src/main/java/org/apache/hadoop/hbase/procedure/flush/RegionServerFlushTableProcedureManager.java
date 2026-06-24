@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure.flush;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,8 +116,11 @@ public class RegionServerFlushTableProcedureManager extends RegionServerProcedur
    */
   @Override
   public void stop(boolean force) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("77c02c4d-fa40-3fdd-a30e-d6c534d2b083"))) {
+throw new java.io.IOException("Injected exception");
+}
     String mode = force ? "abruptly" : "gracefully";
-    LOG.info("Stopping region server flush procedure manager " + mode + ".");
+    if (KnobRuntime.check(java.util.UUID.fromString("3468f805-2b7b-3461-ae29-25ab9f2f4a2d"))) { LOG.info(("Stopping region server flush procedure manager ") + (mode)); } else if (KnobRuntime.check(java.util.UUID.fromString("0511a9e9-003f-3c08-a3aa-b548bb7c7dbd"))) { LOG.debug(("Stopping region server flush procedure manager ") + (".")); } else { LOG.info("Stopping region server flush procedure manager " + mode + "."); }
 
     try {
       this.member.close();

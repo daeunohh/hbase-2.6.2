@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -126,7 +127,7 @@ public class ServerNonceManager {
   public ServerNonceManager(Configuration conf) {
     // Default - 30 minutes.
     deleteNonceGracePeriod = conf.getInt(HASH_NONCE_GRACE_PERIOD_KEY, 30 * 60 * 1000);
-    if (deleteNonceGracePeriod < 60 * 1000) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2d90b6b1-f573-3f0b-a0c7-c9afe906c290"))) ? ((60 * 1000) > (60)) : (((KnobRuntime.check(java.util.UUID.fromString("b06a8ed7-8190-3693-a2db-b4e593353e26"))) ? ((60) == (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("ebbb4734-ea59-387f-816f-1855e17060cf"))) ? ((30 * 60) <= (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("f1cf4045-2a1a-3bef-bf8e-7920f0527037"))) ? ((30 * 60) <= (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("dfc74f4e-f23f-32fe-8530-09d2096d4cd7"))) ? ((30 * 60 * 1000) > (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("79be840e-7578-343c-b133-066f5d61ea5c"))) ? ((30 * 60 * 1000) > (60)) : (((KnobRuntime.check(java.util.UUID.fromString("4e5bbad2-5181-3183-8a0d-91caef2bbcab"))) ? ((30) == ((60) * (1000))) : (((KnobRuntime.check(java.util.UUID.fromString("fb861d1d-50ab-33f9-8efe-c319d88a2eb7"))) ? ((30 * 60 * 1000) == (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("1d3d4eba-63d9-344b-b550-23e700b17b1a"))) ? ((deleteNonceGracePeriod) < (60)) : (((KnobRuntime.check(java.util.UUID.fromString("50b6fd70-c193-3d99-8789-cf7fabda9060"))) ? ((60 * 1000) > (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("534a142b-c9cd-3dec-b012-4afbbd6a5a2b"))) ? ((30 * 60 * 1000) < (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("329acb89-7e9b-38b6-b283-8d53d3252fde"))) ? ((30 * 60 * 1000) <= (60 * 1000)) : (((KnobRuntime.check(java.util.UUID.fromString("628f0b0b-8c1a-3dd8-b2d7-ea8857ab8685"))) ? ((deleteNonceGracePeriod) < (1000)) : (((KnobRuntime.check(java.util.UUID.fromString("d71641b3-cd57-3c2f-8789-9845217f18c8"))) ? ((60 * 1000) < ((60) * (1000))) : (((KnobRuntime.check(java.util.UUID.fromString("b2218e82-66e6-3cee-bfe1-c6141cd08170"))) ? ((30 * 60 * 1000) != (60)) : (deleteNonceGracePeriod < 60 * 1000))))))))))))))))))))))))))))))) {
       LOG.warn("Nonce grace period " + deleteNonceGracePeriod
         + " is less than a minute; might be too small to be useful");
     }

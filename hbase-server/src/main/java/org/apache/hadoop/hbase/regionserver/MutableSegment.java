@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -57,7 +58,13 @@ public class MutableSegment extends Segment {
    */
   public void add(Cell cell, boolean mslabUsed, MemStoreSizing memStoreSizing,
     boolean sizeAddedPreOperation) {
-    internalAdd(cell, mslabUsed, memStoreSizing, sizeAddedPreOperation);
+if(KnobRuntime.check(java.util.UUID.fromString("317c7963-186f-3e08-908c-a0c4234bafb8"))) {
+sizeAddedPreOperation = true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0719833f-8802-3bfa-944a-3e545378f8e5"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("7d227bd3-2108-3541-ae91-cf1d461f4bdf"))) { internalAdd(cell, mslabUsed, memStoreSizing, !sizeAddedPreOperation); } else { internalAdd(cell, mslabUsed, memStoreSizing, sizeAddedPreOperation); }
   }
 
   public void upsert(Cell cell, long readpoint, MemStoreSizing memStoreSizing,

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -128,6 +129,28 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
 
   @Override
   public void yield(final Procedure proc) {
+if(KnobRuntime.check(java.util.UUID.fromString("757d37e6-3ae0-340b-b23a-369b5560404c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1ef7d733-d1dd-3a97-9cfe-d676ae750039"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     push(proc, false, true);
   }
 
@@ -138,6 +161,50 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
   @Override
   protected void enqueue(final Procedure proc, final boolean addFront) {
     if (isMetaProcedure(proc)) {
+if(KnobRuntime.check(java.util.UUID.fromString("7e1bbb8d-a1a8-3401-9f4b-404ca84e585f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("76f42fe3-75fe-34a1-b691-93056fba5cb5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = metaRunQueue.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(metaRunQueue));
+    _knob_field_.set(metaRunQueue, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2ea8accd-3d6e-32af-8bd0-cfaf0826474e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bce294c1-9721-3f6f-9faa-9e3f58585392"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("locked");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(proc);
+    _knob_field_.set(proc, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       doAdd(metaRunQueue, getMetaQueue(), proc, addFront);
     } else if (isTableProcedure(proc)) {
       TableProcedureInterface tableProc = (TableProcedureInterface) proc;
@@ -146,6 +213,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
           tableProc.getTableName(), k -> new TableProcedureWaitingQueue(procedureRetriever));
         if (!waitingQueue.procedureSubmitted(proc)) {
           // there is a table procedure for this table already enqueued, waiting
+if(KnobRuntime.check(java.util.UUID.fromString("d10b77ff-5f0b-3a59-9e54-792721cac6fc"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           LOG.debug("There is already a procedure running for table {}, added {} to waiting queue",
             tableProc.getTableName(), proc);
           return;
@@ -186,6 +264,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       reason = () -> proc + " has the excusive lock access";
     }
     if (reason != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("459eaf16-000e-345a-9b04-3ff954faf297"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fairq.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fairq));
+    _knob_field_.set(fairq, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       addToRunQueue(fairq, queue, reason);
     }
   }
@@ -210,12 +299,45 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       pollResult = doPoll(peerRunQueue);
     }
     if (pollResult == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("5cbe752c-b78d-32ab-ab11-2094c7e65f71"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableRunQueue.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableRunQueue));
+    _knob_field_.set(tableRunQueue, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       pollResult = doPoll(tableRunQueue);
     }
     return pollResult;
   }
 
   private <T extends Comparable<T>> boolean isLockReady(Procedure<?> proc, Queue<T> rq) {
+if(KnobRuntime.check(java.util.UUID.fromString("400e57ba-8bd7-3321-b1e9-e3d0909edf6e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f7a5f034-68cf-30ec-abb4-7aa4f85e4ddb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     LockStatus s = rq.getLockStatus();
     // if we have the lock access, we are ready
     if (s.hasLockAccess(proc)) {
@@ -229,7 +351,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
 
   private <T extends Comparable<T>> Procedure<?> doPoll(final FairQueue<T> fairq) {
     Queue<T> rq = fairq.poll();
-    if (rq == null || !rq.isAvailable()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("3b82dd48-4c16-3ae0-9ed3-0818024e7daa"))) ? (!rq.isAvailable()) : (((KnobRuntime.check(java.util.UUID.fromString("d825c32f-dbf6-3ce3-a69b-34f3c10ff292"))) ? (rq == null) : (rq == null || !rq.isAvailable()))))) {
       return null;
     }
     // loop until we find out a procedure which is ready to run, or if we have checked all the
@@ -247,6 +369,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       rq.add(proc, false);
     }
     // no procedure is ready for execution, remove from run queue
+if(KnobRuntime.check(java.util.UUID.fromString("ff1e867d-c39f-3ed4-84a6-32509151238d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fairq.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fairq));
+    _knob_field_.set(fairq, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     removeFromRunQueue(fairq, rq, () -> "no procedure can be executed");
     return null;
   }
@@ -303,7 +436,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
 
   private <T extends Comparable<T>, TNode extends Queue<T>> void clear(TNode treeMap,
     FairQueue<T> fairq, AvlKeyComparator<TNode> comparator) {
-    while (treeMap != null) {
+    while (((KnobRuntime.check(java.util.UUID.fromString("a2a7cf5f-c036-3253-b290-8b50bec60130"))) ? ((treeMap) == (null)) : (treeMap != null))) {
       Queue<T> node = AvlTree.getFirst(treeMap);
       treeMap = AvlTree.remove(treeMap, node.getKey(), comparator);
       if (fairq != null) {
@@ -346,11 +479,99 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
           TableProcedureWaitingQueue waitingQueue =
             tableProcsWaitingEnqueue.get(tableProc.getTableName());
           if (waitingQueue != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("2ace68d9-17f4-3241-b5a6-ceadeafce7f8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
             Optional<Procedure<?>> nextProc = waitingQueue.procedureCompleted(proc);
             if (nextProc.isPresent()) {
               // enqueue it
               Procedure<?> next = nextProc.get();
+if(KnobRuntime.check(java.util.UUID.fromString("90af64a4-5f2d-3062-94ab-576585f60c3f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = next.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(next));
+    _knob_field_.set(next, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("275d76e2-41dd-396a-abea-d6876ace78f2"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ac329557-dffa-3302-a99f-6994ab212f2c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = next.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(next));
+    _knob_field_.set(next, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
               LOG.debug("{} completed, enqueue a new procedure {}", proc, next);
+if(KnobRuntime.check(java.util.UUID.fromString("37b231aa-c3e1-3f1f-9364-7c2fbd7f2326"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = next.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(next));
+    _knob_field_.set(next, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2732d0ee-7efc-3e3b-87d4-0f9457574733"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableRunQueue.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableRunQueue));
+    _knob_field_.set(tableRunQueue, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dfa24b9b-52ab-3d44-aef0-8699c2d414ec"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = next.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(next));
+    _knob_field_.set(next, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00bfc988-9b5c-3d6e-9fa8-1406d37ca69c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = next.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(next));
+    _knob_field_.set(next, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
               doAdd(tableRunQueue, getTableQueue(tableProc.getTableName()), next, false);
             } else {
               if (waitingQueue.isEmpty()) {
@@ -360,6 +581,28 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
             }
           } else {
             // this should not happen normally, warn it
+if(KnobRuntime.check(java.util.UUID.fromString("3ae75592-488e-3f39-a5ec-6c6333a38eb9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0d63e043-4749-33bd-89c6-e63a8ec022d0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("rootProcId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
             LOG.warn("no waiting queue while completing {}, which should not happen", proc);
           }
         } finally {
@@ -369,7 +612,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       boolean tableDeleted;
       if (proc.hasException()) {
         Exception procEx = proc.getException().unwrapRemoteException();
-        if (tableProc.getTableOperationType() == TableOperationType.CREATE) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("c41f023e-4fb7-3858-84ac-058f462aa13a"))) ? ((tableProc.getTableOperationType()) == (TableOperationType.CREATE)) : (tableProc.getTableOperationType() == TableOperationType.CREATE))) {
           // create failed because the table already exist
           tableDeleted = !(procEx instanceof TableExistsException);
         } else {
@@ -380,7 +623,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
         // the table was deleted
         tableDeleted = (tableProc.getTableOperationType() == TableOperationType.DELETE);
       }
-      if (tableDeleted) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("57989a80-293e-3045-952b-8fc5a3b06e0c"))) ? (!tableDeleted) : (tableDeleted))) {
         markTableAsDeleted(tableProc.getTableName(), proc);
       }
     } else if (proc instanceof PeerProcedureInterface) {
@@ -405,6 +648,31 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
 
   private static <T extends Comparable<T>> void removeFromRunQueue(FairQueue<T> fairq,
     Queue<T> queue, Supplier<String> reason) {
+if(KnobRuntime.check(java.util.UUID.fromString("ef84d83a-eb12-32d5-a818-cd7ecb58cc18"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fairq.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fairq));
+    _knob_field_.set(fairq, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e0dfa138-da1c-367a-9e51-eb0e3ebc1bf9"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("931e09cc-ebd4-33a8-98f5-6d5a90c46747"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fairq.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fairq));
+    _knob_field_.set(fairq, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (LOG.isTraceEnabled()) {
       LOG.trace("Remove {} from run queue because: {}", queue, reason.get());
     }
@@ -432,6 +700,39 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
   }
 
   private static boolean isTableProcedure(Procedure<?> proc) {
+if(KnobRuntime.check(java.util.UUID.fromString("ca3f657b-2880-37bd-ac5c-17a800ae89e8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("14142546-5d41-32dc-800b-18c9d1e53749"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4c6aa8c3-3bde-3f43-a8b8-f58f1edd47a3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return proc instanceof TableProcedureInterface;
   }
 
@@ -454,6 +755,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
     } else {
       priority = 1;
     }
+if(KnobRuntime.check(java.util.UUID.fromString("3d4e16e6-2632-360f-a55d-41e372eb0759"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = serverName.getClass().getDeclaredField("startCode");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(serverName));
+    _knob_field_.set(serverName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     node = new ServerQueue(serverName, priority, locking.getServerLock(serverName));
     serverBuckets[index] = AvlTree.insert(serverBuckets[index], node);
     return node;
@@ -536,6 +848,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
   }
 
   private static boolean isPeerProcedure(Procedure<?> proc) {
+if(KnobRuntime.check(java.util.UUID.fromString("9dddd457-c2f3-3c81-b9bc-1fe99e724b11"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return proc instanceof PeerProcedureInterface;
   }
 
@@ -622,7 +945,40 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
    * @param table     the name of the table that has the exclusive lock
    */
   public void wakeTableExclusiveLock(final Procedure<?> procedure, final TableName table) {
-    schedLock();
+if(KnobRuntime.check(java.util.UUID.fromString("2487054c-bc04-3766-bc6d-d8a4f227b288"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8f963df2-512b-39c7-bdf5-f2e21d16e9b8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("612bc6e1-3b7f-3819-8c66-74c5db21b1f0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("parentProcId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("b9217966-aaa7-32e4-bfde-fed1745834a7"))) { schedUnlock(); } else { schedLock(); }
     try {
       final LockAndQueue namespaceLock = locking.getNamespaceLock(table.getNamespaceAsString());
       final LockAndQueue tableLock = locking.getTableLock(table);
@@ -686,6 +1042,17 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       final LockAndQueue tableLock = locking.getTableLock(table);
       int waitingCount = 0;
       if (tableLock.releaseSharedLock()) {
+if(KnobRuntime.check(java.util.UUID.fromString("05da7012-bd18-3e55-af6c-2610b9cf3145"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableRunQueue.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableRunQueue));
+    _knob_field_.set(tableRunQueue, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         addToRunQueue(tableRunQueue, getTableQueue(table),
           () -> procedure + " released the shared lock");
         waitingCount += wakeWaitingProcedures(tableLock);
@@ -742,6 +1109,31 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
    * @return true if the procedure has to wait for the regions to be available
    */
   public boolean waitRegion(final Procedure<?> procedure, final RegionInfo regionInfo) {
+if(KnobRuntime.check(java.util.UUID.fromString("1e9755f2-7b83-392b-bada-6069a6e31fe4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bf094fb8-a76a-380c-80f6-c794f3e2d9bc"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5cd536a1-be92-3596-9bd8-934ccc90ef97"))) {
+return true;
+}
     return waitRegions(procedure, regionInfo.getTable(), regionInfo);
   }
 
@@ -754,10 +1146,35 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
    */
   public boolean waitRegions(final Procedure<?> procedure, final TableName table,
     final RegionInfo... regionInfos) {
+if(KnobRuntime.check(java.util.UUID.fromString("035f17cc-2282-352c-8b68-ffde78eda51e"))) {
+return false;
+}
     Arrays.sort(regionInfos, RegionInfo.COMPARATOR);
     schedLock();
     try {
-      assert table != null;
+      assert ((KnobRuntime.check(java.util.UUID.fromString("2c990310-4d5a-346a-b348-a69c2c9d3942"))) ? ((table) != (null)) : (table != null));
+if(KnobRuntime.check(java.util.UUID.fromString("92753c61-9549-3d20-b047-b9821df7acd0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5f7422f8-38c6-33ac-b484-ca2e92972f2b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("locked");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(procedure);
+    _knob_field_.set(procedure, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (waitTableSharedLock(procedure, table)) {
         return true;
       }
@@ -769,7 +1186,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
         assert regionInfos[i] != null;
         assert regionInfos[i].getTable() != null;
         assert regionInfos[i].getTable().equals(table) : regionInfos[i] + " " + procedure;
-        assert i == 0 || regionInfos[i] != regionInfos[i - 1]
+        assert ((KnobRuntime.check(java.util.UUID.fromString("a6caec34-7b17-3a51-8b98-3d8a227941d6"))) ? (((i - 1) != (0)) && ((regionInfos[i]) != (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("f2baac09-8aae-3467-a0f7-7eb1111414bf"))) ? ((i == 0) || ((regionInfos[i]) == (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("9cff11ca-136a-3efb-8ffb-f95e3a84828d"))) ? (((++i) != (0)) && ((regionInfos[i]) != (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("88a5c9d9-ffc4-3603-8769-ea49f6b448a5"))) ? (((i - 1) == (0)) || ((regionInfos[i]) != (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("8c0c54c0-1c40-36c9-91ec-85656924d0cb"))) ? (((i--) == (0)) && (regionInfos[i] != regionInfos[i - 1])) : (((KnobRuntime.check(java.util.UUID.fromString("b591d448-b172-3519-a61d-7b46975cff71"))) ? ((++i) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("54ef3f9f-d019-3db9-8456-483cd0eef730"))) ? ((regionInfos[i]) == (regionInfos[i - 1])) : (((KnobRuntime.check(java.util.UUID.fromString("032605ad-3ba5-34af-b5a5-20da7f4e136d"))) ? (i == 0) : (((KnobRuntime.check(java.util.UUID.fromString("801fa521-eebb-3c90-bb26-177508224fc5"))) ? (((++i) != (0)) && ((regionInfos[i]) == (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("b0afa46c-46a8-3970-b8a0-db059b09972e"))) ? (((i - 1) != (0)) || ((regionInfos[i]) == (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("d87bb55f-b34d-3038-a700-d1812a5b982b"))) ? (((i - 1) != (0)) && ((regionInfos[i]) == (regionInfos[i - 1]))) : (((KnobRuntime.check(java.util.UUID.fromString("65263559-2c69-3f80-91e0-81ef312845c1"))) ? (((i - 1) == (0)) && ((regionInfos[i]) != (regionInfos[i - 1]))) : (i == 0 || regionInfos[i] != regionInfos[i - 1]))))))))))))))))))))))))
           : "duplicate region: " + regionInfos[i];
 
         regionLocks[i] = locking.getRegionLock(regionInfos[i].getEncodedName());
@@ -828,7 +1245,7 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
             // release one procedure at the time since regions has an xlock
             nextProcs[numProcs++] = regionLock.removeFirst();
           } else {
-            locking.removeRegionLock(regionInfos[i].getEncodedName());
+            if (KnobRuntime.check(java.util.UUID.fromString("8f90d4d4-e2d8-327f-9cc4-8a7f4a858c3a"))) { locking.getPeerLock(regionInfos[i].getEncodedName()); } else { locking.removeRegionLock(regionInfos[i].getEncodedName()); }
           }
         }
       }
@@ -856,10 +1273,65 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
    * @return true if the procedure has to wait for the namespace to be available
    */
   public boolean waitNamespaceExclusiveLock(Procedure<?> procedure, String namespace) {
+if(KnobRuntime.check(java.util.UUID.fromString("fffbc1ca-9b9d-3616-a535-c4869c18bc5d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("95091109-a5e9-379e-a689-d82bf3b05227"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     schedLock();
     try {
       final LockAndQueue systemNamespaceTableLock =
         locking.getTableLock(TableName.NAMESPACE_TABLE_NAME);
+if(KnobRuntime.check(java.util.UUID.fromString("d09cce1f-5f87-3f84-9914-c023da9105e1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4b7370ba-cd84-361a-b03b-263c65d064ee"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("139539aa-2c2d-33f9-96fd-0e650d32a51e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("lastUpdate");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (!systemNamespaceTableLock.trySharedLock(procedure)) {
         waitProcedure(systemNamespaceTableLock, procedure);
         logLockedResource(LockedResourceType.TABLE,
@@ -899,8 +1371,22 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
       if (systemNamespaceTableLock.releaseSharedLock()) {
         addToRunQueue(tableRunQueue, getTableQueue(TableName.NAMESPACE_TABLE_NAME),
           () -> procedure + " released namespace exclusive lock");
+if(KnobRuntime.check(java.util.UUID.fromString("6d84e38e-49d8-37e0-9d04-0253d51cda5e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = systemNamespaceTableLock.getClass().getDeclaredField("sharedLock");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(systemNamespaceTableLock));
+    _knob_field_.set(systemNamespaceTableLock, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         waitingCount += wakeWaitingProcedures(systemNamespaceTableLock);
       }
+if(KnobRuntime.check(java.util.UUID.fromString("b8d0eade-bc73-30e4-86f2-c7c58b85eb99"))) {
+waitingCount /= 2;
+}
       wakePollIfNeeded(waitingCount);
     } finally {
       schedUnlock();
@@ -933,11 +1419,22 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
           () -> procedure + " held exclusive lock");
         return false;
       }
+if(KnobRuntime.check(java.util.UUID.fromString("5b6eae8f-de70-3168-8a5d-de801f56a5f1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("submittedTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       waitProcedure(lock, procedure);
       logLockedResource(LockedResourceType.SERVER, serverName.getServerName());
       return true;
     } finally {
-      schedUnlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("b4185512-378d-368c-a2e6-a79019bfeb0e"))) { schedLock(); } else { schedUnlock(); }
     }
   }
 
@@ -1033,6 +1530,39 @@ public class MasterProcedureScheduler extends AbstractProcedureScheduler {
    */
   @Deprecated
   public boolean waitMetaExclusiveLock(Procedure<?> procedure) {
+if(KnobRuntime.check(java.util.UUID.fromString("23fdf05b-b890-3497-bb3a-db6579baee03"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("childrenLatch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("309267c5-4d9d-3c96-bbba-c8c05bbc9407"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7930bef3-5a86-382b-800e-4284b913c1e8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = procedure.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(procedure));
+    _knob_field_.set(procedure, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     schedLock();
     try {
       final LockAndQueue lock = locking.getMetaLock();

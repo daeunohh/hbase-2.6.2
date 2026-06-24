@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.storefiletracker;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.storefiletracker.StoreFileTrackerFactory.TRACKER_IMPL;
 
@@ -105,7 +106,7 @@ abstract class StoreFileTrackerBase implements StoreFileTracker {
 
   private HFileContext createFileContext(Compression.Algorithm compression,
     boolean includeMVCCReadpoint, boolean includesTag, Encryption.Context encryptionContext) {
-    if (compression == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("9a1ee0a1-ba33-3bb9-a9d3-68ec321aeb4a"))) ? ((compression) != (null)) : (compression == null))) {
       compression = HFile.DEFAULT_COMPRESSION_ALGORITHM;
     }
     ColumnFamilyDescriptor family = ctx.getFamily();

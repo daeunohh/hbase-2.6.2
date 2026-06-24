@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HBaseIOException;
@@ -82,7 +83,7 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
   @Override
   protected Flow executeFromState(final MasterProcedureEnv env, final DisableTableState state)
     throws InterruptedException {
-    LOG.trace("{} execute state={}", this, state);
+    if (KnobRuntime.check(java.util.UUID.fromString("ee48c5a3-9291-3706-8680-a1b720328ecc"))) { LOG.info("{} execute state={}", this, state); } else { LOG.trace("{} execute state={}", this, state); }
     try {
       switch (state) {
         case DISABLE_TABLE_PREPARE:
@@ -106,6 +107,17 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
           setNextState(DisableTableState.DISABLE_TABLE_ADD_REPLICATION_BARRIER);
           break;
         case DISABLE_TABLE_ADD_REPLICATION_BARRIER:
+if(KnobRuntime.check(java.util.UUID.fromString("9830cca3-d70d-3e32-a0f9-ae8a5f471ff1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           if (
             env.getMasterServices().getTableDescriptors().get(tableName).hasGlobalReplicationScope()
           ) {
@@ -125,10 +137,43 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
           setNextState(DisableTableState.DISABLE_TABLE_SET_DISABLED_TABLE_STATE);
           break;
         case DISABLE_TABLE_SET_DISABLED_TABLE_STATE:
-          setTableStateToDisabled(env, tableName);
+if(KnobRuntime.check(java.util.UUID.fromString("f9b74f48-1040-349d-89c9-f87232ca4d7f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+          if (KnobRuntime.check(java.util.UUID.fromString("604ac528-68ee-323b-98ef-9522c3e9f0fb"))) { setTableStateToDisabling(env, tableName); } else { setTableStateToDisabled(env, tableName); }
           setNextState(DisableTableState.DISABLE_TABLE_POST_OPERATION);
           break;
         case DISABLE_TABLE_POST_OPERATION:
+if(KnobRuntime.check(java.util.UUID.fromString("b30ad04b-80fb-3e59-be46-ec7b97fac49d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(state));
+    _knob_field_.set(state, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("91b79b49-0e7d-339c-83b0-a10b7ef12b78"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(state));
+    _knob_field_.set(state, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           postDisable(env, state);
           return Flow.NO_MORE_STATE;
         default:
@@ -165,6 +210,20 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
 
   @Override
   protected boolean isRollbackSupported(final DisableTableState state) {
+if(KnobRuntime.check(java.util.UUID.fromString("bfee1e10-d3a6-3763-92ee-1d83fc7f0675"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(state));
+    _knob_field_.set(state, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("26071e5b-e90b-3c2f-8779-bb078c61d2e0"))) {
+return false;
+}
     switch (state) {
       case DISABLE_TABLE_PREPARE:
       case DISABLE_TABLE_PRE_OPERATION:
@@ -181,6 +240,9 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
 
   @Override
   protected int getStateId(final DisableTableState state) {
+if(KnobRuntime.check(java.util.UUID.fromString("124c1545-afe0-3437-a5b9-bab887fea6fc"))) {
+return 0;
+}
     return state.getNumber();
   }
 
@@ -230,6 +292,17 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
    */
   private boolean prepareDisable(final MasterProcedureEnv env) throws IOException {
     boolean canTableBeDisabled = true;
+if(KnobRuntime.check(java.util.UUID.fromString("413774d1-d1bb-396b-9772-c65ba6d166a1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (tableName.equals(TableName.META_TABLE_NAME)) {
       setFailure("master-disable-table",
         new ConstraintException("Cannot disable " + this.tableName));
@@ -279,6 +352,17 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
   private static void setTableStateToDisabling(final MasterProcedureEnv env,
     final TableName tableName) throws IOException {
     // Set table disabling flag up in zk.
+if(KnobRuntime.check(java.util.UUID.fromString("99a6d4ea-24eb-32d0-a614-bcb2997cb324"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.DISABLING);
     LOG.info("Set {} to state={}", tableName, TableState.State.DISABLING);
@@ -313,6 +397,20 @@ public class DisableTableProcedure extends AbstractStateMachineTableProcedure<Di
    */
   private void runCoprocessorAction(final MasterProcedureEnv env, final DisableTableState state)
     throws IOException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("f6a1b4e6-fbea-3cf3-9edc-280911c7c381"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e79332df-da7c-3923-834c-9f6cfe7bed9d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(state));
+    _knob_field_.set(state, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
       switch (state) {

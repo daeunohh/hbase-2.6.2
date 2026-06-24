@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hbase.thirdparty.com.google.common.base.Preconditions.checkArgument;
 import static org.apache.hbase.thirdparty.com.google.common.base.Preconditions.checkNotNull;
@@ -108,8 +109,19 @@ public class ReaderContextBuilder {
 
   private void validateFields() throws IllegalArgumentException {
     checkNotNull(filePath, "Illegal ReaderContext, no filePath specified.");
+if(KnobRuntime.check(java.util.UUID.fromString("1bf95188-1af4-37d3-a047-3b7ca5497b0a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fsdis.getClass().getDeclaredField("doCloseStreams");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(fsdis);
+    _knob_field_.set(fsdis, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     checkNotNull(fsdis, "Illegal ReaderContext, no StreamWrapper specified.");
-    checkNotNull(hfs, "Illegal ReaderContext, no HFileSystem specified.");
+    if (KnobRuntime.check(java.util.UUID.fromString("acf7f7a9-cc6d-3046-afd1-ac57b3706879"))) { checkNotNull(checkNotNull(hfs, "Illegal ReaderContext, no HFileSystem specified."), "Illegal ReaderContext, no HFileSystem specified."); } else { checkNotNull(hfs, "Illegal ReaderContext, no HFileSystem specified."); }
     checkArgument(fileSize > 0L, "Illegal ReaderContext, fileSize <= 0");
   }
 }

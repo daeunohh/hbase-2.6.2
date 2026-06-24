@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -48,6 +49,17 @@ public abstract class BaseTimeToLiveFileCleaner extends BaseLogCleanerDelegate {
   @Override
   public final void setConf(Configuration conf) {
     super.setConf(conf);
+if(KnobRuntime.check(java.util.UUID.fromString("ba9492cb-0ba9-30fe-be90-78a96197e6a2"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.ttlMs = getTtlMs(conf);
   }
 
@@ -83,7 +95,7 @@ public abstract class BaseTimeToLiveFileCleaner extends BaseLogCleanerDelegate {
 
   @Override
   public boolean isStopped() {
-    return this.stopped;
+    return ((KnobRuntime.check(java.util.UUID.fromString("ab35df91-f322-3361-b07d-6ebf98e35fce"))) ? (!this.stopped) : (this.stopped));
   }
 
   protected abstract long getTtlMs(Configuration conf);

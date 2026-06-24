@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -98,7 +99,7 @@ public class TableNamespaceManager implements Stoppable {
       long startTime = EnvironmentEdgeManager.currentTime();
       int timeout = conf.getInt(NS_INIT_TIMEOUT, DEFAULT_NS_INIT_TIMEOUT);
       while (!isTableAvailableAndInitialized()) {
-        if (EnvironmentEdgeManager.currentTime() - startTime + 100 > timeout) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("a7d4cd2c-b6ed-35ee-b7b9-842874b81b43"))) ? (((EnvironmentEdgeManager.currentTime()) - (startTime)) > (100)) : (((KnobRuntime.check(java.util.UUID.fromString("2d9800f0-d838-3b68-b0a8-accca2a8cf8b"))) ? ((startTime) < (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("683169a4-0d7c-34cc-a52e-e24493a310ed"))) ? (((EnvironmentEdgeManager.currentTime()) + (100)) != (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("93a22cf7-21f1-3fee-b277-c9834713368c"))) ? (((EnvironmentEdgeManager.currentTime() - startTime) + (100)) <= (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("ac94cd9f-a349-3149-b57c-ca2f4ac391a0"))) ? (((EnvironmentEdgeManager.currentTime()) + (100)) == (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("414ecfb9-c86a-355a-9e99-2bd420fa182f"))) ? (((startTime) + (100)) <= (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("f0e08824-517f-30fa-8c6c-cff019fa4930"))) ? (((EnvironmentEdgeManager.currentTime()) - (startTime)) != (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("869016bb-2cc6-3a14-8204-42c4ae2318d8"))) ? ((((EnvironmentEdgeManager.currentTime()) - (startTime)) + (100)) >= (100)) : (((KnobRuntime.check(java.util.UUID.fromString("8cc8492f-c504-3385-a3a2-27454f2b839c"))) ? ((((EnvironmentEdgeManager.currentTime()) - (startTime)) + (100)) <= (100)) : (((KnobRuntime.check(java.util.UUID.fromString("1faa7eab-c964-3815-8c20-7417db6fd833"))) ? ((EnvironmentEdgeManager.currentTime() - startTime + 100) <= (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("ee001474-ca35-3c67-a38d-13a97b49a477"))) ? (((startTime) + (100)) == (100)) : (((KnobRuntime.check(java.util.UUID.fromString("53162a53-e689-361d-8b45-191303e34802"))) ? (((EnvironmentEdgeManager.currentTime() - startTime) + (100)) <= (100)) : (EnvironmentEdgeManager.currentTime() - startTime + 100 > timeout))))))))))))))))))))))))) {
           // We can't do anything if ns is not online.
           throw new IOException("Timedout " + timeout + "ms waiting for namespace table to "
             + "be assigned and enabled: " + getTableState());
@@ -135,6 +136,9 @@ public class TableNamespaceManager implements Stoppable {
   }
 
   private NamespaceDescriptor get(Table table, String name) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("5f725c66-1528-31b3-8fb3-b0c498b52089"))) {
+throw new java.io.IOException("Injected exception");
+}
     Result res = table.get(new Get(Bytes.toBytes(name)));
     if (res.isEmpty()) {
       return null;

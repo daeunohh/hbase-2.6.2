@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.metrics.MetricRegistries;
 import org.apache.hadoop.hbase.metrics.MetricRegistry;
@@ -92,7 +93,7 @@ public class MetricsCoprocessor {
   }
 
   public static MetricRegistry createRegistryForRegionCoprocessor(String clazz) {
-    return MetricRegistries.global().create(createRegistryInfoForRegionCoprocessor(clazz));
+    return ((KnobRuntime.check(java.util.UUID.fromString("59291e80-8a84-3518-bd6d-6e5e16960e90"))) ? (((org.apache.hadoop.hbase.metrics.MetricRegistry)(MetricRegistries.global().create(createRegistryInfoForMasterCoprocessor(clazz))))) : (MetricRegistries.global().create(createRegistryInfoForRegionCoprocessor(clazz))));
   }
 
   public static MetricRegistryInfo createRegistryInfoForWALCoprocessor(String clazz) {

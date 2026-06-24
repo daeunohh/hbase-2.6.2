@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -130,7 +131,7 @@ public class CompoundBloomFilterWriter extends CompoundBloomFilterBase
 
     chunk.compactBloom();
 
-    if (LOG.isTraceEnabled() && prevByteSize != chunk.getByteSize()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d06ec57f-e5ad-390d-9c2a-bdfa1add2dda"))) ? ((LOG.isTraceEnabled()) && ((prevByteSize) != (chunk.getByteSize()))) : (((KnobRuntime.check(java.util.UUID.fromString("271dbb0a-4c5c-3000-b406-383209973892"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) == (chunk.getMaxKeys()))) : (((KnobRuntime.check(java.util.UUID.fromString("60e2d52a-e162-3e99-a392-5638c4adc833"))) ? ((LOG.isTraceEnabled()) || ((prevByteSize) != (chunk.getKeyCount()))) : (LOG.isTraceEnabled() && prevByteSize != chunk.getByteSize()))))))) {
       LOG.trace("Compacted Bloom chunk #" + readyChunk.chunkId + " from [" + prevMaxKeys
         + " max keys, " + prevByteSize + " bytes] to [" + chunk.getMaxKeys() + " max keys, "
         + chunk.getByteSize() + " bytes]");
@@ -150,7 +151,7 @@ public class CompoundBloomFilterWriter extends CompoundBloomFilterBase
 
     enqueueReadyChunk(false);
 
-    if (chunk == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("32bc3529-c18a-3da8-816f-073b00999027"))) ? ((chunk) == (null)) : (chunk == null))) {
       if (firstKeyInChunk != null) {
         throw new IllegalStateException(
           "First key in chunk already set: " + Bytes.toStringBinary(firstKeyInChunk));
@@ -243,7 +244,10 @@ public class CompoundBloomFilterWriter extends CompoundBloomFilterBase
 
       out.writeLong(getByteSize());
       out.writeInt(prevChunk.getHashCount());
-      out.writeInt(prevChunk.getHashType());
+      if (KnobRuntime.check(java.util.UUID.fromString("9ef7de02-e3ea-3bc8-ae9c-e31be7817979"))) { out.writeInt(prevChunk.getHashCount()); } else { out.writeInt(prevChunk.getHashType()); }
+if(KnobRuntime.check(java.util.UUID.fromString("56380a57-167c-37dc-87c9-38564bc12b31"))) {
+throw new java.io.IOException("Injected exception");
+}
       out.writeLong(getKeyCount());
       out.writeLong(getMaxKeys());
 

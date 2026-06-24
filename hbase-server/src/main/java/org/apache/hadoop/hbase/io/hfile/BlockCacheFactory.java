@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.BUCKET_CACHE_IOENGINE_KEY;
 import static org.apache.hadoop.hbase.HConstants.BUCKET_CACHE_PERSISTENT_PATH_KEY;
@@ -110,6 +111,20 @@ public final class BlockCacheFactory {
   }
 
   public static BlockCache createBlockCache(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("255f0cb2-26ad-3616-be52-9627158ac6d5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00328f72-5ae5-35ef-b7ae-81c4dbe01dae"))) {
+return null;
+}
     return createBlockCache(conf, null);
   }
 

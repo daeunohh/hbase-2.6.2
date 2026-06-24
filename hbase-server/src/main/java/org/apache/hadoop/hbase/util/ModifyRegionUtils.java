@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -63,7 +64,10 @@ public abstract class ModifyRegionUtils {
     byte[][] splitKeys) {
     long regionId = EnvironmentEdgeManager.currentTime();
     RegionInfo[] hRegionInfos = null;
-    if (splitKeys == null || splitKeys.length == 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2bcd7c30-b677-3a24-ae40-d59821000735"))) ? (((splitKeys) == (null)) || ((splitKeys.length) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a9c6b8c1-f65f-36a4-a66e-c0d9b45c06fa"))) ? (((splitKeys) == (null)) && ((splitKeys.length) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8dfc17f0-37c6-362a-b003-36471ff239c8"))) ? ((splitKeys == null) || (splitKeys.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("9b184bde-f86a-3049-9c57-c3b57fb1ca0e"))) ? (((splitKeys) != (null)) && (splitKeys.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("a553ab47-9454-3100-9888-8a9e3d52c65f"))) ? ((splitKeys == null) && ((splitKeys.length + 1) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a15988b4-599a-3099-b225-cf5ce3ddcb91"))) ? (((splitKeys) != (null)) || ((splitKeys.length) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("215354e9-874a-3010-9b82-c6f0a5ea0856"))) ? (((splitKeys) == (null)) || ((splitKeys.length + 1) != (0))) : (splitKeys == null || splitKeys.length == 0))))))))))))))) {
+if(KnobRuntime.check(java.util.UUID.fromString("9a8ec329-15cd-398e-8064-4d0515731855"))) {
+regionId = 0;
+}
       hRegionInfos = new RegionInfo[] { RegionInfoBuilder.newBuilder(tableDescriptor.getTableName())
         .setStartKey(null).setEndKey(null).setSplit(false).setRegionId(regionId).build() };
     } else {
@@ -73,6 +77,9 @@ public abstract class ModifyRegionUtils {
       byte[] endKey = null;
       for (int i = 0; i < numRegions; i++) {
         endKey = (i == splitKeys.length) ? null : splitKeys[i];
+if(KnobRuntime.check(java.util.UUID.fromString("2b0fe0f3-26eb-3aef-8ebe-83d6428cc0c6"))) {
+regionId = -1;
+}
         hRegionInfos[i] = RegionInfoBuilder.newBuilder(tableDescriptor.getTableName())
           .setStartKey(startKey).setEndKey(endKey).setSplit(false).setRegionId(regionId).build();
         startKey = endKey;

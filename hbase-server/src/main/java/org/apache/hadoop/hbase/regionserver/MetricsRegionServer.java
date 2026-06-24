@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
@@ -98,10 +99,24 @@ public class MetricsRegionServer {
   }
 
   public MetricsRegionServerWrapper getRegionServerWrapper() {
+if(KnobRuntime.check(java.util.UUID.fromString("ee2e5baf-e1ee-3a91-a769-626461ba689b"))) {
+return null;
+}
     return regionServerWrapper;
   }
 
   public void updatePutBatch(HRegion region, long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("c23d49ea-9f1a-3bc0-bd02-f0442cbaf5e0"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("memstoreFlushSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
       region.getMetricsTableRequests().updatePutBatch(t);
     }
@@ -109,7 +124,32 @@ public class MetricsRegionServer {
   }
 
   public void updatePut(HRegion region, long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("401a5352-fafc-3114-bca3-7962a83e5887"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("aeabcce5-8ead-3da0-9d67-edc8e6bed60d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedOpenRegionSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("7eb86090-eaf8-3ffb-b200-b2016a28649c"))) {
+t = -1;
+}
       region.getMetricsTableRequests().updatePut(t);
     }
     if (t > slowMetricTime) {
@@ -120,26 +160,131 @@ public class MetricsRegionServer {
   }
 
   public void updateDelete(HRegion region, long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("530bbe5a-4b27-3eda-becc-3cdf10ee6357"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowLockWaitDuration");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5c3ccd3b-0c0f-3d3f-b842-b815b318039f"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9d01ae94-06b7-36bd-856a-d77e6658cd7a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowLockWaitDuration");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c500fffd-ecc1-31c6-bb3d-e5d592d086eb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("busyWaitDuration");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
       region.getMetricsTableRequests().updateDelete(t);
     }
     if (t > slowMetricTime) {
-      serverSource.incrSlowDelete();
+      if (KnobRuntime.check(java.util.UUID.fromString("a98a16d9-ce1d-33c7-80ce-2daf9eb2124d"))) { serverSource.incrSlowGet(); } else { serverSource.incrSlowDelete(); }
     }
     serverSource.updateDelete(t);
     userAggregate.updateDelete(t);
   }
 
   public void updateDeleteBatch(HRegion region, long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("f26ea14f-1314-33a9-8a6d-d0e6d258916e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("timestampSlop");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("46d10797-b9ed-3524-ad53-432c58d61758"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushCheckInterval");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("647b1e3c-b51b-3416-ae1b-55b8bd87dbcf"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushPerChanges");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("87f5d238-1816-3636-92b3-c5fbf96c0905"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("b073c750-9b60-3e2f-a315-d149592e0709"))) {
+t = -1;
+}
       region.getMetricsTableRequests().updateDeleteBatch(t);
     }
     serverSource.updateDeleteBatch(t);
   }
 
   public void updateCheckAndDelete(HRegion region, long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("0270a901-263e-3304-9510-85b9aefe435b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushCheckInterval");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2c48e6b5-de36-3b1f-9e2d-d34a9fdbadf4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowLockWaitDuration");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
-      region.getMetricsTableRequests().updateCheckAndDelete(t);
+      if (KnobRuntime.check(java.util.UUID.fromString("7a792a6d-2e4e-3299-be63-ede9e21218f2"))) { region.getMetricsTableRequests().updateDelete(t); } else { region.getMetricsTableRequests().updateCheckAndDelete(t); }
     }
     serverSource.updateCheckAndDelete(t);
   }
@@ -167,11 +312,50 @@ public class MetricsRegionServer {
       serverSource.incrSlowGet();
     }
     serverSource.updateGet(time, blockBytesScanned);
+if(KnobRuntime.check(java.util.UUID.fromString("00096d0c-8e4b-3298-a0ae-6cd9b913f055"))) {
+blockBytesScanned = 0;
+}
     userAggregate.updateGet(time, blockBytesScanned);
   }
 
   public void updateIncrement(HRegion region, long time, long blockBytesScanned) {
+if(KnobRuntime.check(java.util.UUID.fromString("b7502450-61f9-301f-916b-35d65ec5bdff"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("minBlockSizeBytes");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("80a5e543-e12c-3cb8-8eed-5f07f0de6351"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushPerChanges");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2d84c872-6965-391d-94ad-8696f25f8a76"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("isRestoredRegion");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(region);
+    _knob_field_.set(region, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("26b46ca5-f44a-3f14-9138-4f3009f1a466"))) {
+time = 0;
+}
       region.getMetricsTableRequests().updateIncrement(time, blockBytesScanned);
     }
     if (time > slowMetricTime) {
@@ -232,7 +416,7 @@ public class MetricsRegionServer {
 
   public void updateCompaction(String table, boolean isMajor, long t, int inputFileCount,
     int outputFileCount, long inputBytes, long outputBytes) {
-    serverSource.updateCompactionTime(isMajor, t);
+    if (KnobRuntime.check(java.util.UUID.fromString("fffba14d-9682-34ae-8c16-3f31e34c28a6"))) { serverSource.updateCompactionOutputFileCount(!isMajor, t); } else { serverSource.updateCompactionTime(isMajor, t); }
     serverSource.updateCompactionInputFileCount(isMajor, inputFileCount);
     serverSource.updateCompactionOutputFileCount(isMajor, outputFileCount);
     serverSource.updateCompactionInputSize(isMajor, inputBytes);
@@ -270,6 +454,50 @@ public class MetricsRegionServer {
   }
 
   public void updateWriteQueryMeter(HRegion region) {
+if(KnobRuntime.check(java.util.UUID.fromString("8fd495a2-cf78-32d9-b1da-ba632c625540"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxFlushedSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f9bcfbac-608b-3062-b255-d9183b134bbf"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushCheckInterval");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2234e159-6c5b-3324-95bf-ed3a55f2bb38"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxCellSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1ec5a722-d084-3251-91f4-ca211e4cbeea"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("minBlockSizeBytes");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (region.getMetricsTableRequests() != null) {
       region.getMetricsTableRequests().updateTableWriteQueryMeter();
     }
@@ -282,6 +510,12 @@ public class MetricsRegionServer {
    * @see MetricsRegionServerQuotaSource#incrementNumRegionSizeReportsSent(long)
    */
   public void incrementNumRegionSizeReportsSent(long numReportsSent) {
+if(KnobRuntime.check(java.util.UUID.fromString("033d26f9-1d2d-3b8a-b6db-f304c26f27cf"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2494bb4c-a340-3e2b-8f3e-bb00d88aeccf"))) {
+numReportsSent += 1;
+}
     quotaSource.incrementNumRegionSizeReportsSent(numReportsSent);
   }
 

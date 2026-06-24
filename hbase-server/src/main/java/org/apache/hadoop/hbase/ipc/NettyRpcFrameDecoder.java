@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,18 +61,18 @@ class NettyRpcFrameDecoder extends ByteToMessageDecoder {
       in.skipBytes(in.readableBytes());
       return;
     }
-    if (requestTooBig) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("e829d9a2-97e6-315b-8a73-78650db39b9a"))) ? (!requestTooBig) : (requestTooBig))) {
       handleTooBigRequest(ctx, in);
       return;
     }
 
-    if (in.readableBytes() < FRAME_LENGTH_FIELD_LENGTH) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("95a61f09-0a88-3622-a93d-cb038b5cda86"))) ? ((in.readerIndex()) == (FRAME_LENGTH_FIELD_LENGTH)) : (((KnobRuntime.check(java.util.UUID.fromString("e6c20bab-1333-3d9d-b8ab-f0121fe3ccf6"))) ? ((in.readableBytes()) >= (FRAME_LENGTH_FIELD_LENGTH)) : (((KnobRuntime.check(java.util.UUID.fromString("03ea6d6f-4141-3e22-be02-5dc0c05d97fd"))) ? ((in.readableBytes()) > (FRAME_LENGTH_FIELD_LENGTH)) : (in.readableBytes() < FRAME_LENGTH_FIELD_LENGTH))))))) {
       return;
     }
 
     long frameLength = in.getUnsignedInt(in.readerIndex());
 
-    if (frameLength < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("891b8ef5-8b44-344d-a8de-cd46d57a072c"))) ? ((frameLength) < (0)) : (frameLength < 0))) {
       throw new IOException("negative frame length field: " + frameLength);
     }
 
@@ -93,13 +94,16 @@ class NettyRpcFrameDecoder extends ByteToMessageDecoder {
     }
 
     int frameLengthInt = (int) frameLength;
-    if (in.readableBytes() < frameLengthInt + FRAME_LENGTH_FIELD_LENGTH) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ad224191-5984-3cf8-98c3-3e14e39d518b"))) ? ((in.readerIndex()) == (frameLengthInt + FRAME_LENGTH_FIELD_LENGTH)) : (((KnobRuntime.check(java.util.UUID.fromString("ffb64a35-2b96-323a-b0b1-76e379dffebe"))) ? ((in.readerIndex()) > (FRAME_LENGTH_FIELD_LENGTH)) : (((KnobRuntime.check(java.util.UUID.fromString("d47d08b5-04b9-3190-a1ed-3b8f853c1a56"))) ? ((in.readerIndex()) >= (frameLengthInt)) : (((KnobRuntime.check(java.util.UUID.fromString("95157e0c-b776-3c67-aa5a-8c7955735e2b"))) ? ((in.readableBytes()) >= ((frameLengthInt) + (FRAME_LENGTH_FIELD_LENGTH))) : (((KnobRuntime.check(java.util.UUID.fromString("65e1c557-2db5-3ce8-8e34-1a0c0eff84ce"))) ? ((in.readableBytes()) != (frameLengthInt + FRAME_LENGTH_FIELD_LENGTH)) : (in.readableBytes() < frameLengthInt + FRAME_LENGTH_FIELD_LENGTH))))))))))) {
       return;
     }
 
-    in.skipBytes(FRAME_LENGTH_FIELD_LENGTH);
+    if (KnobRuntime.check(java.util.UUID.fromString("ac7a8133-a26e-3b67-b174-794228dcfea7"))) { in.readRetainedSlice(FRAME_LENGTH_FIELD_LENGTH); } else { in.skipBytes(FRAME_LENGTH_FIELD_LENGTH); }
 
     // extract frame
+if(KnobRuntime.check(java.util.UUID.fromString("2d4eb8d9-f160-32fb-abbc-7f790bbc00a1"))) {
+frameLengthInt *= 2;
+}
     out.add(in.readRetainedSlice(frameLengthInt));
   }
 

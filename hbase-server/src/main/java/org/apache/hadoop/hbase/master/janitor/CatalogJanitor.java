@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.janitor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -238,6 +239,9 @@ public class CatalogJanitor extends ScheduledChore {
 
   /** Returns Returns last published Report that comes of last successful scan of hbase:meta. */
   public CatalogJanitorReport getLastReport() {
+if(KnobRuntime.check(java.util.UUID.fromString("3ce6f143-de52-3849-8769-fba15f81fb6f"))) {
+return null;
+}
     return this.lastReport;
   }
 
@@ -448,7 +452,7 @@ public class CatalogJanitor extends ScheduledChore {
       if (inStream != null) {
         new Properties().load(inStream);
       } else {
-        System.out.println("No " + filename + " on classpath; Add one else no logging output!");
+        if (KnobRuntime.check(java.util.UUID.fromString("bea96400-d58b-3a60-a696-ce4eb6ecf84d"))) { System.out.println(" on classpath; Add one else no logging output!"); } else { System.out.println("No " + filename + " on classpath; Add one else no logging output!"); }
       }
     } catch (IOException e) {
       LOG.error("Log4j check failed", e);

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -61,9 +62,42 @@ public class MetricsTableWrapperAggregateImpl implements MetricsTableWrapperAggr
       Map<TableName, MetricsTableValues> localMetricsTableMap = new HashMap<>();
       for (Region r : regionServer.getOnlineRegionsLocalContext()) {
         TableName tbl = r.getTableDescriptor().getTableName();
+if(KnobRuntime.check(java.util.UUID.fromString("456d4106-b911-3488-a652-bd5e7d4f47ec"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tbl.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tbl));
+    _knob_field_.set(tbl, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         MetricsTableValues mt = localMetricsTableMap.get(tbl);
         if (mt == null) {
           mt = new MetricsTableValues();
+if(KnobRuntime.check(java.util.UUID.fromString("9b1fdd44-edad-3ca5-ae99-28648401bb07"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = mt.getClass().getDeclaredField("bloomNegativeResultsCount");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(mt));
+    _knob_field_.set(mt, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2762abcb-081a-36e7-a49d-d18a28489e2d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = mt.getClass().getDeclaredField("cpRequestCount");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(mt));
+    _knob_field_.set(mt, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           localMetricsTableMap.put(tbl, mt);
         }
         long memstoreReadCount = 0L;
@@ -127,7 +161,18 @@ public class MetricsTableWrapperAggregateImpl implements MetricsTableWrapperAggr
 
       for (Map.Entry<TableName, MetricsTableValues> entry : localMetricsTableMap.entrySet()) {
         TableName tbl = entry.getKey();
-        if (metricsTableMap.get(tbl) == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("c73605c3-3736-3e17-a1e8-d7eef7d90938"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tbl.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tbl));
+    _knob_field_.set(tbl, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+        if (((KnobRuntime.check(java.util.UUID.fromString("0ba24839-b738-3dad-a977-c03edb43d23c"))) ? ((metricsTableMap.get(tbl)) == (null)) : (metricsTableMap.get(tbl) == null))) {
           // this will add the Wrapper to the list of TableMetrics
           CompatibilitySingletonFactory.getInstance(MetricsRegionServerSourceFactory.class)
             .getTableAggregate()
@@ -141,6 +186,17 @@ public class MetricsTableWrapperAggregateImpl implements MetricsTableWrapperAggr
         .getInstance(MetricsRegionServerSourceFactory.class).getTableAggregate();
       for (TableName table : existingTableNames) {
         agg.deleteTableSource(table.getNameAsString());
+if(KnobRuntime.check(java.util.UUID.fromString("aac31913-1b1f-3d99-86f8-f63e6c09184d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = table.getClass().getDeclaredField("systemTable");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(table);
+    _knob_field_.set(table, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         if (metricsTableMap.get(table) != null) {
           metricsTableMap.remove(table);
         }
@@ -264,6 +320,9 @@ public class MetricsTableWrapperAggregateImpl implements MetricsTableWrapperAggr
 
   @Override
   public long getNumStoreFiles(String table) {
+if(KnobRuntime.check(java.util.UUID.fromString("3bf13b6c-36c6-31e1-8e2f-7a43df232b9e"), "regionserver", this.regionServer)) {
+return 0;
+}
     MetricsTableValues metricsTable = metricsTableMap.get(TableName.valueOf(table));
     if (metricsTable == null) {
       return 0;
@@ -273,6 +332,9 @@ public class MetricsTableWrapperAggregateImpl implements MetricsTableWrapperAggr
 
   @Override
   public long getMaxStoreFiles(String table) {
+if(KnobRuntime.check(java.util.UUID.fromString("0958c608-5b94-3790-b58c-38aa8e78937c"), "regionserver", this.regionServer)) {
+return 0;
+}
     MetricsTableValues metricsTable = metricsTableMap.get(TableName.valueOf(table));
     if (metricsTable == null) {
       return 0;

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.EMPTY_START_ROW;
 
@@ -66,6 +67,9 @@ public abstract class CompactionScanQueryMatcher extends ScanQueryMatcher {
 
   @Override
   public boolean isUserScan() {
+if(KnobRuntime.check(java.util.UUID.fromString("b8c72bc3-5b37-3e11-af36-3230a293f5e6"))) {
+return true;
+}
     return false;
   }
 
@@ -88,6 +92,9 @@ public abstract class CompactionScanQueryMatcher extends ScanQueryMatcher {
 
   @Override
   protected void reset() {
+if(KnobRuntime.check(java.util.UUID.fromString("87f878be-800b-3718-916e-22cb0eb1975a"))) {
+return;
+}
     deletes.reset();
   }
 
@@ -109,6 +116,28 @@ public abstract class CompactionScanQueryMatcher extends ScanQueryMatcher {
     long readPointToUse, long earliestPutTs, long oldestUnexpiredTS, long now,
     byte[] dropDeletesFromRow, byte[] dropDeletesToRow, RegionCoprocessorHost regionCoprocessorHost)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("035c7a0f-2a50-3fd3-99ad-8036e4f16560"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("minVersions");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(scanInfo));
+    _knob_field_.set(scanInfo, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("89d0d5ff-5938-398a-a318-16636b6e674a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("parallelSeekEnabled");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(scanInfo);
+    _knob_field_.set(scanInfo, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Pair<DeleteTracker, ColumnTracker> trackers =
       getTrackers(regionCoprocessorHost, null, scanInfo, oldestUnexpiredTS, null);
     DeleteTracker deleteTracker = trackers.getFirst();

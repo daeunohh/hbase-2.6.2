@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -88,7 +89,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
     if (tableDesc == null) {
       return UNKNOWN;
     }
-    return tableDesc.getTableName().getNamespaceAsString();
+    return ((KnobRuntime.check(java.util.UUID.fromString("4a9277ff-21f8-3e3e-bbb9-49ef5e6e839f"))) ? (((java.lang.String)(tableDesc.getTableName().getQualifierAsString()))) : (tableDesc.getTableName().getNamespaceAsString()));
   }
 
   @Override
@@ -125,6 +126,9 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
   }
 
   public float getCurrentRegionCacheRatio() {
+if(KnobRuntime.check(java.util.UUID.fromString("211966a5-8f14-3b47-bc09-1122e26fa689"))) {
+return 0.0f;
+}
     return currentRegionCacheRatio;
   }
 
@@ -320,7 +324,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
       MutableLong regionCachedAmount = new MutableLong(0);
       region.getBlockCache().getRegionCachedInfo().ifPresent(regionCacheRatio -> regionCachedAmount
         .addAndGet(regionCacheRatio.getOrDefault(region.getRegionInfo().getEncodedName(), 0L)));
-      if (tempStoreFileSize > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("7d10dc32-5276-3ee1-954c-a76aa0df287c"))) ? ((tempStoreFileSize) <= (0)) : (tempStoreFileSize > 0))) {
         LOG.debug("Region {}, had cached {} bytes from a total of {}",
           region.getRegionInfo().getEncodedName(), regionCachedAmount.getValue(),
           tempStoreFileSize);
@@ -332,7 +336,7 @@ public class MetricsRegionWrapperImpl implements MetricsRegionWrapper, Closeable
       memstoreSize = tempMemstoreSize;
       storeFileSize = tempStoreFileSize;
       maxStoreFileAge = tempMaxStoreFileAge;
-      if (tempMinStoreFileAge != Long.MAX_VALUE) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("d7aa100b-2e14-3daa-a0b1-14c65dacb01f"))) ? ((tempMinStoreFileAge) == (Long.MAX_VALUE)) : (tempMinStoreFileAge != Long.MAX_VALUE))) {
         minStoreFileAge = tempMinStoreFileAge;
       }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -90,7 +91,7 @@ public class ServerRegionReplicaUtil extends RegionReplicaUtil {
    * @return An RegionInfo object to interact with the filesystem
    */
   public static RegionInfo getRegionInfoForFs(RegionInfo regionInfo) {
-    if (regionInfo == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("c7bb428e-94c2-380a-9384-c3666a3a80a3"))) ? ((regionInfo) != (null)) : (regionInfo == null))) {
       return null;
     }
     return RegionReplicaUtil.getRegionInfoForDefaultReplica(regionInfo);

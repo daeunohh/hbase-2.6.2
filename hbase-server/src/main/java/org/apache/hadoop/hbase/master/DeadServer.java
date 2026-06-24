@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -80,6 +81,9 @@ public class DeadServer {
   }
 
   public synchronized Set<ServerName> copyServerNames() {
+if(KnobRuntime.check(java.util.UUID.fromString("6945fc1d-f104-3234-b263-de5ebc741a81"))) {
+return null;
+}
     Set<ServerName> clone = new HashSet<>(deadServers.size());
     clone.addAll(deadServers.keySet());
     return clone;

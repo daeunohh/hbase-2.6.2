@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import org.apache.hadoop.conf.Configured;
@@ -37,6 +38,39 @@ public abstract class FlushPolicy extends Configured {
    * once and only once.
    */
   protected void configureForRegion(HRegion region) {
+if(KnobRuntime.check(java.util.UUID.fromString("80c215ec-e3da-3c25-b9c8-44208df84bb6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowProcessorTimeout");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8b972071-0010-3338-9191-c7584de31f48"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxCellSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0b127bc7-041f-362b-bfc2-e7ba0ca9c865"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitDuration");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.region = region;
   }
 

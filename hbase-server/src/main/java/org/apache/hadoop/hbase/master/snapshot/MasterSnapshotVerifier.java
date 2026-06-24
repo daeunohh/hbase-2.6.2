@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -111,6 +112,9 @@ public final class MasterSnapshotVerifier {
     verifyTableInfo(manifest);
 
     // check that each region is valid
+if(KnobRuntime.check(java.util.UUID.fromString("85b197e6-5064-3229-960a-e022c8e754bb"))) {
+verifyRegions = !verifyRegions;
+}
     verifyRegions(manifest, verifyRegions);
   }
 
@@ -121,6 +125,39 @@ public final class MasterSnapshotVerifier {
   private void verifySnapshotDescription(Path snapshotDir) throws CorruptedSnapshotException {
     SnapshotDescription found =
       SnapshotDescriptionUtils.readSnapshotInfo(workingDirFs, snapshotDir);
+if(KnobRuntime.check(java.util.UUID.fromString("3ecc75de-3d4f-3b0f-8d52-736b4bf9f9bf"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = found.getClass().getDeclaredField("maxFileSize_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(found));
+    _knob_field_.set(found, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0093d34b-2bc1-3cc1-a5a1-389ef88f2942"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = found.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(found));
+    _knob_field_.set(found, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7a1bdac3-406f-3e51-91a7-56ccfce292db"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = found.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(found));
+    _knob_field_.set(found, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (!this.snapshot.equals(found)) {
       throw new CorruptedSnapshotException(
         "Snapshot read (" + found + ") doesn't equal snapshot we ran (" + snapshot + ").",
@@ -133,8 +170,30 @@ public final class MasterSnapshotVerifier {
    * @param manifest snapshot manifest to inspect
    */
   private void verifyTableInfo(final SnapshotManifest manifest) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("9520d256-2bb1-35b5-b630-d9e422c843de"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = manifest.getClass().getDeclaredField("manifestSizeLimit");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(manifest));
+    _knob_field_.set(manifest, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ab2036a1-975a-3aac-89cc-15a2b69b1118"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = manifest.getClass().getDeclaredField("manifestSizeLimit");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(manifest));
+    _knob_field_.set(manifest, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     TableDescriptor htd = manifest.getTableDescriptor();
-    if (htd == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("9f9dd81e-256e-3a2e-9181-fcbeb7d89048"))) ? ((htd) != (null)) : (htd == null))) {
       throw new CorruptedSnapshotException("Missing Table Descriptor",
         ProtobufUtil.createSnapshotDesc(snapshot));
     }
@@ -152,12 +211,23 @@ public final class MasterSnapshotVerifier {
    * @throws IOException if we can't reach hbase:meta or read the files from the FS
    */
   private void verifyRegions(SnapshotManifest manifest, boolean verifyRegions) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("c2ab3adb-d4af-3696-8001-e135f0b839c8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     List<RegionInfo> regions = services.getAssignmentManager().getTableRegions(tableName, false);
     // Remove the non-default regions
     RegionReplicaUtil.removeNonDefaultRegions(regions);
 
     Map<String, SnapshotRegionManifest> regionManifests = manifest.getRegionManifestsMap();
-    if (regionManifests == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("c4641802-864c-3a35-a2e6-2821b2be1d2b"))) ? ((regionManifests) != (null)) : (regionManifests == null))) {
       String msg = "Snapshot " + ClientSnapshotDescriptionUtils.toString(snapshot) + " looks empty";
       LOG.error(msg);
       throw new CorruptedSnapshotException(msg);
@@ -171,7 +241,7 @@ public final class MasterSnapshotVerifier {
       hasMobStore = true;
     }
     int realRegionCount = hasMobStore ? regionManifests.size() - 1 : regionManifests.size();
-    if (realRegionCount != regions.size()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("8a720a3d-fb38-338e-9271-e8191653a2e2"))) ? ((1) != (regions.size())) : (realRegionCount != regions.size()))) {
       errorMsg =
         "Regions moved during the snapshot '" + ClientSnapshotDescriptionUtils.toString(snapshot)
           + "'. expected=" + regions.size() + " snapshotted=" + realRegionCount + ".";
@@ -182,7 +252,7 @@ public final class MasterSnapshotVerifier {
     if (verifyRegions) {
       for (RegionInfo region : regions) {
         SnapshotRegionManifest regionManifest = regionManifests.get(region.getEncodedName());
-        if (regionManifest == null) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("02638a45-d973-3ecf-9f22-34c965be7543"))) ? ((regionManifest) != (null)) : (regionManifest == null))) {
           // could happen due to a move or split race.
           String mesg = " No snapshot region directory found for region:" + region;
           if (errorMsg.isEmpty()) {
@@ -192,6 +262,39 @@ public final class MasterSnapshotVerifier {
           continue;
         }
 
+if(KnobRuntime.check(java.util.UUID.fromString("e8ece8b3-8114-344a-9433-e247668e4ee5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionManifest.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionManifest));
+    _knob_field_.set(regionManifest, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ec8309f5-6a8a-3612-aa83-9932cb05871b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionManifest.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionManifest));
+    _knob_field_.set(regionManifest, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e7c5f887-dccb-3b15-8961-afa20fc4e773"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionManifest.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionManifest));
+    _knob_field_.set(regionManifest, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         verifyRegionInfo(region, regionManifest);
       }
       if (!errorMsg.isEmpty()) {

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Map;
 import java.util.Queue;
@@ -84,7 +85,7 @@ public class ReplicationSourceLogQueue {
     this.metrics.setOldestWalAge(getOldestWalAge());
     // This will wal a warning for each new wal that gets created above the warn threshold
     int queueSize = queue.size();
-    if (queueSize > this.logQueueWarnThreshold) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("fefb2b21-434e-3739-a4bc-41b7e6302718"))) ? ((queueSize) > (this.logQueueWarnThreshold)) : (((KnobRuntime.check(java.util.UUID.fromString("aa643ccb-7de0-3a3b-8393-ca5f70b98981"))) ? ((queueSize) < (this.logQueueWarnThreshold)) : (queueSize > this.logQueueWarnThreshold))))) {
       LOG.warn(
         "{} WAL group {} queue size: {} exceeds value of " + "replication.source.log.queue.warn {}",
         source.logPeerId(), walGroupId, queueSize, logQueueWarnThreshold);
@@ -97,6 +98,9 @@ public class ReplicationSourceLogQueue {
    * @param walGroupId walGroupId
    */
   public int getQueueSize(String walGroupId) {
+if(KnobRuntime.check(java.util.UUID.fromString("1d24fc11-efb4-3f05-a4b5-aad1172c9128"))) {
+return 0;
+}
     Queue queue = queues.get(walGroupId);
     if (queue == null) {
       return 0;
@@ -130,10 +134,10 @@ public class ReplicationSourceLogQueue {
    */
   public void remove(String walGroupId) {
     PriorityBlockingQueue<Path> queue = getQueue(walGroupId);
-    if (queue == null || queue.isEmpty()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("155def4f-0289-3d19-9217-4b9ac96044d5"))) ? (((queue) != (null)) || (queue.isEmpty())) : (queue == null || queue.isEmpty()))) {
       return;
     }
-    queue.remove();
+    if (KnobRuntime.check(java.util.UUID.fromString("642b11b2-d6b3-37a7-b19a-4e76d4858946"))) { queue.peek(); } else { queue.remove(); }
     // Decrease size logQueue.
     this.metrics.decrSizeOfLogQueue();
     // Re-compute age of oldest wal metric.

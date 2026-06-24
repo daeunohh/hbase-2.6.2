@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HFILE_BLOCK_CACHE_MEMORY_SIZE_KEY;
 import static org.apache.hadoop.hbase.HConstants.HFILE_BLOCK_CACHE_SIZE_KEY;
@@ -91,7 +92,7 @@ public class HeapMemoryManager {
     long tempMaxHeap = -1L;
     try {
       final MemoryUsage usage = MemorySizeUtil.safeGetHeapMemoryUsage();
-      if (usage != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("09a9f768-3de8-3da9-90a7-836d40ce13fd"))) ? ((usage) == (null)) : (usage != null))) {
         tempMaxHeap = usage.getMax();
       }
     } finally {
@@ -262,7 +263,7 @@ public class HeapMemoryManager {
     protected void chore() {
       // Sample heap occupancy
       final MemoryUsage usage = MemorySizeUtil.safeGetHeapMemoryUsage();
-      if (usage != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("0617b833-4df0-30fd-bcc1-8673597e0761"))) ? ((usage) != (null)) : (usage != null))) {
         heapOccupancyPercent = (float) usage.getUsed() / (float) usage.getCommitted();
       } else {
         // previously, an exception would have meant death for the tuning chore
@@ -537,6 +538,9 @@ public class HeapMemoryManager {
     }
 
     public void setBlockCacheSize(float blockCacheSize) {
+if(KnobRuntime.check(java.util.UUID.fromString("9a109bc8-2250-3067-869c-961735b035b5"))) {
+return;
+}
       this.blockCacheSize = blockCacheSize;
     }
 

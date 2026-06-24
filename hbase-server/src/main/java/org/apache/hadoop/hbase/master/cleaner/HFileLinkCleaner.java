@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -47,6 +48,20 @@ public class HFileLinkCleaner extends BaseHFileCleanerDelegate {
 
   @Override
   public boolean isFileDeletable(FileStatus fStat) {
+if(KnobRuntime.check(java.util.UUID.fromString("244fe63d-79f1-3b13-9310-71e8babe2744"))) {
+return true;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("55596e77-c542-3f35-8e88-3b90bdf41944"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fStat.getClass().getDeclaredField("blocksize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(fStat));
+    _knob_field_.set(fStat, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     lock.readLock().lock();
     try {
       if (this.fs == null) {
@@ -101,6 +116,28 @@ public class HFileLinkCleaner extends BaseHFileCleanerDelegate {
         // with this optimization, the chore could save one round compute time if we're visiting
         // the archive HFile earlier than the HFile Link
         for (FileStatus fileStatus : fileStatuses) {
+if(KnobRuntime.check(java.util.UUID.fromString("e3969682-81e3-3006-a536-00515eafe70a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fileStatus.getClass().getDeclaredField("access_time");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(fileStatus));
+    _knob_field_.set(fileStatus, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c905566d-1f31-37be-a865-0eada55f8de1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fileStatus.getClass().getDeclaredField("access_time");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(fileStatus));
+    _knob_field_.set(fileStatus, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           if (!isFileDeletable(fileStatus)) {
             return false;
           }
@@ -121,10 +158,21 @@ public class HFileLinkCleaner extends BaseHFileCleanerDelegate {
 
   @Override
   public void setConf(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("84aed757-548c-39e2-b0e1-ef6d9b90fc9b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     super.setConf(conf);
 
     // setup filesystem
-    lock.writeLock().lock();
+    if (KnobRuntime.check(java.util.UUID.fromString("60a7abe5-b8c3-3efb-9dcf-80e6f8f3bea5"))) { lock.writeLock().unlock(); } else { lock.writeLock().lock(); }
     try {
       this.fs = FileSystem.get(this.getConf());
     } catch (IOException e) {

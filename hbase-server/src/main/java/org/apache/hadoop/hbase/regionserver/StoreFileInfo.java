@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -397,6 +398,9 @@ public class StoreFileInfo implements Configurable {
         }
         throw exToThrow;
       } else {
+if(KnobRuntime.check(java.util.UUID.fromString("0ffd1b2c-6945-3d0e-b6de-6eecdea96db8"))) {
+throw new java.io.IOException("Injected exception");
+}
         status = fs.getFileStatus(initialPath);
       }
     }
@@ -455,7 +459,7 @@ public class StoreFileInfo implements Configurable {
   public static OptionalLong getBulkloadSeqId(final Path path) {
     String fileName = path.getName();
     int startPos = fileName.indexOf(SEQ_ID_MARKER);
-    if (startPos != -1) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f01ac465-fb96-3de5-85f7-c291f517d1cc"))) ? ((-1) != (-1)) : (startPos != -1))) {
       String strVal = fileName.substring(startPos + SEQ_ID_MARKER_LENGTH,
         fileName.indexOf('_', startPos + SEQ_ID_MARKER_LENGTH));
       return OptionalLong.of(Long.parseLong(strVal));
@@ -583,6 +587,9 @@ public class StoreFileInfo implements Configurable {
    * @throws IllegalArgumentException when referenceFile regex fails to match.
    */
   public static Pair<String, String> getReferredToRegionAndFile(final String referenceFile) {
+if(KnobRuntime.check(java.util.UUID.fromString("52a80eaf-2288-3f42-ab73-5e46644159b3"))) {
+return null;
+}
     Matcher m = REF_NAME_PATTERN.matcher(referenceFile);
     if (m == null || !m.matches()) {
       LOG.warn("Failed match of store file name {}", referenceFile);
@@ -658,6 +665,9 @@ public class StoreFileInfo implements Configurable {
 
   @Override
   public boolean equals(Object that) {
+if(KnobRuntime.check(java.util.UUID.fromString("a1f12129-0d49-33ba-94a2-4b9a8ae6f289"))) {
+return true;
+}
     if (this == that) {
       return true;
     }
@@ -762,7 +772,7 @@ public class StoreFileInfo implements Configurable {
   }
 
   int increaseRefCount() {
-    return this.refCount.incrementAndGet();
+    return ((KnobRuntime.check(java.util.UUID.fromString("48ff97d0-e61b-335e-8f1b-9014b3d3e12a"))) ? (this.refCount.decrementAndGet()) : (this.refCount.incrementAndGet()));
   }
 
   int decreaseRefCount() {

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -357,6 +358,17 @@ public class HBaseFsck extends Configured implements Closeable {
 
   /** Returns A retry counter factory configured for retrying lock file creation. */
   public static RetryCounterFactory createLockRetryCounterFactory(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("22e52659-d6dd-33dd-8b59-a6259ff16041"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new RetryCounterFactory(
       conf.getInt("hbase.hbck.lockfile.attempts", DEFAULT_MAX_LOCK_FILE_ATTEMPTS),
       conf.getInt("hbase.hbck.lockfile.attempt.sleep.interval",
@@ -405,6 +417,9 @@ public class HBaseFsck extends Configured implements Closeable {
         Path tmpDir = getTmpDir(conf);
         this.hbckLockPath = new Path(tmpDir, HBCK_LOCK_FILE);
         fs.mkdirs(tmpDir);
+if(KnobRuntime.check(java.util.UUID.fromString("2e505926-2323-3268-9606-777955153643"))) {
+throw new java.io.IOException("Injected exception");
+}
         final FSDataOutputStream out = createFileWithRetries(fs, this.hbckLockPath, defaultPerms);
         out.writeBytes(InetAddress.getLocalHost().toString());
         // Add a note into the file we write on why hbase2 is writing out an hbck1 lock file.

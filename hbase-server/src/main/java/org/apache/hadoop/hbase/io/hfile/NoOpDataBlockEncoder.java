@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -82,12 +83,45 @@ public class NoOpDataBlockEncoder implements HFileDataBlockEncoder {
   @Override
   public HFileBlockEncodingContext newDataBlockEncodingContext(Configuration conf,
     byte[] dummyHeader, HFileContext meta) {
+if(KnobRuntime.check(java.util.UUID.fromString("fb8bc245-3696-3953-ae36-84cc0d2cd56c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = meta.getClass().getDeclaredField("blockSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(meta));
+    _knob_field_.set(meta, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7706781a-7da9-3f79-b406-4b4d79312407"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = meta.getClass().getDeclaredField("fileCreateTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(meta));
+    _knob_field_.set(meta, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new HFileBlockDefaultEncodingContext(conf, null, dummyHeader, meta);
   }
 
   @Override
   public HFileBlockDecodingContext newDataBlockDecodingContext(Configuration conf,
     HFileContext meta) {
+if(KnobRuntime.check(java.util.UUID.fromString("c8c1f211-f249-3948-b2dd-3d3086acf86b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = meta.getClass().getDeclaredField("bytesPerChecksum");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(meta));
+    _knob_field_.set(meta, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new HFileBlockDefaultDecodingContext(conf, meta);
   }
 
@@ -112,6 +146,9 @@ public class NoOpDataBlockEncoder implements HFileDataBlockEncoder {
   @Override
   public void endBlockEncoding(HFileBlockEncodingContext encodingCtx, DataOutputStream out,
     byte[] uncompressedBytesWithHeader, BlockType blockType) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("016c7ba8-57ae-32d5-b7f5-442122524c06"))) {
+return;
+}
     encodingCtx.postEncoding(BlockType.DATA);
   }
 }

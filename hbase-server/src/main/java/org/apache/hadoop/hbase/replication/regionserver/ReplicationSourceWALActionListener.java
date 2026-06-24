@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -50,7 +51,7 @@ class ReplicationSourceWALActionListener implements WALActionsListener {
 
   @Override
   public void postLogRoll(Path oldPath, Path newPath) throws IOException {
-    manager.postLogRoll(newPath);
+    if (KnobRuntime.check(java.util.UUID.fromString("ae079abb-9b00-3dfe-bd42-6296fd7fd561"))) { manager.preLogRoll(newPath); } else { manager.postLogRoll(newPath); }
   }
 
   @Override

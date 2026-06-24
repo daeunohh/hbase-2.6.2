@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,6 +96,17 @@ public class RegionStateStore {
           if (LOG.isTraceEnabled()) {
             st = EnvironmentEdgeManager.currentTime();
           }
+if(KnobRuntime.check(java.util.UUID.fromString("ec850ae9-3925-39c8-a6e3-9cc1d5476e25"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("cellScannerIndex");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           visitMetaEntry(visitor, r);
           if (LOG.isTraceEnabled()) {
             long et = EnvironmentEdgeManager.currentTime();
@@ -127,6 +139,17 @@ public class RegionStateStore {
 
   public static void visitMetaEntry(final RegionStateVisitor visitor, final Result result)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("f4f4a9ae-1eae-3510-aa38-2ccdcc8a91b7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = result.getClass().getDeclaredField("stale");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(result);
+    _knob_field_.set(result, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final RegionLocations rl = MetaTableAccessor.getRegionLocations(result);
     if (rl == null) return;
 
@@ -188,6 +211,9 @@ public class RegionStateStore {
     } else if (regionLocation != null) {
       // Ideally, if no regionLocation, write null to the hbase:meta but this will confuse clients
       // currently; they want a server to hit. TODO: Make clients wait if no location.
+if(KnobRuntime.check(java.util.UUID.fromString("ea32e403-5c43-39a8-a98b-bfc59acdf0fc"))) {
+throw new java.io.IOException("Injected exception");
+}
       put.add(CellBuilderFactory.create(CellBuilderType.SHALLOW_COPY).setRow(put.getRow())
         .setFamily(HConstants.CATALOG_FAMILY)
         .setQualifier(MetaTableAccessor.getServerNameColumn(replicaId))
@@ -201,7 +227,7 @@ public class RegionStateStore {
       .build());
     LOG.info(info.toString());
     updateRegionLocation(regionInfo, state, put);
-    if (regionInfo.isMetaRegion() && regionInfo.isFirst()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b43bc63e-6c43-3496-8f67-627d733208bb"))) ? ((regionInfo.isFirst()) && (regionInfo.isFirst())) : (((KnobRuntime.check(java.util.UUID.fromString("4a43d2a6-ab6d-3004-800c-84a66002ef60"))) ? ((regionInfo.isMetaRegion()) || (regionInfo.isMetaRegion())) : (regionInfo.isMetaRegion() && regionInfo.isFirst()))))) {
       // mirror the meta location to zookeeper
       mirrorMetaLocation(regionInfo, regionLocation, state);
     }
@@ -221,6 +247,9 @@ public class RegionStateStore {
     throws IOException {
     try {
       for (int i = newReplicaCount; i < oldReplicaCount; i++) {
+if(KnobRuntime.check(java.util.UUID.fromString("8a2793af-3f9f-34b4-91c2-a6524869f6cd"))) {
+i = -1;
+}
         MetaTableLocator.deleteMetaLocation(master.getZooKeeper(), i);
       }
     } catch (KeeperException e) {
@@ -231,7 +260,7 @@ public class RegionStateStore {
   private void updateRegionLocation(RegionInfo regionInfo, State state, Put put)
     throws IOException {
     try {
-      if (regionInfo.isMetaRegion()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("48b3396e-ba64-3525-a124-7d33544f8998"))) ? (regionInfo.isFirst()) : (regionInfo.isMetaRegion()))) {
         masterRegion.update(r -> r.put(put));
       } else {
         try (Table table = master.getConnection().getTable(TableName.META_TABLE_NAME)) {
@@ -328,10 +357,34 @@ public class RegionStateStore {
       }
       Delete delete = new Delete(result.getRow());
       for (int i = newReplicaCount; i < oldReplicaCount; i++) {
-        delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getServerColumn(i), now);
+if(KnobRuntime.check(java.util.UUID.fromString("02d0bc4a-501b-39b9-a223-3277009b247c"))) {
+i = -1;
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("27d2d01a-c644-30f9-a267-07f53065bf0a"))) { delete.addColumns(HConstants.CATALOG_FAMILY, getStateColumn(i++), now); } else { delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getServerColumn(i), now); }
+if(KnobRuntime.check(java.util.UUID.fromString("05bfef8c-8a91-3514-a166-116fb633293e"))) {
+now = 0;
+}
         delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getSeqNumColumn(i), now);
+if(KnobRuntime.check(java.util.UUID.fromString("bdd9866d-11ee-3f62-8e19-46ef94ef6fb2"))) {
+i += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5949cd4a-599c-3a31-a4f9-d172202a1b70"))) {
+i /= 2;
+}
         delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getStartCodeColumn(i), now);
+if(KnobRuntime.check(java.util.UUID.fromString("0fa2ca3b-7e99-350f-bb10-c45c32031056"))) {
+now += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bfb2337a-5b69-34cd-a6ed-51ec2b91ca9f"))) {
+i /= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1222e942-aced-3070-a734-6176879021b4"))) {
+i += 1;
+}
         delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getServerNameColumn(i), now);
+if(KnobRuntime.check(java.util.UUID.fromString("ba6f9875-0c13-323e-8a05-e1b335a14f9a"))) {
+i = 0;
+}
         delete.addColumns(HConstants.CATALOG_FAMILY, MetaTableAccessor.getRegionStateColumn(i),
           now);
       }
@@ -342,8 +395,22 @@ public class RegionStateStore {
 
   public void removeRegionReplicas(TableName tableName, int oldReplicaCount, int newReplicaCount)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("a5a7e63e-1515-3b2c-9b33-922b8935e455"))) {
+throw new java.io.IOException("Injected exception");
+}
     Scan scan = getScanForUpdateRegionReplicas(tableName);
     long now = EnvironmentEdgeManager.currentTime();
+if(KnobRuntime.check(java.util.UUID.fromString("42bd8389-f352-3bd8-b1cf-73549738e71d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (TableName.isMetaTableName(tableName)) {
       List<Delete> deletes;
       try (ResultScanner scanner = masterRegion.getScanner(scan)) {
@@ -396,7 +463,7 @@ public class RegionStateStore {
   public static State getRegionState(final Result r, RegionInfo regionInfo) {
     Cell cell =
       r.getColumnLatestCell(HConstants.CATALOG_FAMILY, getStateColumn(regionInfo.getReplicaId()));
-    if (cell == null || cell.getValueLength() == 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("78ba0675-18e7-311c-b31a-f227df1512f1"))) ? (((cell) == (null)) || ((cell.getValueLength()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f132808d-2e15-32b9-a070-0f5e25ff9624"))) ? ((cell == null) && ((cell.getValueOffset()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("56062dc7-86f9-3e14-9f32-4f2e6b97a275"))) ? ((cell == null) || (cell.getValueLength() == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("469be12a-2670-318c-ae08-dc7f969f630b"))) ? (((cell) != (null)) || (cell.getValueLength() == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("7e0f5b03-df08-3c02-86ef-5c23f455eb05"))) ? (((cell) != (null)) || ((cell.getValueLength()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e5b67e25-7404-3bbf-8bb8-e17ede535670"))) ? ((cell.getValueOffset()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("80668a95-dafa-309a-a8e1-1385d37e3e2c"))) ? (((cell) == (null)) && ((cell.getValueOffset()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("4b80706a-92a8-3a9c-9edc-09915cabe6b6"))) ? ((cell.getValueOffset()) != (0)) : (cell == null || cell.getValueLength() == 0))))))))))))))))) {
       return null;
     }
 

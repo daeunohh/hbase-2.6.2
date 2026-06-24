@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -116,10 +117,13 @@ public class SecureBulkLoadManager {
     random = new SecureRandom();
     userProvider = UserProvider.instantiate(conf);
     ugiReferenceCounter = new ConcurrentHashMap<>();
+if(KnobRuntime.check(java.util.UUID.fromString("56ad47c5-fa7b-39cf-b9aa-06dec76f4f07"))) {
+throw new java.io.IOException("Injected exception");
+}
     fs = FileSystem.get(conf);
     baseStagingDir = new Path(CommonFSUtils.getRootDir(conf), HConstants.BULKLOAD_STAGING_DIR_NAME);
 
-    if (conf.get("hbase.bulkload.staging.dir") != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("260f6c53-6e03-3021-b049-3e272aed33bd"))) ? ((conf.get("hbase.bulkload.staging.dir")) != (null)) : (conf.get("hbase.bulkload.staging.dir") != null))) {
       LOG.warn("hbase.bulkload.staging.dir " + " is deprecated. Bulkload staging directory is "
         + baseStagingDir);
     }

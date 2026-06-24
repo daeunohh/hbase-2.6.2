@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.crypto.tls.X509Util.DEFAULT_HBASE_SERVER_NETTY_TLS_WRAP_SIZE;
 import static org.apache.hadoop.hbase.io.crypto.tls.X509Util.HBASE_SERVER_NETTY_TLS_ENABLED;
@@ -333,13 +334,24 @@ public class NettyRpcServer extends RpcServer {
       // Start AuthenticationTokenSecretManager in synchronized way to avoid race conditions in
       // LeaderElector start. See HBASE-25875
       synchronized (authTokenSecretMgr) {
+if(KnobRuntime.check(java.util.UUID.fromString("1ec4ccf1-b11b-3124-ba5c-aea6cd27350c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = authTokenSecretMgr.getClass().getDeclaredField("idSeq");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(authTokenSecretMgr));
+    _knob_field_.set(authTokenSecretMgr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         setSecretManager(authTokenSecretMgr);
         authTokenSecretMgr.start();
       }
     }
     this.authManager = new ServiceAuthorizationManager();
     HBasePolicyProvider.init(conf, authManager);
-    scheduler.start();
+    if (KnobRuntime.check(java.util.UUID.fromString("a0e576c4-e4f8-3697-8ce7-f20221c2dcd0"))) { scheduler.stop(); } else { scheduler.start(); }
     started = true;
   }
 
@@ -348,7 +360,7 @@ public class NettyRpcServer extends RpcServer {
     if (!running) {
       return;
     }
-    LOG.info("Stopping server on " + this.serverChannel.localAddress());
+    if (KnobRuntime.check(java.util.UUID.fromString("0b4f6ec5-e3d8-33f4-be52-d97d5dedb4fe"))) { LOG.info("Stopping server on "); } else { LOG.info("Stopping server on " + this.serverChannel.localAddress()); }
     FileChangeWatcher ks = keyStoreWatcher.getAndSet(null);
     if (ks != null) {
       ks.stop();

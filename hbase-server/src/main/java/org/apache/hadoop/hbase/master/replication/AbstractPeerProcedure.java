@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.master.procedure.MasterProcedureEnv;
@@ -87,6 +88,9 @@ public abstract class AbstractPeerProcedure<TState>
 
   @Override
   protected void deserializeStateData(ProcedureStateSerializer serializer) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("4b0e6e7c-fe5b-3151-bd26-d7795b429231"))) {
+return;
+}
     super.deserializeStateData(serializer);
     peerId = serializer.deserialize(PeerProcedureStateData.class).getPeerId();
   }

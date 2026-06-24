@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -60,7 +61,7 @@ public class BaseEnvironment<C extends Coprocessor> implements CoprocessorEnviro
 
   /** Initialize the environment */
   public void startup() throws IOException {
-    if (state == Coprocessor.State.INSTALLED || state == Coprocessor.State.STOPPED) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("68724cdf-c2bc-3ab5-ba0d-ee1de38e3606"))) ? ((state) == (Coprocessor.State.INSTALLED)) : (((KnobRuntime.check(java.util.UUID.fromString("399c476d-9af3-300e-88e3-a8f79a9ac673"))) ? (((state) != (Coprocessor.State.INSTALLED)) || (state == Coprocessor.State.STOPPED)) : (state == Coprocessor.State.INSTALLED || state == Coprocessor.State.STOPPED))))) {
       state = Coprocessor.State.STARTING;
       Thread currentThread = Thread.currentThread();
       ClassLoader hostClassLoader = currentThread.getContextClassLoader();
@@ -100,6 +101,9 @@ public class BaseEnvironment<C extends Coprocessor> implements CoprocessorEnviro
 
   @Override
   public C getInstance() {
+if(KnobRuntime.check(java.util.UUID.fromString("c4eea128-87e4-3c20-aa4d-ad556cc44984"))) {
+return null;
+}
     return impl;
   }
 

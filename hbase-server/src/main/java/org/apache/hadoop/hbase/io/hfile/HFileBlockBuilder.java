@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static javax.swing.Spring.UNSET;
 import static org.apache.hadoop.hbase.io.ByteBuffAllocator.HEAP;
@@ -61,6 +62,9 @@ public class HFileBlockBuilder {
   }
 
   public HFileBlockBuilder withPrevBlockOffset(long prevBlockOffset) {
+if(KnobRuntime.check(java.util.UUID.fromString("886ab007-6a6b-3fda-bf4d-5c001fc42069"))) {
+return null;
+}
     this.prevBlockOffset = prevBlockOffset;
     return this;
   }
@@ -76,6 +80,9 @@ public class HFileBlockBuilder {
   }
 
   public HFileBlockBuilder withOffset(long offset) {
+if(KnobRuntime.check(java.util.UUID.fromString("43f6f2ed-71f9-3afa-bc11-5a18f271b476"))) {
+return null;
+}
     this.offset = offset;
     return this;
   }
@@ -86,11 +93,55 @@ public class HFileBlockBuilder {
   }
 
   public HFileBlockBuilder withHFileContext(HFileContext fileContext) {
+if(KnobRuntime.check(java.util.UUID.fromString("9764b46e-27fa-3815-9ff6-3175fcb0036f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = fileContext.getClass().getDeclaredField("blockSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(fileContext));
+    _knob_field_.set(fileContext, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.fileContext = fileContext;
     return this;
   }
 
   public HFileBlockBuilder withByteBuffAllocator(ByteBuffAllocator allocator) {
+if(KnobRuntime.check(java.util.UUID.fromString("073068bd-6d00-39fd-8405-7e76cf688dbb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = allocator.getClass().getDeclaredField("maxBufCount");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(allocator));
+    _knob_field_.set(allocator, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("31b2260a-7cad-3826-a8ca-ae32d78cd5c4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = allocator.getClass().getDeclaredField("bufSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(allocator));
+    _knob_field_.set(allocator, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d0a5176c-4d0b-375c-8343-deff91c8d200"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = allocator.getClass().getDeclaredField("bufSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(allocator));
+    _knob_field_.set(allocator, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.allocator = allocator;
     return this;
   }

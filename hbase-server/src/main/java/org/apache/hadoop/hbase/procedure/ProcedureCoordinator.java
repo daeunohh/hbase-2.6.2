@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -90,6 +91,9 @@ public class ProcedureCoordinator {
    * @param opThreads the maximum number of threads to allow in the pool
    */
   public static ThreadPoolExecutor defaultPool(String coordName, int opThreads) {
+if(KnobRuntime.check(java.util.UUID.fromString("e003bdde-1404-3363-b7ce-38d24b3063dd"))) {
+opThreads -= 1;
+}
     return defaultPool(coordName, opThreads, KEEP_ALIVE_MILLIS_DEFAULT);
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -150,7 +151,7 @@ public class ReopenTableRegionsProcedure
   }
 
   private boolean canSchedule(MasterProcedureEnv env, HRegionLocation loc) {
-    if (loc.getSeqNum() < 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("e5118eb3-093e-3d44-8166-e82474cb1585"))) ? ((loc.getSeqNum()) > (0)) : (loc.getSeqNum() < 0))) {
       return false;
     }
     RegionStateNode regionNode =
@@ -238,7 +239,7 @@ public class ReopenTableRegionsProcedure
     if (regionsToReopen.stream().anyMatch(loc -> canSchedule(env, loc))) {
       retryCounter = null;
       setNextState(ReopenTableRegionsState.REOPEN_TABLE_REGIONS_REOPEN_REGIONS);
-      if (shouldBatchBackoff && reopenBatchBackoffMillis > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("3dd1e93f-ba6d-3b60-96ee-00f150adc994"))) ? ((!shouldBatchBackoff) && (reopenBatchBackoffMillis > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("15bda3cb-5ea5-3e13-83fd-8d0fa47b6964"))) ? ((!shouldBatchBackoff) || ((reopenBatchBackoffMillis) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ee9e5627-71ac-3d8a-8d26-de12b4ec6617"))) ? ((!shouldBatchBackoff) && ((reopenBatchBackoffMillis) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1f9301d1-74fd-3d92-987e-70f3e9887d01"))) ? ((shouldBatchBackoff) || ((reopenBatchBackoffMillis) > (0))) : (shouldBatchBackoff && reopenBatchBackoffMillis > 0))))))))) {
         progressBatchSize();
         setBackoffState(reopenBatchBackoffMillis);
         throw new ProcedureSuspendedException();
@@ -249,7 +250,7 @@ public class ReopenTableRegionsProcedure
 
     // We can not schedule TRSP for all the regions need to reopen, wait for a while and retry
     // again.
-    if (retryCounter == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("88650108-1c8b-30fd-b6e1-2d651564d9d3"))) ? ((retryCounter) != (null)) : (retryCounter == null))) {
       retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
     }
     long backoffMillis = retryCounter.getBackoffTimeAndIncrementAttempts();
@@ -262,6 +263,9 @@ public class ReopenTableRegionsProcedure
   }
 
   private void setBackoffState(long millis) {
+if(KnobRuntime.check(java.util.UUID.fromString("334f20f6-2989-31ce-8308-fba649133ea9"))) {
+return;
+}
     setTimeout(Math.toIntExact(millis));
     setState(ProcedureProtos.ProcedureState.WAITING_TIMEOUT);
     skipPersistence();
@@ -336,6 +340,9 @@ public class ReopenTableRegionsProcedure
       // guarding by this if condition can be removed in HBase 4.0.0.
       regionNames.stream().map(ByteString::copyFrom).forEachOrdered(builder::addRegionNames);
     }
+if(KnobRuntime.check(java.util.UUID.fromString("379456e6-b899-30b4-85f0-0b834bdf7c0f"))) {
+throw new java.io.IOException("Injected exception");
+}
     serializer.serialize(builder.build());
   }
 

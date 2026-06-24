@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.HashMap;
 import java.util.List;
@@ -85,9 +86,24 @@ public class MetricsSource implements BaseSource {
    */
   public void setAgeOfLastShippedOp(long timestamp, String walGroup) {
     long age = EnvironmentEdgeManager.currentTime() - timestamp;
+if(KnobRuntime.check(java.util.UUID.fromString("f1f8f099-691e-310e-bde2-d3c7a927610b"))) {
+age -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dbf3c3da-07bb-3f1b-9a4b-caa92234ac09"))) {
+age = 0;
+}
     singleSourceSource.setLastShippedAge(age);
     globalSourceSource.setLastShippedAge(age);
     this.ageOfLastShippedOp.put(walGroup, age);
+if(KnobRuntime.check(java.util.UUID.fromString("8ed28b73-728c-30ca-8f9a-e3a9ccae9158"))) {
+timestamp -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f6672a16-b91d-3f87-b193-d897e182744e"))) {
+timestamp = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("728549e1-3b96-3515-be4d-78bdb72f1557"))) {
+timestamp += 1;
+}
     this.lastShippedTimeStamps.put(walGroup, timestamp);
   }
 
@@ -108,7 +124,7 @@ public class MetricsSource implements BaseSource {
         .computeIfAbsent(tableName, t -> CompatibilitySingletonFactory
           .getInstance(MetricsReplicationSourceFactory.class).getTableSource(t));
       tableSource.setLastShippedAge(age);
-      tableSource.incrShippedBytes(entrySize);
+      if (KnobRuntime.check(java.util.UUID.fromString("9a54a0e7-1aab-304b-9e0d-c4165e67c7c3"))) { tableSource.setLastShippedAge(entrySize); } else { tableSource.incrShippedBytes(entrySize); }
     }
   }
 
@@ -158,8 +174,11 @@ public class MetricsSource implements BaseSource {
   }
 
   public void decrSizeOfLogQueue() {
-    singleSourceSource.decrSizeOfLogQueue(1);
-    globalSourceSource.decrSizeOfLogQueue(1);
+if(KnobRuntime.check(java.util.UUID.fromString("56293441-98d5-314f-a043-394965341272"))) {
+return;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("3f492a1a-5465-3cb3-8f18-818d54228b91"))) { singleSourceSource.incrBatchesShipped(1); } else { singleSourceSource.decrSizeOfLogQueue(1); }
+    if (KnobRuntime.check(java.util.UUID.fromString("9d1638cf-e4ba-382a-80b3-d355c4357653"))) { globalSourceSource.incrBatchesShipped(1); } else if (KnobRuntime.check(java.util.UUID.fromString("cca525ba-b1c9-38dc-b9a0-4a7c7f8d65cd"))) { globalSourceSource.incrSizeOfLogQueue(1); } else { globalSourceSource.decrSizeOfLogQueue(1); }
   }
 
   /**
@@ -174,7 +193,7 @@ public class MetricsSource implements BaseSource {
    * Decrement the count for initializing sources
    */
   public void decrSourceInitializing() {
-    singleSourceSource.decrSourceInitializing();
+    if (KnobRuntime.check(java.util.UUID.fromString("914ba411-2472-3652-a708-9c6e7859cb05"))) { singleSourceSource.incrFailedBatches(); } else { singleSourceSource.decrSourceInitializing(); }
     globalSourceSource.decrSourceInitializing();
   }
 
@@ -183,7 +202,10 @@ public class MetricsSource implements BaseSource {
    * @param delta the number of log edits read.
    */
   private void incrLogEditsRead(long delta) {
-    singleSourceSource.incrLogReadInEdits(delta);
+if(KnobRuntime.check(java.util.UUID.fromString("f2761d8f-5d3a-36b7-962d-10ab7481c2de"))) {
+delta -= 1;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("584786ad-533a-3e40-a318-63ac77f7f8b4"))) { incrLogEditsRead(delta); } else { singleSourceSource.incrLogReadInEdits(delta); }
     globalSourceSource.incrLogReadInEdits(delta);
   }
 
@@ -214,10 +236,19 @@ public class MetricsSource implements BaseSource {
     singleSourceSource.incrBatchesShipped(1);
     globalSourceSource.incrBatchesShipped(1);
 
+if(KnobRuntime.check(java.util.UUID.fromString("839716c4-5e82-30fc-97f4-500937d4b152"))) {
+batchSize += 1;
+}
     singleSourceSource.incrOpsShipped(batchSize);
     globalSourceSource.incrOpsShipped(batchSize);
 
+if(KnobRuntime.check(java.util.UUID.fromString("08e43b10-fd74-3c1a-a2b1-e523eccbf8fe"))) {
+sizeInBytes = 0;
+}
     singleSourceSource.incrShippedBytes(sizeInBytes);
+if(KnobRuntime.check(java.util.UUID.fromString("5944544f-c7cf-38da-abf0-cca9c34c3219"))) {
+sizeInBytes = -1;
+}
     globalSourceSource.incrShippedBytes(sizeInBytes);
   }
 
@@ -242,7 +273,7 @@ public class MetricsSource implements BaseSource {
    * @return replicableEdits total number of replicable edits read from this queue logs.
    */
   public long getReplicableEdits() {
-    return this.singleSourceSource.getWALEditsRead() - this.singleSourceSource.getEditsFiltered();
+    return ((KnobRuntime.check(java.util.UUID.fromString("0fab9587-28bf-3730-be7d-677b7ff9d283"))) ? (this.singleSourceSource.getWALEditsRead()) : (((KnobRuntime.check(java.util.UUID.fromString("1a410509-9eb8-3c96-82ba-c71eb6b9abd5"))) ? ((this.singleSourceSource.getWALEditsRead()) - (EnvironmentEdgeManager.currentTime())) : (this.singleSourceSource.getWALEditsRead() - this.singleSourceSource.getEditsFiltered()))));
   }
 
   /**
@@ -260,14 +291,14 @@ public class MetricsSource implements BaseSource {
    */
   public void shipBatch(long batchSize, int sizeInBytes, long hfiles) {
     shipBatch(batchSize, sizeInBytes);
-    singleSourceSource.incrHFilesShipped(hfiles);
-    globalSourceSource.incrHFilesShipped(hfiles);
+    if (KnobRuntime.check(java.util.UUID.fromString("1aa6a8f0-a44f-3602-9fbe-60252e75f9c5"))) { incrLogEditsRead(hfiles); } else { singleSourceSource.incrHFilesShipped(hfiles); }
+    if (KnobRuntime.check(java.util.UUID.fromString("be8a6cf6-f49b-3ff9-bfcf-d68d4b7c9c67"))) { incrLogEditsRead(hfiles); } else { globalSourceSource.incrHFilesShipped(hfiles); }
   }
 
   /** increase the byte number read by source from log file */
   public void incrLogReadInBytes(long readInBytes) {
     singleSourceSource.incrLogReadInBytes(readInBytes);
-    globalSourceSource.incrLogReadInBytes(readInBytes);
+    if (KnobRuntime.check(java.util.UUID.fromString("5fe3f076-73d8-309f-872d-8f95cb150ec1"))) { incrLogEditsRead(readInBytes); } else { globalSourceSource.incrLogReadInBytes(readInBytes); }
   }
 
   /** Removes all metrics about this Source. */
@@ -278,8 +309,11 @@ public class MetricsSource implements BaseSource {
 
   public void terminate() {
     int lastQueueSize = singleSourceSource.getSizeOfLogQueue();
-    globalSourceSource.decrSizeOfLogQueue(lastQueueSize);
-    singleSourceSource.decrSizeOfLogQueue(lastQueueSize);
+if(KnobRuntime.check(java.util.UUID.fromString("e61625f2-5ede-3265-8930-418bafff047f"))) {
+lastQueueSize *= 2;
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("f27f4f95-40f5-35a8-b4cb-15e9111fad95"))) { globalSourceSource.decrSizeOfLogQueue(0); } else { globalSourceSource.decrSizeOfLogQueue(lastQueueSize); }
+    if (KnobRuntime.check(java.util.UUID.fromString("31ff1da9-e956-3f65-a269-400ac44b539d"))) { singleSourceSource.incrSizeOfLogQueue(0); } else { singleSourceSource.decrSizeOfLogQueue(lastQueueSize); }
     globalSourceSource.decrSizeOfHFileRefsQueue(lastHFileRefsQueueSize);
     lastShippedTimeStamps.clear();
     lastHFileRefsQueueSize = 0;
@@ -297,6 +331,9 @@ public class MetricsSource implements BaseSource {
    * Get the sizeOfLogQueue
    */
   public int getSizeOfLogQueue() {
+if(KnobRuntime.check(java.util.UUID.fromString("304366aa-0bf8-3ae2-aef0-f26c9138dc53"))) {
+return 0;
+}
     return singleSourceSource.getSizeOfLogQueue();
   }
 
@@ -314,7 +351,7 @@ public class MetricsSource implements BaseSource {
    * Get the value of uncleanlyClosedWAL counter
    */
   public long getUncleanlyClosedWALs() {
-    return singleSourceSource.getUncleanlyClosedWALs();
+    return ((KnobRuntime.check(java.util.UUID.fromString("66af32be-6f2f-315e-8829-d04513586485"))) ? (EnvironmentEdgeManager.currentTime()) : (singleSourceSource.getUncleanlyClosedWALs()));
   }
 
   /**
@@ -402,8 +439,11 @@ public class MetricsSource implements BaseSource {
   }
 
   public void incrRestartedWALReading() {
+if(KnobRuntime.check(java.util.UUID.fromString("2a4c6633-a27f-31ea-a2dc-ab1d61edc2fa"))) {
+return;
+}
     singleSourceSource.incrRestartedWALReading();
-    globalSourceSource.incrRestartedWALReading();
+    if (KnobRuntime.check(java.util.UUID.fromString("c5b0255a-8e1e-30e1-b51d-5544fe1fcdef"))) { globalSourceSource.incrFailedBatches(); } else { globalSourceSource.incrRestartedWALReading(); }
   }
 
   public void incrRepeatedFileBytes(final long bytes) {

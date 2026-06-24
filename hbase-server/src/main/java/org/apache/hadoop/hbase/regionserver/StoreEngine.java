@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -167,6 +168,50 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   }
 
   private StoreFileTracker createStoreFileTracker(Configuration conf, HStore store) {
+if(KnobRuntime.check(java.util.UUID.fromString("59054f84-d784-3542-9286-b3016e526615"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("blockingFileCount");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("78cf8d59-12d8-3983-98a8-e524c72ab2d1"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c94c6ed6-2ca3-345a-92b0-e6f5bf20e5f7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("pauseTime");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f3c3bc8-6a18-34f9-b76a-aa1e31658960"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return StoreFileTrackerFactory.create(conf, store.isPrimaryReplicaStore(),
       store.getStoreContext());
   }
@@ -215,6 +260,17 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
   public HStoreFile createStoreFileAndReader(Path p) throws IOException {
     StoreFileInfo info = new StoreFileInfo(conf, ctx.getRegionFileSystem().getFileSystem(), p,
       ctx.isPrimaryReplicaStore());
+if(KnobRuntime.check(java.util.UUID.fromString("48de5d6e-fa84-35f4-a0e7-a5c672439a04"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = info.getClass().getDeclaredField("createdTimestamp");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(info));
+    _knob_field_.set(info, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return createStoreFileAndReader(info);
   }
 
@@ -292,16 +348,30 @@ public abstract class StoreEngine<SF extends StoreFlusher, CP extends Compaction
     } finally {
       storeFileOpenerThreadPool.shutdownNow();
     }
-    if (ioe != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a5706eb0-022e-3ec2-a7b0-9b6f0162025d"))) ? ((ioe) == (null)) : (ioe != null))) {
       // close StoreFile readers
       boolean evictOnClose =
         ctx.getCacheConf() != null ? ctx.getCacheConf().shouldEvictOnClose() : true;
       for (HStoreFile file : results) {
         try {
           if (file != null) {
-            file.closeStoreFile(evictOnClose);
+if(KnobRuntime.check(java.util.UUID.fromString("3002ac5e-6500-380b-9e23-3d2f5636df06"))) {
+evictOnClose = !evictOnClose;
+}
+            if (KnobRuntime.check(java.util.UUID.fromString("9af94d54-da37-3bbe-abfa-1c9038f710be"))) { file.closeStoreFile(!evictOnClose); } else { file.closeStoreFile(evictOnClose); }
           }
         } catch (IOException e) {
+if(KnobRuntime.check(java.util.UUID.fromString("91a4a9e3-a02c-3fa6-99d3-499166f0c179"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = file.getClass().getDeclaredField("isHistorical");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(file);
+    _knob_field_.set(file, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           LOG.warn("Could not close store file {}", file, e);
         }
       }

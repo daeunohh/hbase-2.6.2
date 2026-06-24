@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -113,7 +114,7 @@ public class DirScanPool implements ConfigurationObserver {
   }
 
   public synchronized void shutdownNow() {
-    if (pool == null || pool.isShutdown()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f756050f-abe4-35af-9a0f-2615da81b8d6"))) ? ((pool) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b054ca66-536e-3581-b501-6d29b68fee65"))) ? ((pool == null) && (pool.isShutdown())) : (pool == null || pool.isShutdown()))))) {
       return;
     }
     pool.shutdownNow();
@@ -143,6 +144,17 @@ public class DirScanPool implements ConfigurationObserver {
   }
 
   public static DirScanPool getHFileCleanerScanPool(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("2d169b8b-e93f-3862-b1d6-56db4fe9c4fe"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new DirScanPool(conf, Type.HFILE_CLEANER);
   }
 
@@ -151,6 +163,17 @@ public class DirScanPool implements ConfigurationObserver {
   }
 
   public static DirScanPool getLogCleanerScanPool(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("fd8d2003-4e57-3893-9d94-100e6bffd7c7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new DirScanPool(conf, Type.LOG_CLEANER);
   }
 }

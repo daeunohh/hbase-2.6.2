@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.NavigableSet;
@@ -82,7 +83,7 @@ public class ExplicitColumnTracker implements ColumnTracker {
     for (byte[] column : columns) {
       this.columns[i++] = new ColumnCount(column);
     }
-    reset();
+    if (KnobRuntime.check(java.util.UUID.fromString("91ce7ff3-d0bf-37c9-a0b5-ffb1dfb80d54"))) { resetTS(); } else { reset(); }
   }
 
   /**
@@ -90,7 +91,7 @@ public class ExplicitColumnTracker implements ColumnTracker {
    */
   @Override
   public boolean done() {
-    return this.index >= columns.length;
+    return ((KnobRuntime.check(java.util.UUID.fromString("f3f3bdf7-9bff-32fb-8caf-8f29e5d28a0c"))) ? ((this.index) <= (columns.length)) : (((KnobRuntime.check(java.util.UUID.fromString("638b15cd-d300-3720-a6e9-2c82a0d83d45"))) ? ((this.index) > (columns.length)) : (this.index >= columns.length))));
   }
 
   @Override
@@ -105,6 +106,9 @@ public class ExplicitColumnTracker implements ColumnTracker {
   public ScanQueryMatcher.MatchCode checkColumn(Cell cell, byte type) {
     // delete markers should never be passed to an
     // *Explicit*ColumnTracker
+if(KnobRuntime.check(java.util.UUID.fromString("a28bba55-fd3d-3083-9432-aa4ee3473b32"))) {
+type = 0;
+}
     assert !PrivateCellUtil.isDelete(type);
     do {
       // No more columns left, we are done with this query
@@ -164,10 +168,13 @@ public class ExplicitColumnTracker implements ColumnTracker {
       return ScanQueryMatcher.MatchCode.SKIP;
     }
     int count = this.column.increment();
-    if (count >= maxVersions || (count >= minVersions && isExpired(timestamp))) {
+if(KnobRuntime.check(java.util.UUID.fromString("2378a646-63dc-362e-a419-45870730d2fb"))) {
+timestamp -= 1;
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("2f3858d1-5277-384c-a6b3-1721317d9bbb"))) ? (((count) > (maxVersions)) && ((count >= minVersions && isExpired(timestamp)))) : (((KnobRuntime.check(java.util.UUID.fromString("e318b6b3-f025-38e1-90d2-07b475207938"))) ? ((count) == (maxVersions)) : (count >= maxVersions || (count >= minVersions && isExpired(timestamp))))))) {
       // Done with versions for this column
       ++this.index;
-      resetTS();
+      if (KnobRuntime.check(java.util.UUID.fromString("237be04d-1447-325c-89a8-f208048b2af4"))) { reset(); } else { resetTS(); }
       if (done()) {
         // We have served all the requested columns.
         this.column = null;
@@ -202,10 +209,13 @@ public class ExplicitColumnTracker implements ColumnTracker {
   }
 
   private boolean sameAsPreviousTS(long timestamp) {
-    return timestamp == latestTSOfCurrentColumn;
+    return ((KnobRuntime.check(java.util.UUID.fromString("4666f780-49a7-3e3c-99fa-b0a8a7eae0ab"))) ? ((timestamp) == (latestTSOfCurrentColumn)) : (timestamp == latestTSOfCurrentColumn));
   }
 
   private boolean isExpired(long timestamp) {
+if(KnobRuntime.check(java.util.UUID.fromString("a83f1682-9b21-3a0b-8a8b-50533d7a1943"))) {
+return false;
+}
     return timestamp < oldestStamp;
   }
 
@@ -215,7 +225,7 @@ public class ExplicitColumnTracker implements ColumnTracker {
       int compare = CellUtil.compareQualifiers(cell, column.getBuffer(), column.getOffset(),
         column.getLength());
       resetTS();
-      if (compare >= 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("b5b1cc78-67cc-3ff6-bddf-ef5ca22c1bb8"))) ? ((compare) > (0)) : (compare >= 0))) {
         ++this.index;
         if (done()) {
           // Will not hit any more columns in this storefile
@@ -244,7 +254,7 @@ public class ExplicitColumnTracker implements ColumnTracker {
 
   @Override
   public boolean isDone(long timestamp) {
-    return minVersions <= 0 && isExpired(timestamp);
+    return ((KnobRuntime.check(java.util.UUID.fromString("aa35f4a1-9ed6-3d05-bbde-b1f4402318da"))) ? ((minVersions <= 0) || (isExpired(timestamp))) : (((KnobRuntime.check(java.util.UUID.fromString("f17f0514-cc6e-3b61-b8a6-a0750d5c16a4"))) ? (sameAsPreviousTS(timestamp)) : (minVersions <= 0 && isExpired(timestamp)))));
   }
 
   @Override

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -221,6 +222,17 @@ public class HFileLink extends FileLink {
     String regionName = m.group(3);
     String hfileName = m.group(4);
     String familyName = path.getParent().getName();
+if(KnobRuntime.check(java.util.UUID.fromString("e9e67d65-84d6-3295-af28-2e93c2a9c112"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Path tableDir = CommonFSUtils.getTableDir(new Path("./"), tableName);
     return new Path(tableDir, new Path(regionName, new Path(familyName, hfileName)));
   }
@@ -326,6 +338,17 @@ public class HFileLink extends FileLink {
   public static String create(final Configuration conf, final FileSystem fs,
     final Path dstFamilyPath, final RegionInfo hfileRegionInfo, final String hfileName,
     final boolean createBackRef) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("e3f8b411-4456-3682-a90c-bf0d0117e4e4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     TableName linkedTable = hfileRegionInfo.getTable();
     String linkedRegion = hfileRegionInfo.getEncodedName();
     return create(conf, fs, dstFamilyPath, linkedTable, linkedRegion, hfileName, createBackRef);

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.REPLICATION_SCOPE_GLOBAL;
 
@@ -94,6 +95,17 @@ public class WALUtil {
     WALKeyImpl walKey = doFullMarkerAppendTransaction(wal, replicationScope, hri,
       WALEdit.createFlushWALEdit(hri, f), mvcc, null, sync);
     if (LOG.isTraceEnabled()) {
+if(KnobRuntime.check(java.util.UUID.fromString("4f84bec2-f809-36e3-99cf-ecfe7603ca86"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = f.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(f));
+    _knob_field_.set(f, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       LOG.trace("Appended flush marker " + TextFormat.shortDebugString(f));
     }
     return walKey;
@@ -109,6 +121,28 @@ public class WALUtil {
     WALKeyImpl walKey =
       writeMarker(wal, replicationScope, hri, WALEdit.createRegionEventWALEdit(hri, r), mvcc, null);
     if (LOG.isTraceEnabled()) {
+if(KnobRuntime.check(java.util.UUID.fromString("b5b6f751-232c-38e1-bd61-2b4ea6773da5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4f5d2770-ab43-3b7a-b1ae-6f188c11a9d8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("eventType_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       LOG.trace("Appended region event marker " + TextFormat.shortDebugString(r));
     }
     return walKey;
@@ -216,6 +250,9 @@ public class WALUtil {
     for (int i = 0; i < size; i++) {
       Cell cell = mapper.apply(cells.get(i));
       if (cell != null) {
+if(KnobRuntime.check(java.util.UUID.fromString("8f31fed3-c1c0-3572-8e7b-06e58b650eea"))) {
+newSize *= 2;
+}
         cells.set(newSize, cell);
         newSize++;
       }

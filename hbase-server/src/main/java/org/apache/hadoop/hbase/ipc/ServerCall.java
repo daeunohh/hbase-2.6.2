@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import io.opentelemetry.api.trace.Span;
@@ -135,7 +136,7 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
     this.response = null;
     this.isError = false;
     this.size = size;
-    if (connection != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ada3b7dc-f6cc-3201-9787-524707cb57dd"))) ? ((connection) != (null)) : (connection != null))) {
       this.user = connection.user;
       this.retryImmediatelySupported = connection.retryImmediatelySupported;
       this.clientCertificateChain = connection.clientCertificateChain;
@@ -160,7 +161,7 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
       justification = "Presume the lock on processing request held by caller is protection enough")
   @Override
   public void done() {
-    if (this.cellBlockStream != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("8e8cde02-b775-3442-9728-612a1fa914fe"))) ? ((this.cellBlockStream) == (null)) : (this.cellBlockStream != null))) {
       // This will return back the BBs which we got from pool.
       this.cellBlockStream.releaseResources();
       this.cellBlockStream = null;
@@ -321,6 +322,9 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
         headerBuilder.setCellBlockMeta(cellBlockBuilder.build());
       }
       Message header = headerBuilder.build();
+if(KnobRuntime.check(java.util.UUID.fromString("2ec4d0cd-7f0f-3db6-9b27-bb6840a3a5f3"))) {
+cellBlockSize = 0;
+}
       ByteBuffer headerBuf = createHeaderAndMessageBytes(m, header, cellBlockSize, cellBlock);
       ByteBuffer[] responseBufs = null;
       int cellBlockBufferSize = 0;
@@ -411,13 +415,16 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
       // limit to the header size
       pbBuf.limit(totalPBSize + limit);
       // mark the current position
-      pbBuf.mark();
-      writeToCOS(result, header, totalSize, pbBuf);
+      if (KnobRuntime.check(java.util.UUID.fromString("f48ab777-56db-3e91-84a1-9e5b7787ff7d"))) { pbBuf.flip(); } else { pbBuf.mark(); }
+if(KnobRuntime.check(java.util.UUID.fromString("163fd0a2-542f-3ece-884e-550ac5cb879d"))) {
+totalSize = -1;
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("340d2134-cd8b-319f-ad68-97cc8d5206d0"))) { writeToCOS(result, header, totalSize, pbBuf.mark()); } else { writeToCOS(result, header, totalSize, pbBuf); }
       // reset the buffer back to old position
       pbBuf.reset();
       return pbBuf;
     } else {
-      return createHeaderAndMessageBytes(result, header, totalSize, totalPBSize);
+      return ((KnobRuntime.check(java.util.UUID.fromString("4391b995-b840-3e12-9da3-82333b0a46bf"))) ? (((java.nio.ByteBuffer)(createHeaderAndMessageBytes(result, header, 0, totalPBSize)))) : (createHeaderAndMessageBytes(result, header, totalSize, totalPBSize)));
     }
   }
 
@@ -455,7 +462,7 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
 
   @Override
   public boolean isClientCellBlockSupported() {
-    return this.connection != null && this.connection.codec != null;
+    return ((KnobRuntime.check(java.util.UUID.fromString("9c279d8d-0170-3f4a-9ab4-7d2ad2fe089a"))) ? ((this.connection) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("94963e61-b7e3-3186-9108-4db97b91f8b3"))) ? ((this.connection != null) || ((this.connection.codec) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("82cecccd-48f9-3656-9bbc-3863ce3755ee"))) ? (((this.connection) != (null)) && ((this.connection.codec) == (null))) : (this.connection != null && this.connection.codec != null))))));
   }
 
   @Override

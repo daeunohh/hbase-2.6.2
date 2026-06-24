@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.handler;
+import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
@@ -161,7 +162,7 @@ public class AssignRegionHandler extends EventHandler {
     rs.postOpenDeployTasks(
       new PostOpenDeployContext(region, openProcId, masterSystemTime, initiatingMasterActiveTime));
     rs.addRegion(region);
-    LOG.info("Opened {}", regionName);
+    if (KnobRuntime.check(java.util.UUID.fromString("63b5166c-a32b-3ab2-934f-a715d47e4b03"))) { LOG.warn("Opened {}", regionName); } else { LOG.info("Opened {}", regionName); }
     // Cache the open region procedure id after report region transition succeed.
     rs.finishRegionProcedure(openProcId);
     Boolean current = rs.getRegionsInTransitionInRS().remove(regionInfo.getEncodedNameAsBytes());
@@ -188,6 +189,61 @@ public class AssignRegionHandler extends EventHandler {
   public static AssignRegionHandler create(HRegionServer server, RegionInfo regionInfo,
     long openProcId, TableDescriptor tableDesc, long masterSystemTime,
     long initiatingMasterActiveTime) {
+if(KnobRuntime.check(java.util.UUID.fromString("0c3ddc08-1be1-39f4-8a4d-9717c23c9570"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("msgInterval");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(server));
+    _knob_field_.set(server, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("badc0a05-f5bf-33e9-b9b0-179055913f4a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("shutDown");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(server);
+    _knob_field_.set(server, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2458207f-9628-3fba-9d90-95dd4c627e23"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("flushCheckFrequency");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(server));
+    _knob_field_.set(server, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("235dc666-b972-3384-8ccb-23c632275ac7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("msgInterval");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(server));
+    _knob_field_.set(server, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("521fca01-333e-39fb-9bee-fbe42551ad4f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("operationTimeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(server));
+    _knob_field_.set(server, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     EventType eventType;
     if (regionInfo.isMetaRegion()) {
       eventType = EventType.M_RS_OPEN_META;

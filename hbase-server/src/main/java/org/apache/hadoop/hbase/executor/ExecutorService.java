@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -84,6 +85,28 @@ public class ExecutorService {
    * @param config Configuration to use for the executor.
    */
   public void startExecutorService(final ExecutorConfig config) {
+if(KnobRuntime.check(java.util.UUID.fromString("649006d3-c4c2-3f9f-89a6-98c955843d51"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("corePoolSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2c651a13-969e-3092-8c02-5944d8f35748"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("allowCoreThreadTimeout");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(config);
+    _knob_field_.set(config, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final String name = config.getName();
     Executor hbes = this.executorMap.compute(name, (key, value) -> {
       if (value != null) {
@@ -135,6 +158,17 @@ public class ExecutorService {
   }
 
   public void submit(final EventHandler eh) {
+if(KnobRuntime.check(java.util.UUID.fromString("4706a002-c3f1-3701-bd15-d771157d84f9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("seqid");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Executor executor = getExecutor(eh.getEventType().getExecutorServiceType());
     if (executor == null) {
       // This happens only when events are submitted after shutdown() was
@@ -143,6 +177,17 @@ public class ExecutorService {
       LOG.error("Cannot submit [" + eh + "] because the executor is missing."
         + " Is this process shutting down?");
     } else {
+if(KnobRuntime.check(java.util.UUID.fromString("4be21cd8-dd07-3746-9cc8-4e4d45a76e0e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       executor.submit(eh);
     }
   }
@@ -181,6 +226,9 @@ public class ExecutorService {
     private ExecutorType executorType;
 
     public ExecutorConfig setExecutorType(ExecutorType type) {
+if(KnobRuntime.check(java.util.UUID.fromString("d2ca9bad-ac8c-3920-9203-13f8336ab73a"))) {
+return null;
+}
       this.executorType = type;
       return this;
     }
@@ -190,6 +238,9 @@ public class ExecutorService {
     }
 
     public int getCorePoolSize() {
+if(KnobRuntime.check(java.util.UUID.fromString("5118240a-8cf3-3def-aaec-07e909a5232b"))) {
+return 0;
+}
       return corePoolSize;
     }
 

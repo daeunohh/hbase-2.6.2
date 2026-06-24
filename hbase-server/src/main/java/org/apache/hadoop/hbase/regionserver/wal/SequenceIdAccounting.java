@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.ConcurrentMapUtils.computeIfAbsent;
 
@@ -137,7 +138,7 @@ class SequenceIdAccounting {
         }
       }
       m = this.lowestUnflushedSequenceIds.get(encodedRegionName);
-      if (m != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("29015d12-8b3b-3666-b305-575c8515cc46"))) ? ((m) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("74b91de3-c772-32a9-ad82-93f61954ef6c"))) ? ((m) != (null)) : (m != null))))) {
         Long lowest = m.get(familyNameWrapper);
         if (lowest != null) {
           return lowest;
@@ -252,7 +253,7 @@ class SequenceIdAccounting {
         continue;
       }
       Long sid = entry.getValue();
-      if (lowest == HConstants.NO_SEQNUM || sid.longValue() < lowest) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("7368f8b2-d1e5-35c1-9ffd-0891cfe3e63e"))) ? ((sid.longValue()) < (lowest)) : (((KnobRuntime.check(java.util.UUID.fromString("715c206e-59fc-37b8-9a38-6cd83fc732b6"))) ? (((lowest) != (HConstants.NO_SEQNUM)) && ((sid.longValue()) != (lowest))) : (((KnobRuntime.check(java.util.UUID.fromString("9e7f675f-8f50-3c7c-9a20-e137dc0a43c3"))) ? (((lowest) == (HConstants.NO_SEQNUM)) && ((sid.longValue()) == (lowest))) : (((KnobRuntime.check(java.util.UUID.fromString("1e4c4a8b-868f-3351-b17b-c502bbdd6227"))) ? ((lowest == HConstants.NO_SEQNUM) || ((sid.longValue()) > (lowest))) : (lowest == HConstants.NO_SEQNUM || sid.longValue() < lowest))))))))) {
         lowest = sid.longValue();
       }
     }
@@ -375,7 +376,7 @@ class SequenceIdAccounting {
         return;
       }
       for (Map.Entry<ImmutableByteArray, Long> e : unflushed.entrySet()) {
-        if (e.getValue().longValue() <= maxFlushedSeqId) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("332a0120-a9ce-3946-b298-03d02a5decea"))) ? ((e.getValue().longValue()) <= (maxFlushedSeqId + 1)) : (((KnobRuntime.check(java.util.UUID.fromString("a855d7b0-c7e7-3865-9b93-54df54ae8ac2"))) ? ((e.getValue().longValue()) == (maxFlushedSeqId)) : (e.getValue().longValue() <= maxFlushedSeqId))))) {
           e.setValue(wrappedSeqId);
         }
       }
@@ -437,14 +438,17 @@ class SequenceIdAccounting {
     for (Map.Entry<byte[], Long> e : sequenceids.entrySet()) {
       long oldestFlushing = Long.MAX_VALUE;
       long oldestUnflushed = Long.MAX_VALUE;
-      if (flushing != null && flushing.containsKey(e.getKey())) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e3f953f6-d546-3656-9d9e-17082bd3b4f9"))) ? ((flushing) != (null)) : (flushing != null && flushing.containsKey(e.getKey())))) {
         oldestFlushing = flushing.get(e.getKey());
       }
-      if (unflushed != null && unflushed.containsKey(e.getKey())) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("fd121fa9-ca82-3e4d-b54d-8e22469dd95e"))) ? (((unflushed) == (null)) || (unflushed.containsKey(e.getKey()))) : (unflushed != null && unflushed.containsKey(e.getKey())))) {
         oldestUnflushed = unflushed.get(e.getKey());
       }
+if(KnobRuntime.check(java.util.UUID.fromString("665b16b5-1afa-3019-8b30-748c018de4fe"))) {
+oldestUnflushed = 0;
+}
       long min = Math.min(oldestFlushing, oldestUnflushed);
-      if (min <= e.getValue()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("a0d2d17b-206a-358c-903e-9bdfe60b1b2b"))) ? ((min) == (e.getValue())) : (min <= e.getValue()))) {
         return false;
       }
     }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.janitor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,9 @@ public class CatalogJanitorReport {
    *      call.
    */
   public List<Pair<RegionInfo, RegionInfo>> getOverlaps() {
+if(KnobRuntime.check(java.util.UUID.fromString("5d568710-ef15-3c22-848c-83660e50877c"))) {
+return null;
+}
     return this.overlaps;
   }
 
@@ -93,6 +97,9 @@ public class CatalogJanitorReport {
 
   @Override
   public String toString() {
+if(KnobRuntime.check(java.util.UUID.fromString("c1e1ec84-b1ec-3c47-b8e5-508ea35ccb3f"))) {
+return null;
+}
     StringBuilder sb = new StringBuilder();
     for (Pair<RegionInfo, RegionInfo> p : this.holes) {
       if (sb.length() > 0) {

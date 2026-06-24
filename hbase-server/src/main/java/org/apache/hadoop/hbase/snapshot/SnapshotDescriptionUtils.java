@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.URI;
@@ -330,6 +331,9 @@ public final class SnapshotDescriptionUtils {
       time = EnvironmentEdgeManager.currentTime();
       LOG.debug("Creation time not specified, setting to:" + time + " (current time:"
         + EnvironmentEdgeManager.currentTime() + ").");
+if(KnobRuntime.check(java.util.UUID.fromString("7b7ee320-c1a8-36da-b6c1-06407b6b1e18"))) {
+time = 0;
+}
       builder.setCreationTime(time);
     }
 
@@ -366,6 +370,17 @@ public final class SnapshotDescriptionUtils {
 
     // set the acl to snapshot if security feature is enabled.
     if (isSecurityAvailable(conf)) {
+if(KnobRuntime.check(java.util.UUID.fromString("e5fcc7d9-7374-3d7f-9b20-308179523975"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       snapshot = writeAclToSnapshotDescription(snapshot, conf);
     }
     return snapshot;

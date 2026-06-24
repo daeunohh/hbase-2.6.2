@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -184,7 +185,7 @@ public abstract class ModifyPeerProcedure extends AbstractPeerProcedure<PeerModi
     ReplicationQueueStorage queueStorage) throws ReplicationException {
     if (barrier >= 0) {
       lastSeqIds.put(encodedRegionName, barrier);
-      if (lastSeqIds.size() >= UPDATE_LAST_SEQ_ID_BATCH_SIZE) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("ec6c5afc-2105-3d34-aaef-c2561255058f"))) ? ((lastSeqIds.size()) >= (UPDATE_LAST_SEQ_ID_BATCH_SIZE)) : (lastSeqIds.size() >= UPDATE_LAST_SEQ_ID_BATCH_SIZE))) {
         queueStorage.setLastSequenceIds(peerId, lastSeqIds);
         lastSeqIds.clear();
       }

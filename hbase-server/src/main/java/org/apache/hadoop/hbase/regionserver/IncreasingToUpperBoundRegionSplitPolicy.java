@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,17 +56,50 @@ public class IncreasingToUpperBoundRegionSplitPolicy extends ConstantSizeRegionS
 
   @Override
   protected void configureForRegion(HRegion region) {
+if(KnobRuntime.check(java.util.UUID.fromString("ae2c0944-90ba-3454-98fe-884300afd0e7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("07813d99-adf2-3076-9000-bdf48629692a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("acb3e259-30a8-3070-894d-a44714299de4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     super.configureForRegion(region);
     Configuration conf = getConf();
     initialSize = conf.getLong("hbase.increasing.policy.initial.size", -1);
-    if (initialSize > 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b89c1395-4495-3509-a56d-a1e0a88d9165"))) ? ((initialSize) <= (0)) : (initialSize > 0))) {
       return;
     }
     TableDescriptor desc = region.getTableDescriptor();
     if (desc != null) {
       initialSize = 2 * desc.getMemStoreFlushSize();
     }
-    if (initialSize <= 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("1f3e1c96-d732-35f7-9302-77b828c5d0f7"))) ? ((initialSize) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("1a4cf6ad-2ed1-34c6-a96d-e33dd728281d"))) ? ((initialSize) != (0)) : (initialSize <= 0))))) {
       initialSize = 2 * conf.getLong(HConstants.HREGION_MEMSTORE_FLUSH_SIZE,
         TableDescriptorBuilder.DEFAULT_MEMSTORE_FLUSH_SIZE);
     }

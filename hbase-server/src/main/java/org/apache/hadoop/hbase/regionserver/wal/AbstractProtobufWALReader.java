@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.EOFException;
@@ -146,11 +147,58 @@ public abstract class AbstractProtobufWALReader
       // read the header
       WALProtos.WALHeader header = readHeader(stream);
       // initialize metadata and fields
+if(KnobRuntime.check(java.util.UUID.fromString("e817d0e7-30e2-30c1-978b-9650f69839e9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("valueCompressionAlgorithm_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(header));
+    _knob_field_.set(header, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       initDecryptor(header);
+if(KnobRuntime.check(java.util.UUID.fromString("2393d6b5-4c29-35f9-abe6-f0da4df5420f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(header));
+    _knob_field_.set(header, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2295b2bb-840e-319e-b172-89a96920074f"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7f5ab841-bd02-3a3d-8d7d-f0e0f6b41017"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("valueCompressionAlgorithm_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(header));
+    _knob_field_.set(header, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       initCompression(header);
       initWALCellCodec(header, getCellCodecInputStream(stream));
 
       // read trailer if available
+if(KnobRuntime.check(java.util.UUID.fromString("62329051-c512-3231-a8e7-5147b182080a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = stat.getClass().getDeclaredField("length");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(stat));
+    _knob_field_.set(stat, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       readTrailer(stream, stat);
 
       // this is intentional as we do not want the above methods to use the inputStream field. For
@@ -161,7 +209,7 @@ public abstract class AbstractProtobufWALReader
       this.inputStream = stream;
 
       // seek to the given position if it is not -1
-      if (startPosition >= 0 && startPosition != inputStream.getPos()) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("a07517c7-be0f-33f2-a31c-accc9ac6f858"))) ? ((startPosition) != (getPosition())) : (((KnobRuntime.check(java.util.UUID.fromString("ea304ac2-5984-333c-8f56-3622bc0201de"))) ? (((startPosition) >= (0)) && ((startPosition) != (inputStream.getPos()))) : (((KnobRuntime.check(java.util.UUID.fromString("e069e084-f0a6-3814-b959-8e9392d2533c"))) ? (((startPosition) > (0)) || ((startPosition) == (getPosition()))) : (((KnobRuntime.check(java.util.UUID.fromString("5d7e052e-4614-3a17-91a8-16825b75cb47"))) ? ((startPosition >= 0) || ((startPosition) != (inputStream.getPos()))) : (((KnobRuntime.check(java.util.UUID.fromString("ec1a9adf-87f9-3a5a-b96a-14416a2ffaf9"))) ? (((startPosition) < (0)) || ((startPosition) == (getPosition()))) : (((KnobRuntime.check(java.util.UUID.fromString("87f4dffb-31d6-37ae-92a2-3ff44d3e0806"))) ? (((startPosition) >= (0)) || ((startPosition) != (getPosition()))) : (((KnobRuntime.check(java.util.UUID.fromString("b624d896-f6ab-3ab5-8c80-1123520057ce"))) ? (((startPosition) == (0)) || (startPosition != inputStream.getPos())) : (((KnobRuntime.check(java.util.UUID.fromString("5a61fc11-0c53-3265-9453-fe612f16253c"))) ? (startPosition != inputStream.getPos()) : (((KnobRuntime.check(java.util.UUID.fromString("0f3cedc4-b012-32f9-9fc2-4f136278c32e"))) ? (((startPosition) >= (0)) && ((startPosition) == (inputStream.getPos()))) : (startPosition >= 0 && startPosition != inputStream.getPos()))))))))))))))))))) {
         if (compressionCtx != null) {
           // skip to the position, as we need to construct the compression dictionary
           skipTo(startPosition);
@@ -214,6 +262,9 @@ public abstract class AbstractProtobufWALReader
   }
 
   protected final WALProtos.WALHeader readHeader(FSDataInputStream stream) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("ac3bcd41-9917-35cb-ab14-351bf6c1f581"))) {
+return null;
+}
     byte[] magic = new byte[PB_WAL_MAGIC.length];
     try {
       stream.readFully(magic);
@@ -335,11 +386,36 @@ public abstract class AbstractProtobufWALReader
 
   private WALCellCodec getCodec(Configuration conf, String cellCodecClsName,
     CompressionContext compressionContext) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("745b816b-bffa-3b93-b927-a086e01279bc"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8b27beea-5e61-3498-b494-d4649ec387bd"))) {
+throw new java.io.IOException("Injected exception");
+}
     return WALCellCodec.create(conf, cellCodecClsName, compressionContext);
   }
 
   protected final void initWALCellCodec(WALProtos.WALHeader header, InputStream inputStream)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("668c45cd-fba6-3dbf-938d-0f568aaedb2c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(header));
+    _knob_field_.set(header, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String cellCodecClsName = header.hasCellCodecClsName() ? header.getCellCodecClsName() : null;
     if (decryptor != null && SecureWALCellCodec.class.getName().equals(cellCodecClsName)) {
       WALCellCodec codec = SecureWALCellCodec.getCodec(this.conf, decryptor);
@@ -363,6 +439,17 @@ public abstract class AbstractProtobufWALReader
   }
 
   protected final void readTrailer(FSDataInputStream stream, FileStatus stat) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("dce2d44b-3a30-3091-a04d-bd34fee490e8"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = stat.getClass().getDeclaredField("modification_time");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(stat));
+    _knob_field_.set(stat, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     this.fileLength = stat.getLen();
     this.walEditsStopOffset = this.fileLength;
     long currentPos = stream.getPos();
@@ -397,13 +484,16 @@ public abstract class AbstractProtobufWALReader
         // no trailer possible.
         return false;
       }
+if(KnobRuntime.check(java.util.UUID.fromString("7f936d6a-c3ca-3e6d-9788-85911dc50c8d"))) {
+trailerSizeOffset = -1;
+}
       stream.seek(trailerSizeOffset);
       // read the int as trailer size.
       int trailerSize = stream.readInt();
       ByteBuffer buf = ByteBuffer.allocate(PB_WAL_COMPLETE_MAGIC.length);
       stream.readFully(buf.array(), buf.arrayOffset(), buf.capacity());
       if (!Arrays.equals(buf.array(), PB_WAL_COMPLETE_MAGIC)) {
-        LOG.trace("No trailer found.");
+        if (KnobRuntime.check(java.util.UUID.fromString("473cfe3a-d7a4-3cc4-bae8-ff60c0b24e97"))) { LOG.warn("No trailer found."); } else { LOG.trace("No trailer found."); }
         return false;
       }
       if (trailerSize < 0) {
@@ -430,7 +520,7 @@ public abstract class AbstractProtobufWALReader
   }
 
   protected final boolean reachWALEditsStopOffset(long pos) {
-    if (trailerPresent && pos > 0 && pos == walEditsStopOffset) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("591ba36d-fb9f-3bea-9165-a25ee2fd4efb"))) ? (((false) || ((pos) < (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("fdfc1c6e-9f97-3d74-913e-70c390741c25"))) ? (((!trailerPresent) || ((pos) <= (0))) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("63749909-3d89-3095-a03b-12245339eeab"))) ? (((true) && ((pos) < (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("6e5ac095-cb08-317c-83e8-59b351dc857d"))) ? (((false) && ((pos) < (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("60eaa680-a43d-3524-800d-d0c0e38b7a1a"))) ? (((true) && (pos > 0)) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("8b4f3d1e-41c6-3d5e-a335-5ae016df24e6"))) ? (((pos) < (0)) || ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("4c7980e4-6132-3c88-b8b9-60e0186ffbfd"))) ? (trailerPresent) : (((KnobRuntime.check(java.util.UUID.fromString("9346bf29-7809-3c43-b1f7-2db24c27cd93"))) ? (((false) || ((pos) == (0))) || ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("4f9c26e8-7129-3035-8715-94e2e3b28ca1"))) ? (((!trailerPresent) || ((pos) < (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("3e1cb7c6-d9c9-3bca-9af9-a6fdd3e7094b"))) ? (((true) || ((pos) != (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("3ba82cc0-90ba-3c9b-abab-bfe77dc6febb"))) ? (((!trailerPresent) && ((pos) < (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("5596cd51-56e6-3703-9ef3-de5d0d66a5cf"))) ? ((false) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("f65f97ae-36a9-3363-9711-232dbe94f403"))) ? (((!trailerPresent) && ((pos) <= (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("ec63bd73-3e09-3acc-86a6-d4873cf9989d"))) ? (((!trailerPresent) && ((pos) == (0))) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("94cd3f7c-23d0-3c45-b7f6-23a431673d47"))) ? (((trailerPresent) && ((pos) >= (0))) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("45d02657-8205-3d53-854c-1c9ec991e0ed"))) ? (pos == walEditsStopOffset) : (((KnobRuntime.check(java.util.UUID.fromString("afd2922c-fbb6-3bbc-be46-3d2ab9682d07"))) ? (((true) && (pos > 0)) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("0ed37cc5-00e0-3828-8e3c-15f6fb81afb8"))) ? (((trailerPresent) || ((pos) == (0))) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("9a73793f-4db2-3954-b278-f34f884cc0ff"))) ? (((false) && ((pos) >= (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("264c0d89-8220-30d6-9879-b29e9abb34b1"))) ? ((!trailerPresent) && ((pos) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1ce53c5f-5887-3801-9ba7-80cdd6e4e984"))) ? (((!trailerPresent) || (pos > 0)) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("60bd57c2-f538-34f6-8baa-6b740f604e10"))) ? ((true) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("79e97d7f-03cb-3771-883e-3b70126b1007"))) ? (((!trailerPresent) && ((pos) != (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("dad68064-e3f9-344b-91e5-79236c1de490"))) ? (((trailerPresent) || ((pos) <= (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("c7f526f0-8de4-3ead-a67f-208f7e8669af"))) ? ((trailerPresent) || ((pos) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("29ae5e65-ccde-30f4-b9c4-b49cb76e15b3"))) ? ((trailerPresent) && ((pos) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f975ac41-9e85-3305-9545-f1cdabbb75e2"))) ? (((false) && ((pos) > (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("e23ecc55-6e2a-36cb-904f-3ce16b60362e"))) ? (((true) && ((pos) == (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("7eb95403-59fb-3340-b478-445fd3d9c012"))) ? (((trailerPresent) || ((pos) != (0))) || ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("a57a133c-14ac-3e09-8b30-f62278788479"))) ? (((false) || ((pos) >= (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("3b237f13-2c09-3f99-8dbf-d95416ea254c"))) ? (((!trailerPresent) || ((pos) < (0))) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("132daa85-144a-30df-99ab-53c5aad2b044"))) ? (((trailerPresent) || ((pos) > (0))) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("fa8120c5-5032-3fde-937c-758d110f3ad0"))) ? ((!trailerPresent) || ((pos) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9b23bd33-9820-3024-8e80-b295d6898730"))) ? (((pos) <= (0)) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("e91744fa-878c-38ba-9feb-5f50fbc9a091"))) ? (((pos) <= (0)) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("46833e96-1717-33bf-aea4-e1e971cfeb02"))) ? (((true) && ((pos) == (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("da291696-72a3-364b-b862-859b42dbe566"))) ? (((false) && (pos > 0)) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("1620ebfd-3283-3437-8545-577efd0f1c55"))) ? (((trailerPresent) && ((pos) >= (0))) || ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("a056170b-17af-375e-b074-99d7aa91d5e7"))) ? (((false) && ((pos) <= (0))) && ((pos) == (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("02fa0818-aa78-36ce-8216-b2efd515ec3e"))) ? ((trailerPresent) || (pos > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("2d68d2a3-0d8b-3f48-916f-b101764c4384"))) ? (((true) || ((pos) < (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("f11c9660-39ee-338b-b308-452ee4c38293"))) ? (((!trailerPresent) && ((pos) >= (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("f04d3344-0f4d-3b07-a980-472f284d734e"))) ? ((false) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("d2d56b3e-54ff-3d4d-b4b9-5e3a5115e5c1"))) ? (((true) || ((pos) != (0))) && (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("9075102c-dd75-34e9-90cf-877c79fac604"))) ? (((false) && ((pos) != (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("9c0bf2c4-b753-380d-8fd2-bda814ea1801"))) ? ((!trailerPresent) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("83ccdf4f-0d6d-34e5-9c20-b97d82e8659f"))) ? (((false) && (pos > 0)) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("502ab658-8ae9-3c1b-88ce-af3ce051c0b6"))) ? (((true) || ((pos) < (0))) || ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("7a9d91c9-fef4-3980-83e5-e170061e9346"))) ? (((trailerPresent) || ((pos) >= (0))) || (pos == walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("58b99117-8685-3f62-b55b-3b55c25871ee"))) ? (((!trailerPresent) || ((pos) <= (0))) && ((pos) != (walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("9c9d4d57-90ab-3292-aedc-1601cf8f9cda"))) ? (((false) || ((pos) < (0))) || ((pos) != (walEditsStopOffset))) : (trailerPresent && pos > 0 && pos == walEditsStopOffset))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
       LOG.trace("Reached end of expected edits area at offset {}", pos);
       return true;
     } else {
@@ -457,7 +547,7 @@ public abstract class AbstractProtobufWALReader
   }
 
   public long trailerSize() {
-    if (trailerPresent) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("ed7d3221-0396-3c7c-b46e-f8eae2dcd444"))) ? (!trailerPresent) : (trailerPresent))) {
       // sizeof PB_WAL_COMPLETE_MAGIC + sizeof trailerSize + trailer
       final long calculatedSize =
         (long) PB_WAL_COMPLETE_MAGIC.length + Bytes.SIZEOF_INT + trailer.getSerializedSize();

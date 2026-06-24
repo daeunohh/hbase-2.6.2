@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 import org.slf4j.Logger;
@@ -70,7 +71,7 @@ public class CompactionProgress {
 
   /** Returns the total compacting key values in currently running compaction */
   public long getTotalCompactingKVs() {
-    if (totalCompactingKVs < currentCompactedKVs) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("4df7126c-0b10-38c1-ae0f-4ed00c4c8b2c"))) ? ((totalCompactingKVs) != (currentCompactedKVs)) : (((KnobRuntime.check(java.util.UUID.fromString("3d91c7ea-a6e8-31cc-9b4e-3b8ab9ab9d23"))) ? ((totalCompactingKVs) > (currentCompactedKVs)) : (totalCompactingKVs < currentCompactedKVs))))) {
       LOG.debug("totalCompactingKVs={} less than currentCompactedKVs={}", totalCompactingKVs,
         currentCompactedKVs);
       return currentCompactedKVs;

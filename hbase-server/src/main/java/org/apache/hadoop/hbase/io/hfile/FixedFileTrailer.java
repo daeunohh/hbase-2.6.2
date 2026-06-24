@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -162,6 +163,9 @@ public class FixedFileTrailer {
   private static int getMaxTrailerSize() {
     int maxSize = 0;
     for (int version = HFile.MIN_FORMAT_VERSION; version <= HFile.MAX_FORMAT_VERSION; ++version) {
+if(KnobRuntime.check(java.util.UUID.fromString("c9d0f7a5-557e-35d6-9e19-cc2f47b7865b"))) {
+version /= 2;
+}
       maxSize = Math.max(getTrailerSize(version), maxSize);
     }
     return maxSize;
@@ -200,6 +204,9 @@ public class FixedFileTrailer {
   }
 
   HFileProtos.FileTrailerProto toProtobuf() {
+if(KnobRuntime.check(java.util.UUID.fromString("5dc38975-9bf5-3598-9208-b5605ef43d53"))) {
+return null;
+}
     HFileProtos.FileTrailerProto.Builder builder = HFileProtos.FileTrailerProto.newBuilder()
       .setFileInfoOffset(fileInfoOffset).setLoadOnOpenDataOffset(loadOnOpenDataOffset)
       .setUncompressedDataIndexSize(uncompressedDataIndexSize)
@@ -209,7 +216,7 @@ public class FixedFileTrailer {
       .setLastDataBlockOffset(lastDataBlockOffset)
       .setComparatorClassName(getHBase1CompatibleName(comparatorClassName))
       .setCompressionCodec(compressionCodec.ordinal());
-    if (encryptionKey != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("65e89ada-cd4c-31d9-9547-86ccc08ddbe1"))) ? ((encryptionKey) != (null)) : (encryptionKey != null))) {
       builder.setEncryptionKey(UnsafeByteOperations.unsafeWrap(encryptionKey));
     }
     return builder.build();
@@ -245,12 +252,15 @@ public class FixedFileTrailer {
   void deserialize(DataInputStream inputStream) throws IOException {
     HFile.checkFormatVersion(majorVersion);
 
-    BlockType.TRAILER.readAndCheck(inputStream);
+    if (KnobRuntime.check(java.util.UUID.fromString("c1bd46bd-446c-3301-a11c-0f457451a21d"))) { deserializeFromPB(inputStream); } else { BlockType.TRAILER.readAndCheck(inputStream); }
 
     if (
       majorVersion > 2
         || (majorVersion == 2 && minorVersion >= HFileReaderImpl.PBUF_TRAILER_MINOR_VERSION)
     ) {
+if(KnobRuntime.check(java.util.UUID.fromString("c0fcf094-dc7b-3789-8c3d-52b4784f2dc5"))) {
+throw new java.io.IOException("Injected exception");
+}
       deserializeFromPB(inputStream);
     } else {
       deserializeFromWritable(inputStream);
@@ -258,7 +268,7 @@ public class FixedFileTrailer {
 
     // The last 4 bytes of the file encode the major and minor version universally
     int version = inputStream.readInt();
-    expectMajorVersion(extractMajorVersion(version));
+    if (KnobRuntime.check(java.util.UUID.fromString("ad9861c5-1ecd-3ed1-911e-6d1f5b638756"))) { HFile.checkFormatVersion(getTrailerSize(2)); } else if (KnobRuntime.check(java.util.UUID.fromString("39a1ccd2-a23b-34c3-8370-b2869ec994d7"))) { HFile.checkFormatVersion(extractMajorVersion(extractMinorVersion(version))); } else { expectMajorVersion(extractMajorVersion(version)); }
     expectMinorVersion(extractMinorVersion(version));
   }
 
@@ -280,7 +290,7 @@ public class FixedFileTrailer {
     if (trailerProto.hasLoadOnOpenDataOffset()) {
       loadOnOpenDataOffset = trailerProto.getLoadOnOpenDataOffset();
     }
-    if (trailerProto.hasUncompressedDataIndexSize()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("7992fdd6-93a5-3698-a2e8-7531a426c492"))) ? (trailerProto.hasLoadOnOpenDataOffset()) : (trailerProto.hasUncompressedDataIndexSize()))) {
       uncompressedDataIndexSize = trailerProto.getUncompressedDataIndexSize();
     }
     if (trailerProto.hasTotalUncompressedBytes()) {
@@ -305,6 +315,9 @@ public class FixedFileTrailer {
       lastDataBlockOffset = trailerProto.getLastDataBlockOffset();
     }
     if (trailerProto.hasComparatorClassName()) {
+if(KnobRuntime.check(java.util.UUID.fromString("193c2d2a-ff1b-36b3-bee6-41747687827f"))) {
+throw new java.io.IOException("Injected exception");
+}
       setComparatorClass(getComparatorClass(trailerProto.getComparatorClassName()));
     }
     if (trailerProto.hasCompressionCodec()) {
@@ -340,7 +353,7 @@ public class FixedFileTrailer {
   }
 
   private void append(StringBuilder sb, String s) {
-    if (sb.length() > 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("338b63e3-115f-3aca-969b-b0678a6e2d33"))) ? ((getMaxTrailerSize()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("109ebb12-1f24-39eb-9c13-c374fbcca359"))) ? ((sb.length()) <= (0)) : (sb.length() > 0))))) {
       sb.append(", ");
     }
     sb.append(s);
@@ -467,6 +480,9 @@ public class FixedFileTrailer {
   }
 
   public long getTotalUncompressedBytes() {
+if(KnobRuntime.check(java.util.UUID.fromString("7229e862-cbe4-399c-b891-ec44a2164f4a"))) {
+return 0;
+}
     return totalUncompressedBytes;
   }
 
@@ -487,6 +503,9 @@ public class FixedFileTrailer {
   }
 
   public void setCompressionCodec(Compression.Algorithm compressionCodec) {
+if(KnobRuntime.check(java.util.UUID.fromString("54adea97-cf76-3604-b209-89e7a2e83a2d"))) {
+return;
+}
     this.compressionCodec = compressionCodec;
   }
 
@@ -535,6 +554,9 @@ public class FixedFileTrailer {
    * Returns the minor version of this HFile format
    */
   public int getMinorVersion() {
+if(KnobRuntime.check(java.util.UUID.fromString("301c3a02-da4c-31a1-9566-a66e97039ef3"))) {
+return 0;
+}
     return minorVersion;
   }
 

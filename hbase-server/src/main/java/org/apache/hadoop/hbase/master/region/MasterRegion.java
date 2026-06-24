@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HREGION_LOGDIR_NAME;
 
@@ -129,6 +130,9 @@ public final class MasterRegion {
 
   private void closeRegion(boolean abort) {
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("c7a84860-4558-398c-bac6-12e35d845962"))) {
+abort = true;
+}
       region.close(abort);
     } catch (IOException e) {
       LOG.warn("Failed to close region", e);
@@ -137,6 +141,9 @@ public final class MasterRegion {
 
   private void shutdownWAL() {
     try {
+if(KnobRuntime.check(java.util.UUID.fromString("a97a7d3e-b338-3edc-ab2c-dfb50473381e"))) {
+throw new java.io.IOException("Injected exception");
+}
       walFactory.shutdown();
     } catch (IOException e) {
       LOG.warn("Failed to shutdown WAL", e);
@@ -155,6 +162,17 @@ public final class MasterRegion {
   }
 
   public Result get(Get get) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("e9164e94-b53a-37f8-ac1e-eb4c156cd3b3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = get.getClass().getDeclaredField("storeOffset");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(get));
+    _knob_field_.set(get, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return region.get(get);
   }
 
@@ -163,6 +181,39 @@ public final class MasterRegion {
   }
 
   public RegionScanner getRegionScanner(Scan scan) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("d9a8edae-a219-32ae-a680-659ea4f3df57"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("limit");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(scan));
+    _knob_field_.set(scan, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c86c522a-09e5-3a22-a1f4-a69099e1043b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("maxResultSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(scan));
+    _knob_field_.set(scan, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9f5462fb-a4cb-3fd5-800e-836ffa99d6b3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("batch");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(scan));
+    _knob_field_.set(scan, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return region.getScanner(scan);
   }
 
@@ -278,7 +329,7 @@ public final class MasterRegion {
     // However, it's possible that users directly remove the WAL directory. We expect walsDir
     // to always exist in normal situations, but we should guard against users changing the
     // filesystem outside of HBase's line of sight.
-    if (walFs.exists(walsDir)) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("24b36691-93cd-3bd8-95cd-ee1ff4db7fdd"))) ? (walFs.mkdirs(walsDir)) : (walFs.exists(walsDir)))) {
       replayWALs(conf, walFs, walRootDir, walsDir, regionInfo, serverName, replayEditsDir);
     } else {
       LOG.error(
@@ -303,7 +354,7 @@ public final class MasterRegion {
       if (!walDir.isDirectory()) {
         continue;
       }
-      if (walDir.getPath().getName().startsWith(serverName)) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("8a9153e1-c189-3901-8212-0586a1c6f0bf"))) ? (walDir.getPath().getName().endsWith(serverName)) : (walDir.getPath().getName().startsWith(serverName)))) {
         LOG.warn("This should not happen in real production as we have not created our WAL "
           + "directory yet, ignore if you are running a local region related UT");
       }
@@ -320,6 +371,9 @@ public final class MasterRegion {
         deadWALDir = walDir.getPath();
         LOG.info("{} is already marked as dead", deadWALDir);
       }
+if(KnobRuntime.check(java.util.UUID.fromString("6cd9c0ef-d06d-3405-ba61-46695b401864"))) {
+throw new java.io.FileNotFoundException("Injected exception");
+}
       for (FileStatus walFile : walFs.listStatus(deadWALDir)) {
         Path replayEditsFile = new Path(replayEditsDir, walFile.getPath().getName());
         RecoverLeaseFSUtils.recoverFileLease(walFs, walFile.getPath(), conf);
@@ -441,12 +495,23 @@ public final class MasterRegion {
             server.getServerName().toString(), false);
         }
       } else {
-        if (fs.exists(initializingFlag) && !fs.delete(initializingFlag, true)) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("1a6001e6-b493-33fb-a148-47284e042534"))) ? ((fs.exists(initializingFlag)) || (!fs.delete(initializingFlag, true))) : (fs.exists(initializingFlag) && !fs.delete(initializingFlag, true)))) {
           LOG.warn("failed to clean up initializing flag: " + initializingFlag);
         }
         // open it, make sure to load the table descriptor from fs
         TableDescriptor oldTd = FSTableDescriptors.getTableDescriptorFromFs(fs, tableDir);
         RegionInfo regionInfo = loadRegionInfo(fs, tableDir);
+if(KnobRuntime.check(java.util.UUID.fromString("c329decb-8b7e-3201-8059-848e9c72a3c3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         tryMigrate(conf, fs, tableDir, regionInfo, oldTd, td);
         region = open(conf, td, regionInfo, fs, rootDir, walFs, walRootDir, walFactory, walRoller,
           server.getServerName().toString());
@@ -457,6 +522,17 @@ public final class MasterRegion {
     MasterRegionFlusherAndCompactor flusherAndCompactor = new MasterRegionFlusherAndCompactor(conf,
       server, region, params.flushSize(), params.flushPerChanges(), params.flushIntervalMs(),
       params.compactMin(), globalArchiveDir, params.archivedHFileSuffix());
+if(KnobRuntime.check(java.util.UUID.fromString("d0c63412-1c61-345d-b236-f59dff47ec46"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = flusherAndCompactor.getClass().getDeclaredField("compactMin");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(flusherAndCompactor));
+    _knob_field_.set(flusherAndCompactor, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     walRoller.setFlusherAndCompactor(flusherAndCompactor);
     Path archiveDir = HFileArchiveUtil.getArchivePath(conf);
     if (!fs.mkdirs(archiveDir)) {

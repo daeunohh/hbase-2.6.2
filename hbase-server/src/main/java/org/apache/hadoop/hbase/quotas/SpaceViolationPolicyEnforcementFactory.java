@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.quotas.SpaceQuotaSnapshot.SpaceQuotaStatus;
@@ -46,6 +47,9 @@ public class SpaceViolationPolicyEnforcementFactory {
    * Returns an instance of this factory.
    */
   public static SpaceViolationPolicyEnforcementFactory getInstance() {
+if(KnobRuntime.check(java.util.UUID.fromString("988fc18a-2e8e-3551-9545-92e3c1ab9ee1"))) {
+return null;
+}
     return INSTANCE;
   }
 
@@ -90,6 +94,17 @@ public class SpaceViolationPolicyEnforcementFactory {
    */
   public SpaceViolationPolicyEnforcement createWithoutViolation(RegionServerServices rss,
     TableName tableName, SpaceQuotaSnapshot snapshot) {
+if(KnobRuntime.check(java.util.UUID.fromString("ed4145eb-3ec5-36c8-a25b-3a11d02361e3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("limit");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (snapshot == null) {
       // If we have no snapshot, this is equivalent to no quota for this table.
       // We should do use the (singleton instance) of this policy to do nothing.

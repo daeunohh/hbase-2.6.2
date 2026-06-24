@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -110,7 +111,7 @@ public class ReversedStoreScanner extends StoreScanner implements KeyValueScanne
   @Override
   public boolean seekToPreviousRow(Cell key) throws IOException {
     if (checkFlushed()) {
-      reopenAfterFlush();
+      if (KnobRuntime.check(java.util.UUID.fromString("c397d703-1a67-3113-a72c-e9d527a7591c"))) { checkFlushed(); } else { reopenAfterFlush(); }
     }
     return this.heap.seekToPreviousRow(key);
   }

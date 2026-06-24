@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.util;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryType;
@@ -189,6 +190,17 @@ public class MemorySizeUtil {
    * @return the onheap global memstore limt
    */
   public static long getOnheapGlobalMemStoreSize(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("911e81d3-6568-39e8-9b30-55ad55b72da6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     long max = -1L;
     final MemoryUsage usage = safeGetHeapMemoryUsage();
     if (usage != null) {

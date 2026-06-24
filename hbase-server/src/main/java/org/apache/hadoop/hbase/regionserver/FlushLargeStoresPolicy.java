@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.hadoop.hbase.procedure2.util.StringUtils;
@@ -49,19 +50,63 @@ public abstract class FlushLargeStoresPolicy extends FlushPolicy {
   }
 
   protected void setFlushSizeLowerBounds(HRegion region) {
+if(KnobRuntime.check(java.util.UUID.fromString("e9eee642-40c2-383c-95a4-fbf641857dc6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowProcessorTimeout");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("fa7ec9fa-9b7e-3a86-96db-521a831b3b13"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedOpenRegionSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("991a2e0d-62be-358b-9480-e7cc21a3da06"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("timestampSlop");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00a51bfa-bbcb-3e64-b6ed-d5cb6acd9583"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     int familyNumber = region.getTableDescriptor().getColumnFamilyCount();
     // For multiple families, lower bound is the "average flush size" by default
     // unless setting in configuration is larger.
     flushSizeLowerBound = region.getMemStoreFlushSize() / familyNumber;
     long minimumLowerBound = getConf().getLong(HREGION_COLUMNFAMILY_FLUSH_SIZE_LOWER_BOUND_MIN,
       DEFAULT_HREGION_COLUMNFAMILY_FLUSH_SIZE_LOWER_BOUND_MIN);
-    if (minimumLowerBound > flushSizeLowerBound) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f8ee6994-def4-3ef8-98a4-afad9e1c891b"))) ? ((minimumLowerBound) > (flushSizeLowerBound)) : (minimumLowerBound > flushSizeLowerBound))) {
       flushSizeLowerBound = minimumLowerBound;
     }
     // use the setting in table description if any
     String flushedSizeLowerBoundString =
       region.getTableDescriptor().getValue(HREGION_COLUMNFAMILY_FLUSH_SIZE_LOWER_BOUND);
-    if (flushedSizeLowerBoundString == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d3bd2144-0d59-357e-9b93-7716b5963bbe"))) ? ((flushedSizeLowerBoundString) == (null)) : (flushedSizeLowerBoundString == null))) {
       LOG.debug(
         "No {} set in table {} descriptor;"
           + "using region.getMemStoreFlushHeapSize/# of families ({}) " + "instead.",

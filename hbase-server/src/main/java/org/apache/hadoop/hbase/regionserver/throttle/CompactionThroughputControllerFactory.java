@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -54,6 +55,9 @@ public final class CompactionThroughputControllerFactory {
 
   public static Class<? extends ThroughputController>
     getThroughputControllerClass(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("d572b8a5-d6ac-328c-a410-41d5c080f946"))) {
+return null;
+}
     String className =
       conf.get(HBASE_THROUGHPUT_CONTROLLER_KEY, DEFAULT_THROUGHPUT_CONTROLLER_CLASS.getName());
     className = resolveDeprecatedClassName(className);

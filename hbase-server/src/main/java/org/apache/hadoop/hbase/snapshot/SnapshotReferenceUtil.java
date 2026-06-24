@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -105,14 +106,47 @@ public final class SnapshotReferenceUtil {
   static void visitTableStoreFiles(final Configuration conf, final FileSystem fs,
     final Path snapshotDir, final SnapshotDescription desc, final StoreFileVisitor visitor)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b147f9a6-6619-32aa-b612-fbd16ffdf9a6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(desc));
+    _knob_field_.set(desc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ef3ee41a-3ed9-34ed-86a8-4a5dc8554233"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(desc));
+    _knob_field_.set(desc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     SnapshotManifest manifest = SnapshotManifest.open(conf, fs, snapshotDir, desc);
     List<SnapshotRegionManifest> regionManifests = manifest.getRegionManifests();
-    if (regionManifests == null || regionManifests.isEmpty()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("cf4760f6-6c2a-396c-8ed2-253c2a919fcc"))) ? ((regionManifests == null) && (regionManifests.isEmpty())) : (regionManifests == null || regionManifests.isEmpty()))) {
       LOG.debug("No manifest files present: " + snapshotDir);
       return;
     }
 
     for (SnapshotRegionManifest regionManifest : regionManifests) {
+if(KnobRuntime.check(java.util.UUID.fromString("caa0ebc1-539f-339c-a921-1434fc26ecf5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionManifest.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionManifest));
+    _knob_field_.set(regionManifest, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       visitRegionStoreFiles(regionManifest, visitor);
     }
   }
@@ -125,10 +159,32 @@ public final class SnapshotReferenceUtil {
    */
   public static void visitRegionStoreFiles(final SnapshotRegionManifest manifest,
     final StoreFileVisitor visitor) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("1c14754b-3c8b-388c-8613-697f4f8b817c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = manifest.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(manifest));
+    _knob_field_.set(manifest, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     RegionInfo regionInfo = ProtobufUtil.toRegionInfo(manifest.getRegionInfo());
     for (SnapshotRegionManifest.FamilyFiles familyFiles : manifest.getFamilyFilesList()) {
       String familyName = familyFiles.getFamilyName().toStringUtf8();
       for (SnapshotRegionManifest.StoreFile storeFile : familyFiles.getStoreFilesList()) {
+if(KnobRuntime.check(java.util.UUID.fromString("493c5d52-f8e5-365a-a261-a6b79261054e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = storeFile.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(storeFile));
+    _knob_field_.set(storeFile, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         visitor.storeFile(regionInfo, familyName, storeFile);
       }
     }
@@ -159,12 +215,70 @@ public final class SnapshotReferenceUtil {
    */
   public static void verifySnapshot(final Configuration conf, final FileSystem fs,
     final SnapshotManifest manifest) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("30e75c0f-646c-35b9-8ecd-2b98e3ef5392"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("597e35d3-0fb4-3053-a5be-36eea362a912"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final SnapshotDescription snapshotDesc = manifest.getSnapshotDescription();
     final Path snapshotDir = manifest.getSnapshotDir();
     concurrentVisitReferencedFiles(conf, fs, manifest, "VerifySnapshot", new StoreFileVisitor() {
       @Override
       public void storeFile(final RegionInfo regionInfo, final String family,
         final SnapshotRegionManifest.StoreFile storeFile) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b457d68e-56b6-38e1-b040-25949b18f238"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("88f4095b-de7c-3dae-9255-cc932d0fb4cd"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("add7a914-1a6c-37c8-97fa-f7e81f82c960"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("creationTime_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1b73cde1-80c5-3b09-8992-5fad3ab00723"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("maxFileSize_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         verifyStoreFile(conf, fs, snapshotDir, snapshotDesc, regionInfo, family, storeFile);
       }
     });
@@ -202,11 +316,22 @@ public final class SnapshotReferenceUtil {
   public static void concurrentVisitReferencedFiles(final Configuration conf, final FileSystem fs,
     final SnapshotManifest manifest, final ExecutorService exec, final StoreFileVisitor visitor)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("a6d8d175-68c8-3d81-a149-3c849c901c80"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final SnapshotDescription snapshotDesc = manifest.getSnapshotDescription();
     final Path snapshotDir = manifest.getSnapshotDir();
 
     List<SnapshotRegionManifest> regionManifests = manifest.getRegionManifests();
-    if (regionManifests == null || regionManifests.isEmpty()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b48ef16e-f51b-3c1d-ab46-46302a06b102"))) ? (((regionManifests) != (null)) && (regionManifests.isEmpty())) : (regionManifests == null || regionManifests.isEmpty()))) {
       LOG.debug("No manifest files present: " + snapshotDir);
       return;
     }
@@ -217,6 +342,20 @@ public final class SnapshotReferenceUtil {
       completionService.submit(new Callable<Void>() {
         @Override
         public Void call() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("def81c88-32d6-3c17-b5ca-a83c0bf9e49d"))) {
+throw new java.io.IOException("Injected exception");
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b40acec9-ad33-3a65-9f66-0f255cde807d"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionManifest.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionManifest));
+    _knob_field_.set(regionManifest, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           visitRegionStoreFiles(regionManifest, visitor);
           return null;
         }
@@ -224,6 +363,9 @@ public final class SnapshotReferenceUtil {
     }
     try {
       for (int i = 0; i < regionManifests.size(); ++i) {
+if(KnobRuntime.check(java.util.UUID.fromString("a8fd215b-e9a7-3d8b-be24-7a21d20c8e28"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
         completionService.take().get();
       }
     } catch (InterruptedException e) {
@@ -253,6 +395,28 @@ public final class SnapshotReferenceUtil {
   public static void verifyStoreFile(final Configuration conf, final FileSystem fs,
     final Path snapshotDir, final SnapshotDescription snapshot, final RegionInfo regionInfo,
     final String family, final SnapshotRegionManifest.StoreFile storeFile) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("3117f59a-0ae3-3082-9ba1-e438ab8b6f2c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("aabfd7bd-30df-325e-9eac-74ebe08d6f18"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("creationTime_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     TableName table = TableName.valueOf(snapshot.getTable());
     String fileName = storeFile.getName();
 
@@ -277,7 +441,7 @@ public final class SnapshotReferenceUtil {
     }
 
     Path linkPath;
-    if (refPath != null && HFileLink.isHFileLink(refPath)) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("014e9001-4c56-35c6-ae3f-64eb50d177fc"))) ? (HFileLink.isHFileLink(refPath)) : (((KnobRuntime.check(java.util.UUID.fromString("3a98bdef-d8c1-3fd4-a9c1-3b4cefbccc5a"))) ? ((refPath.getParent().getParent()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("0b8ddea9-5bb6-30b6-8352-94db23578d64"))) ? (((refPath.getParent()) == (null)) && (HFileLink.isHFileLink(refPath.getParent().getParent()))) : (((KnobRuntime.check(java.util.UUID.fromString("a9ae3dc9-b37b-33ff-8258-9c8d9d3114d2"))) ? (HFileLink.isHFileLink(refPath.getParent())) : (((KnobRuntime.check(java.util.UUID.fromString("a53580a1-7d4a-350d-a075-b6c9ff02555c"))) ? (((refPath.getParent()) != (null)) && (HFileLink.isHFileLink(refPath.getParent()))) : (refPath != null && HFileLink.isHFileLink(refPath)))))))))))) {
       linkPath = new Path(family, refPath.getName());
     } else if (HFileLink.isHFileLink(fileName)) {
       linkPath = new Path(family, fileName);
@@ -308,6 +472,39 @@ public final class SnapshotReferenceUtil {
       String msg = "Can't find hfile: " + fileName + " in the real (" + link.getOriginPath()
         + ") or archive (" + link.getArchivePath() + ") directory for the primary table.";
       LOG.error(msg);
+if(KnobRuntime.check(java.util.UUID.fromString("40482c4a-1e45-3b5a-828f-fdff83daa61f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b460f1f4-25ae-31a7-b91a-77674f2e029a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d1b1ed7b-1a61-307d-8b9d-a0c4c50929a5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       throw new CorruptedSnapshotException(msg, ProtobufUtil.createSnapshotDesc(snapshot));
     }
   }
@@ -323,6 +520,20 @@ public final class SnapshotReferenceUtil {
   public static Set<String> getHFileNames(final Configuration conf, final FileSystem fs,
     final Path snapshotDir) throws IOException {
     SnapshotDescription desc = SnapshotDescriptionUtils.readSnapshotInfo(fs, snapshotDir);
+if(KnobRuntime.check(java.util.UUID.fromString("e034b79c-1e62-3351-94cb-1926999924db"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("version_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(desc));
+    _knob_field_.set(desc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b4d2cc63-0e72-37a9-8c69-3b15b40c8007"))) {
+throw new java.io.IOException("Injected exception");
+}
     return getHFileNames(conf, fs, snapshotDir, desc);
   }
 
@@ -337,6 +548,28 @@ public final class SnapshotReferenceUtil {
    */
   private static Set<String> getHFileNames(final Configuration conf, final FileSystem fs,
     final Path snapshotDir, final SnapshotDescription snapshotDesc) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("edbdf58b-6658-3dc0-b3fc-94511a91e23c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("creationTime_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("68359d3c-0bb4-356c-9d57-8770d552c7cb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshotDesc));
+    _knob_field_.set(snapshotDesc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final Set<String> names = new HashSet<>();
     visitTableStoreFiles(conf, fs, snapshotDir, snapshotDesc, new StoreFileVisitor() {
       @Override

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,6 +120,9 @@ class SchemaLocking {
 
   private LockedResource createLockedResource(LockedResourceType resourceType, String resourceName,
     LockAndQueue queue) {
+if(KnobRuntime.check(java.util.UUID.fromString("5807dfb7-ba49-3ec4-a881-1bb063dc76c0"))) {
+return null;
+}
     LockType lockType;
     Procedure<?> exclusiveLockOwnerProcedure;
     int sharedLockCount;

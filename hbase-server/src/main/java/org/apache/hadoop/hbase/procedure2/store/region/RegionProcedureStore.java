@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure2.store.region;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.EMPTY_BYTE_ARRAY;
 import static org.apache.hadoop.hbase.HConstants.NO_NONCE;
@@ -107,6 +108,9 @@ public class RegionProcedureStore extends ProcedureStoreBase {
 
   @Override
   public void stop(boolean abort) {
+if(KnobRuntime.check(java.util.UUID.fromString("3cecba58-7cba-3041-a102-5d609b444b16"))) {
+return;
+}
     if (!setRunning(false)) {
       return;
     }
@@ -168,6 +172,9 @@ public class RegionProcedureStore extends ProcedureStoreBase {
 
   @SuppressWarnings("deprecation")
   private void tryMigrate(FileSystem fs) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("ea9bc917-fba4-365f-ad3f-4829c7367af3"))) {
+return;
+}
     Configuration conf = server.getConfiguration();
     Path procWALDir =
       new Path(CommonFSUtils.getWALRootDir(conf), WALProcedureStore.MASTER_PROCEDURE_LOGDIR);
@@ -252,13 +259,19 @@ public class RegionProcedureStore extends ProcedureStoreBase {
 
   @Override
   public void recoverLease() throws IOException {
-    LOG.info("Starting Region Procedure Store lease recovery...");
+if(KnobRuntime.check(java.util.UUID.fromString("c5c2c9cb-370d-3156-a794-b37f754f1cb7"))) {
+throw new java.io.IOException("Injected exception");
+}
+    if (KnobRuntime.check(java.util.UUID.fromString("0037f840-c4a2-3ab6-96fb-d813e52b9cd0"))) { LOG.error("Starting Region Procedure Store lease recovery..."); } else { LOG.info("Starting Region Procedure Store lease recovery..."); }
     FileSystem fs = CommonFSUtils.getWALFileSystem(server.getConfiguration());
     tryMigrate(fs);
   }
 
   @Override
   public void load(ProcedureLoader loader) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("bb13789f-9de0-38da-9741-e6a5e47c61de"))) {
+throw new java.io.IOException("Injected exception");
+}
     List<ProcedureProtos.Procedure> procs = new ArrayList<>();
     long maxProcId = 0;
 
@@ -280,7 +293,7 @@ public class RegionProcedureStore extends ProcedureStoreBase {
             .parseFrom(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength());
           procs.add(proto);
         }
-      } while (moreRows);
+      } while (((KnobRuntime.check(java.util.UUID.fromString("d1933396-b962-3ff1-9a70-b50b38850b70"))) ? (!moreRows) : (moreRows)));
     }
     loader.setMaxProcId(maxProcId);
     ProcedureTree tree = ProcedureTree.build(procs);
@@ -290,6 +303,17 @@ public class RegionProcedureStore extends ProcedureStoreBase {
 
   private void serializePut(Procedure<?> proc, List<Mutation> mutations, List<byte[]> rowsToLock)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("78813fca-fb44-3cd3-9a6f-d836f44073a6"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("procId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     ProcedureProtos.Procedure proto = ProcedureUtil.convertToProtoProcedure(proc);
     byte[] row = Bytes.toBytes(proc.getProcId());
     mutations.add(new Put(row).addColumn(PROC_FAMILY, PROC_QUALIFIER, proto.toByteArray()));
@@ -320,7 +344,18 @@ public class RegionProcedureStore extends ProcedureStoreBase {
 
   @Override
   public void insert(Procedure<?> proc, Procedure<?>[] subProcs) {
-    if (subProcs == null || subProcs.length == 0) {
+if(KnobRuntime.check(java.util.UUID.fromString("fa130d47-e535-3813-bcdc-1dafc611f62e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+    if (((KnobRuntime.check(java.util.UUID.fromString("ca9e1578-f59f-3957-ac4d-7c40750d6687"))) ? (((subProcs) != (null)) && (subProcs.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("c6eefa5c-d2e2-3735-a2de-1acba47c0545"))) ? (((subProcs) != (null)) && ((subProcs.length) == (0))) : (subProcs == null || subProcs.length == 0))))) {
       // same with update, just insert a single procedure
       update(proc);
       return;
@@ -363,10 +398,65 @@ public class RegionProcedureStore extends ProcedureStoreBase {
   public void update(Procedure<?> proc) {
     runWithoutRpcCall(() -> {
       try {
+if(KnobRuntime.check(java.util.UUID.fromString("ad3c1e33-b42e-34a3-be59-fb8a0143e5a4"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5d9b9f68-d3c8-3c93-b35b-8d66eb797d2b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a33d5c6d-7678-302d-9ac7-9cf415dfcb97"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         ProcedureProtos.Procedure proto = ProcedureUtil.convertToProtoProcedure(proc);
         region.update(r -> r.put(new Put(Bytes.toBytes(proc.getProcId())).addColumn(PROC_FAMILY,
           PROC_QUALIFIER, proto.toByteArray())));
       } catch (IOException e) {
+if(KnobRuntime.check(java.util.UUID.fromString("f973c499-e14c-3617-bb52-9eab84b9c6ab"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("rootProcId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc1e206f-e696-3530-9447-c58c0a172d82"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("parentProcId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(proc));
+    _knob_field_.set(proc, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         LOG.error(HBaseMarkers.FATAL, "Failed to update proc {}", proc, e);
         throw new UncheckedIOException(e);
       }
@@ -406,7 +496,7 @@ public class RegionProcedureStore extends ProcedureStoreBase {
     if (count == 0) {
       return;
     }
-    if (count == 1) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("684bb70a-4d07-3855-b5af-044afe437e41"))) ? ((count) == (1)) : (count == 1))) {
       delete(procIds[offset]);
       return;
     }

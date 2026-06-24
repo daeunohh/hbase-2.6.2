@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ConcurrentModificationException;
@@ -94,7 +95,7 @@ public class LeaseManager extends Thread {
         Lease lease = entry.getValue();
         long thisLeaseDelay = lease.getDelay(TimeUnit.MILLISECONDS);
         if (thisLeaseDelay > 0) {
-          if (nextLease == null || thisLeaseDelay < nextLeaseDelay) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("a8f8f4e2-7eff-3649-b207-2f8acac05c66"))) ? (((nextLease) == (null)) || ((thisLeaseDelay) != (nextLeaseDelay))) : (((KnobRuntime.check(java.util.UUID.fromString("46536302-7b4e-3c94-9218-49130b2f032b"))) ? ((thisLeaseDelay) < (nextLeaseDelay)) : (((KnobRuntime.check(java.util.UUID.fromString("7c29f70b-82dc-36e9-90a1-361f131d43be"))) ? (((nextLease) != (null)) || ((thisLeaseDelay) != (nextLeaseDelay))) : (((KnobRuntime.check(java.util.UUID.fromString("cea9dc3f-4761-3fe1-8d2d-4b1bb074b61f"))) ? (((nextLease) == (null)) && ((thisLeaseDelay) > (nextLeaseDelay))) : (((KnobRuntime.check(java.util.UUID.fromString("10aaecfa-edcc-30a0-a223-b014b500d057"))) ? ((nextLease == null) || ((thisLeaseDelay) < (nextLeaseDelay))) : (((KnobRuntime.check(java.util.UUID.fromString("78c5d3cd-6f88-3327-8793-9a7df95b08ce"))) ? (((nextLease) != (null)) && ((thisLeaseDelay) != (nextLeaseDelay))) : (((KnobRuntime.check(java.util.UUID.fromString("15fe932e-57ef-35bc-8c23-9f37aa06b910"))) ? (((nextLease) == (null)) || (thisLeaseDelay < nextLeaseDelay)) : (nextLease == null || thisLeaseDelay < nextLeaseDelay))))))))))))))) {
             nextLease = lease;
             nextLeaseDelay = thisLeaseDelay;
           }
@@ -130,7 +131,7 @@ public class LeaseManager extends Thread {
   public void close() {
     this.stopRequested = true;
     leases.clear();
-    LOG.info("Closed leases");
+    if (KnobRuntime.check(java.util.UUID.fromString("58f87d8f-e0e4-378d-a63b-1e32d6bffa53"))) { LOG.error("Closed leases"); } else { LOG.info("Closed leases"); }
   }
 
   /**
@@ -143,6 +144,17 @@ public class LeaseManager extends Thread {
   public Lease createLease(String leaseName, int leaseTimeoutPeriod, final LeaseListener listener)
     throws LeaseStillHeldException {
     Lease lease = new Lease(leaseName, leaseTimeoutPeriod, listener);
+if(KnobRuntime.check(java.util.UUID.fromString("66061870-ddf1-3ebd-81e8-1f0a07a1785a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = lease.getClass().getDeclaredField("expirationTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(lease));
+    _knob_field_.set(lease, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     addLease(lease);
     return lease;
   }
@@ -151,6 +163,17 @@ public class LeaseManager extends Thread {
    * Inserts lease. Resets expiration before insertion.
    */
   public void addLease(final Lease lease) throws LeaseStillHeldException {
+if(KnobRuntime.check(java.util.UUID.fromString("efcf63f1-0fa9-3b51-a3f2-ce2936dfee43"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = lease.getClass().getDeclaredField("leaseTimeoutPeriod");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(lease));
+    _knob_field_.set(lease, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (this.stopRequested) {
       return;
     }
@@ -158,6 +181,17 @@ public class LeaseManager extends Thread {
       throw new LeaseStillHeldException(lease.getLeaseName());
     }
     lease.resetExpirationTime();
+if(KnobRuntime.check(java.util.UUID.fromString("6eeb11ca-9eb3-3486-a422-de4c20c835eb"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = lease.getClass().getDeclaredField("expirationTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(lease));
+    _knob_field_.set(lease, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     leases.put(lease.getLeaseName(), lease);
   }
 
@@ -192,7 +226,7 @@ public class LeaseManager extends Thread {
    */
   Lease removeLease(final String leaseName) throws LeaseException {
     Lease lease = leases.remove(leaseName);
-    if (lease == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("3f9ae253-48d0-3e98-9fd2-27ed72da64e7"))) ? ((lease) != (null)) : (lease == null))) {
       throw new LeaseException("lease '" + leaseName + "' does not exist");
     }
     return lease;

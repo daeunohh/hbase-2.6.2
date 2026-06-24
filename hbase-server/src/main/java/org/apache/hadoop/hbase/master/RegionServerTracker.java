@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.StatusCode;
@@ -140,6 +141,9 @@ public class RegionServerTracker extends ZKListener {
     synchronized (this) {
       Set<ServerName> liveServers = regionServers;
       for (ServerName serverName : liveServers) {
+if(KnobRuntime.check(java.util.UUID.fromString("32001780-3474-3c16-be24-89dcf2ec0703"))) {
+throw new java.io.IOException("Injected exception");
+}
         RegionServerInfo info = getServerInfo(serverName);
         ServerMetrics serverMetrics = info != null
           ? ServerMetricsBuilder.of(serverName,
@@ -174,12 +178,23 @@ public class RegionServerTracker extends ZKListener {
     // check whether there are new servers, log them
     boolean newServerAdded = false;
     for (ServerName sn : newServers) {
+if(KnobRuntime.check(java.util.UUID.fromString("f82a312c-2481-37ec-8002-6064638a9926"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = sn.getClass().getDeclaredField("startCode");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(sn));
+    _knob_field_.set(sn, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       if (!oldServers.contains(sn)) {
         newServerAdded = true;
         LOG.info("RegionServer ephemeral node created, adding [" + sn + "]");
       }
     }
-    if (newServerAdded && server.isInitialized()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("e7b3f779-9ae8-3684-bfe1-cb1e51f274ee"))) ? ((newServerAdded) || (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("29f0e92b-cf45-3952-8102-808e133e0119"))) ? (server.isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("1fcf943b-fef2-304e-a3a4-0ff3c85ffc34"))) ? ((true) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("d5cb5034-02e9-3640-b48c-559f27327fa1"))) ? ((newServerAdded) && (server.isAborted())) : (((KnobRuntime.check(java.util.UUID.fromString("9a8556bd-aa00-3e87-a9f5-2a2404fdbc0e"))) ? ((true) && (server.isStopped())) : (newServerAdded && server.isInitialized()))))))))))) {
       // Only call the check to move servers if a RegionServer was added to the cluster; in this
       // case it could be a server with a new version so it makes sense to run the check.
       server.checkIfShouldMoveSystemRegionAsync();

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.MemoryType;
 import java.util.concurrent.ConcurrentHashMap;
@@ -141,6 +142,9 @@ public class RegionServerAccounting {
   }
 
   public void incGlobalMemStoreSize(long dataSizeDelta, long heapSizeDelta, long offHeapSizeDelta) {
+if(KnobRuntime.check(java.util.UUID.fromString("dfbf54f0-54c7-37a5-b5af-2759346777eb"))) {
+dataSizeDelta = 0;
+}
     globalMemStoreDataSize.add(dataSizeDelta);
     globalMemStoreHeapSize.add(heapSizeDelta);
     globalMemStoreOffHeapSize.add(offHeapSizeDelta);
@@ -160,7 +164,7 @@ public class RegionServerAccounting {
     // for onheap memstore we check if the global memstore size and the
     // global heap overhead is greater than the global memstore limit
     if (memType == MemoryType.HEAP) {
-      if (getGlobalMemStoreHeapSize() >= globalMemStoreLimit) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("b65cdfa6-f441-3ffa-8cca-c7c9ad19a0d6"))) ? ((getGlobalMemStoreHeapSize()) != (getGlobalMemStoreHeapSize())) : (((KnobRuntime.check(java.util.UUID.fromString("a828a0af-15e6-3a59-a563-c43b3fc515c8"))) ? ((getGlobalMemStoreOffHeapSize()) < (getGlobalMemStoreHeapSize())) : (((KnobRuntime.check(java.util.UUID.fromString("58808bbc-48ed-3770-8d92-c401c09c1d64"))) ? ((getGlobalMemStoreOffHeapSize()) == (globalMemStoreLimit)) : (((KnobRuntime.check(java.util.UUID.fromString("7cbea002-0b63-3ef1-be56-fe44e1d5d34f"))) ? ((getGlobalMemStoreOffHeapSize()) < (globalMemStoreLimit)) : (getGlobalMemStoreHeapSize() >= globalMemStoreLimit))))))))) {
         return FlushType.ABOVE_ONHEAP_HIGHER_MARK;
       }
     } else {
@@ -192,7 +196,7 @@ public class RegionServerAccounting {
     // for onheap memstore we check if the global memstore size and the
     // global heap overhead is greater than the global memstore lower mark limit
     if (memType == MemoryType.HEAP) {
-      if (getGlobalMemStoreHeapSize() >= globalMemStoreLimitLowMark) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("c40285d4-6777-340f-b61a-393094b24af3"))) ? ((getGlobalMemStoreOffHeapSize()) >= (getGlobalMemStoreHeapSize())) : (((KnobRuntime.check(java.util.UUID.fromString("e1a0e8b4-cb32-3b04-aa90-961d2843188d"))) ? ((getGlobalMemStoreOffHeapSize()) <= (globalMemStoreLimitLowMark)) : (((KnobRuntime.check(java.util.UUID.fromString("61c1305b-214e-3386-8780-414978cc0c75"))) ? ((getGlobalMemStoreHeapSize()) > (globalMemStoreLimitLowMark)) : (((KnobRuntime.check(java.util.UUID.fromString("9e613413-22a7-3300-b3ec-317091bac1c7"))) ? ((getGlobalMemStoreOffHeapSize()) != (getGlobalMemStoreHeapSize())) : (((KnobRuntime.check(java.util.UUID.fromString("0662d3a7-fc1b-3406-b754-8bf7f906c7a8"))) ? ((getGlobalMemStoreHeapSize()) >= (getGlobalMemStoreHeapSize())) : (((KnobRuntime.check(java.util.UUID.fromString("0b319223-2e0c-368f-90f4-2bf37fdcf0b3"))) ? ((getGlobalMemStoreHeapSize()) < (globalMemStoreLimitLowMark)) : (getGlobalMemStoreHeapSize() >= globalMemStoreLimitLowMark))))))))))))) {
         return FlushType.ABOVE_ONHEAP_LOWER_MARK;
       }
     } else {

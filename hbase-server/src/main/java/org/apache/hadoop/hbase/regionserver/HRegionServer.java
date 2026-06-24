@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.ChoreService.CHORE_SERVICE_INITIAL_POOL_SIZE;
 import static org.apache.hadoop.hbase.ChoreService.DEFAULT_CHORE_SERVICE_INITIAL_POOL_SIZE;
@@ -852,6 +853,9 @@ public class HRegionServer extends Thread
   }
 
   protected RSRpcServices createRpcServices() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("b8b64b84-28a6-36fe-819b-2cbb1faa20ef"), "regionserver", this)) {
+throw new java.io.IOException("Injected exception");
+}
     return new RSRpcServices(this);
   }
 
@@ -907,6 +911,17 @@ public class HRegionServer extends Thread
     // Create a cluster connection that when appropriate, can short-circuit and go directly to the
     // local server if the request is to the local server bypassing RPC. Can be used for both local
     // and remote invocations.
+if(KnobRuntime.check(java.util.UUID.fromString("0be1b051-7dd2-3988-a316-bc618ca586ca"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = rpcServices.getClass().getDeclaredField("rpcTimeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(rpcServices));
+    _knob_field_.set(rpcServices, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return ServerConnectionUtils.createShortCircuitConnection(conf, userProvider.getCurrent(),
       serverName, rpcServices, rpcServices, new RegionServerRegistry(this));
   }
@@ -981,6 +996,9 @@ public class HRegionServer extends Thread
   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE",
       justification = "cluster Id znode read would give us correct response")
   private void initializeZooKeeper() throws IOException, InterruptedException {
+if(KnobRuntime.check(java.util.UUID.fromString("d4c5cf04-c17d-3ac0-ac95-4fe349b31e29"), "regionserver", this)) {
+return;
+}
     // Nothing to do in here if no Master in the mix.
     if (this.masterless) {
       return;
@@ -1005,14 +1023,14 @@ public class HRegionServer extends Thread
         if (clusterId == null) {
           this.abort("Cluster ID has not been set");
         }
-        LOG.info("ClusterId : " + clusterId);
+        if (KnobRuntime.check(java.util.UUID.fromString("58c9c197-c99f-32bd-9227-fdd06a7e1029"), "regionserver", this)) { LOG.debug("ClusterId : "); } else { LOG.info("ClusterId : " + clusterId); }
       } catch (KeeperException e) {
         this.abort("Failed to retrieve Cluster ID", e);
       }
     }
 
     waitForMasterActive();
-    if (isStopped() || isAborted()) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a9f7f12b-81cc-39c4-92ff-93cd9c0984ad"), "regionserver", this)) ? ((isStopped()) || (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("24bbe70b-e93a-38ae-a578-4393220243c5"), "regionserver", this)) ? ((isStopped()) && (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("be21f4a2-e7ad-3ccb-b125-bd7d33a54912"), "regionserver", this)) ? ((isStopped()) || (cacheTableDescriptor())) : (isStopped() || isAborted()))))))) {
       return; // No need for further initialization
     }
 
@@ -1035,7 +1053,10 @@ public class HRegionServer extends Thread
    */
   private void blockAndCheckIfStopped(ZKNodeTracker tracker)
     throws IOException, InterruptedException {
-    while (tracker.blockUntilAvailable(this.msgInterval, false) == null) {
+if(KnobRuntime.check(java.util.UUID.fromString("5a4b25ee-a289-3871-93f2-88bfd7b01168"), "regionserver", this)) {
+throw new InterruptedException("Injected exception");
+}
+    while (((KnobRuntime.check(java.util.UUID.fromString("e61235b0-f5ea-31c4-9bd2-7adad2b2f3c9"), "regionserver", this)) ? ((tracker.blockUntilAvailable(this.msgInterval, false)) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("fbecb7e1-6c8f-36e4-a97d-10a2a29a556e"), "regionserver", this)) ? ((tracker.blockUntilAvailable(this.msgInterval, false)) != (null)) : (tracker.blockUntilAvailable(this.msgInterval, false) == null))))) {
       if (this.stopped) {
         throw new IOException("Received the shutdown message while waiting.");
       }
@@ -1209,7 +1230,7 @@ public class HRegionServer extends Thread
 
       // Stop the snapshot and other procedure handlers, forcefully killing all running tasks
       if (rspmHost != null) {
-        rspmHost.stop(this.abortRequested.get() || this.killed);
+        if (KnobRuntime.check(java.util.UUID.fromString("6742d61d-3044-306f-a6fb-69ae4d8a76ef"), "regionserver", this)) { closeUserRegions((canUpdateTableDescriptor()) || (!this.killed)); } else if (KnobRuntime.check(java.util.UUID.fromString("b3b99a7c-aeb5-3b1c-9e16-e97714a9822d"), "regionserver", this)) { closeUserRegions((cacheTableDescriptor()) && (this.killed)); } else if (KnobRuntime.check(java.util.UUID.fromString("bef60db0-f128-351a-bc5f-dcfd8b895e23"), "regionserver", this)) { closeUserRegions(cacheTableDescriptor()); } else if (KnobRuntime.check(java.util.UUID.fromString("7efad9bd-7841-3616-a60e-b0a85856b410"), "regionserver", this)) { rspmHost.stop(cacheTableDescriptor()); } else { rspmHost.stop(this.abortRequested.get() || this.killed); }
       }
 
       if (this.killed) {
@@ -1226,7 +1247,7 @@ public class HRegionServer extends Thread
 
       if (this.clusterConnection != null && !clusterConnection.isClosed()) {
         try {
-          this.clusterConnection.close();
+          if (KnobRuntime.check(java.util.UUID.fromString("00dfee36-a45a-32cd-82f1-fe6b5103fcf2"), "regionserver", this)) { putUpWebUI(); } else { this.clusterConnection.close(); }
         } catch (IOException e) {
           // Although the {@link Closeable} interface throws an {@link
           // IOException}, in reality, the implementation would never do that.
@@ -1245,9 +1266,9 @@ public class HRegionServer extends Thread
         }
       }
 
-      if (!this.killed && this.dataFsOk) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("128a80c6-030e-3fd3-9a10-c80a207135fc"), "regionserver", this)) ? (this.dataFsOk) : (!this.killed && this.dataFsOk))) {
         waitOnAllRegionsToClose(abortRequested.get());
-        LOG.info("stopping server " + this.serverName + "; all regions closed.");
+        if (KnobRuntime.check(java.util.UUID.fromString("487066be-4aef-3fc6-8be7-11413d992385"), "regionserver", this)) { LOG.error("stopping server "); } else if (KnobRuntime.check(java.util.UUID.fromString("ac618fc7-9b9e-35c4-afdb-3b14e7bb29b0"), "regionserver", this)) { LOG.error("; all regions closed."); } else { LOG.info("stopping server " + this.serverName + "; all regions closed."); }
       }
 
       // Stop the quota manager
@@ -1268,7 +1289,7 @@ public class HRegionServer extends Thread
       if (this.rssStub != null) {
         this.rssStub = null;
       }
-      if (this.lockStub != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("df5f4341-65c1-3ad9-bdf0-0b4249ea7de2"), "regionserver", this)) ? ((this.lockStub) != (null)) : (this.lockStub != null))) {
         this.lockStub = null;
       }
       if (this.rpcClient != null) {
@@ -1277,7 +1298,7 @@ public class HRegionServer extends Thread
       if (this.leaseManager != null) {
         this.leaseManager.close();
       }
-      if (this.pauseMonitor != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("615f31f2-ff59-3f82-b217-78cd099ea79a"), "regionserver", this)) ? ((this.pauseMonitor) != (null)) : (this.pauseMonitor != null))) {
         this.pauseMonitor.stop();
       }
 
@@ -1285,7 +1306,7 @@ public class HRegionServer extends Thread
         stopServiceThreads();
       }
 
-      if (this.rpcServices != null) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("35d2bef7-9167-31ab-bb4d-49fb4da7f1dc"), "regionserver", this)) ? ((this.rpcServices) != (null)) : (this.rpcServices != null))) {
         this.rpcServices.stop();
       }
 
@@ -1511,7 +1532,175 @@ public class HRegionServer extends Thread
           serverLoad.addCoprocessors(coprocessorBuilder.setName(regionCoprocessor).build());
         }
       }
+if(KnobRuntime.check(java.util.UUID.fromString("88c51ed9-96ce-3cf0-b3f8-8688811068fd"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("minBlockSizeBytes");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("41aead2d-3198-34df-9182-ef45d2d7f002"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("storeRefCount_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("65ad718e-d866-3b5e-8654-da921ed4b12d"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("totalStaticBloomSizeKB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5db15ff2-0447-3a93-ad5f-7a2a5c4840b2"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("storeRefCount_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0a1f3889-4223-3059-9e5e-28686e25fe42"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1d48b724-e7dc-3fa8-b3a7-ac6ff3f8584b"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedCompactionSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("51931ace-f350-3859-92f9-9d04245eecf4"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("545ccda7-cd59-37a8-bc8a-86627b09e9f5"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("completeSequenceId_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e8ea4e3e-26d8-38f2-9dbf-ae366922a9aa"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitDuration");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3fed281a-706f-3667-a77b-10b8c7c6969b"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3061d0fd-1da7-33bf-8d1a-80a1dc9707ae"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionSpecifier.getClass().getDeclaredField("type_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionSpecifier));
+    _knob_field_.set(regionSpecifier, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("38928cd0-1f32-31ff-ab7a-250610aa5a85"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxCellSize");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5a6e22b8-5c1d-3a62-b7b2-df9a8b96e8d9"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7104400a-204e-3200-bd85-88fcf49c7f06"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("storefileSizeMB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("306536d2-c836-30d5-b305-1ea6fff04b2c"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("minBlockSizeBytes");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       serverLoad.addRegionLoads(createRegionLoad(region, regionLoadBldr, regionSpecifier));
+if(KnobRuntime.check(java.util.UUID.fromString("c32eaf46-c3b9-32c1-bb6b-ce806b4a8862"), "regionserver", this)) {
+throw new java.io.IOException("Injected exception");
+}
       for (String coprocessor : getWAL(region.getRegionInfo()).getCoprocessorHost()
         .getCoprocessors()) {
         serverLoad.addCoprocessors(coprocessorBuilder.setName(coprocessor).build());
@@ -1531,7 +1720,7 @@ public class HRegionServer extends Thread
     if (this.infoServer != null) {
       serverLoad.setInfoServerPort(this.infoServer.getPort());
     } else {
-      serverLoad.setInfoServerPort(-1);
+      if (KnobRuntime.check(java.util.UUID.fromString("ee4a547e-fe2b-3233-8df4-f94e37c00a34"), "regionserver", this)) { serverLoad.setMaxHeapMB(-1); } else { serverLoad.setInfoServerPort(-1); }
     }
     MetricsUserAggregateSource userSource =
       metricsRegionServer.getMetricsUserAggregate().getSource();
@@ -1570,7 +1759,7 @@ public class HRegionServer extends Thread
   private String getOnlineRegionsAsPrintableString() {
     StringBuilder sb = new StringBuilder();
     for (Region r : this.onlineRegions.values()) {
-      if (sb.length() > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("8d5268c5-589e-37dc-b20b-3ae384d41c60"), "regionserver", this)) ? ((sb.length()) >= (0)) : (sb.length() > 0))) {
         sb.append(", ");
       }
       sb.append(r.getRegionInfo().getEncodedName());
@@ -1591,16 +1780,16 @@ public class HRegionServer extends Thread
       while (!onlineRegions.isEmpty()) {
         int count = getNumberOfOnlineRegions();
         // Only print a message if the count of regions has changed.
-        if (count != lastCount) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("be140a64-206e-3385-b74a-090f4bfe62b2"), "regionserver", this)) ? ((-1) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("5a20d761-a39c-3f61-a953-be5cbaa52148"), "regionserver", this)) ? ((-1) != (lastCount)) : (((KnobRuntime.check(java.util.UUID.fromString("66d7f93b-2422-3b60-9aeb-8eb435fed8ea"), "regionserver", this)) ? ((0) == (lastCount)) : (((KnobRuntime.check(java.util.UUID.fromString("18f81adc-9faa-354d-a05d-54121db9933d"), "regionserver", this)) ? ((getNumberOfOnlineRegions()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("04d74793-3f2e-3f8e-bf7e-01e08d01737a"), "regionserver", this)) ? ((getNumberOfOnlineRegions()) == (getNumberOfOnlineRegions())) : (((KnobRuntime.check(java.util.UUID.fromString("ece87cc1-74f7-3548-9529-563fa23363da"), "regionserver", this)) ? ((getNumberOfOnlineRegions()) != (200)) : (count != lastCount))))))))))))) {
           // Log every second at most
-          if (EnvironmentEdgeManager.currentTime() > (previousLogTime + 1000)) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("528fb49b-9883-3f7c-acda-1272593d36e9"), "regionserver", this)) ? ((EnvironmentEdgeManager.currentTime()) >= ((previousLogTime + 1000))) : (EnvironmentEdgeManager.currentTime() > (previousLogTime + 1000)))) {
             previousLogTime = EnvironmentEdgeManager.currentTime();
             lastCount = count;
-            LOG.info("Waiting on " + count + " regions to close");
+            if (KnobRuntime.check(java.util.UUID.fromString("85577c77-f989-3638-b3cc-b83048addf03"), "regionserver", this)) { LOG.info("Waiting on " + count); } else if (KnobRuntime.check(java.util.UUID.fromString("ae8253f3-2e22-33b6-a4cb-0d957632f071"), "regionserver", this)) { LOG.debug("Waiting on " + count); } else { LOG.info("Waiting on " + count + " regions to close"); }
             // Only print out regions still closing if a small number else will
             // swamp the log.
-            if (count < 10 && LOG.isDebugEnabled()) {
-              LOG.debug("Online Regions=" + this.onlineRegions);
+            if (((KnobRuntime.check(java.util.UUID.fromString("b050d2ad-4cd9-3b55-bfd9-d29caabbb7e6"), "regionserver", this)) ? (((getNumberOfOnlineRegions()) == (10)) || (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("5174a4fb-fd76-3b5b-a80a-be5637923429"), "regionserver", this)) ? (((getNumberOfOnlineRegions()) > (10)) && (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("161f0b8f-af14-3b24-876c-41dc5480ca88"), "regionserver", this)) ? (((getNumberOfOnlineRegions()) >= (10)) && (canCreateBaseZNode())) : (((KnobRuntime.check(java.util.UUID.fromString("8adfd7f8-c107-358a-99e7-195a109ce951"), "regionserver", this)) ? (((count) > (10)) && (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("4b615193-587a-3e8a-9e0f-eb84316f091c"), "regionserver", this)) ? ((-1) > (10)) : (((KnobRuntime.check(java.util.UUID.fromString("e6f6465d-ae3f-38e7-9717-d50a9e7eec70"), "regionserver", this)) ? (((-1) != (10)) || (cacheTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("b60e45fa-bb65-3d15-8d59-e99edcb7fcd9"), "regionserver", this)) ? (((count) != (10)) || (LOG.isDebugEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("f384ef38-9ba3-33f4-844a-9243b7b8d5ab"), "regionserver", this)) ? ((count) >= (10)) : (((KnobRuntime.check(java.util.UUID.fromString("22a3303f-fb9d-3ceb-a83a-0c94a5fe0a8a"), "regionserver", this)) ? (((count) <= (10)) && (LOG.isDebugEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("b045c56c-b4dc-35a4-aaf7-61885dfb25d2"), "regionserver", this)) ? (((-1) <= (10)) || (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("51d34dc3-c754-3622-8d08-3700da57307f"), "regionserver", this)) ? (((-1) > (10)) || (cacheTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("7b8b6afb-f6c4-3bab-874b-c2d167dfdd18"), "regionserver", this)) ? (((-1) < (10)) && (canCreateBaseZNode())) : (((KnobRuntime.check(java.util.UUID.fromString("fb74d3dc-767d-33eb-8332-0eb47cf059e5"), "regionserver", this)) ? (((-1) < (10)) && (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("010e3dd7-51c5-3442-93c1-a92d83475222"), "regionserver", this)) ? (((count) < (10)) || (cacheTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("aacf44be-7982-37f2-a9ea-0f70ffa9c04d"), "regionserver", this)) ? (((-1) != (10)) || (canCreateBaseZNode())) : (((KnobRuntime.check(java.util.UUID.fromString("c4e7100a-2fd6-3a67-aab7-4b3580859877"), "regionserver", this)) ? ((count) != (10)) : (((KnobRuntime.check(java.util.UUID.fromString("e82a99f6-9cfc-34d1-8007-79e150fd2f13"), "regionserver", this)) ? (((-1) == (10)) && (cacheTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("7e5cc184-6752-38db-a1ac-dd1c8c835413"), "regionserver", this)) ? (((count) < (10)) || (LOG.isDebugEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("bbb9cbd5-3594-3cf2-9c85-37b203929024"), "regionserver", this)) ? (((count) >= (10)) && (cacheTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("8638cc3d-0c75-3250-82a9-faa348bb200f"), "regionserver", this)) ? (((count) <= (10)) && (canCreateBaseZNode())) : (((KnobRuntime.check(java.util.UUID.fromString("3b34aeb6-b725-33dc-91b9-1f37ce18c77b"), "regionserver", this)) ? (((getNumberOfOnlineRegions()) >= (10)) || (LOG.isDebugEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("257122d4-ce3d-3c0c-9108-4d25222bed04"), "regionserver", this)) ? (((-1) >= (10)) && (canUpdateTableDescriptor())) : (((KnobRuntime.check(java.util.UUID.fromString("19e24d98-5a28-3a19-9820-7aca046609c8"), "regionserver", this)) ? (((count) == (10)) && (canCreateBaseZNode())) : (((KnobRuntime.check(java.util.UUID.fromString("8c3862ac-a8af-3fae-8bf8-710550e8493b"), "regionserver", this)) ? (((-1) > (10)) || (LOG.isDebugEnabled())) : (count < 10 && LOG.isDebugEnabled()))))))))))))))))))))))))))))))))))))))))))))))))) {
+              if (KnobRuntime.check(java.util.UUID.fromString("509cac6b-e38d-395d-9eb6-cc31378095c0"), "regionserver", this)) { LOG.debug("Online Regions="); } else { LOG.debug("Online Regions=" + this.onlineRegions); }
             }
           }
         }
@@ -1619,7 +1808,7 @@ public class HRegionServer extends Thread
           }
         }
         // No regions in RIT, we could stop waiting now.
-        if (this.regionsInTransitionInRS.isEmpty()) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("54dc7a2e-ff2b-38a0-8c01-3e2d512ea166"), "regionserver", this)) ? (canUpdateTableDescriptor()) : (this.regionsInTransitionInRS.isEmpty()))) {
           if (!onlineRegions.isEmpty()) {
             LOG.info("We were exiting though online regions are not empty,"
               + " because some regions failed closing");
@@ -1643,9 +1832,9 @@ public class HRegionServer extends Thread
   private static boolean sleepInterrupted(long millis) {
     boolean interrupted = false;
     try {
-      Thread.sleep(millis);
+      if (KnobRuntime.check(java.util.UUID.fromString("bcb38339-61ff-3c31-a35a-3bd29eabf711"))) { Threads.sleep(millis); } else { Thread.sleep(millis); }
     } catch (InterruptedException e) {
-      LOG.warn("Interrupted while sleeping");
+      if (KnobRuntime.check(java.util.UUID.fromString("34b84579-9cc6-3244-9833-5a3afa2a01ec"))) { LOG.info("Interrupted while sleeping"); } else { LOG.warn("Interrupted while sleeping"); }
       interrupted = true;
     }
     return interrupted;
@@ -1680,6 +1869,9 @@ public class HRegionServer extends Thread
    */
   protected void handleReportForDutyResponse(final RegionServerStartupResponse c)
     throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("8daedfb4-45f2-3d94-bbe4-e97d9ca82da2"), "regionserver", this)) {
+throw new java.io.IOException("Injected exception");
+}
     try {
       boolean updateRootDir = false;
       for (NameStringPair e : c.getMapEntriesList()) {
@@ -1729,9 +1921,12 @@ public class HRegionServer extends Thread
       // Set our ephemeral znode up in zookeeper now we have a name.
       createMyEphemeralNode();
 
-      if (updateRootDir) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("6a07d950-5385-357b-82fa-791b16be1a1b"), "regionserver", this)) ? (false) : (updateRootDir))) {
         // initialize file system by the config fs.defaultFS and hbase.rootdir from master
-        initializeFileSystem();
+if(KnobRuntime.check(java.util.UUID.fromString("30e6f7ba-0321-3502-b8f7-94999a1f0da2"), "regionserver", this)) {
+throw new java.io.IOException("Injected exception");
+}
+        if (KnobRuntime.check(java.util.UUID.fromString("f2f5c108-cb72-3f0a-bcac-c8acdaecdd29"), "regionserver", this)) { putUpWebUI(); } else { initializeFileSystem(); }
       }
 
       // hack! Maps DFSClient => RegionServer for logs. HDFS made this
@@ -1744,7 +1939,7 @@ public class HRegionServer extends Thread
       ZNodeClearer.writeMyEphemeralNodeOnDisk(getMyEphemeralNodePath());
 
       // This call sets up an initialized replication and WAL. Later we start it up.
-      setupWALAndReplication();
+      if (KnobRuntime.check(java.util.UUID.fromString("3f566502-2923-3bdc-8832-19bc86a4c254"), "regionserver", this)) { putUpWebUI(); } else { setupWALAndReplication(); }
       // Init in here rather than in constructor after thread name has been set
       final MetricsTable metricsTable =
         new MetricsTable(new MetricsTableWrapperAggregateImpl(this));
@@ -1860,6 +2055,138 @@ public class HRegionServer extends Thread
    */
   RegionLoad createRegionLoad(final HRegion r, RegionLoad.Builder regionLoadBldr,
     RegionSpecifier.Builder regionSpecifier) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("80ac4414-d563-34a5-ace9-cb0689a738f2"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("maxBusyWaitDuration");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6f9b54bf-dd59-331b-99f2-eeb0934486e6"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionSpecifier.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionSpecifier));
+    _knob_field_.set(regionSpecifier, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("94bb4f66-e0e0-3cee-83b3-bf44186b3563"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("maxBusyWaitMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("b0a0948b-f2f5-326f-9b4a-19a987d530e9"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("readRequestsCount_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1676bfa2-becc-3467-b4d7-1080ebfcde57"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("rootIndexSizeKB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("843508a4-04cd-330e-b1d9-546727bba9b1"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("storefileIndexSizeKB_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("8f89e3a7-7aa4-316c-b289-d577936999ee"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("maxCompactedStoreFileRefCount_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("00daa389-53c7-3dbd-8804-45e5538a1ee8"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("lastReplayedOpenRegionSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc58b265-799c-3abe-8de1-ad8040eca3d4"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("734068fc-6609-3158-8a6a-830bf83e213c"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("rowProcessorTimeout");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("16d2a926-917c-367b-a0df-8bbda9c097fa"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("stores_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("93bf219c-d435-3428-8fb3-122f6b2494c7"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("rootIndexSizeKB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     byte[] name = r.getRegionInfo().getRegionName();
     String regionEncodedName = r.getRegionInfo().getEncodedName();
     int stores = 0;
@@ -1902,10 +2229,19 @@ public class HRegionServer extends Thread
     int memstoreSizeMB = roundSize(r.getMemStoreDataSize(), unitMB);
     int storeUncompressedSizeMB = roundSize(storeUncompressedSize, unitMB);
     int storefileSizeMB = roundSize(storefileSize, unitMB);
+if(KnobRuntime.check(java.util.UUID.fromString("bcb860cd-2caf-307c-9017-227490ce8be2"), "regionserver", this)) {
+storefileIndexSize += 1;
+}
     int storefileIndexSizeKB = roundSize(storefileIndexSize, unitKB);
     int rootLevelIndexSizeKB = roundSize(rootLevelIndexSize, unitKB);
+if(KnobRuntime.check(java.util.UUID.fromString("d11f26a0-7b01-377a-ae66-02c05236fb3d"), "regionserver", this)) {
+totalStaticIndexSize = 0;
+}
     int totalStaticIndexSizeKB = roundSize(totalStaticIndexSize, unitKB);
     int totalStaticBloomSizeKB = roundSize(totalStaticBloomSize, unitKB);
+if(KnobRuntime.check(java.util.UUID.fromString("49702b07-097a-344c-83dd-a080966be250"), "regionserver", this)) {
+totalRegionSize = 0;
+}
     int regionSizeMB = roundSize(totalRegionSize, unitMB);
     final MutableFloat currentRegionCachedRatio = new MutableFloat(0.0f);
     getBlockCache().ifPresent(bc -> {
@@ -1927,12 +2263,42 @@ public class HRegionServer extends Thread
     if (regionLoadBldr == null) {
       regionLoadBldr = RegionLoad.newBuilder();
     }
-    if (regionSpecifier == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("a514e4bf-af91-374b-bf9a-5bb071f57266"), "regionserver", this)) ? ((regionSpecifier) == (null)) : (regionSpecifier == null))) {
       regionSpecifier = RegionSpecifier.newBuilder();
     }
 
     regionSpecifier.setType(RegionSpecifierType.REGION_NAME);
     regionSpecifier.setValue(UnsafeByteOperations.unsafeWrap(name));
+if(KnobRuntime.check(java.util.UUID.fromString("cdf6c61a-f373-32c1-80b6-1140ad2b8427"), "regionserver", this)) {
+rootLevelIndexSizeKB -= 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0340377e-33ce-3958-8bd6-53ac9ce737fc"), "regionserver", this)) {
+totalStaticBloomSizeKB += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("89bcb774-b6e1-36a0-b914-e00c2bd98010"), "regionserver", this)) {
+totalCompactingKVs = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("21cab2e3-407f-3b5e-a87d-a677a99e80f3"), "regionserver", this)) {
+storeUncompressedSizeMB *= 2;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f9af61f4-38d6-3e92-80a0-6dd4e08bd5ad"), "regionserver", this)) {
+storefileSizeMB += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d98fabf9-9d89-35b7-817e-63b16178c047"), "regionserver", this)) {
+totalStaticBloomSizeKB = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7a64fcc3-1388-3013-ab24-3c167da26f5d"), "regionserver", this)) {
+storeUncompressedSizeMB = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9dab4da0-114b-3fd9-b083-c28a1accbdec"), "regionserver", this)) {
+storeUncompressedSizeMB += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6d98119b-474f-3069-9a0e-e4cdd2fb4173"), "regionserver", this)) {
+currentCompactedKVs = 0;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("6b5c1891-524c-34d9-875c-8dabd5bc862d"), "regionserver", this)) {
+storefileSizeMB *= 2;
+}
     regionLoadBldr.setRegionSpecifier(regionSpecifier.build()).setStores(stores)
       .setStorefiles(storefiles).setStoreRefCount(storeRefCount)
       .setMaxCompactedStoreFileRefCount(maxCompactedStoreFileRefCount)
@@ -1949,6 +2315,83 @@ public class HRegionServer extends Thread
       .setCompactionState(ProtobufUtil.createCompactionStateForRegionLoad(r.getCompactionState()))
       .setLastMajorCompactionTs(r.getOldestHfileTs(true)).setRegionSizeMB(regionSizeMB)
       .setCurrentRegionCachedRatio(currentRegionCachedRatio.floatValue());
+if(KnobRuntime.check(java.util.UUID.fromString("79d4a37d-ad2b-38a4-b1e4-0b7a3fcac114"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("bitField0_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("382d7825-0468-3580-9620-73567d6a43da"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("storefiles_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4c36c055-0956-3bcf-82f7-e263a51cbf52"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("stores_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9a0418e7-9ff4-3561-99d5-b1026747b1f2"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("compactionState_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("cc05b6a8-4b42-3618-96b8-c1fac2e502e7"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("totalStaticBloomSizeKB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d72d9148-8eb7-372a-8c47-68fb700fbf18"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("rootIndexSizeKB_");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("dc6db321-d8eb-3488-a884-eb0f294ac0a6"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = regionLoadBldr.getClass().getDeclaredField("blocksLocalWithSsdWeight_");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(regionLoadBldr));
+    _knob_field_.set(regionLoadBldr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     r.setCompleteSequenceId(regionLoadBldr);
     return regionLoadBldr.build();
   }
@@ -1968,6 +2411,17 @@ public class HRegionServer extends Thread
 
   public RegionLoad createRegionLoad(final String encodedRegionName) throws IOException {
     HRegion r = onlineRegions.get(encodedRegionName);
+if(KnobRuntime.check(java.util.UUID.fromString("cb5be3b1-d9b3-3f94-bfd6-c0de3cd55014"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = r.getClass().getDeclaredField("miniBatchSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(r));
+    _knob_field_.set(r, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return r != null ? createRegionLoad(r, null, null) : null;
   }
 
@@ -1999,7 +2453,7 @@ public class HRegionServer extends Thread
       for (HRegion hr : this.instance.onlineRegions.values()) {
         // If region is read only or compaction is disabled at table level, there's no need to
         // iterate through region's stores
-        if (hr == null || hr.isReadOnly() || !hr.getTableDescriptor().isCompactionEnabled()) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("8ce5561d-e9c3-3a4b-bc45-8c496c7eee1c"))) ? (hr == null || hr.isReadOnly()) : (((KnobRuntime.check(java.util.UUID.fromString("c10fed54-1ceb-3a0b-ab7c-296a86511bac"))) ? (((hr) == (null)) && (hr.isReadOnly())) : (((KnobRuntime.check(java.util.UUID.fromString("f734c386-0722-33d9-bf16-f4445814a935"))) ? (((hr) != (null)) || (!hr.getTableDescriptor().isCompactionEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("51a765ab-d4e0-3fea-b5c1-682b0f4e37c9"))) ? (((hr == null) && (hr.isReadOnly())) && (!hr.getTableDescriptor().isCompactionEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("f18b91c8-eeb5-3626-b386-0b62ca3639a7"))) ? (((hr == null) || (hr.isReadOnly())) && (!hr.getTableDescriptor().isCompactionEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("5dd5d82e-6332-38ac-ba50-cb016b82aa29"))) ? ((((hr) == (null)) && (hr.isReadOnly())) && (!hr.getTableDescriptor().isCompactionEnabled())) : (hr == null || hr.isReadOnly() || !hr.getTableDescriptor().isCompactionEnabled()))))))))))))) {
           continue;
         }
         for (HStore s : hr.stores.values()) {
@@ -2011,6 +2465,39 @@ public class HRegionServer extends Thread
             }
             if (s.needsCompaction()) {
               // Queue a compaction. Will recognize if major is needed.
+if(KnobRuntime.check(java.util.UUID.fromString("88626952-96c3-3464-b536-c2b0870c7aec"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = hr.getClass().getDeclaredField("maxFlushedSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(hr));
+    _knob_field_.set(hr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("7bee26e3-01f4-373f-ba15-3cd72c8972fd"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = hr.getClass().getDeclaredField("lastReplayedCompactionSeqId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(hr));
+    _knob_field_.set(hr, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a50bcc1c-ba75-3a93-aefd-d6501f402118"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = s.getClass().getDeclaredField("compactionCheckMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(s));
+    _knob_field_.set(s, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
               this.instance.compactSplitThread.requestSystemCompaction(hr, s,
                 getName() + " requests compaction");
             } else if (s.shouldPerformMajorCompaction()) {
@@ -2029,7 +2516,7 @@ public class HRegionServer extends Thread
               }
             }
           } catch (IOException e) {
-            LOG.warn("Failed major compaction check on " + hr, e);
+            if (KnobRuntime.check(java.util.UUID.fromString("14ddebdc-68a9-3778-8ca1-e5ce5f4dcfdb"))) { LOG.warn(("Failed major compaction check on ") + (hr), e); } else { LOG.warn("Failed major compaction check on " + hr, e); }
           }
         }
       }
@@ -2083,7 +2570,7 @@ public class HRegionServer extends Thread
    * @return true if online, false if not.
    */
   public boolean isOnline() {
-    return online.get();
+    return ((KnobRuntime.check(java.util.UUID.fromString("92510178-787a-32c9-b634-360868ddff71"), "regionserver", this)) ? (cacheTableDescriptor()) : (online.get()));
   }
 
   /**
@@ -2118,6 +2605,9 @@ public class HRegionServer extends Thread
   }
 
   private WALActionsListener getWALEventTrackerListener(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("5436a8bb-d3c0-337f-a816-254d126a44e4"), "regionserver", this)) {
+return null;
+}
     if (conf.getBoolean(WAL_EVENT_TRACKER_ENABLED_KEY, WAL_EVENT_TRACKER_ENABLED_DEFAULT)) {
       WALEventTrackerListener listener =
         new WALEventTrackerListener(conf, getNamedQueueRecorder(), getServerName());
@@ -2130,6 +2620,9 @@ public class HRegionServer extends Thread
    * Start up replication source and sink handlers.
    */
   private void startReplicationService() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("d977326c-5f4c-320a-8400-6b3ed8553639"), "regionserver", this)) {
+throw new java.io.IOException("Injected exception");
+}
     if (
       this.replicationSourceHandler == this.replicationSinkHandler
         && this.replicationSourceHandler != null
@@ -2140,7 +2633,7 @@ public class HRegionServer extends Thread
         this.replicationSourceHandler.startReplicationService();
       }
       if (this.replicationSinkHandler != null) {
-        this.replicationSinkHandler.startReplicationService();
+        if (KnobRuntime.check(java.util.UUID.fromString("eb53a1ad-9af3-39c0-bb76-0ee0c5cae299"), "regionserver", this)) { putUpWebUI(); } else { this.replicationSinkHandler.startReplicationService(); }
       }
     }
   }
@@ -2277,7 +2770,7 @@ public class HRegionServer extends Thread
     if (this.nonceManagerChore != null) {
       choreService.scheduleChore(nonceManagerChore);
     }
-    if (this.storefileRefresher != null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("952c3416-0c21-39b6-9e86-51cb67a6cf53"), "regionserver", this)) ? ((this.storefileRefresher) != (null)) : (this.storefileRefresher != null))) {
       choreService.scheduleChore(storefileRefresher);
     }
     if (this.fsUtilizationChore != null) {
@@ -2311,7 +2804,7 @@ public class HRegionServer extends Thread
       conf.getInt("hbase.log.replay.retries.number", 8)); // 8 retries take about 23 seconds
     sinkConf.setInt(HConstants.HBASE_RPC_TIMEOUT_KEY,
       conf.getInt("hbase.log.replay.rpc.timeout", 30000)); // default 30 seconds
-    sinkConf.setInt(HConstants.HBASE_CLIENT_SERVERSIDE_RETRIES_MULTIPLIER, 1);
+    if (KnobRuntime.check(java.util.UUID.fromString("3a15d326-dabd-3268-b961-db2259472319"), "regionserver", this)) { sinkConf.setInt(getName() + ".logRoller", 1); } else { sinkConf.setInt(HConstants.HBASE_CLIENT_SERVERSIDE_RETRIES_MULTIPLIER, 1); }
     if (
       this.csm != null
         && conf.getBoolean(HBASE_SPLIT_WAL_COORDINATED_BY_ZK, DEFAULT_HBASE_SPLIT_COORDINATED_BY_ZK)
@@ -2319,7 +2812,7 @@ public class HRegionServer extends Thread
       // SplitLogWorker needs csm. If none, don't start this.
       this.splitLogWorker = new SplitLogWorker(sinkConf, this, this, walFactory);
       splitLogWorker.start();
-      LOG.debug("SplitLogWorker started");
+      if (KnobRuntime.check(java.util.UUID.fromString("499d30bb-24f6-34e8-a5e3-7ea27becbc24"), "regionserver", this)) { LOG.error("SplitLogWorker started"); } else { LOG.debug("SplitLogWorker started"); }
     }
 
     // Memstore services.
@@ -2635,6 +3128,28 @@ public class HRegionServer extends Thread
    * to receive it.
    */
   private boolean skipReportingTransition(final RegionStateTransitionContext context) {
+if(KnobRuntime.check(java.util.UUID.fromString("62818b64-3bbf-3306-81d0-588b9d7ec60f"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = context.getClass().getDeclaredField("initiatingMasterActiveTime");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(context));
+    _knob_field_.set(context, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("022b4eb3-6515-3e38-8cc9-b4b7833ce6e6"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = context.getClass().getDeclaredField("openSeqNum");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(context));
+    _knob_field_.set(context, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final TransitionCode code = context.getCode();
     final long openSeqNum = context.getOpenSeqNum();
     long masterSystemTime = context.getMasterSystemTime();
@@ -2671,13 +3186,16 @@ public class HRegionServer extends Thread
     builder.setServer(ProtobufUtil.toServerName(serverName));
     RegionStateTransition.Builder transition = builder.addTransitionBuilder();
     transition.setTransitionCode(code);
-    if (code == TransitionCode.OPENED && openSeqNum >= 0) {
-      transition.setOpenSeqNum(openSeqNum);
+    if (((KnobRuntime.check(java.util.UUID.fromString("796222c4-bfcb-3c38-8420-043f55ae6eee"), "regionserver", this)) ? (((code) == (TransitionCode.OPENED)) || ((openSeqNum) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("298217df-f505-3272-b9b7-100ac9498eb0"), "regionserver", this)) ? (((code) == (TransitionCode.OPENED)) || ((openSeqNum) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("91a63881-2292-3f12-8c1f-a86d1a682643"), "regionserver", this)) ? ((code == TransitionCode.OPENED) && ((openSeqNum) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e636e947-7623-3377-ac40-fa001b17f170"), "regionserver", this)) ? (code == TransitionCode.OPENED) : (((KnobRuntime.check(java.util.UUID.fromString("3db63e61-0d99-3a0e-a6fa-b4bc922a1b8b"), "regionserver", this)) ? (((code) != (TransitionCode.OPENED)) && ((openSeqNum) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("c8f92e19-0157-3b1a-b90d-5583d06e33a7"), "regionserver", this)) ? ((code == TransitionCode.OPENED) || (openSeqNum >= 0)) : (((KnobRuntime.check(java.util.UUID.fromString("5676dc81-1e3b-32d1-9ddc-793a12a1bd46"), "regionserver", this)) ? ((openSeqNum) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6904b3f1-107c-30c0-9a66-840e1e2a34b8"), "regionserver", this)) ? (((code) == (TransitionCode.OPENED)) || ((openSeqNum) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b4619593-088e-33e0-b4af-3bf04233dfb3"), "regionserver", this)) ? ((openSeqNum) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("4d64f21d-a435-3d49-a6fc-1ae6112a717d"), "regionserver", this)) ? (((code) == (TransitionCode.OPENED)) && ((openSeqNum) != (0))) : (code == TransitionCode.OPENED && openSeqNum >= 0))))))))))))))))))))) {
+      if (KnobRuntime.check(java.util.UUID.fromString("faddc49a-7112-3a7b-8081-65d7fec68b9c"), "regionserver", this)) { transition.setInitiatingMasterActiveTime(openSeqNum); } else { transition.setOpenSeqNum(openSeqNum); }
     }
     for (RegionInfo hri : hris) {
       transition.addRegionInfo(ProtobufUtil.toRegionInfo(hri));
     }
     for (long procId : procIds) {
+if(KnobRuntime.check(java.util.UUID.fromString("3f608a3b-1a6a-3243-9399-2ba89a49a386"), "regionserver", this)) {
+procId += 1;
+}
       transition.addProcId(procId);
     }
     transition.setInitiatingMasterActiveTime(context.getInitiatingMasterActiveTime());
@@ -2687,7 +3205,7 @@ public class HRegionServer extends Thread
 
   @Override
   public boolean reportRegionStateTransition(final RegionStateTransitionContext context) {
-    if (TEST_SKIP_REPORTING_TRANSITION) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b9377f38-69e4-33a5-9035-68969eb4fbcd"), "regionserver", this)) ? (!TEST_SKIP_REPORTING_TRANSITION) : (TEST_SKIP_REPORTING_TRANSITION))) {
       return skipReportingTransition(context);
     }
     final ReportRegionStateTransitionRequest request =
@@ -2735,6 +3253,9 @@ public class HRegionServer extends Thread
             : " immediately."),
           ioe);
         if (pause) {
+if(KnobRuntime.check(java.util.UUID.fromString("fb31d106-8280-355d-8ae0-84ece6c58040"), "regionserver", this)) {
+pauseTime = -1;
+}
           Threads.sleep(pauseTime);
         }
         tries++;
@@ -2906,6 +3427,28 @@ public class HRegionServer extends Thread
       shutdownChore(compactionChecker);
       shutdownChore(compactedFileDischarger);
       shutdownChore(periodicFlusher);
+if(KnobRuntime.check(java.util.UUID.fromString("032936fb-97aa-35e8-8757-b02788819356"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = healthCheckChore.getClass().getDeclaredField("threshold");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(healthCheckChore));
+    _knob_field_.set(healthCheckChore, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("5cd575b0-f898-31a8-bce5-6d123312a4ba"), "regionserver", this)) {
+try {
+    java.lang.reflect.Field _knob_field_ = healthCheckChore.getClass().getDeclaredField("numTimesUnhealthy");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(healthCheckChore));
+    _knob_field_.set(healthCheckChore, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       shutdownChore(healthCheckChore);
       shutdownChore(storefileRefresher);
       shutdownChore(fsUtilizationChore);
@@ -3067,9 +3610,9 @@ public class HRegionServer extends Thread
     RegionServerStartupResponse result = null;
     try {
       rpcServices.requestCount.reset();
-      rpcServices.rpcGetRequestCount.reset();
+      if (KnobRuntime.check(java.util.UUID.fromString("6b96cfd5-a513-31c5-99e3-19bb1a757a9a"), "regionserver", this)) { putUpWebUI(); } else { rpcServices.rpcGetRequestCount.reset(); }
       rpcServices.rpcScanRequestCount.reset();
-      rpcServices.rpcFullScanRequestCount.reset();
+      if (KnobRuntime.check(java.util.UUID.fromString("7b13d218-60bf-39aa-9662-b0c55cf36875"), "regionserver", this)) { putUpWebUI(); } else { rpcServices.rpcFullScanRequestCount.reset(); }
       rpcServices.rpcMultiRequestCount.reset();
       rpcServices.rpcMutateRequestCount.reset();
       LOG.info("reportForDuty to master=" + masterServerName + " with isa=" + rpcServices.isa
@@ -3080,9 +3623,15 @@ public class HRegionServer extends Thread
       if (!StringUtils.isBlank(useThisHostnameInstead)) {
         request.setUseThisHostnameInstead(useThisHostnameInstead);
       }
+if(KnobRuntime.check(java.util.UUID.fromString("69c21fe1-1d2b-3c89-ad30-a579f95ebc53"), "regionserver", this)) {
+port /= 2;
+}
       request.setPort(port);
       request.setServerStartCode(this.startcode);
-      request.setServerCurrentTime(now);
+if(KnobRuntime.check(java.util.UUID.fromString("78061903-579b-3e6b-aaf9-687ccebb6b54"), "regionserver", this)) {
+now = -1;
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("d99f9eb6-5d76-3896-b928-9073b6a6385d"), "regionserver", this)) { request.setServerStartCode(now); } else { request.setServerCurrentTime(now); }
       result = rss.regionServerStartup(null, request.build());
     } catch (ServiceException se) {
       IOException ioe = ProtobufUtil.getRemoteException(se);
@@ -3173,7 +3722,7 @@ public class HRegionServer extends Thread
         }
       }
     } finally {
-      this.onlineRegionsLock.writeLock().unlock();
+      if (KnobRuntime.check(java.util.UUID.fromString("c59ed80b-715c-3661-8e08-857cd0cd4bff"), "regionserver", this)) { setupSignalHandlers(); } else { this.onlineRegionsLock.writeLock().unlock(); }
     }
   }
 
@@ -3185,6 +3734,9 @@ public class HRegionServer extends Thread
   /** Returns true if a stop has been requested. */
   @Override
   public boolean isStopped() {
+if(KnobRuntime.check(java.util.UUID.fromString("4d2aacbb-78a6-39c9-9554-044a890cfe56"), "regionserver", this)) {
+return false;
+}
     return this.stopped;
   }
 
@@ -3274,11 +3826,17 @@ public class HRegionServer extends Thread
 
   /** Returns Return the rootDir. */
   protected Path getDataRootDir() {
+if(KnobRuntime.check(java.util.UUID.fromString("9897ee3b-a938-3cb3-9f84-aa3c07c25a9f"), "regionserver", this)) {
+return null;
+}
     return dataRootDir;
   }
 
   @Override
   public FileSystem getFileSystem() {
+if(KnobRuntime.check(java.util.UUID.fromString("103ee738-a509-3bea-97f6-afddecca7e14"), "regionserver", this)) {
+return null;
+}
     return dataFs;
   }
 
@@ -3309,6 +3867,9 @@ public class HRegionServer extends Thread
 
   @Override
   public CoordinatedStateManager getCoordinatedStateManager() {
+if(KnobRuntime.check(java.util.UUID.fromString("e6b884f9-8cb8-3e31-87f3-3b3621154715"), "regionserver", this)) {
+return null;
+}
     return csm;
   }
 
@@ -3485,7 +4046,7 @@ public class HRegionServer extends Thread
   public String[] getRegionServerCoprocessors() {
     TreeSet<String> coprocessors = new TreeSet<>();
     try {
-      coprocessors.addAll(getWAL(null).getCoprocessorHost().getCoprocessors());
+      if (KnobRuntime.check(java.util.UUID.fromString("6eb9e3c9-387d-3e6d-be7c-67b9ac80e8a8"), "regionserver", this)) { coprocessors.addAll(CoprocessorHost.getLoadedCoprocessors()); } else { coprocessors.addAll(getWAL(null).getCoprocessorHost().getCoprocessors()); }
     } catch (IOException exception) {
       LOG.warn("Exception attempting to fetch wal coprocessor information for the common wal; "
         + "skipping.");

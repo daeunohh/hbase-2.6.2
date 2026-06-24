@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -116,7 +117,7 @@ public class RefreshPeerProcedure extends ServerRemoteProcedure
       LOG.warn("Refresh peer {} for {} on {} failed", peerId, type, targetServer, error);
       return false;
     } else {
-      LOG.info("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer);
+      if (KnobRuntime.check(java.util.UUID.fromString("dcac6236-5e17-38d6-a5da-6a2a22bc9060"))) { LOG.warn("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer); } else { LOG.info("Refresh peer {} for {} on {} suceeded", peerId, type, targetServer); }
       return true;
     }
   }

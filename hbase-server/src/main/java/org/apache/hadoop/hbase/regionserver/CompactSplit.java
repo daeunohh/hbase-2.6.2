@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.Store.NO_PRIORITY;
 import static org.apache.hadoop.hbase.regionserver.Store.PRIORITY_USER;
@@ -106,7 +107,7 @@ public class CompactSplit implements CompactionRequester, PropagatingConfigurati
     this.server = server;
     this.conf = server.getConfiguration();
     this.compactionsEnabled = this.conf.getBoolean(HBASE_REGION_SERVER_ENABLE_COMPACTION, true);
-    createCompactionExecutors();
+    if (KnobRuntime.check(java.util.UUID.fromString("71c9d38d-86fd-344d-af47-527b7149d443"), "regionserver", this.server)) { createSplitExcecutors(); } else { createCompactionExecutors(); }
     createSplitExcecutors();
 
     // compaction throughput controller
@@ -126,6 +127,9 @@ public class CompactSplit implements CompactionRequester, PropagatingConfigurati
   private void createSplitExcecutors() {
     final String n = Thread.currentThread().getName();
     int splitThreads = conf.getInt(SPLIT_THREADS, SPLIT_THREADS_DEFAULT);
+if(KnobRuntime.check(java.util.UUID.fromString("31faac74-a7dd-339b-b7dd-0fac0fc32761"), "regionserver", this.server)) {
+splitThreads = -1;
+}
     this.splits = (ThreadPoolExecutor) Executors.newFixedThreadPool(splitThreads,
       new ThreadFactoryBuilder().setNameFormat(n + "-splits-%d").setDaemon(true).build());
   }
@@ -339,7 +343,7 @@ public class CompactSplit implements CompactionRequester, PropagatingConfigurati
     boolean selectNow, CompactionLifeCycleTracker tracker,
     CompactionCompleteTracker completeTracker, User user) throws IOException {
     if (!this.isCompactionsEnabled()) {
-      LOG.info("Ignoring compaction request for " + region + ",because compaction is disabled.");
+      if (KnobRuntime.check(java.util.UUID.fromString("c7bae59e-6c8c-38b1-923c-affd9cd43960"), "regionserver", this.server)) { LOG.debug(("Ignoring compaction request for " + region) + (",because compaction is disabled.")); } else { LOG.info("Ignoring compaction request for " + region + ",because compaction is disabled."); }
       return;
     }
 
@@ -425,6 +429,28 @@ public class CompactSplit implements CompactionRequester, PropagatingConfigurati
   public synchronized void requestSystemCompaction(HRegion region, HStore store, String why,
     boolean giveUpIfRequestedOrCompacting) throws IOException {
     if (giveUpIfRequestedOrCompacting && isUnderCompaction(store)) {
+if(KnobRuntime.check(java.util.UUID.fromString("6b0b1681-6d30-3b7d-ae14-f58bf3f133c5"), "regionserver", this.server)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowLockWaitDuration");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0efd09ec-1c1c-3649-a913-18fd0b0ce1ca"), "regionserver", this.server)) {
+try {
+    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowProcessorTimeout");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(region));
+    _knob_field_.set(region, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       LOG.debug("Region {} store {} is under compaction now, skip to request compaction", region,
         store.getColumnFamilyName());
       return;
@@ -466,7 +492,7 @@ public class CompactSplit implements CompactionRequester, PropagatingConfigurati
     while (!done) {
       try {
         done = t.awaitTermination(60, TimeUnit.SECONDS);
-        LOG.info("Waiting for " + name + " to finish...");
+        if (KnobRuntime.check(java.util.UUID.fromString("0204ffa2-277d-3221-b96d-c64ddb197661"), "regionserver", this.server)) { LOG.info("Waiting for "); } else if (KnobRuntime.check(java.util.UUID.fromString("599728cb-3c23-3f69-bd32-fada1f7ab84f"), "regionserver", this.server)) { LOG.debug(("Waiting for ") + (" to finish...")); } else { LOG.info("Waiting for " + name + " to finish..."); }
         if (!done) {
           t.shutdownNow();
         }

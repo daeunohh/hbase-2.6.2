@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -259,6 +260,9 @@ public abstract class AbstractWALRoller<T extends Abortable> extends Thread impl
 
   /** Returns true if all WAL roll finished */
   public boolean walRollFinished() {
+if(KnobRuntime.check(java.util.UUID.fromString("03f1e3a1-c995-3e6c-80a8-cd7ca2d3ac9e"))) {
+return true;
+}
     // TODO add a status field of roll in RollController
     return wals.values().stream()
       .noneMatch(rc -> rc.needsRoll(EnvironmentEdgeManager.currentTime())) && isWaiting();

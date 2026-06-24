@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.hadoop.hbase.ServerName;
@@ -42,7 +43,7 @@ public class ScannerIdGenerator {
   }
 
   public long generateNewScannerId() {
-    return (scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL) | serverNameHash;
+    return ((KnobRuntime.check(java.util.UUID.fromString("27fc530b-c4d8-3234-8f1a-365a4f5dfc5b"))) ? (serverNameHash) : (((KnobRuntime.check(java.util.UUID.fromString("4fea8099-7864-3639-8284-ca142ff2fdbb"))) ? (0x00000000FFFFFFFFL) : ((scannerIdGen.incrementAndGet() & 0x00000000FFFFFFFFL) | serverNameHash))));
   }
 
   public static void main(final String[] args) {

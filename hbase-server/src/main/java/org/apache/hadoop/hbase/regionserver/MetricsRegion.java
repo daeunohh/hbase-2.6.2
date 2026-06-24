@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
@@ -55,6 +56,9 @@ public class MetricsRegion {
   }
 
   public void updateScanTime(final long t) {
+if(KnobRuntime.check(java.util.UUID.fromString("9f57fc24-0974-3bcc-8e63-f1a43b21dc6d"))) {
+return;
+}
     source.updateScanTime(t);
   }
 
@@ -79,6 +83,6 @@ public class MetricsRegion {
   }
 
   public void updateReadRequestCount() {
-    userAggregate.updateReadRequestCount();
+    if (KnobRuntime.check(java.util.UUID.fromString("3b7d3a3a-c786-3b50-b456-6bed7ed7c0a1"))) { userAggregate.updateFilteredReadRequests(); } else { userAggregate.updateReadRequestCount(); }
   }
 }

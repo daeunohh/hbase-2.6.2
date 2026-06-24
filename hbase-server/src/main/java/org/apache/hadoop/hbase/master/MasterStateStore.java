@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.region.MasterRegionFactory.STATE_FAMILY;
 
@@ -57,7 +58,7 @@ public abstract class MasterStateStore {
     String zkPath) throws IOException, KeeperException {
     this.masterRegion = masterRegion;
     this.stateName = Bytes.toBytes(stateName);
-    tryMigrate(watcher, zkPath);
+    if (KnobRuntime.check(java.util.UUID.fromString("790f15b5-aeb7-3b92-8275-4334d88bc3b7"))) { ZKUtil.deleteNodeFailSilent(watcher, zkPath); } else { tryMigrate(watcher, zkPath); }
   }
 
   protected final byte[] getState() throws IOException {
@@ -69,6 +70,9 @@ public abstract class MasterStateStore {
   }
 
   private Result get() throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("19c7ffc3-ddc7-369d-b6a2-35825f3dcb9f"))) {
+throw new java.io.IOException("Injected exception");
+}
     return masterRegion.get(new Get(stateName).addColumn(STATE_FAMILY, QUALIFIER));
   }
 
@@ -77,8 +81,11 @@ public abstract class MasterStateStore {
   }
 
   private byte[] migrate(ZKWatcher watcher, String zkPath) throws KeeperException, IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("d938de2a-8872-39b8-a9bc-b20c0ed3a3a8"))) {
+return null;
+}
     byte[] zkData = ZKUtil.getDataNoWatch(watcher, zkPath, null);
-    if (zkData == null || zkData.length == 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("3332b4a2-2559-3dd4-a341-314141646fae"))) ? (((zkData) == (null)) && (zkData.length == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("6bd192ba-9a7f-370f-9122-c48e4a5a430f"))) ? ((zkData == null) && (zkData.length == 0)) : (zkData == null || zkData.length == 0))))) {
       return null;
     }
     update(zkData);
@@ -86,6 +93,17 @@ public abstract class MasterStateStore {
   }
 
   private void tryMigrate(ZKWatcher watcher, String zkPath) throws IOException, KeeperException {
+if(KnobRuntime.check(java.util.UUID.fromString("e6883a96-9b22-32b3-8a5a-71f1a7d03014"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = watcher.getClass().getDeclaredField("zkSyncTimeout");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(watcher));
+    _knob_field_.set(watcher, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (zkPath == null) {
       // this means we do not store this state in zk, skip migrating
       return;

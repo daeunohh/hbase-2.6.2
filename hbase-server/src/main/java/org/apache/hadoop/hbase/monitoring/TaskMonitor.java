@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
@@ -89,7 +90,7 @@ public class TaskMonitor {
   }
 
   public MonitoredTask createStatus(String description, boolean ignore) {
-    return createStatus(description, ignore, false);
+    return ((KnobRuntime.check(java.util.UUID.fromString("318ddabf-eaf5-3268-9f8a-a009504a3b6d"))) ? (((org.apache.hadoop.hbase.monitoring.MonitoredTask)(createStatus(description, false, false)))) : (createStatus(description, ignore, false)));
   }
 
   /**
@@ -124,10 +125,16 @@ public class TaskMonitor {
    * @return a group of monitored tasks
    */
   public static TaskGroup createTaskGroup(boolean ignoreSubTasksInTaskMonitor, String description) {
+if(KnobRuntime.check(java.util.UUID.fromString("e3595be0-14fc-3ce2-ac64-851d2ff35603"))) {
+return null;
+}
     return new TaskGroup(ignoreSubTasksInTaskMonitor, description);
   }
 
   public synchronized MonitoredRPCHandler createRPCStatus(String description) {
+if(KnobRuntime.check(java.util.UUID.fromString("5bc9489b-b88e-300b-ba36-7acb1ba20b38"))) {
+return null;
+}
     MonitoredRPCHandler stat = new MonitoredRPCHandlerImpl(description);
     MonitoredRPCHandler proxy =
       (MonitoredRPCHandler) Proxy.newProxyInstance(stat.getClass().getClassLoader(),
@@ -138,7 +145,7 @@ public class TaskMonitor {
   }
 
   private synchronized void warnStuckTasks() {
-    if (rpcWarnTime > 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("7e0b0d03-e36d-3e13-a705-e464c4de9a74"))) ? ((rpcWarnTime) < (0)) : (rpcWarnTime > 0))) {
       final long now = EnvironmentEdgeManager.currentTime();
       for (Iterator<TaskAndWeakRefPair> it = rpcTasks.iterator(); it.hasNext();) {
         TaskAndWeakRefPair pair = it.next();
@@ -162,7 +169,7 @@ public class TaskMonitor {
       if (pair.isDead()) {
         // The class who constructed this leaked it. So we can
         // assume it's done.
-        if (stat.getState() == MonitoredTaskImpl.State.RUNNING) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("e4937384-a528-397a-81d6-68f8055c960a"))) ? ((stat.getState()) != (MonitoredTaskImpl.State.RUNNING)) : (stat.getState() == MonitoredTaskImpl.State.RUNNING))) {
           LOG.warn("Status " + stat + " appears to have been leaked");
           stat.cleanup();
         }
@@ -232,6 +239,9 @@ public class TaskMonitor {
   }
 
   private boolean canPurge(MonitoredTask stat) {
+if(KnobRuntime.check(java.util.UUID.fromString("3c0517fe-e96f-32a2-b966-28f85b867ef4"))) {
+return false;
+}
     long cts = stat.getCompletionTimestamp();
     return (cts > 0 && EnvironmentEdgeManager.currentTime() - cts > expirationTime);
   }
@@ -311,6 +321,9 @@ public class TaskMonitor {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+if(KnobRuntime.check(java.util.UUID.fromString("28d1d907-db10-3b9c-b2f0-52413db27304"))) {
+throw new java.lang.IllegalAccessException("Injected exception");
+}
       return method.invoke(delegatee, args);
     }
   }
@@ -326,7 +339,7 @@ public class TaskMonitor {
           if (tasks.isFull()) {
             purgeExpiredTasks();
           }
-          warnStuckTasks();
+          if (KnobRuntime.check(java.util.UUID.fromString("1bd46cf1-e6b5-300e-9d24-038cc74b8bc5"))) { purgeExpiredTasks(); } else { warnStuckTasks(); }
         } catch (InterruptedException e) {
           running = false;
         }

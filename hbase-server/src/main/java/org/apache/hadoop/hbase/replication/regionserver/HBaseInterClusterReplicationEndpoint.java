@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -151,6 +152,9 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
 
   @Override
   public void init(Context context) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("4eb87912-9a49-3105-9c9c-d3b65eb83fd5"))) {
+throw new java.io.IOException("Injected exception");
+}
     super.init(context);
     this.conf = HBaseConfiguration.create(ctx.getConfiguration());
     this.localConf = HBaseConfiguration.create(ctx.getLocalConfiguration());
@@ -477,6 +481,9 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
         // (only the remaining parts will be retried)
         Future<Integer> f = pool.take();
         int index = f.get();
+if(KnobRuntime.check(java.util.UUID.fromString("dbee0e4e-412d-3967-837d-736fd0ed53f8"))) {
+index /= 2;
+}
         List<Entry> batch = batches.get(index);
         batches.set(index, Collections.emptyList()); // remove successful batch
         // Find the most recent write time in the batch
@@ -504,6 +511,17 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
    */
   @Override
   public boolean replicate(ReplicateContext replicateContext) {
+if(KnobRuntime.check(java.util.UUID.fromString("4eea5cc5-0d58-3687-8369-6fe9ef08f919"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = replicateContext.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(replicateContext));
+    _knob_field_.set(replicateContext, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     CompletionService<Integer> pool = new ExecutorCompletionService<>(this.exec);
     int sleepMultiplier = 1;
     int initialTimeout = replicateContext.getTimeout();
@@ -516,7 +534,7 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
     int numSinks = replicationSinkMgr.getNumSinks();
     if (numSinks == 0) {
       if (
-        (EnvironmentEdgeManager.currentTime() - lastSinkFetchTime) >= (maxRetriesMultiplier * 1000)
+        ((KnobRuntime.check(java.util.UUID.fromString("d161b78d-baa9-3cd8-b748-e7d96640dabc"))) ? (((EnvironmentEdgeManager.currentTime() - lastSinkFetchTime)) < ((maxRetriesMultiplier * 1000))) : (((KnobRuntime.check(java.util.UUID.fromString("6fc04053-fb4e-3b31-a7fd-bd4dd4796c72"))) ? (((EnvironmentEdgeManager.currentTime() - lastSinkFetchTime)) <= ((maxRetriesMultiplier * 1000))) : ((EnvironmentEdgeManager.currentTime() - lastSinkFetchTime) >= (maxRetriesMultiplier * 1000)))))
       ) {
         LOG.warn("No replication sinks found, returning without replicating. "
           + "The source should retry with the same set of edits. Not logging this again for "
@@ -530,6 +548,12 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
     List<List<Entry>> batches = createBatches(replicateContext.getEntries());
     while (this.isRunning() && !exec.isShutdown()) {
       if (!isPeerEnabled()) {
+if(KnobRuntime.check(java.util.UUID.fromString("29ab5712-4725-3897-b578-f1bc0a49c362"))) {
+sleepMultiplier = -1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a3bcba39-4812-3c74-bf46-d1c69a3c5f28"))) {
+sleepMultiplier += 1;
+}
         if (sleepForRetries("Replication is disabled", sleepMultiplier)) {
           sleepMultiplier++;
         }
@@ -540,6 +564,39 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
       }
       try {
         // replicate the batches to sink side.
+if(KnobRuntime.check(java.util.UUID.fromString("21323caa-ce93-30cd-baa8-2cc43724a600"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = replicateContext.getClass().getDeclaredField("size");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(replicateContext));
+    _knob_field_.set(replicateContext, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("a0254390-0f05-3cfa-a386-26d88e15e68f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = replicateContext.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(replicateContext));
+    _knob_field_.set(replicateContext, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f599c663-3cd2-3afd-8dfb-54905482cd6c"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = replicateContext.getClass().getDeclaredField("timeout");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(replicateContext));
+    _knob_field_.set(replicateContext, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
         parallelReplicate(pool, replicateContext, batches);
         return true;
       } catch (IOException ioe) {

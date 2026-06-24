@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -70,6 +71,28 @@ public class DefaultStoreEngine extends StoreEngine<DefaultStoreFlusher, RatioBa
   }
 
   protected void createCompactor(Configuration conf, HStore store) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("33998d46-876b-38f1-9ac5-52edd6f0fb76"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("66140247-d010-35dc-8f03-cba767582950"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String className = conf.get(DEFAULT_COMPACTOR_CLASS_KEY, DEFAULT_COMPACTOR_CLASS.getName());
     try {
       compactor = ReflectionUtils.instantiateWithCustomCtor(className,
@@ -92,6 +115,28 @@ public class DefaultStoreEngine extends StoreEngine<DefaultStoreFlusher, RatioBa
   }
 
   protected void createStoreFlusher(Configuration conf, HStore store) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("3df2495c-a55b-3990-b8a8-91667863c626"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("flushRetriesNumber");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4b420914-bbe2-31eb-b445-68d76ecaf49e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(store));
+    _knob_field_.set(store, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     String className =
       conf.get(DEFAULT_STORE_FLUSHER_CLASS_KEY, DEFAULT_STORE_FLUSHER_CLASS.getName());
     try {

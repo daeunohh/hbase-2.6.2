@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.master.MasterCoprocessorHost;
@@ -50,6 +51,9 @@ public class DisablePeerProcedure extends ModifyPeerProcedure {
 
   @Override
   protected void prePeerModification(MasterProcedureEnv env) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("7ede6c72-cb8f-329b-b037-d7e49ecc41f3"))) {
+return;
+}
     MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
       cpHost.preDisableReplicationPeer(peerId);

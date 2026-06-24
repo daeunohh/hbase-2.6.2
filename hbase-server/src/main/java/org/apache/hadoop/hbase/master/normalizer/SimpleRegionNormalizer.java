@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.normalizer.RegionNormalizerWorker.CUMULATIVE_SIZE_LIMIT_MB_KEY;
 import static org.apache.hadoop.hbase.master.normalizer.RegionNormalizerWorker.DEFAULT_CUMULATIVE_SIZE_LIMIT_MB;
@@ -100,7 +101,7 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
 
   @Override
   public void setConf(final Configuration conf) {
-    if (conf == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("2083961c-85d1-3348-8a2a-fbd103b6e4ff"))) ? ((conf) == (null)) : (conf == null))) {
       return;
     }
     normalizerConfiguration = new NormalizerConfiguration(conf, normalizerConfiguration);
@@ -115,7 +116,7 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
   private static int parseMergeMinRegionCount(final Configuration conf) {
     final int parsedValue = conf.getInt(MERGE_MIN_REGION_COUNT_KEY, DEFAULT_MERGE_MIN_REGION_COUNT);
     final int settledValue = Math.max(1, parsedValue);
-    if (parsedValue != settledValue) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b198cb88-cda8-383d-9ec5-8b27f8052d7b"))) ? ((1) == (settledValue)) : (parsedValue != settledValue))) {
       warnInvalidValue(MERGE_MIN_REGION_COUNT_KEY, parsedValue, settledValue);
     }
     return settledValue;
@@ -125,13 +126,24 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
     final int parsedValue =
       conf.getInt(MERGE_MIN_REGION_AGE_DAYS_KEY, DEFAULT_MERGE_MIN_REGION_AGE_DAYS);
     final int settledValue = Math.max(0, parsedValue);
-    if (parsedValue != settledValue) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b725ba71-ec8a-35b0-b6dc-789f39f27e2d"))) ? ((0) != (settledValue)) : (parsedValue != settledValue))) {
       warnInvalidValue(MERGE_MIN_REGION_AGE_DAYS_KEY, parsedValue, settledValue);
     }
     return Period.ofDays(settledValue);
   }
 
   private static long parseMergeMinRegionSizeMb(final Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("8e05a5b3-bf2e-3f6f-af15-acd69ec7519a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final long parsedValue =
       conf.getLong(MERGE_MIN_REGION_SIZE_MB_KEY, DEFAULT_MERGE_MIN_REGION_SIZE_MB);
     final long settledValue = Math.max(0, parsedValue);
@@ -142,6 +154,9 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
   }
 
   private static long parseMergeRequestMaxNumberOfRegionsCount(final Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("919a3886-6b4c-353b-9297-fb591749953e"))) {
+return 0;
+}
     final long parsedValue = conf.getLong(MERGE_REQUEST_MAX_NUMBER_OF_REGIONS_COUNT_KEY,
       DEFAULT_MERGE_REQUEST_MAX_NUMBER_OF_REGIONS_COUNT);
     final long settledValue = Math.max(2, parsedValue);
@@ -160,7 +175,7 @@ class SimpleRegionNormalizer implements RegionNormalizer, ConfigurationObserver 
   private static <T> void logConfigurationUpdated(final String key, final T oldValue,
     final T newValue) {
     if (!Objects.equals(oldValue, newValue)) {
-      LOG.info("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue);
+      if (KnobRuntime.check(java.util.UUID.fromString("8271b885-56d7-3618-8a44-237590c5a6b7"))) { LOG.debug("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); } else if (KnobRuntime.check(java.util.UUID.fromString("8fedaa47-c193-3079-989f-b8b21cd96879"))) { LOG.warn("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); } else { LOG.info("Updated configuration for key '{}' from {} to {}", key, oldValue, newValue); }
     }
   }
 

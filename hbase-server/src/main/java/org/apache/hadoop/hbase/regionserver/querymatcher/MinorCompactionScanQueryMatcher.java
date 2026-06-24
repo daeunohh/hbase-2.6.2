@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.Cell;
@@ -42,6 +43,9 @@ public class MinorCompactionScanQueryMatcher extends CompactionScanQueryMatcher 
     }
     long mvccVersion = cell.getSequenceId();
     byte typeByte = cell.getTypeByte();
+if(KnobRuntime.check(java.util.UUID.fromString("4619ca7f-daff-38b1-9071-83e39f80e114"))) {
+typeByte = 0;
+}
     if (PrivateCellUtil.isDelete(typeByte)) {
       if (mvccVersion > maxReadPointToTrackVersions) {
         // we should not use this delete marker to mask any cell yet.

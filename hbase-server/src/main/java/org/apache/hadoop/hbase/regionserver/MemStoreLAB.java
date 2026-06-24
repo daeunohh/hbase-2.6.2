@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Cell;
@@ -120,6 +121,17 @@ public interface MemStoreLAB {
   }
 
   static boolean isEnabled(Configuration conf) {
+if(KnobRuntime.check(java.util.UUID.fromString("b5748d02-44e9-3bbb-ad5f-feee4ce3212f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(conf);
+    _knob_field_.set(conf, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return conf.getBoolean(USEMSLAB_KEY, USEMSLAB_DEFAULT);
   }
 

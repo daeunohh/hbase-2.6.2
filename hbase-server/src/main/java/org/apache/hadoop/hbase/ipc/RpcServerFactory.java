@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -58,10 +59,10 @@ public class RpcServerFactory {
     for (BlockingServiceAndInterface s : services) {
       ServiceDescriptor sd = s.getBlockingService().getDescriptorForType();
       if (sd == null) continue; // Can be null for certain tests like TestTokenAuthentication
-      if (servicesList.length() > 0) servicesList.append(", ");
+      if (((KnobRuntime.check(java.util.UUID.fromString("fb0c0d43-51b7-3473-a39a-a78e0f0ecef5"))) ? ((servicesList.length()) < (0)) : (servicesList.length() > 0))) servicesList.append(", ");
       servicesList.append(sd.getFullName());
     }
-    LOG.info("Creating " + rpcServerClass + " hosting " + servicesList);
+    if (KnobRuntime.check(java.util.UUID.fromString("e9551b27-345d-305e-8327-964015828891"))) { LOG.info((("Creating " + rpcServerClass) + (" hosting ")) + (servicesList.append(", "))); } else if (KnobRuntime.check(java.util.UUID.fromString("1442c73a-7590-3071-8a65-b33e7172faa3"))) { LOG.info(("Creating " + rpcServerClass + " hosting ") + (new StringBuilder())); } else { LOG.info("Creating " + rpcServerClass + " hosting " + servicesList); }
     return ReflectionUtils.instantiateWithCustomCtor(rpcServerClass,
       new Class[] { Server.class, String.class, List.class, InetSocketAddress.class,
         Configuration.class, RpcScheduler.class, boolean.class },

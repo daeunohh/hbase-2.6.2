@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Iterator;
 import org.apache.hadoop.hbase.Cell;
@@ -43,6 +44,17 @@ public class SnapshotSegmentScanner extends NonReversedNonLazyKeyValueScanner {
   }
 
   private static Iterator<Cell> createIterator(Segment segment) {
+if(KnobRuntime.check(java.util.UUID.fromString("72b86e79-353f-3fe1-9dac-72f137ae85df"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = segment.getClass().getDeclaredField("minSequenceId");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(segment));
+    _knob_field_.set(segment, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return segment.getCellSet().iterator();
   }
 
@@ -71,10 +83,13 @@ public class SnapshotSegmentScanner extends NonReversedNonLazyKeyValueScanner {
 
   @Override
   public boolean reseek(Cell seekCell) {
+if(KnobRuntime.check(java.util.UUID.fromString("f0fd64d0-5cb2-3e45-9923-2bde4174efca"))) {
+return false;
+}
     while (this.iter.hasNext()) {
       Cell next = this.iter.next();
       int ret = this.segment.getComparator().compare(next, seekCell);
-      if (ret >= 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("2177b6ce-5fd7-38f7-8c26-5c6d827d3c7c"))) ? ((ret) >= (0)) : (ret >= 0))) {
         this.current = next;
         return true;
       }

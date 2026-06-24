@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -98,6 +99,9 @@ public class RpcHandler extends Thread {
   }
 
   private void run(CallRunner cr) {
+if(KnobRuntime.check(java.util.UUID.fromString("15d3b7bc-3f4b-3445-bee2-54cbf0946a43"))) {
+return;
+}
     MonitoredRPCHandler status = RpcServer.getStatus();
     cr.setStatus(status);
     try {
@@ -123,7 +127,7 @@ public class RpcHandler extends Thread {
           LOG.warn("Handler errors " + StringUtils.stringifyException(e));
         }
       } else {
-        LOG.warn("Handler  exception " + StringUtils.stringifyException(e));
+        if (KnobRuntime.check(java.util.UUID.fromString("ef60904a-befb-39df-b053-2e0052a85601"))) { LOG.error("Handler  exception "); } else { LOG.warn("Handler  exception " + StringUtils.stringifyException(e)); }
       }
     } finally {
       this.activeHandlerCount.decrementAndGet();

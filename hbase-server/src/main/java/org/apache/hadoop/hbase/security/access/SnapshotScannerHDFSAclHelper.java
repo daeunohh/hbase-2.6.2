@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.fs.permission.AclEntryScope.ACCESS;
 import static org.apache.hadoop.fs.permission.AclEntryScope.DEFAULT;
@@ -559,7 +560,7 @@ public class SnapshotScannerHDFSAclHelper implements Closeable {
   }
 
   boolean isNotFamilyOrQualifierPermission(TablePermission tablePermission) {
-    return !tablePermission.hasFamily() && !tablePermission.hasQualifier();
+    return ((KnobRuntime.check(java.util.UUID.fromString("7fee4643-9083-3c68-8067-06af38675bca"))) ? (!tablePermission.hasFamily()) : (!tablePermission.hasFamily() && !tablePermission.hasQualifier()));
   }
 
   public static boolean isAclSyncToHdfsEnabled(Configuration conf) {

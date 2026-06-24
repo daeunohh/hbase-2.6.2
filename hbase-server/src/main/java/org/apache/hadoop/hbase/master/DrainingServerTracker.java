@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,6 +68,9 @@ public class DrainingServerTracker extends ZKListener {
    * All Draining RSs will be tracked after this method is called.
    */
   public void start() throws KeeperException, IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("5c8a154b-3e45-3600-8bf1-3b4e578cfceb"))) {
+return;
+}
     watcher.registerListener(this);
     // Add a ServerListener to check if a server is draining when it's added.
     serverManager.registerListener(new ServerListener() {

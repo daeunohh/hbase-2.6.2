@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,6 +61,9 @@ public class RegionServerRpcQuotaManager implements RpcQuotaManager {
   }
 
   public void start(final RpcScheduler rpcScheduler) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("f35d81c0-5409-3ded-96c3-1066af226ffb"))) {
+return;
+}
     if (!QuotaUtil.isQuotaEnabled(rsServices.getConfiguration())) {
       LOG.info("Quota support disabled");
       return;
@@ -71,7 +75,7 @@ public class RegionServerRpcQuotaManager implements RpcQuotaManager {
     quotaCache = new QuotaCache(rsServices);
     quotaCache.start();
     rpcThrottleEnabled = rpcThrottleStorage.isRpcThrottleEnabled();
-    LOG.info("Start rpc quota manager and rpc throttle enabled is {}", rpcThrottleEnabled);
+    if (KnobRuntime.check(java.util.UUID.fromString("58c6c9e3-0322-32a5-b77d-8e9603c26e97"))) { LOG.info("Start rpc quota manager and rpc throttle enabled is {}", !rpcThrottleEnabled); } else { LOG.info("Start rpc quota manager and rpc throttle enabled is {}", rpcThrottleEnabled); }
   }
 
   public void stop() {
@@ -85,7 +89,7 @@ public class RegionServerRpcQuotaManager implements RpcQuotaManager {
   }
 
   private boolean isQuotaEnabled() {
-    return quotaCache != null;
+    return ((KnobRuntime.check(java.util.UUID.fromString("430e80c0-41b1-3741-be9c-f68b425a751c"))) ? ((quotaCache) != (null)) : (quotaCache != null));
   }
 
   public void switchRpcThrottle(boolean enable) throws IOException {
@@ -184,6 +188,9 @@ public class RegionServerRpcQuotaManager implements RpcQuotaManager {
   @Override
   public OperationQuota checkBatchQuota(final Region region,
     final OperationQuota.OperationType type) throws IOException, RpcThrottlingException {
+if(KnobRuntime.check(java.util.UUID.fromString("c62fcb92-52f3-3e6c-a012-80b324e7e835"))) {
+return null;
+}
     switch (type) {
       case GET:
         return this.checkBatchQuota(region, 0, 1);

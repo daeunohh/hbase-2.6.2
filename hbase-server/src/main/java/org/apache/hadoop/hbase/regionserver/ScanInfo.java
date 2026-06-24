@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.hadoop.conf.Configuration;
@@ -119,6 +120,9 @@ public class ScanInfo {
   }
 
   boolean isUsePread() {
+if(KnobRuntime.check(java.util.UUID.fromString("8d295a16-63f6-326d-b155-530c0a1bbc6c"))) {
+return true;
+}
     return this.usePread;
   }
 
@@ -127,6 +131,9 @@ public class ScanInfo {
   }
 
   boolean isParallelSeekEnabled() {
+if(KnobRuntime.check(java.util.UUID.fromString("331d11b0-0533-33f3-b816-d23d5215a679"))) {
+return false;
+}
     return this.parallelSeekEnabled;
   }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.DataInput;
@@ -274,6 +275,9 @@ public final class HFile {
     }
 
     public WriterFactory withOutputStream(FSDataOutputStream ostream) {
+if(KnobRuntime.check(java.util.UUID.fromString("5a05d26e-ca07-3555-8360-c90343ddbcdc"))) {
+return null;
+}
       Preconditions.checkNotNull(ostream);
       this.ostream = ostream;
       return this;
