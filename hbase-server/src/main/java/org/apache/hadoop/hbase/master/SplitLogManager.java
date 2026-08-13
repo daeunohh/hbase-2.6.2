@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.SplitLogManager.ResubmitDirective.CHECK;
 import static org.apache.hadoop.hbase.master.SplitLogManager.ResubmitDirective.FORCE;
@@ -439,9 +438,6 @@ public class SplitLogManager {
   }
 
   public void stop() {
-if(KnobRuntime.check(java.util.UUID.fromString("f63d24ea-185c-3213-95f8-bd8d227588e9"))) {
-return;
-}
     if (choreService != null) {
       choreService.shutdown();
     }
@@ -548,7 +544,7 @@ return;
   private class TimeoutMonitor extends ScheduledChore {
     private long lastLog = 0;
 
-    public TimeoutMonitor(final int period, Stoppable stopper) {
+    TimeoutMonitor(final int period, Stoppable stopper) {
       super("SplitLogManager Timeout Monitor", stopper, period);
     }
 

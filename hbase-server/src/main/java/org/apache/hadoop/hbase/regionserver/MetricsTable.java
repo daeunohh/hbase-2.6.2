@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -57,10 +56,7 @@ public class MetricsTable {
   }
 
   public void updateFlushMemstoreSize(String table, long bytes) {
-if(KnobRuntime.check(java.util.UUID.fromString("4ddab25d-fbaa-3842-9e68-93f7e1bf7fee"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("228b029e-b6b0-3e7f-94f3-0ddb627daf64"))) { tableSourceAgg.getOrCreateTableSource(table, wrapper).updateSplitTime(bytes); } else { tableSourceAgg.getOrCreateTableSource(table, wrapper).updateFlushMemstoreSize(bytes); }
+    tableSourceAgg.getOrCreateTableSource(table, wrapper).updateFlushMemstoreSize(bytes);
   }
 
   public void updateFlushOutputSize(String table, long bytes) {

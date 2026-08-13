@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -307,9 +306,6 @@ public abstract class ScanQueryMatcher implements ShipperListener {
    * @return result of the compare between the indexed key and the key portion of the passed cell
    */
   public int compareKeyForNextRow(Cell nextIndexed, Cell currentCell) {
-if(KnobRuntime.check(java.util.UUID.fromString("b576c73c-17dc-33d8-8e9a-a01a9bcc736e"))) {
-return 0;
-}
     return PrivateCellUtil.compareKeyBasedOnColHint(rowComparator, nextIndexed, currentCell, 0, 0,
       null, 0, 0, HConstants.OLDEST_TIMESTAMP, Type.Minimum.getCode());
   }
@@ -389,7 +385,7 @@ return 0;
 
     if (deleteTracker instanceof NewVersionBehaviorTracker) {
       columnTracker = (NewVersionBehaviorTracker) deleteTracker;
-    } else if (((KnobRuntime.check(java.util.UUID.fromString("0bfe1215-ba1a-3a81-bcc6-c3f44000d2dd"))) ? (((columns) != (null)) || ((columns.size()) != (0))) : (columns == null || columns.size() == 0))) {
+    } else if (columns == null || columns.size() == 0) {
       columnTracker = new ScanWildcardColumnTracker(scanInfo.getMinVersions(), maxVersionToCheck,
         oldestUnexpiredTS, scanInfo.getComparator());
     } else {
@@ -402,27 +398,10 @@ return 0;
   // Used only for testing purposes
   static MatchCode checkColumn(ColumnTracker columnTracker, byte[] bytes, int offset, int length,
     long ttl, byte type, boolean ignoreCount) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5b74e8ef-9ff1-3947-ab8c-e551cfb8f37a"))) {
-length += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("65e41e16-d61f-367d-8752-b989daf43b2b"))) {
-throw new java.io.IOException("Injected exception");
-}
     KeyValue kv = KeyValueUtil.createFirstOnRow(HConstants.EMPTY_BYTE_ARRAY, 0, 0,
       HConstants.EMPTY_BYTE_ARRAY, 0, 0, bytes, offset, length);
-if(KnobRuntime.check(java.util.UUID.fromString("62eba330-837a-3339-b8be-363d38d1414e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = kv.getClass().getDeclaredField("offset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(kv));
-    _knob_field_.set(kv, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     MatchCode matchCode = columnTracker.checkColumn(kv, type);
-    if (((KnobRuntime.check(java.util.UUID.fromString("219682f2-e2e1-35e4-a0f1-d5f03e31e62d"))) ? ((matchCode) != (MatchCode.INCLUDE)) : (matchCode == MatchCode.INCLUDE))) {
+    if (matchCode == MatchCode.INCLUDE) {
       return columnTracker.checkVersions(kv, ttl, type, ignoreCount);
     }
     return matchCode;

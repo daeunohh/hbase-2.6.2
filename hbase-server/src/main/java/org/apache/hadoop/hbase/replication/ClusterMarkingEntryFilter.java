@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.UUID;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -59,7 +58,7 @@ public class ClusterMarkingEntryFilter implements WALEntryFilter {
       WALEdit edit = entry.getEdit();
       WALKeyImpl logKey = (WALKeyImpl) entry.getKey();
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("c5089f6e-43c6-35ab-957c-424fa44e1f5c"))) ? (edit != null) : (((KnobRuntime.check(java.util.UUID.fromString("d29b6c86-6267-3cdc-b111-48b10bd6d40c"))) ? ((edit != null) || (!edit.isEmpty())) : (edit != null && !edit.isEmpty()))))) {
+      if (edit != null && !edit.isEmpty()) {
         // Mark that the current cluster has the change
         logKey.addClusterId(clusterId);
         return entry;

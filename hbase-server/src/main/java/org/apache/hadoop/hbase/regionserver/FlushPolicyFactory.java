@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -47,77 +46,8 @@ public class FlushPolicyFactory {
    * Create the FlushPolicy configured for the given table.
    */
   public static FlushPolicy create(HRegion region, Configuration conf) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("75b276c0-bdac-3880-aa35-7322dac2bc79"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("minBlockSizeBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9979d4a6-eaff-3e26-9f32-fe108dc1f211"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("timestampSlop");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0e940bf0-df40-337b-829e-69b52f44d60b"))) {
-throw new java.io.IOException("Injected exception");
-}
     Class<? extends FlushPolicy> clazz = getFlushPolicyClass(region.getTableDescriptor(), conf);
     FlushPolicy policy = ReflectionUtils.newInstance(clazz, conf);
-if(KnobRuntime.check(java.util.UUID.fromString("7a6af1f3-03ce-3c5b-b7c2-df8667d05fd2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedCompactionSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fbc423b3-2c36-32fa-b97a-401096852533"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("miniBatchSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f482a02a-a0f4-3e9e-b88c-6f102bb276ed"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxFlushedSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("eec5d787-7d98-3670-a9f1-d0bcc5f34f9f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("timestampSlop");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     policy.configureForRegion(region);
     return policy;
   }
@@ -127,9 +57,6 @@ try {
    */
   public static Class<? extends FlushPolicy> getFlushPolicyClass(TableDescriptor htd,
     Configuration conf) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("71b281f7-5aff-382e-a8a4-049f66a265c5"))) {
-return null;
-}
     String className = htd.getFlushPolicyClassName();
     if (className == null) {
       className = conf.get(HBASE_FLUSH_POLICY_KEY, DEFAULT_FLUSH_POLICY_CLASS.getName());

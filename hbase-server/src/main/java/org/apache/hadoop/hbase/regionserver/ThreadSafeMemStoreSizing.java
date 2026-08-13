@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -60,9 +59,6 @@ class ThreadSafeMemStoreSizing implements MemStoreSizing {
     this.offHeapSize.addAndGet(offHeapSizeDelta);
     this.heapSize.addAndGet(heapSizeDelta);
     this.cellsCount.addAndGet(cellsCountDelta);
-if(KnobRuntime.check(java.util.UUID.fromString("49f1e3d7-0b8d-3f0d-ad2c-34160e90d9eb"))) {
-dataSizeDelta -= 1;
-}
     return this.dataSize.addAndGet(dataSizeDelta);
   }
 
@@ -73,12 +69,12 @@ dataSizeDelta -= 1;
 
   @Override
   public long getDataSize() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("c2c0685b-c789-30c8-bf9b-7c7a67519093"))) ? (getOffHeapSize()) : (dataSize.get()));
+    return dataSize.get();
   }
 
   @Override
   public long getHeapSize() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("d90fec42-1e01-3c94-9491-f6446dd13877"))) ? (getHeapSize()) : (heapSize.get()));
+    return heapSize.get();
   }
 
   @Override

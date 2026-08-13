@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.hbase.util.Threads;
@@ -60,7 +59,7 @@ class MasterInitializationMonitor extends Thread {
   @Override
   public void run() {
     try {
-      while (((KnobRuntime.check(java.util.UUID.fromString("4a1533b2-20e9-3962-9751-d8f8090fbfd3"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (!master.isStopped()) : (!master.isStopped() && master.isActiveMaster()))) {
+      while (!master.isStopped() && master.isActiveMaster()) {
         Thread.sleep(timeout);
         if (master.isInitialized()) {
           LOG.debug("Initialization completed within allotted tolerance. Monitor exiting.");
@@ -75,7 +74,7 @@ class MasterInitializationMonitor extends Thread {
         }
       }
     } catch (InterruptedException ie) {
-      if (KnobRuntime.check(java.util.UUID.fromString("13659e45-c51e-3ded-955d-387c53538fa1"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) { LOG.error("InitMonitor thread interrupted. Existing."); } else { LOG.trace("InitMonitor thread interrupted. Existing."); }
+      LOG.trace("InitMonitor thread interrupted. Existing.");
     }
   }
 }

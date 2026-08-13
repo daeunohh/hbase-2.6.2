@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.metrics;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
@@ -114,13 +113,10 @@ public class MetricsTableRequests {
   private boolean enabTableQueryMeterMetrics;
 
   public boolean isEnableTableLatenciesMetrics() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("8cde34fb-2952-387c-a549-96156aec4f7e"))) ? (!enableTableLatenciesMetrics) : (enableTableLatenciesMetrics));
+    return enableTableLatenciesMetrics;
   }
 
   public boolean isEnabTableQueryMeterMetrics() {
-if(KnobRuntime.check(java.util.UUID.fromString("872aeec8-47bd-335c-8fbf-f27d69387743"))) {
-return true;
-}
     return enabTableQueryMeterMetrics;
   }
 
@@ -129,16 +125,13 @@ return true;
   }
 
   private void init(TableName tableName, Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("056c6dc7-2a77-3d04-b3f5-7149337e3812"))) {
-return;
-}
     this.tableName = tableName;
     this.conf = conf;
     enableTableLatenciesMetrics = this.conf.getBoolean(ENABLE_TABLE_LATENCIES_METRICS_KEY,
       ENABLE_TABLE_LATENCIES_METRICS_DEFAULT);
     enabTableQueryMeterMetrics = this.conf.getBoolean(ENABLE_TABLE_QUERY_METER_METRICS_KEY,
       ENABLE_TABLE_QUERY_METER_METRICS_KEY_DEFAULT);
-    if (((KnobRuntime.check(java.util.UUID.fromString("d1a8e6e6-e24d-34eb-830f-922ceb2883c7"))) ? ((!enableTableLatenciesMetrics) || (!enabTableQueryMeterMetrics)) : (((KnobRuntime.check(java.util.UUID.fromString("2fe863ab-6bed-3e47-ad31-a315e9174fea"))) ? (enabTableQueryMeterMetrics) : (enableTableLatenciesMetrics || enabTableQueryMeterMetrics))))) {
+    if (enableTableLatenciesMetrics || enabTableQueryMeterMetrics) {
       registry = createRegistryForTableRequests();
       if (enableTableLatenciesMetrics) {
         getTimeHistogram = registry.histogram(GET_TIME);
@@ -174,51 +167,18 @@ return;
   }
 
   private MetricRegistryInfo createRegistryInfoForTableRequests() {
-if(KnobRuntime.check(java.util.UUID.fromString("b38a1dc0-2858-3517-8b4a-33022e985b81"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     registryInfo = new MetricRegistryInfo(qualifyMetrics(METRICS_NAME, tableName),
       METRICS_DESCRIPTION, qualifyMetrics(METRICS_JMX_CONTEXT, tableName), METRICS_CONTEXT, false);
     return registryInfo;
   }
 
   public void removeRegistry() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("b6032bca-6f1f-3de1-8a78-d8b3bcaba549"))) ? ((!enableTableLatenciesMetrics) && (enabTableQueryMeterMetrics)) : (((KnobRuntime.check(java.util.UUID.fromString("a85216e9-6e4a-3dbf-96cd-d9c9c5ddc77a"))) ? ((enableTableLatenciesMetrics) && (!enabTableQueryMeterMetrics)) : (enableTableLatenciesMetrics || enabTableQueryMeterMetrics))))) {
+    if (enableTableLatenciesMetrics || enabTableQueryMeterMetrics) {
       MetricRegistries.global().remove(registry.getMetricRegistryInfo());
     }
   }
 
   private static String qualifyMetrics(String prefix, TableName tableName) {
-if(KnobRuntime.check(java.util.UUID.fromString("b89a68b5-2703-37bb-9698-a48479861be0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("29e31b13-a88e-39e8-9951-13d5e41acff3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     StringBuilder sb = new StringBuilder();
     sb.append(prefix).append("_");
     sb.append("Namespace_").append(tableName.getNamespaceAsString());
@@ -273,11 +233,8 @@ try {
    */
   public void updateGet(long time, long blockBytesScanned) {
     if (isEnableTableLatenciesMetrics()) {
-if(KnobRuntime.check(java.util.UUID.fromString("ce251348-f1a7-375e-bb73-d713b99bcca4"))) {
-time = 0;
-}
       getTimeHistogram.update(time);
-      if (((KnobRuntime.check(java.util.UUID.fromString("8bdb2f31-6548-3ac9-b660-dfe478e2f534"))) ? ((blockBytesScanned) <= (0)) : (blockBytesScanned > 0))) {
+      if (blockBytesScanned > 0) {
         blockBytesScannedCount.increment(blockBytesScanned);
         getBlockBytesScanned.update(blockBytesScanned);
       }
@@ -323,21 +280,9 @@ time = 0;
   public void updateScan(long time, long responseCellSize, long blockBytesScanned) {
     if (isEnableTableLatenciesMetrics()) {
       scanTimeHistogram.update(time);
-if(KnobRuntime.check(java.util.UUID.fromString("7a9b4c57-f992-3098-8524-f7004a86f07b"))) {
-responseCellSize = -1;
-}
       scanSizeHistogram.update(responseCellSize);
-      if (((KnobRuntime.check(java.util.UUID.fromString("16753713-ae81-3c10-af41-e4780ef7588a"))) ? ((blockBytesScanned) >= (0)) : (blockBytesScanned > 0))) {
-if(KnobRuntime.check(java.util.UUID.fromString("6f1c5bc9-620e-37ab-958e-0579505d9b16"))) {
-blockBytesScanned = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fa337431-79fc-36ac-8ae2-5edc154fc60b"))) {
-blockBytesScanned = 0;
-}
+      if (blockBytesScanned > 0) {
         blockBytesScannedCount.increment(blockBytesScanned);
-if(KnobRuntime.check(java.util.UUID.fromString("b94c4f6d-ebab-39a6-a67e-e382ea962d4d"))) {
-blockBytesScanned = -1;
-}
         scanBlockBytesScanned.update(blockBytesScanned);
       }
     }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -433,7 +432,7 @@ public class HStoreFile implements StoreFile {
     if (isBulkLoadResult()) {
       // For bulkloads, we have to parse the sequenceid from the path name
       OptionalLong sequenceId = StoreFileInfo.getBulkloadSeqId(this.getPath());
-      if (((KnobRuntime.check(java.util.UUID.fromString("1b418ae6-4df8-362b-b0cc-d49bbd32d715"))) ? (isBulkLoadResult()) : (sequenceId.isPresent()))) {
+      if (sequenceId.isPresent()) {
         this.sequenceid = sequenceId.getAsLong();
         // Handle reference files as done above.
         if (fileInfo.isTopReference()) {
@@ -511,7 +510,7 @@ public class HStoreFile implements StoreFile {
       byte[] data = metadataMap.get(COMPACTION_EVENT_KEY);
       this.compactedStoreFiles.addAll(ProtobufUtil.toCompactedStoreFiles(data));
     } catch (IOException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b476a8fd-607d-39a5-a5cb-3b53af5e3a1e"))) { LOG.warn("Error reading compacted storefiles from meta data", e); } else { LOG.error("Error reading compacted storefiles from meta data", e); }
+      LOG.error("Error reading compacted storefiles from meta data", e);
     }
 
     // initialize so we can reuse them after reader closed.
@@ -524,7 +523,7 @@ public class HStoreFile implements StoreFile {
    * Initialize the reader used for pread.
    */
   public void initReader() throws IOException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("bbae43e0-5eb8-3080-8411-da1fea072450"))) ? ((initialReader) == (null)) : (initialReader == null))) {
+    if (initialReader == null) {
       synchronized (this) {
         if (initialReader == null) {
           try {
@@ -532,7 +531,7 @@ public class HStoreFile implements StoreFile {
           } catch (Exception e) {
             try {
               boolean evictOnClose = cacheConf != null ? cacheConf.shouldEvictOnClose() : true;
-              if (KnobRuntime.check(java.util.UUID.fromString("5ec25a02-c53c-30c1-8eb1-ecce47ee54f1"))) { closeStoreFile(!evictOnClose); } else { this.closeStoreFile(evictOnClose); }
+              this.closeStoreFile(evictOnClose);
             } catch (IOException ee) {
               LOG.warn("failed to close reader", ee);
             }

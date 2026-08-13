@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CallDroppedException;
 import org.apache.hadoop.hbase.CallQueueTooBigException;
@@ -71,20 +70,14 @@ public class MetricsHBaseServer {
   }
 
   void sentBytes(long count) {
-    if (KnobRuntime.check(java.util.UUID.fromString("e86929bd-7b81-3202-89ea-d1218f936b49"))) { source.sentResponse(count); } else { source.sentBytes(count); }
+    source.sentBytes(count);
   }
 
   void receivedBytes(int count) {
-if(KnobRuntime.check(java.util.UUID.fromString("a03386dc-993e-30a1-80b9-1c1a24df538a"))) {
-return;
-}
     source.receivedBytes(count);
   }
 
   void sentResponse(long count) {
-if(KnobRuntime.check(java.util.UUID.fromString("ee02c1da-6d6b-3259-879b-1cdc4a75a1da"))) {
-count -= 1;
-}
     source.sentResponse(count);
   }
 
@@ -97,20 +90,11 @@ count -= 1;
   }
 
   void processedCall(int processingTime) {
-if(KnobRuntime.check(java.util.UUID.fromString("6aaf1b57-40b0-32a7-ab43-5fe151c0eb05"))) {
-processingTime += 1;
-}
     source.processedCall(processingTime);
   }
 
   void totalCall(int totalTime) {
-if(KnobRuntime.check(java.util.UUID.fromString("b9ddb287-eeec-378c-a589-eeb7d6ca5043"))) {
-totalTime *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8491216d-6420-3a34-a48c-94620a9fa237"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("78cf7a0d-2211-30d5-866c-cf0a26652351"))) { source.processedCall(totalTime); } else { source.queuedAndProcessedCall(totalTime); }
+    source.queuedAndProcessedCall(totalTime);
   }
 
   void unwritableTime(long unwritableTime) {
@@ -122,7 +106,7 @@ return;
   }
 
   public void exception(Throwable throwable) {
-    if (KnobRuntime.check(java.util.UUID.fromString("6a638fe8-75e1-3ca1-8c15-d4020bed7f1d"))) { source.authorizationSuccess(); } else { source.exception(); }
+    source.exception();
 
     /**
      * Keep some metrics for commonly seen exceptions Try and put the most common types first. Place
@@ -165,7 +149,7 @@ return;
       } else {
         source.otherExceptions();
         if (LOG.isDebugEnabled()) {
-          if (KnobRuntime.check(java.util.UUID.fromString("2c79542d-03f0-3bab-8d78-1da3cc34221b"))) { LOG.debug("Unknown exception type", throwable.getCause()); } else { LOG.debug("Unknown exception type", throwable); }
+          LOG.debug("Unknown exception type", throwable);
         }
       }
     }

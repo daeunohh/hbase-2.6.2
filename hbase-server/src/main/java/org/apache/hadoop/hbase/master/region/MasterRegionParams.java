@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.Server;
 import org.apache.hadoop.hbase.client.TableDescriptor;
@@ -62,17 +61,11 @@ public class MasterRegionParams {
   }
 
   public MasterRegionParams regionDirName(String regionDirName) {
-if(KnobRuntime.check(java.util.UUID.fromString("851d728e-818a-361e-a851-937b8e9c4e15"))) {
-return null;
-}
     this.regionDirName = regionDirName;
     return this;
   }
 
   public MasterRegionParams tableDescriptor(TableDescriptor tableDescriptor) {
-if(KnobRuntime.check(java.util.UUID.fromString("7afcae32-dcae-3aad-8284-a6e82c47dc96"))) {
-return null;
-}
     this.tableDescriptor = tableDescriptor;
     return this;
   }
@@ -108,9 +101,6 @@ return null;
   }
 
   public MasterRegionParams ringBufferSlotCount(int ringBufferSlotCount) {
-if(KnobRuntime.check(java.util.UUID.fromString("5b1b031c-0320-3505-b99b-508c269c024b"))) {
-return null;
-}
     this.ringBufferSlotCount = ringBufferSlotCount;
     return this;
   }

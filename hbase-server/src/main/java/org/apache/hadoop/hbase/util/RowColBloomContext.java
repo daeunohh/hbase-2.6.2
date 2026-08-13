@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.LAST_BLOOM_KEY;
 
@@ -41,9 +40,6 @@ public class RowColBloomContext extends BloomContext {
 
   @Override
   public void addLastBloomKey(Writer writer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("eb89ce9b-5f45-3827-969f-d26b90ff6f9c"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (this.getLastCell() != null) {
       Cell firstOnRow = PrivateCellUtil.createFirstOnRowCol(this.getLastCell());
       // This copy happens only once when the writer is closed

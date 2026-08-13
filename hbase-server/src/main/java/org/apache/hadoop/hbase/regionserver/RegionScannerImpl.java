@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -262,9 +261,6 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
 
   @Override
   public boolean nextRaw(List<Cell> outResults) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("1abda8e1-0d11-35ac-b9bc-cc36a419b226"))) {
-return true;
-}
     // Use the RegionScanner's context by default
     return nextRaw(outResults, defaultScannerContext);
   }
@@ -282,17 +278,6 @@ return true;
       moreValues = nextInternal(outResults, scannerContext);
     } else {
       List<Cell> tmpList = new ArrayList<>();
-if(KnobRuntime.check(java.util.UUID.fromString("dc2daaa7-f61f-324b-b567-78dff26cc02d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scannerContext.getClass().getDeclaredField("keepProgress");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(scannerContext);
-    _knob_field_.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       moreValues = nextInternal(tmpList, scannerContext);
       outResults.addAll(tmpList);
     }
@@ -311,9 +296,6 @@ try {
 
     if (isFilterDoneInternal()) {
       moreValues = false;
-if(KnobRuntime.check(java.util.UUID.fromString("e92733b7-a6e0-3e78-95c8-dd0461138f87"))) {
-throw new java.io.IOException("Injected exception");
-}
     }
     return moreValues;
   }
@@ -407,7 +389,7 @@ throw new java.io.IOException("Injected exception");
       // is still processing the request. We should abort aggressively
       // in that case.
       long afterTime = rpcCall.get().disconnectSince();
-      if (((KnobRuntime.check(java.util.UUID.fromString("3de5f3f8-eef0-332a-b2b0-477f21aea79c"))) ? ((afterTime) >= (0)) : (afterTime >= 0))) {
+      if (afterTime >= 0) {
         throw new CallerDisconnectedException(
           "Aborting on region " + getRegionInfo().getRegionNameAsString() + ", call " + this
             + " after " + afterTime + " ms, since " + "caller disconnected");
@@ -419,7 +401,7 @@ throw new java.io.IOException("Injected exception");
     long initialSizeProgress, long initialHeapSizeProgress) {
     // Starting to scan a new row. Reset the scanner progress according to whether or not
     // progress should be kept.
-    if (((KnobRuntime.check(java.util.UUID.fromString("54aebcf3-9d13-3bb3-ace1-9e104dddee97"))) ? (scannerContext.mayHaveMoreCellsInRow()) : (scannerContext.getKeepProgress()))) {
+    if (scannerContext.getKeepProgress()) {
       // Progress should be kept. Reset to initial values seen at start of method invocation.
       scannerContext.setProgress(initialBatchProgress, initialSizeProgress,
         initialHeapSizeProgress);
@@ -430,9 +412,6 @@ throw new java.io.IOException("Injected exception");
 
   private boolean nextInternal(List<Cell> results, ScannerContext scannerContext)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9d7f55f8-5392-348b-a8a7-769954ca882e"))) {
-return false;
-}
     Preconditions.checkArgument(results.isEmpty(), "First parameter should be an empty list");
     Preconditions.checkArgument(scannerContext != null, "Scanner context cannot be null");
     Optional<RpcCall> rpcCall = RpcServer.getCurrentCall();
@@ -475,7 +454,7 @@ return false;
       // would prevent the filters from being evaluated. Thus, if it is true, change the
       // scope of any limits that could potentially create partial results to
       // LimitScope.BETWEEN_ROWS so that those limits are not reached mid-row
-      if (((KnobRuntime.check(java.util.UUID.fromString("12b03526-5a3d-3095-998f-cb2090f337da"))) ? (true) : (hasFilterRow))) {
+      if (hasFilterRow) {
         if (LOG.isTraceEnabled()) {
           LOG.trace("filter#hasFilterRow is true which prevents partial results from being "
             + " formed. Changing scope of limits that may create partials");
@@ -560,15 +539,6 @@ return false;
           // We don't know how the results have changed after being filtered. Must set progress
           // according to contents of results now.
           if (scannerContext.getKeepProgress()) {
-if(KnobRuntime.check(java.util.UUID.fromString("5f011de9-50be-379d-8264-9c2895b78be0"))) {
-initialSizeProgress += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9509074b-9e05-3071-bc76-92aecb20e441"))) {
-initialBatchProgress /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("87110dc2-6619-3685-abce-6d2863cd6b6b"))) {
-initialBatchProgress -= 1;
-}
             scannerContext.setProgress(initialBatchProgress, initialSizeProgress,
               initialHeapSizeProgress);
           } else {
@@ -751,7 +721,7 @@ initialBatchProgress -= 1;
     scannerContext.setSkippingRow(true);
 
     Cell next;
-    while (((KnobRuntime.check(java.util.UUID.fromString("63f34d77-fd37-3594-a14b-2132715de54d"))) ? ((((next = this.storeHeap.peek())) == (null)) || (CellUtil.matchingRows(next, curRowCell))) : ((next = this.storeHeap.peek()) != null && CellUtil.matchingRows(next, curRowCell)))) {
+    while ((next = this.storeHeap.peek()) != null && CellUtil.matchingRows(next, curRowCell)) {
       // Check for thread interrupt status in case we have been signaled from
       // #interruptRegionOperation.
       region.checkInterrupt();
@@ -770,7 +740,7 @@ initialBatchProgress -= 1;
     if (currentRowCell == null) {
       return true;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("b6a9f863-4987-33dc-baba-94f740699d20"))) ? (stopRow == null) : (stopRow == null || Bytes.equals(stopRow, HConstants.EMPTY_END_ROW)))) {
+    if (stopRow == null || Bytes.equals(stopRow, HConstants.EMPTY_END_ROW)) {
       return false;
     }
     int c = comparator.compareRows(currentRowCell, stopRow, 0, stopRow.length);

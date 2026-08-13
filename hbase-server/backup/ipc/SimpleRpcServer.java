@@ -102,7 +102,7 @@ public class SimpleRpcServer extends RpcServer {
 
     private ExecutorService readPool;
 
-    public Listener(final String name) throws IOException {
+    Listener(final String name) throws IOException {
       super(name);
       // The backlog of requests that we will have the serversocket carry.
       int backlogLength = conf.getInt("hbase.ipc.server.listen.queue.size", 128);

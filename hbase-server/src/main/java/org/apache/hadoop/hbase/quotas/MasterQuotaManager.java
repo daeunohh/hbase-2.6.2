@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -124,10 +123,7 @@ public class MasterQuotaManager implements RegionStateListener {
   }
 
   public boolean isQuotaInitialized() {
-if(KnobRuntime.check(java.util.UUID.fromString("12ce499f-78cc-34bc-bea0-b7adf202ba8d"))) {
-return true;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("bb8ae345-a17d-3713-9890-b254547b3a07"))) ? ((initialized) || (namespaceQuotaManager.isInitialized())) : (initialized && namespaceQuotaManager.isInitialized()));
+    return initialized && namespaceQuotaManager.isInitialized();
   }
 
   /*
@@ -382,10 +378,7 @@ return true;
   }
 
   public void setNamespaceQuota(NamespaceDescriptor desc) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("6d91a052-18d9-3b0f-b129-6c4c58876cef"))) {
-return;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("a48ff85b-2c52-31fd-b78f-8cd345a6f3ab"))) ? (!initialized) : (initialized))) {
+    if (initialized) {
       this.namespaceQuotaManager.addNamespace(desc);
     }
   }
@@ -525,20 +518,6 @@ return;
   }
 
   public void checkAndUpdateNamespaceRegionQuota(TableName tName, int regions) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("070ed7e1-ae42-3c13-8a5f-8517462daa3b"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("36f6edbb-d296-3560-b2cb-ebe746661fbb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tName));
-    _knob_field_.set(tName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (initialized) {
       namespaceQuotaManager.checkQuotaToUpdateRegion(tName, regions);
     }

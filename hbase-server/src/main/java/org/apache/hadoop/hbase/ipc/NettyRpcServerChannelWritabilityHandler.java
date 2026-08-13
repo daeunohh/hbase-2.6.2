@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.IntSupplier;
@@ -64,9 +63,6 @@ public class NettyRpcServerChannelWritabilityHandler extends ChannelDuplexHandle
   @Override
   public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise)
     throws Exception {
-if(KnobRuntime.check(java.util.UUID.fromString("01729442-b584-3e3e-98c1-8a861258e071"))) {
-return;
-}
     if (handleFatalThreshold(ctx)) {
       promise.setFailure(
         new ConnectionClosedException("Channel outbound bytes exceeded fatal threshold"));

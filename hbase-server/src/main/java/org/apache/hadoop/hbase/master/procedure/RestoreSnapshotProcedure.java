@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -181,17 +180,6 @@ public class RestoreSnapshotProcedure
           throw new UnsupportedOperationException("unhandled state=" + state);
       }
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("c7f126a4-b17b-3b43-bf04-a50bda7d033c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (isRollbackSupported(state)) {
         setFailure("master-restore-snapshot", e);
       } else {
@@ -261,50 +249,6 @@ try {
     sb.append(" (table=");
     sb.append(getTableName());
     sb.append(" snapshot=");
-if(KnobRuntime.check(java.util.UUID.fromString("fc573135-10c8-3dd4-8967-0111c1c562e0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d02bfd76-f314-3b8d-9bfb-36aa82fcbf60"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e9b2b07f-7042-33e4-96fa-ae3d39c0612c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("db3262b5-89c0-3e5f-b1b4-b8b83c806867"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     sb.append(snapshot);
     sb.append(")");
   }
@@ -437,9 +381,6 @@ try {
         ProcedureSyncWait.getMasterQuotaManager(env).getRegionCountOfTable(tableName);
 
       if (snapshotRegionCount > 0 && tableRegionCount != snapshotRegionCount) {
-if(KnobRuntime.check(java.util.UUID.fromString("3a397a37-e685-3467-a9b7-6fb32a2a4559"))) {
-throw new java.io.IOException("Injected exception");
-}
         ProcedureSyncWait.getMasterQuotaManager(env).checkAndUpdateNamespaceRegionQuota(tableName,
           snapshotRegionCount);
       }
@@ -468,50 +409,6 @@ throw new java.io.IOException("Injected exception");
     LOG.info("Starting restore snapshot=" + ClientSnapshotDescriptionUtils.toString(snapshot));
     try {
       Path snapshotDir = SnapshotDescriptionUtils.getCompletedSnapshotDir(snapshot, rootDir);
-if(KnobRuntime.check(java.util.UUID.fromString("861c59a7-1b8d-3ac1-8886-8d00ea30253f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b34e44ca-869d-3fc2-b883-f7ebf4a33b81"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2bf14c93-eb14-3f6f-930b-0ce7cfbde8c5"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b6924504-a1f2-376e-9353-4452b91b1a0f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       SnapshotManifest manifest = SnapshotManifest.open(conf, fs, snapshotDir, snapshot);
       RestoreSnapshotHelper restoreHelper = new RestoreSnapshotHelper(conf, fs, manifest,
         modifiedTableDescriptor, rootDir, monitorException, getMonitorStatus());
@@ -522,17 +419,6 @@ try {
       regionsToAdd = metaChanges.getRegionsToAdd();
       parentsToChildrenPairMap = metaChanges.getParentToChildrenPairMap();
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("a55e9cfd-2e8b-344b-b663-1a9259fc7795"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       String msg = "restore snapshot=" + ClientSnapshotDescriptionUtils.toString(snapshot)
         + " failed in on-disk restore. Try re-running the restore command.";
       LOG.error(msg, e);

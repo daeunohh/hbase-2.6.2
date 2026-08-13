@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.executor.EventType;
 import org.apache.hadoop.hbase.procedure2.BaseRSProcedureCallable;
@@ -56,7 +55,7 @@ public class RefreshPeerCallable extends BaseRSProcedureCallable {
         handler.enablePeer(this.peerId);
         break;
       case DISABLE_PEER:
-        if (KnobRuntime.check(java.util.UUID.fromString("3bf3f783-7e25-3866-b11f-063d02659c8a"))) { handler.addPeer(this.peerId); } else { handler.disablePeer(this.peerId); }
+        handler.disablePeer(this.peerId);
         break;
       case UPDATE_PEER_CONFIG:
         handler.updatePeerConfig(this.peerId);

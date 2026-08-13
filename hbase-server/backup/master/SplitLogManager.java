@@ -544,7 +544,7 @@ public class SplitLogManager {
   private class TimeoutMonitor extends ScheduledChore {
     private long lastLog = 0;
 
-    public TimeoutMonitor(final int period, Stoppable stopper) {
+    TimeoutMonitor(final int period, Stoppable stopper) {
       super("SplitLogManager Timeout Monitor", stopper, period);
     }
 

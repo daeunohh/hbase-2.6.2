@@ -144,7 +144,7 @@ public class TaskMonitor {
         TaskAndWeakRefPair pair = it.next();
         MonitoredTask stat = pair.get();
         if (
-          (stat.getState() == MonitoredTaskImpl.State.RUNNING)
+          ("RUNNING".equals(stat.getState().name()))
             && (now >= stat.getWarnTime() + rpcWarnTime)
         ) {
           LOG.warn("Task may be stuck: " + stat);
@@ -162,7 +162,7 @@ public class TaskMonitor {
       if (pair.isDead()) {
         // The class who constructed this leaked it. So we can
         // assume it's done.
-        if (stat.getState() == MonitoredTaskImpl.State.RUNNING) {
+        if ("RUNNING".equals(stat.getState().name())) {
           LOG.warn("Status " + stat + " appears to have been leaked");
           stat.cleanup();
         }
@@ -285,7 +285,7 @@ public class TaskMonitor {
     private MonitoredTask impl;
     private WeakReference<MonitoredTask> weakProxy;
 
-    public TaskAndWeakRefPair(MonitoredTask stat, MonitoredTask proxy) {
+    TaskAndWeakRefPair(MonitoredTask stat, MonitoredTask proxy) {
       this.impl = stat;
       this.weakProxy = new WeakReference<>(proxy);
     }
@@ -317,6 +317,9 @@ public class TaskMonitor {
 
   private class MonitorRunnable implements Runnable {
     private boolean running = true;
+
+    MonitorRunnable() {
+    }
 
     @Override
     public void run() {

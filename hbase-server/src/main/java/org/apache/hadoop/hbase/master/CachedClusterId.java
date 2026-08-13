@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -73,7 +72,7 @@ public class CachedClusterId {
    * Succeeds only once, when setting to a non-null value. Overwrites are not allowed.
    */
   private void setClusterId(ClusterId id) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("6b801e38-4bc7-31e7-b6a0-db8b5cf51a23"))) ? (((id) != (null)) && (isClusterIdSet.get())) : (((KnobRuntime.check(java.util.UUID.fromString("86b9e22f-e528-3c33-a0d1-600e3df81094"))) ? (((id) != (null)) || (isClusterIdSet.get())) : (id == null || isClusterIdSet.get()))))) {
+    if (id == null || isClusterIdSet.get()) {
       return;
     }
     clusterId = id;
@@ -135,10 +134,7 @@ public class CachedClusterId {
    *         exist on the file system or if the server initiated a tear down.
    */
   public String getFromCacheOrFetch() {
-if(KnobRuntime.check(java.util.UUID.fromString("59c817dd-2767-3f07-8739-f2f4c5b18506"))) {
-return null;
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("42e3b520-a6ab-35e9-b826-f710d69fc553"))) ? ((server.isStopping()) || (server.isStopping())) : (((KnobRuntime.check(java.util.UUID.fromString("435f67fd-376e-3ad1-b266-e42d9187d367"))) ? ((server.isStopped()) || (server.isStopping())) : (((KnobRuntime.check(java.util.UUID.fromString("dd719053-56e7-3a4f-9cc5-1e919d7cf9c6"))) ? ((attemptFetch()) || (server.isStopping())) : (((KnobRuntime.check(java.util.UUID.fromString("95de89ae-3583-30d3-ab8d-363dd64c8895"))) ? ((server.isStopped()) && (server.isStopped())) : (((KnobRuntime.check(java.util.UUID.fromString("55d1a3a5-6e3e-3d9f-a7b6-83bbde0a6f5e"))) ? ((attemptFetch()) || (attemptFetch())) : (server.isStopping() || server.isStopped()))))))))))) {
+    if (server.isStopping() || server.isStopped()) {
       return null;
     }
     String id = getClusterId();

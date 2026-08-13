@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Service;
@@ -474,9 +473,6 @@ public class RegionCoprocessorHost
   @Override
   public RegionCoprocessor checkAndGetInstance(Class<?> implClass)
     throws InstantiationException, IllegalAccessException {
-if(KnobRuntime.check(java.util.UUID.fromString("5007a238-234c-3479-ba6d-f1e85939209e"))) {
-throw new IllegalAccessException("Injected exception");
-}
     try {
       if (RegionCoprocessor.class.isAssignableFrom(implClass)) {
         return implClass.asSubclass(RegionCoprocessor.class).getDeclaredConstructor().newInstance();
@@ -1035,17 +1031,6 @@ throw new IllegalAccessException("Injected exception");
 
   public void preBatchMutate(final MiniBatchOperationInProgress<Mutation> miniBatchOp)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("d8c10262-5435-3328-a743-b305deaeef08"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("lastIndexExclusive");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (this.coprocEnvironments.isEmpty()) {
       return;
     }
@@ -1059,39 +1044,6 @@ try {
 
   public void postBatchMutate(final MiniBatchOperationInProgress<Mutation> miniBatchOp)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("b47bb50c-8755-3deb-8a7d-f5c7cb7361cf"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfDeletes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9dd80889-ef0d-3bc0-88b0-4d6ac71fcfa6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfAppends");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("815b696f-b2dc-3620-9cdd-7f77eed36620"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("lastIndexExclusive");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (this.coprocEnvironments.isEmpty()) {
       return;
     }
@@ -1105,61 +1057,6 @@ try {
 
   public void postBatchMutateIndispensably(final MiniBatchOperationInProgress<Mutation> miniBatchOp,
     final boolean success) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("50e8e427-9d8d-3dd7-bed2-df8dd57351c9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("readyToWriteCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ff75e52e-eef7-32b4-a743-aabd3987db4a"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("readyToWriteCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("35352781-ca9f-3f6b-8952-545922c553c0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfAppends");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f233b528-d07a-39e6-ac5d-494ac6325da4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfIncrements");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d4d4ec8d-d346-3ce0-8f17-06ec15e4cd79"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("cellCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (this.coprocEnvironments.isEmpty()) {
       return;
     }
@@ -1386,17 +1283,6 @@ try {
    * @exception IOException Exception
    */
   public RegionScanner postScannerOpen(final Scan scan, RegionScanner s) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9c093cec-24c2-351c-a09d-fe41d1a372d2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (this.coprocEnvironments.isEmpty()) {
       return s;
     }
@@ -1512,61 +1398,6 @@ try {
    * Called before open store scanner for user scan.
    */
   public ScanInfo preStoreScannerOpen(HStore store, Scan scan) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("c020ec7d-6046-34e0-a516-5581ff806762"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8b9f667f-45ec-339a-a503-9c2e273049bb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("lastCompactSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("094f605d-f0b4-351f-a16d-f1af95a901f3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9d64d1b8-5dd5-3283-afe5-76f1810c0c70"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("caching");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("96fe6020-e9e1-3e14-881d-e98927a87e76"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("maxVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (coprocEnvironments.isEmpty()) return store.getScanInfo();
     CustomizedScanInfoBuilder builder = new CustomizedScanInfoBuilder(store.getScanInfo(), scan);
     execOperation(new RegionObserverOperationWithoutResult() {
@@ -1681,9 +1512,6 @@ try {
     if (this.coprocEnvironments.isEmpty()) {
       return;
     }
-if(KnobRuntime.check(java.util.UUID.fromString("ad8df852-a74c-355b-a868-38285025fbd8"))) {
-throw new java.io.IOException("Injected exception");
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionObserverOperationWithoutResult() {
       @Override
       public void call(RegionObserver observer) throws IOException {

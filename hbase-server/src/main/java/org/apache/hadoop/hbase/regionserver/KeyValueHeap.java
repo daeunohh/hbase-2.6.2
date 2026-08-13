@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,7 +83,7 @@ public class KeyValueHeap extends NonReversedNonLazyKeyValueScanner
     if (!scanners.isEmpty()) {
       this.heap = new PriorityQueue<>(scanners.size(), this.comparator);
       for (KeyValueScanner scanner : scanners) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("b2edaae0-aabb-33ee-ae7d-cd43193ec615"))) ? ((scanner.peek()) != (null)) : (scanner.peek() != null))) {
+        if (scanner.peek() != null) {
           this.heap.add(scanner);
         } else {
           this.scannersForDelayedClose.add(scanner);
@@ -217,10 +216,10 @@ public class KeyValueHeap extends NonReversedNonLazyKeyValueScanner
       scanner.close();
     }
     this.scannersForDelayedClose.clear();
-    if (((KnobRuntime.check(java.util.UUID.fromString("53d36aaf-51f0-3982-ae04-b8a4862b309e"))) ? ((this.current) != (null)) : (this.current != null))) {
+    if (this.current != null) {
       this.current.close();
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("b1a56944-a6b8-3657-9140-6b194daa9e26"))) ? ((this.heap) != (null)) : (this.heap != null))) {
+    if (this.heap != null) {
       // Order of closing the scanners shouldn't matter here, so simply iterate and close them.
       for (KeyValueScanner scanner : heap) {
         scanner.close();
@@ -290,7 +289,7 @@ public class KeyValueHeap extends NonReversedNonLazyKeyValueScanner
     try {
       while (scanner != null) {
         Cell topKey = scanner.peek();
-        if (((KnobRuntime.check(java.util.UUID.fromString("987ea56b-4fcc-372b-b690-d2ae43bd9144"))) ? ((comparator.getComparator().compare(seekKey, topKey)) < (0)) : (comparator.getComparator().compare(seekKey, topKey) <= 0))) {
+        if (comparator.getComparator().compare(seekKey, topKey) <= 0) {
           // Top KeyValue is at-or-after Seek KeyValue. We only know that all
           // scanners are at or after seekKey (because fake keys of
           // scanners where a lazy-seek operation has been done are not greater
@@ -305,13 +304,10 @@ public class KeyValueHeap extends NonReversedNonLazyKeyValueScanner
         }
 
         boolean seekResult;
-        if (((KnobRuntime.check(java.util.UUID.fromString("60771c21-1fe5-30a5-95d6-5f984a6769d1"))) ? ((isLazy) && ((heap.size()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("44a7a455-cc46-32f4-bd1b-9e66dd3f6ed9"))) ? ((!isLazy) || ((heap.size()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b15d5ec8-5597-320d-b59c-1b046de2b20d"))) ? (heap.size() > 0) : (((KnobRuntime.check(java.util.UUID.fromString("098f42e3-7924-3fb3-b494-72f007d6b09c"))) ? ((isLazy) && ((heap.size()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("44594c6e-5476-3329-a2b4-5572aef5e043"))) ? ((!isLazy) || ((heap.size()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("0c60d5d5-f3fa-352a-80b0-19d120bf27f8"))) ? ((false) && (heap.size() > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("9f01e1db-fc60-394e-9a31-1e716a8d710a"))) ? ((heap.size()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("2eb09074-9e95-3e60-b489-81683fee9ac2"))) ? ((false) || ((heap.size()) <= (0))) : (isLazy && heap.size() > 0))))))))))))))))) {
+        if (isLazy && heap.size() > 0) {
           // If there is only one scanner left, we don't do lazy seek.
           seekResult = scanner.requestSeek(seekKey, forward, useBloom);
         } else {
-if(KnobRuntime.check(java.util.UUID.fromString("06333c75-065d-33a1-9c2d-1d6f70308110"))) {
-forward = true;
-}
           seekResult = NonLazyKeyValueScanner.doRealSeek(scanner, seekKey, forward);
         }
 
@@ -355,8 +351,8 @@ forward = true;
       return null;
     }
 
-    while (((KnobRuntime.check(java.util.UUID.fromString("93de757a-1fe2-3514-a508-e2695c7c1347"))) ? ((kvScanner) != (null)) : (kvScanner != null && !kvScanner.realSeekDone()))) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("641a7bd4-5d7f-3b5d-994b-c79bf36ead08"))) ? ((kvScanner.peek()) != (null)) : (kvScanner.peek() != null))) {
+    while (kvScanner != null && !kvScanner.realSeekDone()) {
+      if (kvScanner.peek() != null) {
         try {
           kvScanner.enforceSeek();
         } catch (IOException ioe) {

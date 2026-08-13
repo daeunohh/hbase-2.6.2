@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +78,7 @@ public class MonitoredRPCHandlerImpl extends MonitoredTaskImpl implements Monito
    */
   @Override
   public long getRPCQueueTime() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("effa81b8-f389-32dd-be38-f069e6ea81a1"))) ? ((getState()) == (State.RUNNING)) : (getState() != State.RUNNING))) {
+    if (getState() != State.RUNNING) {
       return -1;
     }
     return rpcQueueTime;
@@ -91,9 +90,6 @@ public class MonitoredRPCHandlerImpl extends MonitoredTaskImpl implements Monito
    */
   @Override
   public long getRPCStartTime() {
-if(KnobRuntime.check(java.util.UUID.fromString("df960844-a0ae-3ce7-8605-29f9149ef3c1"))) {
-return 0;
-}
     if (getState() != State.RUNNING) {
       return -1;
     }
@@ -139,7 +135,7 @@ return 0;
    */
   @Override
   public long getRPCPacketLength() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("282c7513-0e4a-3cc3-bb7e-0da847a5a58c"))) ? ((getState() != State.RUNNING) && (packet == null)) : (((KnobRuntime.check(java.util.UUID.fromString("e46cecd5-b703-37ad-80a3-9cfd475cb01c"))) ? ((getState() != State.RUNNING) && ((packet) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("783b4b80-a934-3a9c-8587-67f6565cedb8"))) ? ((getState() != State.RUNNING) || ((packet) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("1f09d611-a0de-334e-bbd7-608738d6d59a"))) ? (((getState()) != (State.RUNNING)) || ((packet) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("6d35c1b5-24be-31fb-854e-d09ef7f09850"))) ? (((getState()) == (State.RUNNING)) && ((packet) != (null))) : (getState() != State.RUNNING || packet == null))))))))))) {
+    if (getState() != State.RUNNING || packet == null) {
       // no RPC is currently running, or we don't have an RPC's packet info
       return -1L;
     }
@@ -153,9 +149,6 @@ return 0;
    */
   @Override
   public String getClient() {
-if(KnobRuntime.check(java.util.UUID.fromString("39493222-9687-311f-9531-d18292b2bf4f"))) {
-return null;
-}
     return clientAddress + ":" + remotePort;
   }
 
@@ -165,9 +158,6 @@ return null;
    */
   @Override
   public boolean isRPCRunning() {
-if(KnobRuntime.check(java.util.UUID.fromString("eeb0c0ff-bba3-305b-a869-4511961c2307"))) {
-return false;
-}
     return getState() == State.RUNNING;
   }
 

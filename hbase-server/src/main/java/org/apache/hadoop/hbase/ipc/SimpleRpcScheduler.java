@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Abortable;
@@ -86,7 +85,7 @@ public class SimpleRpcScheduler extends RpcScheduler implements ConfigurationObs
       conf.get(RpcExecutor.CALL_QUEUE_TYPE_CONF_KEY, RpcExecutor.CALL_QUEUE_TYPE_CONF_DEFAULT);
     float callqReadShare = conf.getFloat(RWQueueRpcExecutor.CALL_QUEUE_READ_SHARE_CONF_KEY, 0);
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("6835491d-13a7-3799-b6e7-32224fbd7293"))) ? ((callqReadShare) > (0)) : (callqReadShare > 0))) {
+    if (callqReadShare > 0) {
       // at least 1 read handler and 1 write handler
       callExecutor = new FastPathRWQueueRpcExecutor("default.FPRWQ", Math.max(2, handlerCount),
         maxQueueLength, priority, conf, server);
@@ -106,7 +105,7 @@ public class SimpleRpcScheduler extends RpcScheduler implements ConfigurationObs
     float metaCallqReadShare =
       conf.getFloat(MetaRWQueueRpcExecutor.META_CALL_QUEUE_READ_SHARE_CONF_KEY,
         MetaRWQueueRpcExecutor.DEFAULT_META_CALL_QUEUE_READ_SHARE);
-    if (((KnobRuntime.check(java.util.UUID.fromString("4cd600f4-3536-3356-bc90-bb26d20cad60"))) ? ((metaCallqReadShare) == (0)) : (metaCallqReadShare > 0))) {
+    if (metaCallqReadShare > 0) {
       // different read/write handler for meta, at least 1 read handler and 1 write handler
       this.priorityExecutor = new MetaRWQueueRpcExecutor("priority.RWQ",
         Math.max(2, priorityHandlerCount), maxPriorityQueueLength, priority, conf, server);
@@ -178,9 +177,6 @@ public class SimpleRpcScheduler extends RpcScheduler implements ConfigurationObs
 
   @Override
   public void start() {
-if(KnobRuntime.check(java.util.UUID.fromString("65e8a767-a146-394e-9d5e-91c9e7d08724"))) {
-return;
-}
     callExecutor.start(port);
     if (priorityExecutor != null) {
       priorityExecutor.start(port);
@@ -200,7 +196,7 @@ return;
   @Override
   public void stop() {
     callExecutor.stop();
-    if (((KnobRuntime.check(java.util.UUID.fromString("ff1e12f0-76e0-32d7-9a76-ce729db254da"))) ? ((priorityExecutor) != (null)) : (priorityExecutor != null))) {
+    if (priorityExecutor != null) {
       priorityExecutor.stop();
     }
     if (replicationExecutor != null) {
@@ -228,9 +224,9 @@ return;
         && level == MasterAnnotationReadingPriorityFunction.META_TRANSITION_QOS
     ) {
       return metaTransitionExecutor.dispatch(callTask);
-    } else if (((KnobRuntime.check(java.util.UUID.fromString("15f48c7f-97de-34cf-8286-0a5d434b248e"))) ? ((priorityExecutor != null) || (level > highPriorityLevel)) : (((KnobRuntime.check(java.util.UUID.fromString("0ecaa46e-fe7a-3d20-8c65-a30cea580a73"))) ? (((priorityExecutor) != (null)) && (level > highPriorityLevel)) : (((KnobRuntime.check(java.util.UUID.fromString("ed899264-7451-384b-8cad-703f58db9a85"))) ? ((level) > (highPriorityLevel)) : (((KnobRuntime.check(java.util.UUID.fromString("51b6a201-9516-3629-8d08-557443966d40"))) ? ((priorityExecutor != null) && ((level) <= (highPriorityLevel))) : (((KnobRuntime.check(java.util.UUID.fromString("54be0fa0-4835-3c60-8518-ab6cb7d5d83b"))) ? (((priorityExecutor) == (null)) || ((level) == (highPriorityLevel))) : (priorityExecutor != null && level > highPriorityLevel))))))))))) {
+    } else if (priorityExecutor != null && level > highPriorityLevel) {
       return priorityExecutor.dispatch(callTask);
-    } else if (((KnobRuntime.check(java.util.UUID.fromString("f84cdfd6-fb88-35e6-9822-c9dbb4fa2564"))) ? ((replicationExecutor != null) || ((level) != (HConstants.REPLICATION_QOS))) : (((KnobRuntime.check(java.util.UUID.fromString("0c7bf466-bbd4-36dc-96d3-a5959bd07712"))) ? ((replicationExecutor) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b3ee6363-bd6f-3e43-af12-cc53cb154334"))) ? ((replicationExecutor) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8db5eaa7-065d-3e7d-834c-add3bdeea16f"))) ? ((replicationExecutor != null) && ((level) != (HConstants.REPLICATION_QOS))) : (replicationExecutor != null && level == HConstants.REPLICATION_QOS))))))))) {
+    } else if (replicationExecutor != null && level == HConstants.REPLICATION_QOS) {
       return replicationExecutor.dispatch(callTask);
     } else if (bulkloadExecutor != null && level == HConstants.BULKLOAD_QOS) {
       return bulkloadExecutor.dispatch(callTask);
@@ -266,9 +262,6 @@ return;
 
   @Override
   public int getActiveRpcHandlerCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("3eb39b70-f38d-332f-bf79-7f83699e1bce"))) {
-return 0;
-}
     return callExecutor.getActiveHandlerCount() + getActivePriorityRpcHandlerCount()
       + getActiveReplicationRpcHandlerCount() + getActiveMetaPriorityRpcHandlerCount()
       + getActiveBulkLoadRpcHandlerCount();

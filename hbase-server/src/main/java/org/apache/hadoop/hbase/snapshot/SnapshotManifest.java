@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -238,10 +237,7 @@ public final class SnapshotManifest {
   protected void addRegion(final HRegion region, RegionVisitor visitor) throws IOException {
     // 1. dump region meta info into the snapshot directory
     final String snapshotName = desc.getName();
-    if (KnobRuntime.check(java.util.UUID.fromString("3914e867-778b-3be3-a78b-122663dfcbfd"))) { LOG.debug(("Storing '" + region + "' region-info for snapshot=") + (snapshotName)); } else if (KnobRuntime.check(java.util.UUID.fromString("a468f767-b911-3740-b70e-23f8e65b37f9"))) { LOG.debug("' region-info for snapshot="); } else { LOG.debug("Storing '" + region + "' region-info for snapshot=" + snapshotName); }
-if(KnobRuntime.check(java.util.UUID.fromString("64a091f3-3736-339e-a271-879515ee0f9f"))) {
-throw new java.io.IOException("Injected exception");
-}
+    LOG.debug("Storing '" + region + "' region-info for snapshot=" + snapshotName);
     Object regionData = visitor.regionOpen(region.getRegionInfo());
     monitor.rethrowException();
 
@@ -256,7 +252,7 @@ throw new java.io.IOException("Injected exception");
 
       List<HStoreFile> storeFiles = new ArrayList<>(store.getStorefiles());
       if (LOG.isDebugEnabled()) {
-        if (KnobRuntime.check(java.util.UUID.fromString("a7a36cfa-ee6a-3063-ad09-5b9f471c3ecd"))) { LOG.debug(("Adding snapshot references for " + storeFiles) + (" hfiles")); } else if (KnobRuntime.check(java.util.UUID.fromString("75bf97e8-fc41-39dc-80fd-ddf6ed890793"))) { LOG.debug(("Adding snapshot references for ") + (" hfiles")); } else if (KnobRuntime.check(java.util.UUID.fromString("136b5442-3658-3ab5-b59c-d63bdba50c8a"))) { LOG.debug("Adding snapshot references for "); } else { LOG.debug("Adding snapshot references for " + storeFiles + " hfiles"); }
+        LOG.debug("Adding snapshot references for " + storeFiles + " hfiles");
       }
 
       // 2.2. iterate through all the store's files and create "references".
@@ -271,9 +267,6 @@ throw new java.io.IOException("Injected exception");
       }
       visitor.familyClose(regionData, familyData);
     }
-if(KnobRuntime.check(java.util.UUID.fromString("82c83541-91c5-35d5-aecf-ab26411a2c67"))) {
-throw new java.io.IOException("Injected exception");
-}
     visitor.regionClose(regionData);
   }
 
@@ -296,17 +289,6 @@ throw new java.io.IOException("Injected exception");
       Path baseDir = tableDir;
       // Open the RegionFS
       if (isMobRegion) {
-if(KnobRuntime.check(java.util.UUID.fromString("3bd9a00c-9eea-30f5-9b08-bc172454fb10"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         baseDir = CommonFSUtils.getTableDir(MobUtils.getMobHome(conf), regionInfo.getTable());
       }
       HRegionFileSystem regionFs =
@@ -348,9 +330,6 @@ try {
         // 2.1. build the snapshot reference for the store
         // iterate through all the store's files and create "references".
         addReferenceFiles(visitor, regionData, familyData, storeFiles, false);
-if(KnobRuntime.check(java.util.UUID.fromString("a3589586-76e9-365d-890e-b5ca71a0bb1d"))) {
-throw new java.io.IOException("Injected exception");
-}
         visitor.familyClose(regionData, familyData);
       }
       visitor.regionClose(regionData);
@@ -390,28 +369,6 @@ throw new java.io.IOException("Injected exception");
         storeFile.getPath()));
 
       // create "reference" to this store file.
-if(KnobRuntime.check(java.util.UUID.fromString("fdeaaa56-8d5a-3ce1-bec6-37bee7c4e060"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = storeFile.getClass().getDeclaredField("size");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(storeFile));
-    _knob_field_.set(storeFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("948d1212-aac7-337f-a400-257c93d7a95c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = storeFile.getClass().getDeclaredField("createdTimestamp");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(storeFile));
-    _knob_field_.set(storeFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       visitor.storeFile(regionData, familyData, storeFile);
     }
   }
@@ -523,30 +480,8 @@ try {
   }
 
   public void consolidate() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("ee71fab5-1ddb-33b1-a2d7-8d773fb37ed1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(desc));
-    _knob_field_.set(desc, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cb3551fb-43c8-341f-84d2-33a272d8e628"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(desc));
-    _knob_field_.set(desc, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (getSnapshotFormat(desc) == SnapshotManifestV1.DESCRIPTOR_VERSION) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b0c765a2-f75d-335e-b2c1-e6645df7e676"))) { LOG.debug("Using old Snapshot Format"); } else { LOG.info("Using old Snapshot Format"); }
+      LOG.info("Using old Snapshot Format");
       // write a copy of descriptor to the snapshot directory
       FSTableDescriptors.createTableDescriptorForTableDirectory(workingDirFs, workingDir, htd,
         false);
@@ -574,10 +509,10 @@ try {
       SnapshotDataManifest.Builder dataManifestBuilder = SnapshotDataManifest.newBuilder();
       dataManifestBuilder.setTableSchema(ProtobufUtil.toTableSchema(htd));
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("85e93cba-3708-37ee-8e17-8b61020b2357"))) ? ((v1Regions != null) && ((v1Regions.size()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("69b26b76-0c9f-34ac-9866-3ba76c3af3d4"))) ? (((v1Regions) == (null)) || (v1Regions.size() > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("db55c365-605c-36e9-a5bd-0ca1c696c93b"))) ? (((v1Regions) != (null)) && ((v1Regions.size()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("d191437e-dd55-3567-a722-dc72d9f1a214"))) ? ((v1Regions.size()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("6dcb2bd0-e4e0-36ca-b394-e4639332baed"))) ? (v1Regions != null) : (((KnobRuntime.check(java.util.UUID.fromString("bc7b905c-9e9f-35c2-82ba-62d11918ce08"))) ? (((v1Regions) != (null)) && ((v1Regions.size()) <= (0))) : (v1Regions != null && v1Regions.size() > 0))))))))))))) {
+      if (v1Regions != null && v1Regions.size() > 0) {
         dataManifestBuilder.addAllRegionManifests(v1Regions);
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("539bc51d-26f4-3256-a05a-484bd7afcb36"))) ? (((v2Regions) != (null)) && ((v2Regions.size()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("31105ced-f322-3427-b992-d33493dbd6f2"))) ? (((v2Regions) != (null)) || ((v2Regions.size()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("2a62f0b2-9bb6-3a28-8a25-1e000a4006ca"))) ? (((v2Regions) != (null)) || ((v2Regions.size()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("cdfd3b5f-11f8-3103-b4d2-ba783b46af54"))) ? ((v2Regions.size()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e0d639a6-c260-3e2d-ad7a-f4f3f3a385e8"))) ? (((v2Regions) == (null)) || ((v2Regions.size()) == (0))) : (v2Regions != null && v2Regions.size() > 0))))))))))) {
+      if (v2Regions != null && v2Regions.size() > 0) {
         dataManifestBuilder.addAllRegionManifests(v2Regions);
       }
 

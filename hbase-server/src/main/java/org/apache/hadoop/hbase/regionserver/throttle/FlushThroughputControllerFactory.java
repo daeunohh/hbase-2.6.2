@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
@@ -42,21 +41,7 @@ public final class FlushThroughputControllerFactory {
   }
 
   public static ThroughputController create(RegionServerServices server, Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("36f035a8-02b4-3f33-8e3e-2f15f9e3490b"))) {
-return null;
-}
     Class<? extends ThroughputController> clazz = getThroughputControllerClass(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("fb8d6b60-4fa4-31c7-9bd1-6b3f1c830b65"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     ThroughputController controller = ReflectionUtils.newInstance(clazz, conf);
     controller.setup(server);
     return controller;

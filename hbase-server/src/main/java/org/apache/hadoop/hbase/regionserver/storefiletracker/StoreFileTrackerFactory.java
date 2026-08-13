@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.storefiletracker;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -119,41 +118,8 @@ public final class StoreFileTrackerFactory {
 
   public static StoreFileTracker create(Configuration conf, boolean isPrimaryReplica,
     StoreContext ctx) {
-if(KnobRuntime.check(java.util.UUID.fromString("6bc3fac6-ae43-3fd1-adb9-b35cff09cd21"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = ctx.getClass().getDeclaredField("blockSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(ctx));
-    _knob_field_.set(ctx, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Class<? extends StoreFileTracker> tracker = getTrackerClass(conf);
     LOG.debug("instantiating StoreFileTracker impl {}", tracker.getName());
-if(KnobRuntime.check(java.util.UUID.fromString("f76db16c-7f1c-319a-acb8-6a28e8b036c4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e5c0e3fd-5bb0-3d6e-b6b7-8184ccd07e44"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = ctx.getClass().getDeclaredField("blockSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(ctx));
-    _knob_field_.set(ctx, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return ReflectionUtils.newInstance(tracker, conf, isPrimaryReplica, ctx);
   }
 
@@ -163,28 +129,6 @@ try {
    */
   public static StoreFileTracker create(Configuration conf, TableDescriptor td,
     ColumnFamilyDescriptor cfd, HRegionFileSystem regionFs) {
-if(KnobRuntime.check(java.util.UUID.fromString("1677ac14-d6ed-3239-a0bd-3b56afe4541b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = regionFs.getClass().getDeclaredField("baseSleepBeforeRetries");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(regionFs));
-    _knob_field_.set(regionFs, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5527ae30-324e-343a-af50-5331cb2da117"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = regionFs.getClass().getDeclaredField("hdfsClientRetriesNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(regionFs));
-    _knob_field_.set(regionFs, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     StoreContext ctx =
       StoreContext.getBuilder().withColumnFamilyDescriptor(cfd).withRegionFileSystem(regionFs)
         .withFamilyStoreDirectoryPath(regionFs.getStoreDir(cfd.getNameAsString())).build();

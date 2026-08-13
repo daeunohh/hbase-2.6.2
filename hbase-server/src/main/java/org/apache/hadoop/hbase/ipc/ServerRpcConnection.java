@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.RPC_HEADER;
 
@@ -192,9 +191,6 @@ abstract class ServerRpcConnection implements Closeable {
       return;
     }
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("5fc6e215-5548-3d3d-87fa-b22f6502cde5"))) {
-throw new java.lang.ClassNotFoundException("Injected exception");
-}
       this.codec = (Codec) Class.forName(className).getDeclaredConstructor().newInstance();
     } catch (Exception e) {
       throw new UnsupportedCellCodecException(className, e);
@@ -364,13 +360,13 @@ throw new java.lang.ClassNotFoundException("Injected exception");
   }
 
   public void processOneRpc(ByteBuff buf) throws IOException, InterruptedException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("d734fcbb-41af-3636-9906-61bb3a9cbbd6"))) ? (true) : (connectionHeaderRead))) {
+    if (connectionHeaderRead) {
       processRequest(buf);
     } else {
       processConnectionHeader(buf);
       callCleanupIfNeeded();
       this.connectionHeaderRead = true;
-      if (((KnobRuntime.check(java.util.UUID.fromString("81b7967c-8fd3-3f6d-a500-68c64e11ac9d"))) ? (rpcServer.needAuthorization()) : (rpcServer.needAuthorization() && !authorizeConnection()))) {
+      if (rpcServer.needAuthorization() && !authorizeConnection()) {
         // Throw FatalConnectionException wrapping ACE so client does right thing and closes
         // down the connection instead of trying to read non-existent retun.
         throw new AccessDeniedException("Connection from " + this + " for service "
@@ -495,7 +491,7 @@ throw new java.lang.ClassNotFoundException("Injected exception");
   private void sendConnectionHeaderResponseIfNeeded() throws FatalConnectionException {
     Pair<RPCProtos.ConnectionHeaderResponse, CryptoAES> pair = setupCryptoCipher();
     // Response the connection header if Crypto AES is enabled
-    if (((KnobRuntime.check(java.util.UUID.fromString("0ca89583-d176-3071-807a-ef78706e3625"))) ? ((pair) != (null)) : (pair == null))) {
+    if (pair == null) {
       return;
     }
     try {
@@ -594,7 +590,7 @@ throw new java.lang.ClassNotFoundException("Injected exception");
       Message param = null;
       CellScanner cellScanner = null;
       try {
-        if (((KnobRuntime.check(java.util.UUID.fromString("c5f44bb9-5854-3264-b093-781d8f220d14"))) ? ((header.hasRequestParam()) || (authorizeConnection())) : (header.hasRequestParam() && header.getRequestParam()))) {
+        if (header.hasRequestParam() && header.getRequestParam()) {
           md = this.service.getDescriptorForType().findMethodByName(header.getMethodName());
           if (md == null) {
             throw new UnsupportedOperationException(header.getMethodName());
@@ -604,21 +600,7 @@ throw new java.lang.ClassNotFoundException("Injected exception");
           int paramSize = cis.readRawVarint32();
           offset += cis.getTotalBytesRead();
           if (builder != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("99e24ecc-fae5-3638-af9c-cb7dae71b657"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cis.getClass().getDeclaredField("recursionDepth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cis));
-    _knob_field_.set(cis, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("44e9e03c-44ed-3463-8b38-6ddc65203294"))) {
-paramSize *= 2;
-}
-            if (KnobRuntime.check(java.util.UUID.fromString("16c1b77f-af60-36f2-9a20-c943b84f0c49"))) { ProtobufUtil.mergeFrom(builder, cis, -1); } else { ProtobufUtil.mergeFrom(builder, cis, paramSize); }
+            ProtobufUtil.mergeFrom(builder, cis, paramSize);
             param = builder.build();
           }
           offset += paramSize;
@@ -633,7 +615,7 @@ paramSize *= 2;
         if (header.hasCellBlockMeta()) {
           buf.position(offset);
           ByteBuff dup = buf.duplicate();
-          if (KnobRuntime.check(java.util.UUID.fromString("676065d0-fedf-303c-954b-fa088d24e14f"))) { dup.limit((offset) + (header.getCellBlockMeta().getLength())); } else if (KnobRuntime.check(java.util.UUID.fromString("8086ad49-7546-35c0-9b09-ec68092ae5a6"))) { dup.limit(-1); } else if (KnobRuntime.check(java.util.UUID.fromString("45d166f8-94d6-31f5-ad48-d8ff2b212ffe"))) { dup.limit((0) + (header.getCellBlockMeta().getLength())); } else { dup.limit(offset + header.getCellBlockMeta().getLength()); }
+          dup.limit(offset + header.getCellBlockMeta().getLength());
           cellScanner = this.rpcServer.cellBlockBuilder.createCellScannerReusingBuffers(this.codec,
             this.compressionCodec, dup);
         }
@@ -665,26 +647,6 @@ paramSize *= 2;
       if (header.hasTimeout() && header.getTimeout() > 0) {
         timeout = Math.max(this.rpcServer.minClientRequestTimeout, header.getTimeout());
       }
-if(KnobRuntime.check(java.util.UUID.fromString("e2c86b82-1b4e-3e54-bdb4-a5d6107bbacc"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(header));
-    _knob_field_.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0643a659-4de0-39be-b2f0-c3b5345968d5"))) {
-totalRequestSize += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f3b8db04-2794-39cc-b8c4-c237cc6b203e"))) {
-id *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("62b527a2-6f40-3a52-a163-4566a4e38ba0"))) {
-timeout *= 2;
-}
       ServerCall<?> call = createCall(id, this.service, md, header, param, cellScanner,
         totalRequestSize, this.addr, timeout, this.callCleanup);
 
@@ -750,7 +712,7 @@ timeout *= 2;
     // but since it is just backup master, it is not a critical problem
     String clusterId = ((HRegionServer) rpcServer.server).getClusterId();
     RpcServer.LOG.debug("Response connection registry, clusterId = '{}'", clusterId);
-    if (((KnobRuntime.check(java.util.UUID.fromString("d45db748-17df-3d84-b122-8fa3c06b32e4"))) ? ((clusterId) == (null)) : (clusterId == null))) {
+    if (clusterId == null) {
       // should be in tests or some scenarios where we should not reach here
       return false;
     }
@@ -812,9 +774,6 @@ timeout *= 2;
     int version = preambleBuffer.get(preambleBuffer.position() + 4) & 0xFF;
     byte authByte = preambleBuffer.get(preambleBuffer.position() + 5);
     if (version != RpcServer.CURRENT_VERSION) {
-if(KnobRuntime.check(java.util.UUID.fromString("9f1baabe-07bc-3e57-a5d7-d93e2e6426b2"))) {
-version *= 2;
-}
       String msg = getFatalConnectionString(version, authByte);
       doBadPreambleHandling(msg, new WrongVersionException(msg));
       return PreambleResponse.CLOSE;
@@ -822,12 +781,6 @@ version *= 2;
 
     this.provider = this.saslProviders.selectProvider(authByte);
     if (this.provider == null) {
-if(KnobRuntime.check(java.util.UUID.fromString("04e6f634-9c1c-3ed3-84ad-5fff28cd6d20"))) {
-version += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d141cfc8-810b-3bef-b38f-3a6df576b7c1"))) {
-version *= 2;
-}
       String msg = getFatalConnectionString(version, authByte);
       doBadPreambleHandling(msg, new BadAuthException(msg));
       return PreambleResponse.CLOSE;

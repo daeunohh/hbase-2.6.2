@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -131,17 +130,6 @@ public final class HFileArchiveUtil {
   public static Path getRegionArchiveDir(Path rootDir, TableName tableName,
     String encodedRegionName) {
     // get the archive directory for a table
-if(KnobRuntime.check(java.util.UUID.fromString("72a96428-fd44-3e15-9523-47c7fbafcbf4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Path archiveDir = getTableArchivePath(rootDir, tableName);
     return HRegion.getRegionDir(archiveDir, encodedRegionName);
   }
@@ -171,17 +159,6 @@ try {
    */
   public static Path getTableArchivePath(final Configuration conf, final TableName tableName)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f08c787e-201d-35ce-85b7-6c2bdeba3350"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return CommonFSUtils.getTableDir(getArchivePath(conf), tableName);
   }
 
@@ -194,7 +171,7 @@ try {
    * @throws IOException if an unexpected error occurs
    */
   public static Path getArchivePath(Configuration conf) throws IOException {
-    return ((KnobRuntime.check(java.util.UUID.fromString("4f05fb33-0677-3350-af44-688e7ff6c306"))) ? (((org.apache.hadoop.fs.Path)(getArchivePath(getArchivePath(conf))))) : (getArchivePath(CommonFSUtils.getRootDir(conf))));
+    return getArchivePath(CommonFSUtils.getRootDir(conf));
   }
 
   /**

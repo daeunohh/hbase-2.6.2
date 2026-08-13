@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -308,9 +307,6 @@ public class WALKeyImpl implements WALKey {
     this.nonce = nonce;
     this.mvcc = mvcc;
     if (logSeqNum != NO_SEQUENCE_ID) {
-if(KnobRuntime.check(java.util.UUID.fromString("b90a9a45-2778-3613-8a03-201d07518dbb"))) {
-logSeqNum += 1;
-}
       setSequenceId(logSeqNum);
     }
     this.replicationScope = replicationScope;
@@ -534,19 +530,19 @@ logSeqNum += 1;
       compressor.compress(this.tablename.getName(), CompressionContext.DictionaryIndex.TABLE));
     builder.setLogSequenceNumber(getSequenceId());
     builder.setWriteTime(writeTime);
-    if (((KnobRuntime.check(java.util.UUID.fromString("37ab26ae-1b7c-3090-a784-983ad309e805"))) ? ((this.origLogSeqNum) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("49dd9a95-6a23-326a-b1c0-104962aae63f"))) ? ((getSequenceId()) < (0)) : (this.origLogSeqNum > 0))))) {
+    if (this.origLogSeqNum > 0) {
       builder.setOrigSequenceNumber(this.origLogSeqNum);
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("91c4a894-7ae2-3ccd-b86a-b95a0a32561a"))) ? ((this.nonce) == (HConstants.NO_NONCE)) : (((KnobRuntime.check(java.util.UUID.fromString("c37371e2-c58a-3ee0-aa56-9e325f0c2376"))) ? ((this.nonce) != (HConstants.NO_NONCE)) : (this.nonce != HConstants.NO_NONCE))))) {
+    if (this.nonce != HConstants.NO_NONCE) {
       builder.setNonce(nonce);
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("2ddddfb6-00f3-354f-9584-b0300c873d04"))) ? ((this.nonceGroup) == (getSequenceId())) : (this.nonceGroup != HConstants.NO_NONCE))) {
-      if (KnobRuntime.check(java.util.UUID.fromString("ca0e45b2-aa87-3d64-bd8c-dbe90055ff1f"))) { builder.setWriteTime(getSequenceId()); } else { builder.setNonceGroup(nonceGroup); }
+    if (this.nonceGroup != HConstants.NO_NONCE) {
+      builder.setNonceGroup(nonceGroup);
     }
     HBaseProtos.UUID.Builder uuidBuilder = HBaseProtos.UUID.newBuilder();
     for (UUID clusterId : clusterIds) {
-      if (KnobRuntime.check(java.util.UUID.fromString("88b22c11-d814-3288-a100-212eba49de12"))) { uuidBuilder.setLeastSigBits(EnvironmentEdgeManager.currentTime()); } else { uuidBuilder.setLeastSigBits(clusterId.getLeastSignificantBits()); }
-      if (KnobRuntime.check(java.util.UUID.fromString("c04600d0-6b06-3a95-97f6-be23ef97edb5"))) { uuidBuilder.setMostSigBits(getSequenceId()); } else if (KnobRuntime.check(java.util.UUID.fromString("c402de7e-6567-3b4d-af18-f7504fcd5f32"))) { uuidBuilder.setLeastSigBits(EnvironmentEdgeManager.currentTime()); } else { uuidBuilder.setMostSigBits(clusterId.getMostSignificantBits()); }
+      uuidBuilder.setLeastSigBits(clusterId.getLeastSignificantBits());
+      uuidBuilder.setMostSigBits(clusterId.getMostSignificantBits());
       builder.addClusterIds(uuidBuilder.build());
     }
     if (replicationScope != null) {
@@ -565,22 +561,11 @@ logSeqNum += 1;
         builder.addExtendedAttributes(attr);
       }
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("ca248591-ae53-3132-8f1f-1b001ec8ef35"))) ? (((org.apache.hadoop.hbase.shaded.protobuf.generated.WALProtos.WALKey.Builder)(builder.setLogSequenceNumber(getSequenceId())))) : (builder));
+    return builder;
   }
 
   public void readFieldsFromPb(WALProtos.WALKey walKey,
     WALCellCodec.ByteStringUncompressor uncompressor) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("aea871ea-a084-3663-a2b9-fb5b1ba43be2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walKey.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walKey));
-    _knob_field_.set(walKey, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     this.encodedRegionName = uncompressor.uncompress(walKey.getEncodedRegionName(),
       CompressionContext.DictionaryIndex.REGION);
     byte[] tablenameBytes =
@@ -590,14 +575,14 @@ try {
     for (HBaseProtos.UUID clusterId : walKey.getClusterIdsList()) {
       clusterIds.add(new UUID(clusterId.getMostSigBits(), clusterId.getLeastSigBits()));
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("14a2a36d-cbdb-3995-bd4a-ab34b55e0e50"))) ? (walKey.hasNonce()) : (walKey.hasNonceGroup()))) {
+    if (walKey.hasNonceGroup()) {
       this.nonceGroup = walKey.getNonceGroup();
     }
     if (walKey.hasNonce()) {
       this.nonce = walKey.getNonce();
     }
     this.replicationScope = null;
-    if (((KnobRuntime.check(java.util.UUID.fromString("d3c0249f-a875-32ec-9846-d12ef6602c31"))) ? ((walKey.getScopesCount()) == (0)) : (walKey.getScopesCount() > 0))) {
+    if (walKey.getScopesCount() > 0) {
       this.replicationScope = new TreeMap<>(Bytes.BYTES_COMPARATOR);
       for (FamilyScope scope : walKey.getScopesList()) {
         byte[] family =

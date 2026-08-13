@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.waleventtracker;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.NO_NONCE;
 import static org.apache.hadoop.hbase.namequeues.WALEventTrackerTableAccessor.WAL_EVENT_TRACKER_TABLE_NAME_STR;
@@ -70,20 +69,6 @@ public final class WALEventTrackerTableCreator {
    */
   public static void createIfNeededAndNotExists(Configuration conf, MasterServices masterServices)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("291e404c-442b-36f0-8666-bc9d33314fe2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1a9b94f7-b8fb-3413-aff4-c374369c6e65"))) {
-return;
-}
     boolean walEventTrackerEnabled =
       conf.getBoolean(WAL_EVENT_TRACKER_ENABLED_KEY, WAL_EVENT_TRACKER_ENABLED_DEFAULT);
     if (!walEventTrackerEnabled) {

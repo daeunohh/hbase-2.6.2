@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.storefiletracker;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -57,17 +56,6 @@ public final class StoreFileTrackerValidationUtils {
   public static void checkForCreateTable(Configuration conf, TableDescriptor table)
     throws IOException {
     for (ColumnFamilyDescriptor family : table.getColumnFamilies()) {
-if(KnobRuntime.check(java.util.UUID.fromString("6c2cbd2e-18db-3559-87b8-07fd1a159009"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       checkForNewFamily(conf, table, family);
     }
   }

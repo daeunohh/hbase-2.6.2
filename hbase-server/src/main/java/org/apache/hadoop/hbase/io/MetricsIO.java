@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
@@ -70,10 +69,7 @@ public class MetricsIO {
   }
 
   public void updateFsPreadTime(long t) {
-if(KnobRuntime.check(java.util.UUID.fromString("c87c0bf8-0fe0-3fcd-97c0-89b2c8b8c373"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("1db4e998-8f0c-3a42-95cd-478abfc22b33"))) { source.updateFsWriteTime(t); } else { source.updateFsPReadTime(t); }
+    source.updateFsPReadTime(t);
   }
 
   public void updateFsWriteTime(long t) {

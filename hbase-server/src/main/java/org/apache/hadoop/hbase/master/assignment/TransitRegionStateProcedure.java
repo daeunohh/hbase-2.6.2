@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.hfile.CacheConfig.DEFAULT_EVICT_ON_CLOSE;
 import static org.apache.hadoop.hbase.io.hfile.CacheConfig.EVICT_BLOCKS_ON_CLOSE_KEY;
@@ -179,9 +178,6 @@ public class TransitRegionStateProcedure
   }
 
   private void initForceRetainmentRetryCounter(MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("84d067cc-ab03-358b-873c-c199f763bcfb"))) {
-return;
-}
     if (env.getAssignmentManager().isForceRegionRetainment()) {
       forceRetainmentRetryCounter =
         new RetryCounter(env.getAssignmentManager().getForceRegionRetainmentRetries(),
@@ -210,7 +206,7 @@ return;
     // First we need meta to be loaded, and second, if meta is not online then we will likely to
     // fail when updating meta so we wait until it is assigned.
     AssignmentManager am = env.getAssignmentManager();
-    return ((KnobRuntime.check(java.util.UUID.fromString("082c1be5-2acc-3793-ad6a-ad3e2cf57a17"))) ? (am.waitMetaAssigned(this, getRegion())) : (am.waitMetaLoaded(this) || am.waitMetaAssigned(this, getRegion())));
+    return am.waitMetaLoaded(this) || am.waitMetaAssigned(this, getRegion());
   }
 
   private void checkAndWaitForOriginalServer(MasterProcedureEnv env, ServerName lastHost)
@@ -274,7 +270,7 @@ return;
 
   private void openRegion(MasterProcedureEnv env, RegionStateNode regionNode) throws IOException {
     ServerName loc = regionNode.getRegionLocation();
-    if (((KnobRuntime.check(java.util.UUID.fromString("a53e1644-8ac2-3b74-abfc-e14a67ef8447"))) ? (((loc) == (null)) || (BOGUS_SERVER_NAME.equals(loc))) : (loc == null || BOGUS_SERVER_NAME.equals(loc)))) {
+    if (loc == null || BOGUS_SERVER_NAME.equals(loc)) {
       LOG.warn("No location specified for {}, jump back to state {} to get one", getRegion(),
         RegionStateTransitionState.REGION_STATE_TRANSITION_GET_ASSIGN_CANDIDATE);
       setNextState(RegionStateTransitionState.REGION_STATE_TRANSITION_GET_ASSIGN_CANDIDATE);
@@ -287,9 +283,6 @@ return;
 
   private Flow confirmOpened(MasterProcedureEnv env, RegionStateNode regionNode)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("538b3d69-82b8-3bdb-a594-113afd0d4123"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (regionNode.isInState(State.OPEN)) {
       retryCounter = null;
       if (lastState == RegionStateTransitionState.REGION_STATE_TRANSITION_CONFIRM_OPENED) {
@@ -326,7 +319,7 @@ throw new java.io.IOException("Injected exception");
     regionNode.setRegionLocation(null);
     setNextState(RegionStateTransitionState.REGION_STATE_TRANSITION_GET_ASSIGN_CANDIDATE);
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("29099c7f-588b-306c-94e6-9dd6e02c1605"))) ? ((retries) >= (env.getAssignmentManager().getForceRegionRetainmentRetries())) : (((KnobRuntime.check(java.util.UUID.fromString("e6628b2a-3c41-3b07-a4fa-4396acab1e38"))) ? ((retries) == (env.getAssignmentManager().getAssignMaxAttempts())) : (retries > env.getAssignmentManager().getAssignRetryImmediatelyMaxAttempts()))))) {
+    if (retries > env.getAssignmentManager().getAssignRetryImmediatelyMaxAttempts()) {
       // Throw exception to backoff and retry when failed open too many times
       throw new HBaseIOException(
         "Failed confirm OPEN of " + regionNode + " (remote log may yield more detail on why).");
@@ -480,20 +473,6 @@ throw new java.io.IOException("Injected exception");
   public void reportTransition(MasterProcedureEnv env, RegionStateNode regionNode,
     ServerName serverName, TransitionCode code, long seqId, long procId) throws IOException {
     if (remoteProc == null) {
-if(KnobRuntime.check(java.util.UUID.fromString("72c03a1a-efc9-333d-b8a8-19cabbe03920"))) {
-seqId -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("724efaf6-3844-3f14-9f17-8dc27da90e72"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = code.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(code));
-    _knob_field_.set(code, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       LOG.warn(
         "There is no outstanding remote region procedure for {}, serverName={}, code={},"
           + " seqId={}, proc={}, should be a retry, ignore",
@@ -503,9 +482,6 @@ try {
     // The procId could be -1 if it is from an old region server, we need to deal with it so that we
     // can do rolling upgraing.
     if (procId >= 0 && remoteProc.getProcId() != procId) {
-if(KnobRuntime.check(java.util.UUID.fromString("fb617cc1-417a-39d8-a194-be455768aade"))) {
-seqId = -1;
-}
       LOG.warn(
         "The pid of remote region procedure for {} is {}, the reported pid={}, serverName={},"
           + " code={}, seqId={}, proc={}, should be a retry, ignore",

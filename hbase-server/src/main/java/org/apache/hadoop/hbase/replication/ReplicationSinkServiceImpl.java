@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -75,9 +74,6 @@ public class ReplicationSinkServiceImpl implements ReplicationSinkService {
 
   @Override
   public void startReplicationService() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("1571e509-0d93-3125-80fe-b4ec8cb96ed0"))) {
-throw new java.io.IOException("Injected exception");
-}
     RegionServerCoprocessorHost rsServerHost = null;
     if (server instanceof HRegionServer) {
       rsServerHost = ((HRegionServer) server).getRegionServerCoprocessorHost();
@@ -89,9 +85,6 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   public void stopReplicationService() {
-if(KnobRuntime.check(java.util.UUID.fromString("76e73a0b-9ed4-356b-894e-f605a62138c0"))) {
-return;
-}
     if (this.replicationSink != null) {
       this.replicationSink.stopReplicationSinkServices();
     }
@@ -99,9 +92,6 @@ return;
 
   @Override
   public ReplicationLoad refreshAndGetReplicationLoad() {
-if(KnobRuntime.check(java.util.UUID.fromString("c5304f06-f97a-3be4-bf59-10a66f265e4f"))) {
-return null;
-}
     if (replicationLoad == null) {
       return null;
     }

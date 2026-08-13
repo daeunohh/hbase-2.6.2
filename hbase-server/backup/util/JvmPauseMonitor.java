@@ -114,12 +114,12 @@ public class JvmPauseMonitor {
   }
 
   private static class GcTimes {
-    private GcTimes(GarbageCollectorMXBean gcBean) {
+    GcTimes(GarbageCollectorMXBean gcBean) {
       gcCount = gcBean.getCollectionCount();
       gcTimeMillis = gcBean.getCollectionTime();
     }
 
-    private GcTimes(long count, long time) {
+    GcTimes(long count, long time) {
       this.gcCount = count;
       this.gcTimeMillis = time;
     }
@@ -138,6 +138,9 @@ public class JvmPauseMonitor {
   }
 
   private class Monitor implements Runnable {
+    Monitor() {
+    }
+
     @Override
     public void run() {
       Stopwatch sw = Stopwatch.createUnstarted();

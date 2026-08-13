@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.REPLICATION_SCOPE_LOCAL;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.MAJOR_COMPACTION_KEY;
@@ -505,10 +504,7 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
     }
 
     boolean isFlushRequested() {
-if(KnobRuntime.check(java.util.UUID.fromString("eeba4e5d-217f-3e1b-9dc9-64fcd11bc43d"))) {
-return false;
-}
-      return ((KnobRuntime.check(java.util.UUID.fromString("1c6b8613-b8c2-3d3a-b50a-c6c42f00c68d"))) ? (!this.flushRequested) : (this.flushRequested));
+      return this.flushRequested;
     }
 
     void setReadsEnabled(boolean readsEnabled) {
@@ -892,7 +888,7 @@ return false;
     }
     if (LOG.isDebugEnabled()) {
       // Write out region name, its encoded name and storeHotnessProtector as string.
-      if (KnobRuntime.check(java.util.UUID.fromString("4f46da3d-0033-3f74-95a4-f1e47cdb2afe"))) { LOG.info(("Instantiated " + this + "; ") + (storeHotnessProtector.toString())); } else { LOG.debug("Instantiated " + this + "; " + storeHotnessProtector.toString()); }
+      LOG.debug("Instantiated " + this + "; " + storeHotnessProtector.toString());
     }
 
     configurationManager = null;
@@ -909,7 +905,7 @@ return false;
       conf.getInt(HBASE_REGIONSERVER_MINIBATCH_SIZE, DEFAULT_HBASE_REGIONSERVER_MINIBATCH_SIZE);
 
     // recover the metrics of read and write requests count if they were retained
-    if (((KnobRuntime.check(java.util.UUID.fromString("9a3e9b34-e33f-35ff-a9f8-f2ce4aec4405"))) ? (((rsServices) != (null)) || (rsServices.getRegionServerAccounting() != null)) : (((KnobRuntime.check(java.util.UUID.fromString("b6cec289-8771-395c-b6aa-527a0d482fe5"))) ? (rsServices.getRegionServerAccounting() != null) : (rsServices != null && rsServices.getRegionServerAccounting() != null))))) {
+    if (rsServices != null && rsServices.getRegionServerAccounting() != null) {
       Pair<Long, Long> retainedRWRequestsCnt = rsServices.getRegionServerAccounting()
         .getRetainedRegionRWRequestsCnt().get(getRegionInfo().getEncodedName());
       if (retainedRWRequestsCnt != null) {
@@ -1067,17 +1063,6 @@ return false;
 
     long lastFlushTime = EnvironmentEdgeManager.currentTime();
     for (HStore store : stores.values()) {
-if(KnobRuntime.check(java.util.UUID.fromString("a540f888-3880-3e7a-bb43-9a06ec47e8ab"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("parallelPutCountPrintThreshold");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       this.lastStoreFlushTimeMap.put(store, lastFlushTime);
     }
 
@@ -1094,10 +1079,7 @@ try {
       // determine whether a region has been successfully reopened, so here we always need to update
       // the max sequence id file.
       if (RegionReplicaUtil.isDefaultReplica(getRegionInfo())) {
-        if (KnobRuntime.check(java.util.UUID.fromString("cebf1716-82af-33d3-9d08-329012abc231"))) { LOG.info("writing seq id for {}", this.getRegionInfo().getShortNameToLog()); } else { LOG.debug("writing seq id for {}", this.getRegionInfo().getEncodedName()); }
-if(KnobRuntime.check(java.util.UUID.fromString("e6101100-5ebb-3fee-9d7e-c62fcc4450ac"))) {
-throw new java.io.IOException("Injected exception");
-}
+        LOG.debug("writing seq id for {}", this.getRegionInfo().getEncodedName());
         WALSplitUtil.writeRegionSequenceIdFile(getWalFileSystem(), getWALRegionDir(),
           nextSeqId - 1);
         // This means we have replayed all the recovered edits and also written out the max sequence
@@ -1106,7 +1088,7 @@ throw new java.io.IOException("Injected exception");
         Path wrongRegionWALDir = CommonFSUtils.getWrongWALRegionDir(conf,
           getRegionInfo().getTable(), getRegionInfo().getEncodedName());
         FileSystem walFs = getWalFileSystem();
-        if (((KnobRuntime.check(java.util.UUID.fromString("2eea474e-2886-3450-8985-70ebb62e7f02"))) ? (StoreFileInfo.isReference(getWALRegionDir())) : (walFs.exists(wrongRegionWALDir)))) {
+        if (walFs.exists(wrongRegionWALDir)) {
           if (!walFs.delete(wrongRegionWALDir, true)) {
             LOG.debug("Failed to clean up wrong region WAL directory {}", wrongRegionWALDir);
           }
@@ -1171,41 +1153,8 @@ throw new java.io.IOException("Injected exception");
         for (int i = 0; i < htableDescriptor.getColumnFamilyCount(); i++) {
           Future<HStore> future = completionService.take();
           HStore store = future.get();
-if(KnobRuntime.check(java.util.UUID.fromString("534dfb92-c541-38c7-941e-d39a1fa7d7dd"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("lastCompactSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("604a2068-fa6d-3c0e-9355-4bb6b39f11b7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2965cfc3-4eb5-3fce-87b2-6dfe22ed2d9f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("pauseTime");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           this.stores.put(store.getColumnFamilyDescriptor().getName(), store);
-          if (((KnobRuntime.check(java.util.UUID.fromString("ea7f6c83-f55a-3dea-af9e-7e58303dec7f"))) ? (isClosed()) : (store.isSloppyMemStore()))) {
+          if (store.isSloppyMemStore()) {
             hasSloppyStores = true;
           }
 
@@ -1223,7 +1172,7 @@ try {
         if (hasSloppyStores) {
           htableDescriptor = TableDescriptorBuilder.newBuilder(htableDescriptor)
             .setFlushPolicyClassName(FlushNonSloppyStoresFirstPolicy.class.getName()).build();
-          if (KnobRuntime.check(java.util.UUID.fromString("f8c66428-274d-3ebb-8326-2536660ee658"))) { LOG.debug(("Setting FlushNonSloppyStoresFirstPolicy for the region=") + (this)); } else { LOG.info("Setting FlushNonSloppyStoresFirstPolicy for the region=" + this); }
+          LOG.info("Setting FlushNonSloppyStoresFirstPolicy for the region=" + this);
         }
       } catch (InterruptedException e) {
         throw throwOnInterrupt(e);
@@ -1244,7 +1193,7 @@ try {
         }
       }
     }
-    return ((KnobRuntime.check(java.util.UUID.fromString("7767ace8-55ab-346a-89b7-6e4d187c325b"))) ? (Math.min(maxSeqId, (maxMemstoreTS) + (1))) : (Math.max(maxSeqId, maxMemstoreTS + 1)));
+    return Math.max(maxSeqId, maxMemstoreTS + 1);
   }
 
   private void initializeWarmup(final CancelableProgressable reporter) throws IOException {
@@ -1285,9 +1234,6 @@ try {
   }
 
   private void writeRegionCloseMarker(WAL wal) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("063a2fe7-3b47-32c4-a387-68db31f7cc4d"))) {
-throw new java.io.IOException("Injected exception");
-}
     Map<byte[], List<Path>> storeFiles = getStoreFiles();
     RegionEventDescriptor regionEventDesc = ProtobufUtil.toRegionEventDescriptor(
       RegionEventDescriptor.EventType.REGION_CLOSE, getRegionInfo(), mvcc.getReadPoint(),
@@ -1383,17 +1329,6 @@ throw new java.io.IOException("Injected exception");
    * Increase the size of mem store in this region and the size of global mem store
    */
   private void incMemStoreSize(MemStoreSize mss) {
-if(KnobRuntime.check(java.util.UUID.fromString("52606d3b-9b14-3fdc-ad95-03021b59ced1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mss.getClass().getDeclaredField("cellsCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(mss));
-    _knob_field_.set(mss, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     incMemStoreSize(mss.getDataSize(), mss.getHeapSize(), mss.getOffHeapSize(),
       mss.getCellsCount());
   }
@@ -1409,39 +1344,6 @@ try {
   }
 
   void decrMemStoreSize(MemStoreSize mss) {
-if(KnobRuntime.check(java.util.UUID.fromString("a2151f7a-6b68-35e9-b852-59d3b04f184f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mss.getClass().getDeclaredField("dataSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(mss));
-    _knob_field_.set(mss, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5607c212-0bb3-382a-a1f4-9ec1d2b86d37"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mss.getClass().getDeclaredField("cellsCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(mss));
-    _knob_field_.set(mss, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d7ea0ae1-a98e-3e3a-a707-2a2d25d6b83b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mss.getClass().getDeclaredField("heapSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(mss));
-    _knob_field_.set(mss, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     decrMemStoreSize(mss.getDataSize(), mss.getHeapSize(), mss.getOffHeapSize(),
       mss.getCellsCount());
   }
@@ -1547,9 +1449,6 @@ try {
 
   @Override
   public boolean isClosed() {
-if(KnobRuntime.check(java.util.UUID.fromString("3ab4c881-6053-3e84-950d-530f35fe6957"))) {
-return true;
-}
     return this.closed.get();
   }
 
@@ -1576,7 +1475,7 @@ return true;
   @Override
   public boolean isMergeable() {
     if (!isAvailable()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("989e1d0c-427d-3577-ab31-c2d138c0ed62"))) { LOG.debug("Region " + this); } else if (KnobRuntime.check(java.util.UUID.fromString("519871ee-aa5f-3f42-ace1-b421e5cf62bd"))) { LOG.debug((("Region ") + (this)) + (" is not mergeable because it is closing or closed")); } else { LOG.debug("Region " + this + " is not mergeable because it is closing or closed"); }
+      LOG.debug("Region " + this + " is not mergeable because it is closing or closed");
       return false;
     }
     if (hasReferences()) {
@@ -1808,7 +1707,7 @@ return true;
 
     final boolean canAbort = conf.getBoolean(CLOSE_WAIT_ABORT, DEFAULT_CLOSE_WAIT_ABORT);
     boolean useTimedWait = false;
-    if (((KnobRuntime.check(java.util.UUID.fromString("4b994720-6f7f-3335-b9d5-620b31ca6e56"))) ? (((timeoutForWriteLock) != (null)) && ((timeoutForWriteLock) == (Long.MAX_VALUE))) : (((KnobRuntime.check(java.util.UUID.fromString("0d424748-d509-3452-8237-6b7e2ea994dc"))) ? ((timeoutForWriteLock != null) && ((timeoutForWriteLock) != (Long.MAX_VALUE))) : (((KnobRuntime.check(java.util.UUID.fromString("d98372e0-74d2-3277-b3f4-a645c9932325"))) ? (((timeoutForWriteLock) == (null)) || ((timeoutForWriteLock) == (Long.MAX_VALUE))) : (((KnobRuntime.check(java.util.UUID.fromString("a57a9153-4a4b-30cb-a681-d19388fca42f"))) ? (((timeoutForWriteLock) != (null)) && ((timeoutForWriteLock) != (Long.MAX_VALUE))) : (timeoutForWriteLock != null && timeoutForWriteLock != Long.MAX_VALUE))))))))) {
+    if (timeoutForWriteLock != null && timeoutForWriteLock != Long.MAX_VALUE) {
       // convert legacy use of timeoutForWriteLock in seconds to new use in millis
       timeoutForWriteLock = TimeUnit.SECONDS.toMillis(timeoutForWriteLock);
       useTimedWait = true;
@@ -1825,7 +1724,7 @@ return true;
     if (useTimedWait) {
       // Sanity check configuration
       long remainingWaitTime = timeoutForWriteLock;
-      if (((KnobRuntime.check(java.util.UUID.fromString("c0cca056-426e-3c8c-8e07-0eefa15ce32e"))) ? ((remainingWaitTime) <= (closeWaitInterval)) : (remainingWaitTime < closeWaitInterval))) {
+      if (remainingWaitTime < closeWaitInterval) {
         LOG.warn("Time limit for close wait of " + timeoutForWriteLock
           + " ms is less than the configured lock acquisition wait interval " + closeWaitInterval
           + " ms, using wait interval as time limit");
@@ -1884,7 +1783,7 @@ return true;
     }
 
     if (LOG.isDebugEnabled()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("785c19cd-127b-360d-a4b4-8dc85566060f"))) { LOG.debug(("Acquired close lock on " + this + " after waiting ") + (elapsedWaitTime)); } else if (KnobRuntime.check(java.util.UUID.fromString("101c6398-811e-31c3-b451-1d1de28cf923"))) { LOG.info(("Acquired close lock on " + this + " after waiting ") + (elapsedWaitTime)); } else if (KnobRuntime.check(java.util.UUID.fromString("396114a0-0675-3e7c-962b-10638e33dd75"))) { LOG.error(("Acquired close lock on " + this + " after waiting ") + (elapsedWaitTime)); } else if (KnobRuntime.check(java.util.UUID.fromString("71de0269-0e8d-3416-bd33-3cdf31f7caa6"))) { LOG.info((("Acquired close lock on " + this + " after waiting ") + (elapsedWaitTime)) + (" ms")); } else if (KnobRuntime.check(java.util.UUID.fromString("3789a3cb-836c-31a2-80f6-25ccceffcf11"))) { LOG.error("Acquired close lock on " + this + " after waiting " + elapsedWaitTime); } else { LOG.debug("Acquired close lock on " + this + " after waiting " + elapsedWaitTime + " ms"); }
+      LOG.debug("Acquired close lock on " + this + " after waiting " + elapsedWaitTime + " ms");
     }
 
     status.setStatus("Disabling writes for close");
@@ -1894,7 +1793,7 @@ return true;
         // SplitTransaction handles the null
         return null;
       }
-      if (KnobRuntime.check(java.util.UUID.fromString("502f1d2b-3c5c-3f1c-9169-4bcedc3f4e66"))) { LOG.info("Updates disabled for region "); } else if (KnobRuntime.check(java.util.UUID.fromString("02b1f2a1-5a20-3a18-ac4c-1db2bfe24346"))) { LOG.info(("Updates disabled for region ") + (this)); } else { LOG.debug("Updates disabled for region " + this); }
+      LOG.debug("Updates disabled for region " + this);
       // Don't flush the cache if we are aborting
       if (!abort && canFlush) {
         int failedfFlushCount = 0;
@@ -1909,7 +1808,7 @@ return true;
             }
             flushCount++;
             tmp = this.memStoreSizing.getDataSize();
-            if (((KnobRuntime.check(java.util.UUID.fromString("7a6702e9-5736-3934-9bac-61030142a1ba"))) ? ((tmp) < (remainingSize)) : (((KnobRuntime.check(java.util.UUID.fromString("4eb543ae-79fe-30ad-8c1c-e0556f050a0c"))) ? ((tmp) != (remainingSize)) : (tmp >= remainingSize))))) {
+            if (tmp >= remainingSize) {
               failedfFlushCount++;
             }
             remainingSize = tmp;
@@ -1920,7 +1819,7 @@ return true;
                 + " attempts on region: " + Bytes.toStringBinary(getRegionInfo().getRegionName()));
             }
           } catch (IOException ioe) {
-            if (KnobRuntime.check(java.util.UUID.fromString("cb7832b5-6947-3888-b237-df4ca84e368e"))) { status.abort(("Failed flush ") + (this)); } else { status.setStatus("Failed flush " + this + ", putting online again"); }
+            status.setStatus("Failed flush " + this + ", putting online again");
             synchronized (writestate) {
               writestate.writesEnabled = true;
             }
@@ -2001,7 +1900,7 @@ return true;
 
       if (!canFlush) {
         decrMemStoreSize(this.memStoreSizing.getMemStoreSize());
-      } else if (((KnobRuntime.check(java.util.UUID.fromString("d5b20a21-9409-3636-8f3c-ada6e75160be"))) ? ((EnvironmentEdgeManager.currentTime()) == (0)) : (this.memStoreSizing.getDataSize() != 0))) {
+      } else if (this.memStoreSizing.getDataSize() != 0) {
         LOG.error("Memstore data size is {} in region {}", this.memStoreSizing.getDataSize(), this);
       }
       if (coprocessorHost != null) {
@@ -2018,7 +1917,7 @@ return true;
       LOG.info("Closed {}", this);
       return result;
     } finally {
-      if (KnobRuntime.check(java.util.UUID.fromString("10a1cc9d-107a-3e8b-81da-44a7cee08a9a"))) { setHTableSpecificConf(); } else { lock.writeLock().unlock(); }
+      lock.writeLock().unlock();
     }
   }
 
@@ -2073,10 +1972,10 @@ return true;
       long start = EnvironmentEdgeManager.currentTime();
       long duration = 0;
       boolean interrupted = false;
-      if (KnobRuntime.check(java.util.UUID.fromString("438412f2-c8fd-3ef1-b185-e76f94005b82"))) { LOG.debug(("waiting for cache flush to complete for region ") + (this)); } else if (KnobRuntime.check(java.util.UUID.fromString("71b20190-7a80-3d57-b6b2-420e2a19025b"))) { LOG.error("waiting for cache flush to complete for region "); } else { LOG.debug("waiting for cache flush to complete for region " + this); }
+      LOG.debug("waiting for cache flush to complete for region " + this);
       try {
         while (writestate.flushing) {
-          if (((KnobRuntime.check(java.util.UUID.fromString("07cf6318-efaa-3163-827a-dfad55cec1ce"))) ? (((timeout) != (0)) || ((duration) > (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("559fd501-7871-35a4-9979-07550f60e5a2"))) ? (((timeout) < (0)) || ((duration) < (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("c14e16c7-52fa-3898-8e1f-79a0784de788"))) ? ((duration) <= (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("304951d5-c5d3-33ad-9535-eb388ee685ca"))) ? (((timeout) > (0)) && ((duration) != (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("bd1fb794-146d-3f6f-98e8-814556cabb76"))) ? (((timeout) < (0)) || ((duration) != (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("4a4171ec-82f1-3f2d-9e9e-5e11f2782fb9"))) ? (((timeout) > (0)) && ((duration) > (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("6cd43c8c-df72-3892-adb5-f458bf3aaae0"))) ? (((timeout) > (0)) || ((duration) != (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("e907609a-5f41-303b-8c87-e01f0d4c4ebb"))) ? (((timeout) >= (0)) || ((duration) == (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("9c368ad9-7078-373f-bfae-e2fee645ab7a"))) ? ((timeout) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("30bfd16f-336b-381c-9f48-9a0760b379d4"))) ? (((timeout) != (0)) && ((duration) < (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("78b126f1-9eef-3e69-ac85-c77d6687bb76"))) ? ((timeout) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3a828448-e253-3210-aa64-44bdecda8791"))) ? (((timeout) <= (0)) && ((duration) > (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("41801449-6bda-32c5-8de2-effd16ec7236"))) ? (((timeout) < (0)) && ((duration) < (timeout))) : (((KnobRuntime.check(java.util.UUID.fromString("822248d0-7b2c-37e4-9bb4-44793e089439"))) ? ((timeout > 0) || ((duration) < (timeout))) : (timeout > 0 && duration >= timeout))))))))))))))))))))))))))))) break;
+          if (timeout > 0 && duration >= timeout) break;
           try {
             long toWait = timeout == 0 ? 0 : (timeout - duration);
             writestate.wait(toWait);
@@ -2337,28 +2236,6 @@ return true;
     for (HStore s : stores.values()) {
       Optional<CompactionContext> compaction = s.requestCompaction();
       if (compaction.isPresent()) {
-if(KnobRuntime.check(java.util.UUID.fromString("36e78fbb-dbc7-35fe-8c91-aa6dda2ee492"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = s.getClass().getDeclaredField("lastCompactSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(s));
-    _knob_field_.set(s, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0f275c70-0782-3416-b598-886f9e6aceb5"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = s.getClass().getDeclaredField("blockingFileCount");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(s));
-    _knob_field_.set(s, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         compact(compaction.get(), s, NoLimitThroughputController.INSTANCE, null);
       }
     }
@@ -2396,7 +2273,7 @@ try {
     ThroughputController throughputController, User user) throws IOException {
     assert compaction != null && compaction.hasSelection();
     assert !compaction.getRequest().getFiles().isEmpty();
-    if (((KnobRuntime.check(java.util.UUID.fromString("0a956ff6-01c8-3b71-bf18-75371a44a364"))) ? ((this.closing.get()) && (isClosing())) : (((KnobRuntime.check(java.util.UUID.fromString("80b4b01d-d59f-3374-b8f0-fa69089f4d44"))) ? ((isClosing()) && (this.closed.get())) : (this.closing.get() || this.closed.get()))))) {
+    if (this.closing.get() || this.closed.get()) {
       LOG.debug("Skipping compaction on " + this + " because closing/closed");
       store.cancelRequestedCompaction(compaction);
       return false;
@@ -2843,9 +2720,6 @@ try {
         this.updatesLock.writeLock().unlock();
       }
     }
-if(KnobRuntime.check(java.util.UUID.fromString("ad07dcde-82cc-33ca-85ab-f67a02e11676"))) {
-myseqid -= 1;
-}
     logFatLineOnFlush(storesToFlush, myseqid);
     // Stop updates while we snapshot the memstore of all of these regions' stores. We only have
     // to do this for a moment. It is quick. We also set the memstore size to zero here before we
@@ -3024,9 +2898,6 @@ myseqid -= 1;
       justification = "Intentional; notify is about completed flush")
   FlushResultImpl internalFlushCacheAndCommit(WAL wal, MonitoredTask status,
     PrepareFlushResult prepareResult, Collection<HStore> storesToFlush) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("e20a4ec7-b738-3044-9e92-e0bf02bdbb1c"))) {
-throw new java.io.IOException("Injected exception");
-}
     // prepare flush context is carried via PrepareFlushResult
     TreeMap<byte[], StoreFlushContext> storeFlushCtxs = prepareResult.storeFlushCtxs;
     TreeMap<byte[], List<Path>> committedFiles = prepareResult.committedFiles;
@@ -3066,19 +2937,8 @@ throw new java.io.IOException("Injected exception");
         List<Path> storeCommittedFiles = sfc.getCommittedFiles();
         committedFiles.put(storeName, storeCommittedFiles);
         // Flush committed no files, indicating flush is empty or flush was canceled
-        if (((KnobRuntime.check(java.util.UUID.fromString("668160d7-e791-3f22-865a-b22a0b7e747c"))) ? (((storeCommittedFiles) == (null)) || (isClosing())) : (((KnobRuntime.check(java.util.UUID.fromString("946d2d09-fc7a-3c44-8dc2-1f2021f4e4ec"))) ? (((storeCommittedFiles) == (null)) || (storeCommittedFiles.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("516b5808-cab9-3a0b-b33c-560d4faf4046"))) ? (isClosing()) : (storeCommittedFiles == null || storeCommittedFiles.isEmpty()))))))) {
+        if (storeCommittedFiles == null || storeCommittedFiles.isEmpty()) {
           MemStoreSize storeFlushableSize = prepareResult.storeFlushableSize.get(storeName);
-if(KnobRuntime.check(java.util.UUID.fromString("43cfdb92-40e4-37fc-982d-64caa2440033"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = storeFlushableSize.getClass().getDeclaredField("offHeapSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(storeFlushableSize));
-    _knob_field_.set(storeFlushableSize, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           prepareResult.totalFlushableSize.decMemStoreSize(storeFlushableSize);
         }
         flushedOutputFileSize += sfc.getOutputFileSize();
@@ -3094,9 +2954,6 @@ try {
       if (rsServices != null) {
         RegionServerSpaceQuotaManager quotaManager = rsServices.getRegionServerSpaceQuotaManager();
         if (quotaManager != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("26d74ce0-5cf9-36f2-9dbb-79a9c62a9238"))) {
-flushedOutputFileSize = 0;
-}
           quotaManager.getRegionSizeStore().incrementRegionSize(this.getRegionInfo(),
             flushedOutputFileSize);
         }
@@ -3104,9 +2961,6 @@ flushedOutputFileSize = 0;
 
       if (wal != null) {
         // write flush marker to WAL. If fail, we should throw DroppedSnapshotException
-if(KnobRuntime.check(java.util.UUID.fromString("7f79aa8a-b49a-3e90-a042-ac2198e4e36d"))) {
-flushOpSeqId = -1;
-}
         FlushDescriptor desc = ProtobufUtil.toFlushDescriptor(FlushAction.COMMIT_FLUSH,
           getRegionInfo(), flushOpSeqId, committedFiles);
         WALUtil.writeFlushMarker(wal, this.getReplicationScope(), getRegionInfo(), desc, true,
@@ -3157,61 +3011,6 @@ flushOpSeqId = -1;
 
     // Record latest flush time
     for (HStore store : storesToFlush) {
-if(KnobRuntime.check(java.util.UUID.fromString("74ca778f-341b-3580-8a6d-2289e3634e41"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("flushRetriesNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fab61f2e-716a-3961-abde-f74dfcea8e74"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("flushRetriesNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a5eec958-3ec2-3077-81c5-030a430d976d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("pauseTime");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("67457422-0bc7-3c73-867a-45568cf5d8ac"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("compactionCheckMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ba633b9f-228b-3bbf-b75d-e299b37ffbc8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("flushRetriesNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       this.lastStoreFlushTimeMap.put(store, startTime);
     }
 
@@ -3262,50 +3061,6 @@ try {
 
   @Override
   public RegionScannerImpl getScanner(Scan scan) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("750d8676-62a7-333d-ad68-e95dda886228"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeLimit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("89beb202-4a9e-33a6-b664-b0ccfd219ca7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("maxVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("292d1cdf-0f30-3835-8d8e-444f2f0a7fa0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("batch");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("550366f5-4631-341c-baa7-5c6e66c5dac8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("maxVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return getScanner(scan, null);
   }
 
@@ -3405,7 +3160,7 @@ try {
         // Check if time is LATEST, change to time of most recent addition if so
         // This is expensive.
         if (
-          ((KnobRuntime.check(java.util.UUID.fromString("212840fb-145e-3484-acb6-4e789e0c2015"))) ? (((EnvironmentEdgeManager.currentTime()) != (HConstants.LATEST_TIMESTAMP)) || (WALEdit.isMetaEditFamily(cell))) : (((KnobRuntime.check(java.util.UUID.fromString("ac3d8936-19fd-3ae9-8525-8c795d8c1b30"))) ? ((cell.getTimestamp() == HConstants.LATEST_TIMESTAMP) && (PrivateCellUtil.isDeleteType(cell))) : (cell.getTimestamp() == HConstants.LATEST_TIMESTAMP && PrivateCellUtil.isDeleteType(cell)))))
+          cell.getTimestamp() == HConstants.LATEST_TIMESTAMP && PrivateCellUtil.isDeleteType(cell)
         ) {
           byte[] qual = CellUtil.cloneQualifier(cell);
 
@@ -3421,42 +3176,9 @@ try {
           get.setMaxVersions(count);
           get.addColumn(family, qual);
           if (coprocessorHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("117b0da8-da58-3c09-9db7-3ab1ad79f43c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = get.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(get));
-    _knob_field_.set(get, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f8758eda-0a52-30c8-b92b-cd4a06bf5026"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = get.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(get));
-    _knob_field_.set(get, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             if (
               !coprocessorHost.prePrepareTimeStampForDeleteVersion(mutation, cell, byteNow, get)
             ) {
-if(KnobRuntime.check(java.util.UUID.fromString("b38b8a6b-aeaf-3a55-80a9-240163b636ef"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = get.getClass().getDeclaredField("storeLimit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(get));
-    _knob_field_.set(get, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
               updateDeleteLatestVersionTimestamp(cell, get, count, byteNow);
             }
           } else {
@@ -3563,13 +3285,7 @@ try {
       throws IOException {
       assert lastIndexExclusive <= this.size();
       for (int i = nextIndexToProcess; i < lastIndexExclusive; i++) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("f5088bf4-1536-30a4-a0f5-a2a5801f4f52"))) ? (isOperationPending(i++)) : (((KnobRuntime.check(java.util.UUID.fromString("ac7a2517-688a-3a60-ba13-a2cd07ffd58e"))) ? ((!pendingOnly) || (isOperationPending(i++))) : (!pendingOnly || isOperationPending(i)))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("67be2f56-1eba-352e-9ee7-fa4e7f5f6572"))) {
-i = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e29ac1c8-b2ca-3c30-bf5c-7bceee2b8270"))) {
-i = 0;
-}
+        if (!pendingOnly || isOperationPending(i)) {
           if (!visitor.visit(i)) {
             break;
           }
@@ -3629,17 +3345,6 @@ i = 0;
     protected void writeMiniBatchOperationsToMemStore(
       final MiniBatchOperationInProgress<Mutation> miniBatchOp, final long writeNumber)
       throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("d36e1257-f8e5-3361-8655-e33c9a0020e2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfIncrements");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       MemStoreSizing memStoreAccounting = new NonThreadSafeMemStoreSizing();
       visitBatchOperations(true, miniBatchOp.getLastIndexExclusive(), (int index) -> {
         // We need to update the sequence id for following reasons.
@@ -3662,19 +3367,10 @@ try {
     }
 
     public int size() {
-if(KnobRuntime.check(java.util.UUID.fromString("963eced7-9921-3f3d-9706-67d29ca6c4e5"))) {
-return 0;
-}
       return operations.length;
     }
 
     public boolean isOperationPending(int index) {
-if(KnobRuntime.check(java.util.UUID.fromString("924f373f-be7c-3817-9ff5-52c735da8ed5"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("be2535b5-718f-37ba-bef7-92200f841303"))) {
-return true;
-}
       return retCodeDetails[index].getOperationStatusCode() == OperationStatusCode.NOT_RUN;
     }
 
@@ -3759,7 +3455,7 @@ return true;
         }
         retCodeDetails[index] =
           new OperationStatus(OperationStatusCode.SANITY_CHECK_FAILURE, we.getMessage());
-        if (((KnobRuntime.check(java.util.UUID.fromString("6f390676-3a11-3bf4-92ff-599de6d66fca"))) ? (isInReplay()) : (isAtomic()))) {
+        if (isAtomic()) {
           throw we;
         }
       }
@@ -3934,39 +3630,6 @@ return true;
 
     private void
       doFinishHotnessProtector(final MiniBatchOperationInProgress<Mutation> miniBatchOp) {
-if(KnobRuntime.check(java.util.UUID.fromString("dd425323-3ff7-3344-9c7f-26a7c164fb7f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("lastIndexExclusive");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7193dba2-e47b-3a79-bace-1dd73ae0ca8d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("cellCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c4456dc5-1542-38fc-bea6-1862cc6bb1d8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfIncrements");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       // check and return if the protector is not enabled
       if (!region.storeHotnessProtector.isEnable()) {
         return;
@@ -4101,9 +3764,6 @@ try {
             // TODO: Currently validation is done with current time before acquiring locks and
             // updates are done with different timestamps after acquiring locks. This behavior is
             // inherited from the code prior to this change. Can this be changed?
-if(KnobRuntime.check(java.util.UUID.fromString("fc168e6d-45e7-3518-ad5e-bc532d677a28"))) {
-throw new java.io.IOException("Injected exception");
-}
             checkAndPrepareMutation(index, now);
           }
           return true;
@@ -4185,17 +3845,6 @@ throw new java.io.IOException("Injected exception");
           }
 
           List<Cell> results = returnResults ? new ArrayList<>(mutation.size()) : null;
-if(KnobRuntime.check(java.util.UUID.fromString("5bfab3ab-a9b9-3cb2-8c28-850cdd7c941b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mutation.getClass().getDeclaredField("ts");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(mutation));
-    _knob_field_.set(mutation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           familyCellMaps[index] = reckonDeltas(mutation, results, timestamp);
           this.results[index] = results != null ? Result.create(results) : Result.EMPTY_RESULT;
 
@@ -4277,7 +3926,7 @@ try {
       } else {
         // Append
         Append append = (Append) mutation;
-        if (KnobRuntime.check(java.util.UUID.fromString("814719e1-d685-3b38-afb4-d568ebdf3926"))) { get.setTimeRange(append.getTimeRange().getMax(), append.getTimeRange().getMax()); } else { get.setTimeRange(append.getTimeRange().getMin(), append.getTimeRange().getMax()); }
+        get.setTimeRange(append.getTimeRange().getMin(), append.getTimeRange().getMax());
       }
       for (Entry<String, byte[]> entry : mutation.getAttributesMap().entrySet()) {
         get.setAttribute(entry.getKey(), entry.getValue());
@@ -4378,20 +4027,6 @@ try {
             newCell = reckonDelta(delta, currentValue, columnFamily, now, mutation,
               (oldCell) -> Bytes.toBytes(newValue));
           } else {
-if(KnobRuntime.check(java.util.UUID.fromString("1e3e8ab9-58b9-3740-97ca-db266a22dd6b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mutation.getClass().getDeclaredField("ts");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(mutation));
-    _knob_field_.set(mutation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0e674cbb-2bba-328c-8711-ae1570fd6fd2"))) {
-now -= 1;
-}
             newCell = reckonDelta(delta, currentValue, columnFamily, now, mutation,
               (oldCell) -> ByteBuffer
                 .wrap(new byte[delta.getValueLength() + oldCell.getValueLength()])
@@ -4401,7 +4036,7 @@ now -= 1;
           }
           if (region.maxCellSize > 0) {
             int newCellSize = PrivateCellUtil.estimatedSerializedSizeOf(newCell);
-            if (((KnobRuntime.check(java.util.UUID.fromString("be2bfe4d-fa5b-38c8-bae1-eda9fe4ccb35"))) ? ((newCellSize) > (region.maxCellSize)) : (((KnobRuntime.check(java.util.UUID.fromString("960017af-c051-3a89-8e5a-e5beb34a0a76"))) ? ((1) != (region.maxCellSize)) : (newCellSize > region.maxCellSize))))) {
+            if (newCellSize > region.maxCellSize) {
               String msg = "Cell with size " + newCellSize + " exceeds limit of "
                 + region.maxCellSize + " bytes in region " + this;
               LOG.debug(msg);
@@ -4493,7 +4128,7 @@ now -= 1;
       super.completeMiniBatchOperations(miniBatchOp, writeEntry);
 
       if (nonce != HConstants.NO_NONCE) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("014c6722-5a59-3c51-be47-ebedf994bcbf"))) ? (((region.rsServices) != (null)) || (region.rsServices.getNonceManager() != null)) : (region.rsServices != null && region.rsServices.getNonceManager() != null))) {
+        if (region.rsServices != null && region.rsServices.getNonceManager() != null) {
           region.rsServices.getNonceManager().addMvccToOperationContext(nonceGroup, nonce,
             writeEntry.getWriteNumber());
         }
@@ -4877,11 +4512,8 @@ now -= 1;
    * @throws IOException if an IO problem is encountered
    */
   private OperationStatus[] batchMutate(BatchOperation<?> batchOp) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("c667ffcd-1ea1-3dee-a711-238d47ed9287"))) {
-throw new java.io.IOException("Injected exception");
-}
     boolean initialized = false;
-    if (KnobRuntime.check(java.util.UUID.fromString("a34e069e-277c-3b44-980e-c73617e1ebd7"))) { waitForFlushesAndCompactions(); } else if (KnobRuntime.check(java.util.UUID.fromString("1ee3c13a-355b-3dd1-829e-1d28106a87ff"))) { interruptRegionOperations(); } else { batchOp.startRegionOperation(); }
+    batchOp.startRegionOperation();
     try {
       while (!batchOp.isDone()) {
         if (!batchOp.isInReplay()) {
@@ -4925,7 +4557,7 @@ throw new java.io.IOException("Injected exception");
 
     // Check for thread interrupt status in case we have been signaled from
     // #interruptRegionOperation.
-    if (KnobRuntime.check(java.util.UUID.fromString("bb3ae2f1-c23d-323a-b499-151931e5d92d"))) { waitForFlushesAndCompactions(); } else { checkInterrupt(); }
+    checkInterrupt();
 
     try {
       // STEP 1. Try to acquire as many locks as we can and build mini-batch of operations with
@@ -4949,7 +4581,7 @@ throw new java.io.IOException("Injected exception");
       locked = true;
 
       // From this point until memstore update this operation should not be interrupted.
-      if (KnobRuntime.check(java.util.UUID.fromString("ef37c2eb-6c70-3539-b439-17042dec8f3b"))) { waitForFlushesAndCompactions(); } else { disableInterrupts(); }
+      disableInterrupts();
 
       // STEP 2. Update mini batch of all operations in progress with LATEST_TIMESTAMP timestamp
       // We should record the timestamp only after we have acquired the rowLock,
@@ -5264,9 +4896,6 @@ throw new java.io.IOException("Injected exception");
   }
 
   private void checkRow(final Row action, final byte[] row) throws DoNotRetryIOException {
-if(KnobRuntime.check(java.util.UUID.fromString("4eddf2a9-45a2-3121-b299-a51085663467"))) {
-return;
-}
     if (!Bytes.equals(row, action.getRow())) {
       throw new org.apache.hadoop.hbase.DoNotRetryIOException("Action's getRow must match");
     }
@@ -5304,9 +4933,6 @@ return;
   }
 
   private OperationStatus mutate(Mutation mutation, boolean atomic) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("cdfd728e-ee78-37a7-ae06-3378d9ed6519"))) {
-atomic = false;
-}
     return mutate(mutation, atomic, HConstants.NO_NONCE, HConstants.NO_NONCE);
   }
 
@@ -5378,7 +5004,7 @@ atomic = false;
   private void rewriteCellTags(Map<byte[], List<Cell>> familyMap, final Mutation m) {
     // Check if we have any work to do and early out otherwise
     // Update these checks as more logic is added here
-    if (((KnobRuntime.check(java.util.UUID.fromString("d4f8d230-1de2-3842-bb15-fcf1bcc8d002"))) ? ((EnvironmentEdgeManager.currentTime()) == (Long.MAX_VALUE)) : (m.getTTL() == Long.MAX_VALUE))) {
+    if (m.getTTL() == Long.MAX_VALUE) {
       return;
     }
 
@@ -5410,7 +5036,7 @@ atomic = false;
     }
 
     MemStoreSize mss = this.memStoreSizing.getMemStoreSize();
-    if (((KnobRuntime.check(java.util.UUID.fromString("6e28e590-8e2a-3cf6-b9ee-9d75634932ce"))) ? (((mss.getDataSize()) + (mss.getHeapSize())) != (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("5a313205-ef9a-36d6-a495-11222cdaa6af"))) ? (((mss.getHeapSize()) + (mss.getDataSize())) > (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("c9bed4fb-4fdf-3368-a7c5-f7231a3767aa"))) ? (((mss.getHeapSize()) + (EnvironmentEdgeManager.currentTime())) < (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("9f0fa8f2-4739-3d88-b56d-217b781065b3"))) ? (((mss.getDataSize()) + (mss.getDataSize())) == (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("3c92c895-2b2a-349c-980e-7a2dbf9433f4"))) ? (((mss.getDataSize()) + (EnvironmentEdgeManager.currentTime())) > (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("eaa921b1-2c7e-349c-9c83-54c5beee8a9e"))) ? (((mss.getHeapSize()) + (mss.getOffHeapSize())) > (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("40a0e99b-c7c7-373c-ad82-ac8cea3964ff"))) ? (((mss.getDataSize()) + (mss.getHeapSize())) >= (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("b0c1b70a-4280-357a-b2b8-90ba857c4420"))) ? (((EnvironmentEdgeManager.currentTime()) + (EnvironmentEdgeManager.currentTime())) <= (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("7d012355-6d59-3704-9752-6044c374e42f"))) ? (((EnvironmentEdgeManager.currentTime()) + (mss.getDataSize())) > (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("ecc7c6e9-e521-3307-a842-917a2b136d8e"))) ? (((EnvironmentEdgeManager.currentTime()) + (EnvironmentEdgeManager.currentTime())) == (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("8a14acbf-7672-3fa2-b1b2-c29b52569c65"))) ? ((mss.getOffHeapSize()) <= (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("91b6e876-61e9-3cc1-bd41-5b29d7da7912"))) ? ((EnvironmentEdgeManager.currentTime()) > (this.blockingMemStoreSize)) : (((KnobRuntime.check(java.util.UUID.fromString("837a7cb8-73f8-3f1a-87b6-f29fb94030ca"))) ? (((mss.getDataSize()) + (mss.getHeapSize())) == (this.blockingMemStoreSize)) : (mss.getHeapSize() + mss.getOffHeapSize() > this.blockingMemStoreSize))))))))))))))))))))))))))) {
+    if (mss.getHeapSize() + mss.getOffHeapSize() > this.blockingMemStoreSize) {
       blockedRequestsCount.increment();
       requestFlush();
       // Don't print current limit because it will vary too much. The message is used as a key
@@ -5698,7 +5324,7 @@ atomic = false;
   private void handleException(FileSystem fs, Path edits, IOException e) throws IOException {
     boolean skipErrors = conf.getBoolean(HConstants.HREGION_EDITS_REPLAY_SKIP_ERRORS,
       conf.getBoolean("hbase.skip.errors", HConstants.DEFAULT_HREGION_EDITS_REPLAY_SKIP_ERRORS));
-    if (((KnobRuntime.check(java.util.UUID.fromString("fa024a3f-87ac-3a33-b189-0958e3a7107d"))) ? ((conf.get("hbase.skip.errors")) != (null)) : (conf.get("hbase.skip.errors") != null))) {
+    if (conf.get("hbase.skip.errors") != null) {
       LOG.warn("The property 'hbase.skip.errors' has been deprecated. Please use "
         + HConstants.HREGION_EDITS_REPLAY_SKIP_ERRORS + " instead.");
     }
@@ -5721,7 +5347,7 @@ atomic = false;
   private long replayRecoveredEdits(final Path edits, Map<byte[], Long> maxSeqIdInStores,
     final CancelableProgressable reporter, FileSystem fs) throws IOException {
     String msg = "Replaying edits from " + edits;
-    if (KnobRuntime.check(java.util.UUID.fromString("29e73096-ffb2-3178-9404-a3329b900a94"))) { LOG.debug(getRegionInfo().getEncodedName() + " : " + "Found decreasing SeqId. PreId="); } else { LOG.info(msg); }
+    LOG.info(msg);
     MonitoredTask status = TaskMonitor.get().createStatus(msg);
 
     status.setStatus("Opening recovered edits");
@@ -5758,7 +5384,7 @@ atomic = false;
 
           if (reporter != null) {
             intervalEdits += val.size();
-            if (((KnobRuntime.check(java.util.UUID.fromString("4541e40e-339f-3bc0-a142-db99fc66326c"))) ? ((intervalEdits) != (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("6442c0af-c0cd-3df6-bf4f-5c67956e2360"))) ? ((intervalEdits) > (2000)) : (((KnobRuntime.check(java.util.UUID.fromString("b45d6a94-4983-3e46-84de-48ca07c4c4ac"))) ? ((intervalEdits) < (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("9dfb3acd-a13d-3c42-9dd2-2fca54fda4da"))) ? ((intervalEdits) != (300000)) : (((KnobRuntime.check(java.util.UUID.fromString("bf966ef9-3218-30af-b9bd-977daa8667f1"))) ? ((intervalEdits) != (2000)) : (intervalEdits >= interval))))))))))) {
+            if (intervalEdits >= interval) {
               // Number of edits interval reached
               intervalEdits = 0;
               long cur = EnvironmentEdgeManager.currentTime();
@@ -5768,7 +5394,7 @@ atomic = false;
                 // Timeout reached
                 if (!reporter.progress()) {
                   msg = "Progressable reporter failed, stopping replay for region " + this;
-                  if (KnobRuntime.check(java.util.UUID.fromString("f300301e-33d0-3b57-bb34-04a915a0fc94"))) { LOG.error(getRegionInfo().getEncodedName() + " : " + "Found decreasing SeqId. PreId="); } else if (KnobRuntime.check(java.util.UUID.fromString("a3fa9cbb-c64e-3cd9-9498-71e649636b0e"))) { LOG.error(getRegionInfo().getEncodedName() + " : "); } else { LOG.warn(msg); }
+                  LOG.warn(msg);
                   status.abort(msg);
                   throw new IOException(msg);
                 }
@@ -5960,7 +5586,7 @@ atomic = false;
           + " and lastReplayedOpenRegionSeqId=" + lastReplayedOpenRegionSeqId);
       }
 
-      if (KnobRuntime.check(java.util.UUID.fromString("5b1b9409-8e19-3112-b743-14d4cb6a4b1d"))) { closeRegionOperation(Operation.REPLAY_EVENT); } else { startRegionOperation(Operation.REPLAY_EVENT); }
+      startRegionOperation(Operation.REPLAY_EVENT);
       try {
         HStore store = this.getStore(compaction.getFamilyName().toByteArray());
         if (store == null) {
@@ -5969,21 +5595,7 @@ atomic = false;
             + Bytes.toString(compaction.getFamilyName().toByteArray()));
           return;
         }
-if(KnobRuntime.check(java.util.UUID.fromString("a6ae707d-245e-3acb-9d9e-7932b4364c1a"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fda61359-b1f7-3927-82b0-c5d45e6f0c12"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = compaction.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(compaction));
-    _knob_field_.set(compaction, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("ee8476a9-9d65-326d-b45e-d560b27cb891"))) { store.replayCompactionMarker(compaction, pickCompactionFiles, !removeFiles); } else { store.replayCompactionMarker(compaction, pickCompactionFiles, removeFiles); }
+        store.replayCompactionMarker(compaction, pickCompactionFiles, removeFiles);
         logRegionFiles();
       } catch (FileNotFoundException ex) {
         LOG.warn(getRegionInfo().getEncodedName() + " : "
@@ -5997,20 +5609,6 @@ try {
   }
 
   void replayWALFlushMarker(FlushDescriptor flush, long replaySeqId) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9108055e-7393-3a58-b9ce-277674826645"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = flush.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(flush));
-    _knob_field_.set(flush, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("11e3624f-d50a-3dff-a4db-a618c3a2033a"))) {
-throw new java.io.IOException("Injected exception");
-}
     checkTargetRegion(flush.getEncodedRegionName().toByteArray(), "Flush marker from WAL ", flush);
 
     if (ServerRegionReplicaUtil.isDefaultReplica(this.getRegionInfo())) {
@@ -6078,7 +5676,7 @@ throw new java.io.IOException("Injected exception");
     // (flush, compaction, region open etc)
     synchronized (writestate) {
       try {
-        if (((KnobRuntime.check(java.util.UUID.fromString("388efece-740a-3eda-9c1b-6267ac755f6c"))) ? ((flush.getFlushSequenceNumber()) > (lastReplayedOpenRegionSeqId)) : (flush.getFlushSequenceNumber() < lastReplayedOpenRegionSeqId))) {
+        if (flush.getFlushSequenceNumber() < lastReplayedOpenRegionSeqId) {
           LOG.warn(getRegionInfo().getEncodedName() + " : " + "Skipping replaying flush event :"
             + TextFormat.shortDebugString(flush)
             + " because its sequence id is smaller than this regions lastReplayedOpenRegionSeqId "
@@ -7575,9 +7173,6 @@ throw new java.io.IOException("Injected exception");
    */
   public static HRegion openHRegion(Path rootDir, final RegionInfo info, final TableDescriptor htd,
     final WAL wal, final Configuration conf) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("37239cdb-384b-3226-af85-5ebeed1295c2"))) {
-return null;
-}
     return openHRegion(rootDir, info, htd, wal, conf, null, null);
   }
 
@@ -7686,28 +7281,6 @@ return null;
    */
   public static HRegion openHRegion(final HRegion other, final CancelableProgressable reporter)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("8d862841-5395-3f04-ac10-d3e5fee9bfa1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = other.getClass().getDeclaredField("memstoreFlushSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(other));
-    _knob_field_.set(other, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c60fd3c1-c7ba-3b66-9c78-3af12f351d81"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = other.getClass().getDeclaredField("minBlockSizeBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(other));
-    _knob_field_.set(other, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     HRegionFileSystem regionFs = other.getRegionFileSystem();
     HRegion r = newHRegion(regionFs.getTableDir(), other.getWAL(), regionFs.getFileSystem(),
       other.baseConf, other.getRegionInfo(), other.getTableDescriptor(), null);
@@ -7733,7 +7306,7 @@ try {
       TableDescriptorChecker.checkCompression(cConfig, htableDescriptor);
       // Refuse to open the region if encryption configuration is incorrect or
       // codec support is missing
-      if (KnobRuntime.check(java.util.UUID.fromString("fdcbd399-10ee-314f-ac8f-30545787fb2c"))) { LOG.info(("checking encryption for ") + (this.getRegionInfo().getEncodedName())); } else { LOG.debug("checking encryption for " + this.getRegionInfo().getEncodedName()); }
+      LOG.debug("checking encryption for " + this.getRegionInfo().getEncodedName());
       TableDescriptorChecker.checkEncryption(cConfig, htableDescriptor);
       // Refuse to open the region if a required class cannot be loaded
       LOG.debug("checking classloading for " + this.getRegionInfo().getEncodedName());
@@ -8186,75 +7759,9 @@ try {
   private void doProcessRowWithTimeout(final RowProcessor<?, ?> processor, final long now,
     final HRegion region, final List<Mutation> mutations, final WALEdit walEdit, final long timeout)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("aae78590-9fd7-3e31-ae3b-1d973b303563"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5089f3bb-30b6-3e4f-96dc-8d4b8d92ed76"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("isRestoredRegion");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(region);
-    _knob_field_.set(region, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // Short circuit the no time bound case.
     if (timeout < 0) {
       try {
-if(KnobRuntime.check(java.util.UUID.fromString("76ac5eb8-b89e-3d3c-9bff-3ceeafeabc83"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedCompactionSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d752ff6a-4706-307d-8de2-bc274ce1614a"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("blockingMemStoreSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("19186d41-3c1d-38ed-899a-c0a306d35d6e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxBusyWaitMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e0514893-39e8-301b-b040-adc5c9c7d0d4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("memstoreFlushSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         processor.process(now, region, mutations, walEdit);
       } catch (IOException e) {
         String row = processor.getRowsToLock().isEmpty()
@@ -8273,28 +7780,6 @@ try {
       @Override
       public Void call() throws IOException {
         try {
-if(KnobRuntime.check(java.util.UUID.fromString("85e41815-b6f9-372e-b26b-94307290b270"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("lastReplayedOpenRegionSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b1330eae-38f4-3d1f-9712-e16bbc89c281"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxCellSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           processor.process(now, region, mutations, walEdit);
           return null;
         } catch (IOException e) {
@@ -8550,9 +8035,6 @@ try {
       });
 
     if (coprocessorHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("ce7678a5-6e43-3d4d-9ee4-71b4b6978ca3"))) {
-throw new java.io.IOException("Injected exception");
-}
       coprocessorHost.postEndpointInvocation(service, methodName, request, responseBuilder);
     }
     IOException exception =
@@ -8708,9 +8190,6 @@ throw new java.io.IOException("Injected exception");
     regionLockHolders.remove(thisThread);
     lock.readLock().unlock();
     if (coprocessorHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("6c4108f5-ab4b-3767-b377-1ff4b8f68e91"))) {
-throw new java.io.IOException("Injected exception");
-}
       coprocessorHost.postCloseRegionOperation(operation);
     }
   }
@@ -8727,9 +8206,6 @@ throw new java.io.IOException("Injected exception");
     if (this.closing.get()) {
       throw new NotServingRegionException(getRegionInfo().getRegionNameAsString() + " is closing");
     }
-if(KnobRuntime.check(java.util.UUID.fromString("3753204c-f54d-3fd2-bf33-2db84c27a56d"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (writeLockNeeded) lock(lock.writeLock());
     else lock(lock.readLock());
     if (this.closed.get()) {
@@ -8879,9 +8355,6 @@ throw new java.io.IOException("Injected exception");
   }
 
   public void reportCompactionRequestEnd(boolean isMajor, int numFiles, long filesSizeCompacted) {
-if(KnobRuntime.check(java.util.UUID.fromString("524b39fd-3bfd-3025-a001-6be7eb89f3da"))) {
-return;
-}
     int newValue = (isMajor ? majorInProgress : minorInProgress).decrementAndGet();
 
     // metrics
@@ -8905,7 +8378,7 @@ return;
   }
 
   public void incrementFlushesQueuedCount() {
-    if (KnobRuntime.check(java.util.UUID.fromString("b336a88d-0ca3-3c79-9bd4-f3cf7c1fa96d"))) { waitForFlushesAndCompactions(); } else { flushesQueued.increment(); }
+    flushesQueued.increment();
   }
 
   protected void decrementFlushesQueuedCount() {
@@ -8951,7 +8424,7 @@ return;
   // Package scope for tests
   void checkInterrupt() throws NotServingRegionException, InterruptedIOException {
     if (Thread.interrupted()) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("317530b7-04a3-3cbc-97a0-be78038d507d"))) ? (isClosing()) : (this.closing.get()))) {
+      if (this.closing.get()) {
         throw new NotServingRegionException(
           getRegionInfo().getRegionNameAsString() + " is closing");
       }
@@ -9086,7 +8559,7 @@ return;
     if (shouldFlush) {
       // Make request outside of synchronize block; HBASE-818.
       this.rsServices.getFlushRequester().requestFlush(this, tracker);
-      if (((KnobRuntime.check(java.util.UUID.fromString("a8251699-1160-391e-bcbb-1f772ba3857f"))) ? (isClosed()) : (LOG.isDebugEnabled()))) {
+      if (LOG.isDebugEnabled()) {
         LOG.debug("Flush requested on " + this.getRegionInfo().getEncodedName());
       }
     } else {

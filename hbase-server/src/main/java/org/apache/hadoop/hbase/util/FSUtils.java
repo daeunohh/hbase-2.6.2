@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction.SAFEMODE_GET;
@@ -421,7 +420,7 @@ public final class FSUtils {
     // version is deprecated require migration
     // Output on stdout so user sees it in terminal.
     if (message) {
-      if (KnobRuntime.check(java.util.UUID.fromString("84602e7b-1f12-3234-bdc3-cbb5b942bbf4"))) { System.out.println("WARNING! "); } else { System.out.println("WARNING! " + msg); }
+      System.out.println("WARNING! " + msg);
     }
     throw new FileSystemVersionException(msg);
   }
@@ -492,13 +491,10 @@ public final class FSUtils {
         return;
       } catch (IOException e) {
         if (retries > 0) {
-          if (KnobRuntime.check(java.util.UUID.fromString("7330cd23-dd26-37ce-838a-4473c035fa62"))) { LOG.error(", retrying", e); } else { LOG.debug("Unable to create version file at " + rootdir.toString() + ", retrying", e); }
+          LOG.debug("Unable to create version file at " + rootdir.toString() + ", retrying", e);
           fs.delete(versionFile, false);
           try {
             if (wait > 0) {
-if(KnobRuntime.check(java.util.UUID.fromString("4d3c8aa2-15fd-3a0d-9ba8-cda0e5df5a2c"))) {
-wait -= 1;
-}
               Thread.sleep(wait);
             }
           } catch (InterruptedException ie) {
@@ -550,9 +546,6 @@ wait -= 1;
    * @throws IOException if reading the cluster ID file fails
    */
   public static ClusterId getClusterId(FileSystem fs, Path rootdir) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("703f0160-b740-3b0d-9aed-de9dd4480c30"))) {
-return null;
-}
     Path idPath = new Path(rootdir, HConstants.CLUSTER_ID_FILE_NAME);
     ClusterId clusterId = null;
     FileStatus status = fs.exists(idPath) ? fs.getFileStatus(idPath) : null;
@@ -584,9 +577,6 @@ return null;
         } finally {
           in.close();
         }
-if(KnobRuntime.check(java.util.UUID.fromString("f84d8d61-a0c6-380c-a81d-58370714b5f6"))) {
-throw new java.io.IOException("Injected exception");
-}
         rewriteAsPb(fs, rootdir, idPath, clusterId);
       }
       return clusterId;
@@ -650,7 +640,7 @@ throw new java.io.IOException("Injected exception");
         }
         return;
       } catch (IOException ioe) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("9b4df531-3223-3b9f-b8ea-a834ed6741de"))) ? ((wait) > (0)) : (wait > 0))) {
+        if (wait > 0) {
           LOG.warn("Unable to create cluster ID file in " + rootdir.toString() + ", retrying in "
             + wait + "msec: " + StringUtils.stringifyException(ioe));
           try {
@@ -708,9 +698,6 @@ throw new java.io.IOException("Injected exception");
    * @return true if exists
    */
   public static boolean metaRegionExists(FileSystem fs, Path rootDir) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("03d03c79-1d20-362f-924c-e1fc35c06ee0"))) {
-return true;
-}
     Path metaRegionDir = getRegionDirFromRootDir(rootDir, RegionInfoBuilder.FIRST_META_REGIONINFO);
     return fs.exists(metaRegionDir);
   }
@@ -1169,9 +1156,6 @@ return true;
 
     @Override
     public boolean accept(Path p) {
-if(KnobRuntime.check(java.util.UUID.fromString("f79f2596-e0d4-3e19-8c86-ef1e9ffe94b0"))) {
-return false;
-}
       return HFileLink.isHFileLink(p);
     }
   }

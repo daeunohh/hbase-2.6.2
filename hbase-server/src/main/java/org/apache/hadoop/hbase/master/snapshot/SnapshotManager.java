@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -320,9 +319,6 @@ public class SnapshotManager extends MasterProcedureManager implements Stoppable
    * @throws IOException if we can't reach the filesystem
    */
   private void resetTempDir() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2d50a9cc-6f30-31b9-a09e-1a260850e305"))) {
-return;
-}
     Set<String> workingProcedureCoordinatedSnapshotNames =
       snapshotToProcIdMap.keySet().stream().map(s -> s.getName()).collect(Collectors.toSet());
 
@@ -360,31 +356,6 @@ return;
    * @throws IOException                   For filesystem IOExceptions
    */
   public void deleteSnapshot(SnapshotDescription snapshot) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("b5d2408c-7410-32b8-80ac-0f99084e4a82"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c43f19a3-6560-39ce-afa8-5d5b175f3ffd"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("42111201-925f-314b-bc83-c363c1ebe1e7"))) {
-throw new java.io.IOException("Injected exception");
-}
     // check to see if it is completed
     if (!isSnapshotCompleted(snapshot)) {
       throw new SnapshotDoesNotExistException(ProtobufUtil.createSnapshotDesc(snapshot));
@@ -402,17 +373,6 @@ throw new java.io.IOException("Injected exception");
     MasterCoprocessorHost cpHost = master.getMasterCoprocessorHost();
     org.apache.hadoop.hbase.client.SnapshotDescription snapshotPOJO = null;
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("10561a4b-1986-3b6e-a271-e9f600ff7442"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       snapshotPOJO = ProtobufUtil.createSnapshotDesc(snapshot);
       cpHost.preDeleteSnapshot(snapshotPOJO);
     }
@@ -566,45 +526,12 @@ try {
    * @return <tt>true</tt> if there is a snapshot in progress on the specified table.
    */
   private synchronized boolean isTakingSnapshot(TableName tableName, boolean checkProcedure) {
-if(KnobRuntime.check(java.util.UUID.fromString("fcc12c38-52b5-3542-809b-c91e32ff1053"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     SnapshotSentinel handler = this.snapshotHandlers.get(tableName);
     if (handler != null && !handler.isFinished()) {
       return true;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("76a41c5c-6a57-3f56-964a-65d2bf0068f0"))) ? (!checkProcedure) : (((KnobRuntime.check(java.util.UUID.fromString("52f86d99-afba-375e-b707-d6aeee00b9b4"))) ? (false) : (checkProcedure))))) {
+    if (checkProcedure) {
       for (Map.Entry<SnapshotDescription, Long> entry : snapshotToProcIdMap.entrySet()) {
-if(KnobRuntime.check(java.util.UUID.fromString("761b8ee9-9238-3ac9-b598-6625333c7657"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("12b49f89-9bf6-381e-ba96-fd9611c43043"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         if (
           TableName.valueOf(entry.getKey().getTable()).equals(tableName)
             && !master.getMasterProcedureExecutor().isFinished(entry.getValue())
@@ -660,7 +587,7 @@ try {
    */
   private static void updateWorkingDirAclsIfRequired(Path workingDir, FileSystem workingDirFS)
     throws IOException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("9af9292c-cde4-39a7-ae3d-0b0b13a5f020"))) ? ((workingDir.getParent() == null) || ((workingDir.getParent().getParent()) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bfed20f8-278e-3c74-b90d-6597b102efd9"))) ? (((workingDir.getParent()) != (null)) && ((workingDir.getParent().getParent()) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("0df3784c-008e-3083-a0fd-b76865f3a581"))) ? ((workingDir.getParent() == null) || ((workingDir.getParent().getParent()) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("45e1d3ec-a800-37fd-a344-5f69da7836e8"))) ? ((workingDir.getParent() == null) && (workingDir.getParent().getParent() == null)) : (workingDir.getParent() == null || workingDir.getParent().getParent() == null))))))))) {
+    if (workingDir.getParent() == null || workingDir.getParent().getParent() == null) {
       return;
     }
     AclStatus snapshotWorkingParentDirStatus;
@@ -678,9 +605,6 @@ try {
       snapshotWorkingParentDirAclStatusEntries != null
         && snapshotWorkingParentDirAclStatusEntries.size() > 0
     ) {
-if(KnobRuntime.check(java.util.UUID.fromString("b0258958-6987-317e-99bb-0f275b81a902"))) {
-throw new java.io.IOException("Injected exception");
-}
       workingDirFS.modifyAclEntries(workingDir, snapshotWorkingParentDirAclStatusEntries);
     }
   }
@@ -786,53 +710,6 @@ throw new java.io.IOException("Injected exception");
     throws IOException {
     this.takingSnapshotLock.readLock().lock();
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("5da1d1ea-aefa-39b9-8b13-ee3fbef54b83"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("547183cc-08df-3a55-b7d3-2d707b4ff838"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("aea8dada-690c-3aa0-8e30-47512d312aab"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("creationTime_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8e02f28b-8057-3f2e-a5c1-588b1d322aff"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8d9d0617-0470-3e58-ae35-124a7c074baa"))) {
-nonceGroup = -1;
-}
       return submitSnapshotProcedure(snapshot, nonceGroup, nonce);
     } finally {
       this.takingSnapshotLock.readLock().unlock();
@@ -850,31 +727,6 @@ nonceGroup = -1;
           long procId = submitProcedure(new SnapshotProcedure(
             getMaster().getMasterProcedureExecutor().getEnvironment(), snapshot));
 
-if(KnobRuntime.check(java.util.UUID.fromString("dc89b055-98bd-39be-83fd-5fdb4aec2555"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("219124f9-3750-304f-8482-38c6f96f7d6d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("feb0daa4-2edf-3611-bcc5-c0bb063e7b06"))) {
-procId = 0;
-}
           getMaster().getSnapshotManager().registerSnapshotProcedure(snapshot, procId);
         }
 
@@ -1062,20 +914,9 @@ procId = 0;
         + tableName.getNameAsString(), e);
       throw e;
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("3d62e062-7180-3def-a659-caf30896748f"))) { LOG.debug(("Clone snapshot=" + snapshot.getName()) + (" as table=")); } else if (KnobRuntime.check(java.util.UUID.fromString("c62ffd0f-e8ab-3d06-89f5-0426d6b4ac12"))) { LOG.debug(("Clone snapshot=" + snapshot.getName()) + (tableName)); } else if (KnobRuntime.check(java.util.UUID.fromString("ceec30a0-4ce5-3ced-a96d-70546c4e8add"))) { LOG.warn(("Clone snapshot=" + snapshot.getName()) + (tableName)); } else if (KnobRuntime.check(java.util.UUID.fromString("9206802d-2816-3c48-9425-772a823b968a"))) { LOG.error(("Clone snapshot=" + snapshot.getName()) + (" as table=")); } else { LOG.info("Clone snapshot=" + snapshot.getName() + " as table=" + tableName); }
+    LOG.info("Clone snapshot=" + snapshot.getName() + " as table=" + tableName);
 
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("e1e20a84-b828-353d-9d5e-0e6a5559bbd7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotPOJO.getClass().getDeclaredField("maxFileSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshotPOJO));
-    _knob_field_.set(snapshotPOJO, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cpHost.postCloneSnapshot(snapshotPOJO, htd);
     }
     return procId;
@@ -1092,28 +933,6 @@ try {
   synchronized long cloneSnapshot(final SnapshotDescription snapshot,
     final TableDescriptor tableDescriptor, final NonceKey nonceKey, final boolean restoreAcl,
     final String customSFT) throws HBaseSnapshotException {
-if(KnobRuntime.check(java.util.UUID.fromString("34291984-008b-323f-b2c6-583f961a6c15"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("441cfef6-7c12-3871-9fef-c8d83a3119a5"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = nonceKey.getClass().getDeclaredField("nonce");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(nonceKey));
-    _knob_field_.set(nonceKey, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     TableName tableName = tableDescriptor.getTableName();
 
     // make sure we aren't running a snapshot on the same table
@@ -1136,7 +955,7 @@ try {
     } catch (Exception e) {
       String msg = "Couldn't clone the snapshot="
         + ClientSnapshotDescriptionUtils.toString(snapshot) + " on table=" + tableName;
-      if (KnobRuntime.check(java.util.UUID.fromString("4d520407-cdbc-32fa-8eba-6117fa3ecb3f"))) { LOG.warn(msg, e); } else { LOG.error(msg, e); }
+      LOG.error(msg, e);
       throw new RestoreSnapshotException(msg, e);
     }
   }
@@ -1176,43 +995,10 @@ try {
 
     // Execute the restore/clone operation
     long procId;
-    if (((KnobRuntime.check(java.util.UUID.fromString("75addf3f-8e5c-3e18-b1d9-c42080383129"))) ? (isTableTakingAnySnapshot(tableName)) : (master.getTableDescriptors().exists(tableName)))) {
+    if (master.getTableDescriptors().exists(tableName)) {
       procId =
         restoreSnapshot(reqSnapshot, tableName, snapshot, snapshotTableDesc, nonceKey, restoreAcl);
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("198bef0d-8cce-3729-ac98-bb180151e261"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fcd12f3d-5349-3d4e-a6e5-f08c37343fcd"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = reqSnapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(reqSnapshot));
-    _knob_field_.set(reqSnapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("522d99d5-c6ed-3a90-bc59-9cdea94ee012"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = reqSnapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(reqSnapshot));
-    _knob_field_.set(reqSnapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       procId = cloneSnapshot(reqSnapshot, tableName, snapshot, snapshotTableDesc, nonceKey,
         restoreAcl, customSFT);
     }
@@ -1250,22 +1036,8 @@ try {
     // call Coprocessor pre hook
     org.apache.hadoop.hbase.client.SnapshotDescription snapshotPOJO = null;
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("d515a216-582a-383d-9b57-828ffcbf5ec4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       snapshotPOJO = ProtobufUtil.createSnapshotDesc(snapshot);
-if(KnobRuntime.check(java.util.UUID.fromString("a6b70dac-c97f-3ac6-b8bd-38e6785216de"))) {
-throw new java.io.IOException("Injected exception");
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("89421c20-b068-3c80-b4d0-707ea4280a90"))) { cpHost.postCloneSnapshot(snapshotPOJO, snapshotTableDesc); } else { cpHost.preRestoreSnapshot(snapshotPOJO, snapshotTableDesc); }
+      cpHost.preRestoreSnapshot(snapshotPOJO, snapshotTableDesc);
     }
 
     long procId;
@@ -1276,20 +1048,9 @@ throw new java.io.IOException("Injected exception");
         + " as table " + tableName.getNameAsString(), e);
       throw e;
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("1114e0d2-0da8-3312-bfe2-a6bce1b3d056"))) { LOG.error("Restore snapshot=" + snapshot.getName()); } else { LOG.info("Restore snapshot=" + snapshot.getName() + " as table=" + tableName); }
+    LOG.info("Restore snapshot=" + snapshot.getName() + " as table=" + tableName);
 
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("127d2605-1024-3123-9f37-1d311a205c0d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotPOJO.getClass().getDeclaredField("version");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotPOJO));
-    _knob_field_.set(snapshotPOJO, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cpHost.postRestoreSnapshot(snapshotPOJO, snapshotTableDesc);
     }
 
@@ -1322,28 +1083,6 @@ try {
 
     try {
       TableDescriptor oldDescriptor = master.getTableDescriptors().get(tableName);
-if(KnobRuntime.check(java.util.UUID.fromString("e37ea340-2bcd-3c1a-bdda-6e555bb76c80"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = nonceKey.getClass().getDeclaredField("group");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(nonceKey));
-    _knob_field_.set(nonceKey, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4c70af5c-cf1e-35a6-9e77-36f7faa518d0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = nonceKey.getClass().getDeclaredField("nonce");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(nonceKey));
-    _knob_field_.set(nonceKey, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       long procId = master.getMasterProcedureExecutor().submitProcedure(
         new RestoreSnapshotProcedure(master.getMasterProcedureExecutor().getEnvironment(),
           oldDescriptor, tableDescriptor, snapshot, restoreAcl),
@@ -1503,7 +1242,7 @@ try {
 
   @Override
   public boolean isStopped() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("0bbae02a-eda9-3afe-981c-2a0e02a0b111"))) ? (!this.stopped) : (this.stopped));
+    return this.stopped;
   }
 
   /**
@@ -1512,12 +1251,6 @@ try {
    * @throws UnsupportedOperationException if snapshot are not supported
    */
   public void checkSnapshotSupport() throws UnsupportedOperationException {
-if(KnobRuntime.check(java.util.UUID.fromString("61271ea4-ece5-3126-9608-dac0bf373e7e"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6b8c7074-e54a-32cc-b548-f3fcd08da831"))) {
-throw new UnsupportedOperationException("Injected exception");
-}
     if (!this.isSnapshotSupported) {
       throw new UnsupportedOperationException(
         "To use snapshots, You must add to the hbase-site.xml of the HBase Master: '"
@@ -1554,13 +1287,10 @@ throw new UnsupportedOperationException("Injected exception");
     // check if an older version of snapshot directory was present
     Path oldSnapshotDir = new Path(mfs.getRootDir(), HConstants.OLD_SNAPSHOT_DIR_NAME);
     FileSystem fs = mfs.getFileSystem();
-if(KnobRuntime.check(java.util.UUID.fromString("d883d338-ea93-3df8-9d0e-7d5d0a1081e1"))) {
-throw new java.io.IOException("Injected exception");
-}
     List<SnapshotDescription> ss = getCompletedSnapshots(new Path(rootDir, oldSnapshotDir), false);
     if (ss != null && !ss.isEmpty()) {
       LOG.error("Snapshots from an earlier release were found under: " + oldSnapshotDir);
-      if (KnobRuntime.check(java.util.UUID.fromString("0475b2b3-2aba-351f-9df9-3edd89fdf679"))) { LOG.warn(("Please rename the directory as ") + (SnapshotHFileCleaner.class.getName())); } else if (KnobRuntime.check(java.util.UUID.fromString("7a0a5dda-bcdb-35dd-b97f-177b32bbfaf5"))) { LOG.error("Please rename the directory as "); } else { LOG.error("Please rename the directory as " + HConstants.SNAPSHOT_DIR_NAME); }
+      LOG.error("Please rename the directory as " + HConstants.SNAPSHOT_DIR_NAME);
     }
 
     // If the user has enabled the snapshot, we force the cleaners to be present
@@ -1590,7 +1320,7 @@ throw new java.io.IOException("Injected exception");
       snapshotEnabled = hfileCleaners.contains(SnapshotHFileCleaner.class.getName());
 
       // Warn if the cleaners are enabled but the snapshot.enabled property is false/not set.
-      if (((KnobRuntime.check(java.util.UUID.fromString("560f6a15-de31-3369-b94b-22c5e939658f"))) ? (!snapshotEnabled) : (snapshotEnabled))) {
+      if (snapshotEnabled) {
         LOG.warn("Snapshot log and hfile cleaners are present in the configuration, " + "but the '"
           + HBASE_SNAPSHOT_ENABLED + "' property "
           + (userDisabled ? "is set to 'false'." : "is not set."));
@@ -1668,17 +1398,6 @@ throw new java.io.IOException("Injected exception");
 
   @Override
   public void execProcedure(ProcedureDescription desc) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("3e2fba8a-c5b0-32c8-a283-165745d606ad"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(desc));
-    _knob_field_.set(desc, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     takeSnapshot(toSnapshotDescription(desc));
   }
 

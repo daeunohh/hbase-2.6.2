@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,17 +136,6 @@ public class DeleteTableProcedure extends AbstractStateMachineTableProcedure<Del
           throw new UnsupportedOperationException("unhandled state=" + state);
       }
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("258bdc64-1f32-3a2d-9c40-6e8c20868eb4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (isRollbackSupported(state)) {
         setFailure("master-delete-table", e);
       } else {
@@ -155,17 +143,6 @@ try {
           retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
         }
         long backoff = retryCounter.getBackoffTimeAndIncrementAttempts();
-if(KnobRuntime.check(java.util.UUID.fromString("70687663-427b-3b6c-b285-2af935648dc7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         LOG.warn("Retriable error trying to delete table={},state={},suspend {}secs.",
           getTableName(), state, backoff / 1000, e);
         throw suspend(Math.toIntExact(backoff), true);
@@ -293,17 +270,6 @@ try {
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
       final TableName tableName = this.tableName;
-if(KnobRuntime.check(java.util.UUID.fromString("57ad5cfe-855a-3327-9158-dc7b827969e2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cpHost.preDeleteTableAction(tableName, getUser());
     }
     return true;
@@ -370,28 +336,6 @@ try {
 
       // Delete the directory on wal filesystem
       FileSystem walFs = mfs.getWALFileSystem();
-if(KnobRuntime.check(java.util.UUID.fromString("24e77890-e96c-34c1-9f52-cc508f7dfece"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("06195262-7ec7-3a51-9729-4a6aa3d3c4f8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       Path tableWALDir = CommonFSUtils.getWALTableDir(env.getMasterConfiguration(), tableName);
       if (walFs.exists(tableWALDir) && !walFs.delete(tableWALDir, true)) {
         throw new IOException("Couldn't delete table dir on wal filesystem" + tableWALDir);
@@ -408,17 +352,6 @@ try {
    */
   private static void cleanRegionsInMeta(final MasterProcedureEnv env, final TableName tableName)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5b1368bc-57db-3e19-9170-d5d06cf6f672"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Scan tableScan = MetaTableAccessor.getScanForTableName(env.getMasterConfiguration(), tableName)
       .setFilter(new KeyOnlyFilter());
     long now = EnvironmentEdgeManager.currentTime();
@@ -461,17 +394,17 @@ try {
   protected static void deleteAssignmentState(final MasterProcedureEnv env,
     final TableName tableName) throws IOException {
     // Clean up regions of the table in RegionStates.
-    if (KnobRuntime.check(java.util.UUID.fromString("761fd939-5c1a-3b55-9225-f2d2365433bc"))) { LOG.trace("Removing '" + tableName); } else { LOG.debug("Removing '" + tableName + "' from region states."); }
+    LOG.debug("Removing '" + tableName + "' from region states.");
     env.getMasterServices().getAssignmentManager().deleteTable(tableName);
 
     // If entry for this table states, remove it.
-    if (KnobRuntime.check(java.util.UUID.fromString("ad5fef0d-9977-3721-b6de-3502ec04402d"))) { LOG.trace(("Marking '") + ("' as deleted.")); } else if (KnobRuntime.check(java.util.UUID.fromString("ec5bf4b0-6b43-35e4-8af9-40e71fb8855f"))) { LOG.warn(("Marking '") + ("' as deleted.")); } else if (KnobRuntime.check(java.util.UUID.fromString("405cd33f-e870-3a3e-9f64-a92e349008bc"))) { LOG.trace((("Marking '") + (tableName)) + ("' as deleted.")); } else if (KnobRuntime.check(java.util.UUID.fromString("b8da9568-4bc7-3cb4-964e-f2fdd57e55fc"))) { LOG.debug("Marking '"); } else if (KnobRuntime.check(java.util.UUID.fromString("f50cb105-9bd1-3e33-9ed2-05937d88cc06"))) { LOG.trace("' as deleted."); } else if (KnobRuntime.check(java.util.UUID.fromString("6cd81df0-424f-38ea-9fea-163c9bf76999"))) { LOG.trace(("Marking '") + (tableName)); } else { LOG.debug("Marking '" + tableName + "' as deleted."); }
+    LOG.debug("Marking '" + tableName + "' as deleted.");
     env.getMasterServices().getTableStateManager().setDeletedTable(tableName);
   }
 
   protected static void deleteTableDescriptorCache(final MasterProcedureEnv env,
     final TableName tableName) throws IOException {
-    if (KnobRuntime.check(java.util.UUID.fromString("469dbf03-30ee-37b5-ae55-33b41be7668d"))) { LOG.debug("' descriptor."); } else { LOG.debug("Removing '" + tableName + "' descriptor."); }
+    LOG.debug("Removing '" + tableName + "' descriptor.");
     env.getMasterServices().getTableDescriptors().remove(tableName);
   }
 

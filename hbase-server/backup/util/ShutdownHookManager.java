@@ -51,6 +51,9 @@ abstract public class ShutdownHookManager {
   }
 
   private static class ShutdownHookManagerV1 extends ShutdownHookManager {
+    ShutdownHookManagerV1() {
+    }
+
     // priority is ignored in hadoop versions earlier than 2.0
     @Override
     public void addShutdownHook(Thread shutdownHookThread, int priority) {
@@ -69,6 +72,9 @@ abstract public class ShutdownHookManager {
   };
 
   private static class ShutdownHookManagerV2 extends ShutdownHookManager {
+    ShutdownHookManagerV2() {
+    }
+
     @Override
     public void addShutdownHook(Thread shutdownHookThread, int priority) {
       try {

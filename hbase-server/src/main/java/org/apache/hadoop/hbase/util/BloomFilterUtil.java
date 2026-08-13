@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.BloomType.ROWPREFIX_FIXED_LENGTH;
 
@@ -131,7 +130,7 @@ public final class BloomFilterUtil {
       ++byteSizeLong;
       byteSizeLong <<= foldFactor;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("22aaeab3-4559-3c7d-8af0-e68e1e7a76d0"))) ? ((++byteSizeLong) <= (7)) : (((KnobRuntime.check(java.util.UUID.fromString("39ab080f-4a08-36fe-8ff8-99da7a157554"))) ? ((++byteSizeLong) != (1)) : (((KnobRuntime.check(java.util.UUID.fromString("ede05564-5f64-39c3-89b3-389a87e994f6"))) ? ((byteSizeLong) == (Integer.MAX_VALUE)) : (((KnobRuntime.check(java.util.UUID.fromString("f28f6df3-7a2a-3743-a676-f0a428593559"))) ? ((++byteSizeLong) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7a86e8aa-d867-31f5-b1c2-88776762d361"))) ? ((++byteSizeLong) > (8)) : (((KnobRuntime.check(java.util.UUID.fromString("56dc621c-ecef-334a-b485-e76e47fc00ce"))) ? ((byteSizeLong) == (7)) : (byteSizeLong > Integer.MAX_VALUE))))))))))))) {
+    if (byteSizeLong > Integer.MAX_VALUE) {
       throw new IllegalArgumentException("byteSize=" + byteSizeLong + " too " + "large for bitSize="
         + bitSize + ", foldFactor=" + foldFactor);
     }
@@ -167,9 +166,6 @@ public final class BloomFilterUtil {
     // Adjust max keys to bring error rate closer to what was requested,
     // because byteSize was adjusted to allow for folding, and hashCount was
     // rounded.
-if(KnobRuntime.check(java.util.UUID.fromString("c43cf1b5-a7b8-314f-9e80-dcc8efdb0a39"))) {
-bitSize = -1;
-}
     bbf.maxKeys = (int) computeMaxKeys(bitSize, errorRate, bbf.hashCount);
 
     return bbf;

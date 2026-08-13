@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -78,9 +77,6 @@ public class SortedList<E> implements List<E>, RandomAccess {
    * over using the RandomAccess pattern.
    */
   public List<E> get() { // FindBugs: UG_SYNC_SET_UNSYNC_GET complaint. Fix!!
-if(KnobRuntime.check(java.util.UUID.fromString("61da546a-305a-37fc-bbc1-f0960e5f7d02"))) {
-return null;
-}
     return list;
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -464,17 +463,6 @@ public class MasterCoprocessorHost
   public TableDescriptor preModifyTable(final TableName tableName,
     final TableDescriptor currentDescriptor, final TableDescriptor newDescriptor)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("b4251eff-5b7a-3999-ae04-896687edc9b3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (coprocEnvironments.isEmpty()) {
       return newDescriptor;
     }

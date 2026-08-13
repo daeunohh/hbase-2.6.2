@@ -97,7 +97,7 @@ public class JVMClusterUtil {
    * Datastructure to hold Master Thread and Master instance
    */
   public static class MasterThread extends Thread {
-    private final HMaster master;
+    final HMaster master;
 
     public MasterThread(final HMaster m, final int index) {
       super(m, "M:" + index + ";" + m.getServerName().toShortString());

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -170,9 +169,6 @@ public interface RegionServerServices extends Server, MutableOnlineRegions, Favo
     }
 
     public long[] getProcIds() {
-if(KnobRuntime.check(java.util.UUID.fromString("e2f9b471-a19e-3b94-ad76-94194cc599fb"))) {
-return null;
-}
       return procIds;
     }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -136,9 +135,6 @@ public class HalfStoreFileReader extends StoreFileReader {
 
       @Override
       public boolean next() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("521d49d3-bd3b-329b-aca9-221dfd214bf3"))) {
-return false;
-}
         if (atEnd) return false;
 
         boolean b = delegate.next();
@@ -292,64 +288,6 @@ return false;
 
   @Override
   public boolean passesKeyRangeFilter(Scan scan) {
-if(KnobRuntime.check(java.util.UUID.fromString("c8cd8d46-c03b-3c15-a05c-db2676cb8fb1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("maxVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("cab96a32-9f4f-3f26-b967-f85a321d6817"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("268e212b-95d0-3187-b872-912507912e84"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("caching");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("af279a1d-3a0a-31ad-bc4b-9d60879285f5"))) {
-return false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7a4381c0-d48e-3712-9fc4-d1096c4edc0e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeLimit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ee6c8a65-f8b6-3378-b22e-3b8293ad6a54"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("caching");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return true;
   }
 
@@ -392,7 +330,7 @@ try {
       } catch (IOException e) {
         LOG.warn("Failed seekTo first KV in the file", e);
       } finally {
-        if (((KnobRuntime.check(java.util.UUID.fromString("60c05051-02f8-3e94-bf10-1b7362f98cd9"))) ? ((scanner) != (null)) : (scanner != null))) {
+        if (scanner != null) {
           scanner.close();
         }
       }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataInput;
@@ -909,9 +908,6 @@ public class HFileBlockIndex {
         heapSize += ClassSize.align(ClassSize.ARRAY + blockDataSizes.length * Bytes.SIZEOF_INT);
       }
 
-if(KnobRuntime.check(java.util.UUID.fromString("62ff62b5-8c71-326f-b570-4aedfd17f90f"))) {
-heapSize -= 1;
-}
       return ClassSize.align(heapSize);
     }
 
@@ -1015,7 +1011,7 @@ heapSize -= 1;
     }
 
     public void setMaxChunkSize(int maxChunkSize) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("4fe19b93-af83-3e5d-a184-a30689d3d838"))) ? ((maxChunkSize) >= (0)) : (maxChunkSize <= 0))) {
+      if (maxChunkSize <= 0) {
         throw new IllegalArgumentException("Invalid maximum index block size");
       }
       this.maxChunkSize = maxChunkSize;
@@ -1074,39 +1070,6 @@ heapSize -= 1;
         if (cacheConf != null) {
           cacheConf.getBlockCache().ifPresent(cache -> {
             HFileBlock blockForCaching = blockWriter.getBlockForCaching(cacheConf);
-if(KnobRuntime.check(java.util.UUID.fromString("fb0e46ca-8a5e-3b7a-b63b-75d90ae87c06"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("47cc64e3-61f7-3641-bf91-a9bfd03931a9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("149fac35-bf87-36e9-8bcb-1d8e9d88743f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             cache.cacheBlock(new BlockCacheKey(nameForCaching, rootLevelIndexPos, true,
               blockForCaching.getBlockType()), blockForCaching);
             // Index blocks always go to LRU, which then converts any off-heap buffer to on-heap,
@@ -1274,7 +1237,7 @@ try {
 
         return true;
       } else {
-        return ((KnobRuntime.check(java.util.UUID.fromString("c3b40732-e87a-3bc5-9870-8d6cd5d006d3"))) ? ((curInlineChunk.getNumEntries()) > (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("94521962-2bc9-39eb-b9a0-156530d444a7"))) ? ((curInlineChunk.getNonRootSize()) > (maxChunkSize)) : (curInlineChunk.getNonRootSize() >= maxChunkSize))));
+        return curInlineChunk.getNonRootSize() >= maxChunkSize;
       }
     }
 
@@ -1440,9 +1403,6 @@ try {
         + WritableUtils.getVIntSize(firstKey.length) + firstKey.length;
 
       blockKeys.add(firstKey);
-if(KnobRuntime.check(java.util.UUID.fromString("56bfbc66-150d-34eb-bf4f-d1ee4c274f16"))) {
-blockOffset = -1;
-}
       blockOffsets.add(blockOffset);
       onDiskDataSizes.add(onDiskDataSize);
 

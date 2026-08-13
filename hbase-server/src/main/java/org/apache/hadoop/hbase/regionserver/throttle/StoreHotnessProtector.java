@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import java.util.Map;
@@ -125,9 +124,6 @@ public class StoreHotnessProtector {
   }
 
   public void start(Map<byte[], List<Cell>> familyMaps) throws RegionTooBusyException {
-if(KnobRuntime.check(java.util.UUID.fromString("fabda7cc-1a85-3284-8919-45785a5bf223"))) {
-return;
-}
     if (!isEnable()) {
       return;
     }

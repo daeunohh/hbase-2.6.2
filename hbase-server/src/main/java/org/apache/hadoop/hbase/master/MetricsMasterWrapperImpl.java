@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.AbstractMap.SimpleImmutableEntry;
 import java.util.Collections;
@@ -58,7 +57,7 @@ public class MetricsMasterWrapperImpl implements MetricsMasterWrapper {
 
   @Override
   public long getMergePlanCount() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("ab928e6b-ec7c-324b-abe1-38c3188842ea"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((master.getRegionNormalizerManager()) == (null)) : (master.getRegionNormalizerManager() == null))) {
+    if (master.getRegionNormalizerManager() == null) {
       return 0;
     }
     return master.getRegionNormalizerManager().getMergePlanCount();
@@ -95,10 +94,7 @@ public class MetricsMasterWrapperImpl implements MetricsMasterWrapper {
 
   @Override
   public long getActiveTime() {
-if(KnobRuntime.check(java.util.UUID.fromString("6a255785-3281-3cc3-a123-2955dfc20653"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return 0;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("011528f1-eae3-3d1e-ba5e-56665e4836e1"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (master.getMasterFinishedInitializationTime()) : (((KnobRuntime.check(java.util.UUID.fromString("56c5b10e-87d2-38f7-a5e4-fc01ff25642c"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (master.getMasterStartTime()) : (master.getMasterActiveTime()))));
+    return master.getMasterActiveTime();
   }
 
   @Override
@@ -144,9 +140,6 @@ return 0;
 
   @Override
   public String getDrainingRegionServers() {
-if(KnobRuntime.check(java.util.UUID.fromString("bdb5e301-c02e-3816-9f4e-dcd77aa4757c"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return null;
-}
     ServerManager serverManager = this.master.getServerManager();
     if (serverManager == null) {
       return "";
@@ -165,9 +158,6 @@ return null;
 
   @Override
   public String getServerName() {
-if(KnobRuntime.check(java.util.UUID.fromString("25570921-25d5-39b5-8293-2fd1ab9f217f"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return null;
-}
     ServerName serverName = master.getServerName();
     if (serverName == null) {
       return "";
@@ -177,9 +167,6 @@ return null;
 
   @Override
   public boolean getIsActiveMaster() {
-if(KnobRuntime.check(java.util.UUID.fromString("eb022212-904f-379c-9586-52ff6da742fb"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return false;
-}
     return master.isActiveMaster();
   }
 

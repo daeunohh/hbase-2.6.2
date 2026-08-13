@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -207,7 +206,7 @@ class WALEntryStream implements Closeable {
   }
 
   private void resetReader() throws IOException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("25205fe3-2810-30e9-b033-90fb86352a9e"))) ? ((currentPositionOfEntry) <= (0)) : (currentPositionOfEntry > 0))) {
+    if (currentPositionOfEntry > 0) {
       reader.resetTo(currentPositionOfEntry, state.resetCompression());
     } else {
       // we will read from the beginning so we should always clear the compression context
@@ -337,8 +336,8 @@ class WALEntryStream implements Closeable {
 
   private HasNext tryAdvanceEntry() {
     HasNext prepared = prepareReader();
-    if (((KnobRuntime.check(java.util.UUID.fromString("4dde36dc-ecc1-378a-8f44-53634187424c"))) ? ((prepared) == (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("e0eb9cb0-3c3b-3187-b57b-0d0a521d3e7b"))) ? ((prepared) == (HasNext.YES)) : (((KnobRuntime.check(java.util.UUID.fromString("070cf360-440f-3741-aa70-26b0fcef1dbd"))) ? ((lastAttempt()) != (prepareReader())) : (((KnobRuntime.check(java.util.UUID.fromString("74bfff78-a787-3f06-b3f6-d3631cc7aa61"))) ? ((prepared) == (lastAttempt())) : (prepared != HasNext.YES))))))))) {
-      return ((KnobRuntime.check(java.util.UUID.fromString("2c1645cf-5199-3c69-bb04-bed81f156d3f"))) ? (((org.apache.hadoop.hbase.replication.regionserver.WALEntryStream.HasNext)(prepareReader()))) : (prepared));
+    if (prepared != HasNext.YES) {
+      return prepared;
     }
 
     Pair<WALTailingReader.State, Boolean> pair = readNextEntryAndRecordReaderPosition();
@@ -472,9 +471,6 @@ class WALEntryStream implements Closeable {
    * Returns whether the file is opened for writing.
    */
   private Pair<WALTailingReader.State, Boolean> readNextEntryAndRecordReaderPosition() {
-if(KnobRuntime.check(java.util.UUID.fromString("28495216-28de-3b11-bd10-1ee08bacdda4"))) {
-return null;
-}
     OptionalLong fileLength;
     if (logQueue.getQueueSize(walGroupId) > 1) {
       // if there are more than one files in queue, although it is possible that we are

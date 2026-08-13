@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -42,7 +41,7 @@ public abstract class OffPeakHours {
   public static OffPeakHours getInstance(Configuration conf) {
     int startHour = conf.getInt(CompactionConfiguration.HBASE_HSTORE_OFFPEAK_START_HOUR, -1);
     int endHour = conf.getInt(CompactionConfiguration.HBASE_HSTORE_OFFPEAK_END_HOUR, -1);
-    return ((KnobRuntime.check(java.util.UUID.fromString("3ac915b3-11a6-34f6-9f70-eed5cee1a4b8"))) ? (((org.apache.hadoop.hbase.regionserver.compactions.OffPeakHours)(getInstance(-1, endHour)))) : (getInstance(startHour, endHour)));
+    return getInstance(startHour, endHour);
   }
 
   /**
@@ -50,7 +49,7 @@ public abstract class OffPeakHours {
    * @param endHour   exclusive
    */
   public static OffPeakHours getInstance(int startHour, int endHour) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("3375e9fb-0ede-3fcb-a9fb-94ec7444618e"))) ? (((startHour) == (-1)) && ((endHour) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("f550d844-e776-3fa4-a5ef-55259684a366"))) ? (((startHour) == (-1)) || ((-1) != (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("dfccca2c-1cc1-3f8a-af06-d08c3306ce3b"))) ? (((1) == (-1)) || ((-1) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("f9255295-05eb-3951-9d0b-872734c91934"))) ? (((startHour) == (-1)) || ((1) != (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("3f3371de-917f-3532-9a34-8a9620397757"))) ? (((startHour) == (-1)) && ((-1) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("6da1b8d9-e9e7-38c4-b3e9-fc23462e767f"))) ? ((startHour == -1) && ((-1) != (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("1a26e55a-d838-3d67-b978-1de177c3314c"))) ? (((1) == (-1)) || ((1) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("735e9ae9-fcfb-391b-bb71-672d9011879b"))) ? (((1) != (-1)) && ((1) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("dcee71cc-bb03-31dc-b944-2f4e548cca25"))) ? (((-1) != (-1)) && ((-1) != (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("470fccd2-e19f-3111-80ec-73dd6cf5979d"))) ? (((-1) == (-1)) && ((endHour) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("b36a024f-6541-323c-be26-fe464cf1b28f"))) ? (((startHour) == (-1)) || ((-1) == (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("0a5625b9-f034-3c92-b943-296a718993db"))) ? (((startHour) != (-1)) && ((endHour) != (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("a4d169ed-3f3c-3ed3-9f21-e9ed1ee514af"))) ? (((-1) != (-1)) || (endHour == -1)) : (((KnobRuntime.check(java.util.UUID.fromString("cb53e514-ed96-3e39-bbc4-f034b78fb27a"))) ? (((-1) != (-1)) && ((1) == (-1))) : (startHour == -1 && endHour == -1))))))))))))))))))))))))))))) {
+    if (startHour == -1 && endHour == -1) {
       return DISABLED;
     }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -169,9 +168,6 @@ public class WALCoprocessorHost extends CoprocessorHost<WALCoprocessor, WALCopro
    * @param newPath the path of the wal we are going to create
    */
   public void preWALRoll(Path oldPath, Path newPath) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2141b875-89d1-3656-98ca-b261dc0766ca"))) {
-return;
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new WALObserverOperation() {
       @Override
       protected void call(WALObserver observer) throws IOException {
@@ -186,9 +182,6 @@ return;
    * @param newPath the path of the wal we have created and now is the current
    */
   public void postWALRoll(Path oldPath, Path newPath) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("efc46763-b957-30ed-b7ed-a5514e557a60"))) {
-throw new java.io.IOException("Injected exception");
-}
     execOperation(coprocEnvironments.isEmpty() ? null : new WALObserverOperation() {
       @Override
       protected void call(WALObserver observer) throws IOException {

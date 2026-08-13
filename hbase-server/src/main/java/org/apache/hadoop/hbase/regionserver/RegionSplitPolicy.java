@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -98,28 +97,6 @@ public abstract class RegionSplitPolicy extends Configured {
    * @return a RegionSplitPolicy
    */
   public static RegionSplitPolicy create(HRegion region, Configuration conf) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("203b019d-0e53-334f-b627-2f01a42839f3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("flushCheckInterval");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d8a070ad-9777-3ecc-b101-750c4ea6d51e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("timestampSlop");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Preconditions.checkNotNull(region, "Region should not be null.");
     Class<? extends RegionSplitPolicy> clazz =
       getSplitPolicyClass(region.getTableDescriptor(), conf);

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -44,20 +43,17 @@ abstract public class ShutdownHookManager {
   abstract public boolean removeShutdownHook(Runnable shutdownHook);
 
   public static void affixShutdownHook(Thread shutdownHook, int priority) {
-if(KnobRuntime.check(java.util.UUID.fromString("3fa99d5a-436a-318f-a1cf-dfd4cd1b1082"))) {
-priority = 0;
-}
     instance.addShutdownHook(shutdownHook, priority);
   }
 
   public static boolean deleteShutdownHook(Runnable shutdownHook) {
-if(KnobRuntime.check(java.util.UUID.fromString("7bc66439-9a04-3806-a06b-e834965cf7d0"))) {
-return true;
-}
     return instance.removeShutdownHook(shutdownHook);
   }
 
   private static class ShutdownHookManagerV1 extends ShutdownHookManager {
+    ShutdownHookManagerV1() {
+    }
+
     // priority is ignored in hadoop versions earlier than 2.0
     @Override
     public void addShutdownHook(Thread shutdownHookThread, int priority) {
@@ -76,6 +72,9 @@ return true;
   };
 
   private static class ShutdownHookManagerV2 extends ShutdownHookManager {
+    ShutdownHookManagerV2() {
+    }
+
     @Override
     public void addShutdownHook(Thread shutdownHookThread, int priority) {
       try {

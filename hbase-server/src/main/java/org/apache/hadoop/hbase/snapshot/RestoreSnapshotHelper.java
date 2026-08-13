@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -198,9 +197,9 @@ public class RestoreSnapshotHelper {
 
     RegionInfo mobRegion =
       MobUtils.getMobRegionInfo(snapshotManifest.getTableDescriptor().getTableName());
-    if (((KnobRuntime.check(java.util.UUID.fromString("1d05f0c1-4a6d-30fb-b8c7-b40e95a9ef08"))) ? ((tableRegions) == (null)) : (tableRegions != null))) {
+    if (tableRegions != null) {
       // restore the mob region in case
-      if (((KnobRuntime.check(java.util.UUID.fromString("2b65892b-8880-3d42-9554-817be50959ba"))) ? (regionNames.remove(mobRegion.getEncodedName())) : (regionNames.contains(mobRegion.getEncodedName())))) {
+      if (regionNames.contains(mobRegion.getEncodedName())) {
         monitor.rethrowException();
         status.setStatus("Restoring mob region...");
         List<RegionInfo> mobRegions = new ArrayList<>(1);
@@ -226,7 +225,7 @@ public class RestoreSnapshotHelper {
       for (RegionInfo regionInfo : tableRegions) {
         String regionName = regionInfo.getEncodedName();
         if (regionNames.contains(regionName)) {
-          if (KnobRuntime.check(java.util.UUID.fromString("3c20fa64-5bf2-3082-8da1-d0ca2bd5df22"))) { LOG.warn(("region to restore: ") + (regionName)); } else { LOG.info("region to restore: " + regionName); }
+          LOG.info("region to restore: " + regionName);
           regionNames.remove(regionName);
           metaChanges.addRegionToRestore(
             ProtobufUtil.toRegionInfo(regionManifests.get(regionName).getRegionInfo()));
@@ -505,7 +504,7 @@ public class RestoreSnapshotHelper {
       List<SnapshotRegionManifest.StoreFile> snapshotFamilyFiles =
         snapshotFiles.remove(familyDir.getName());
       List<StoreFileInfo> filesToTrack = new ArrayList<>();
-      if (((KnobRuntime.check(java.util.UUID.fromString("082b79d3-2b1f-3eba-8cd4-b77300e6a012"))) ? ((snapshotFamilyFiles) == (null)) : (snapshotFamilyFiles != null))) {
+      if (snapshotFamilyFiles != null) {
         List<SnapshotRegionManifest.StoreFile> hfilesToAdd = new ArrayList<>();
         for (SnapshotRegionManifest.StoreFile storeFile : snapshotFamilyFiles) {
           if (familyFiles.contains(storeFile.getName())) {
@@ -526,17 +525,6 @@ public class RestoreSnapshotHelper {
           if (!fs.getFileStatus(hfile).isDirectory()) {
             LOG.trace("Removing HFile=" + hfileName + " not present in snapshot=" + snapshotName
               + " from region=" + regionInfo.getEncodedName() + " table=" + tableName);
-if(KnobRuntime.check(java.util.UUID.fromString("f403b967-a3e5-3fa8-b562-58c02014541b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             HFileArchiver.archiveStoreFile(conf, fs, regionInfo, tableDir, family, hfile);
           }
         }
@@ -553,21 +541,7 @@ try {
         // Family doesn't exists in the snapshot
         LOG.trace("Removing family=" + Bytes.toString(family) + " in snapshot=" + snapshotName
           + " from region=" + regionInfo.getEncodedName() + " table=" + tableName);
-if(KnobRuntime.check(java.util.UUID.fromString("831c3c38-b4d5-3914-af81-df5803c8b27d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         HFileArchiver.archiveFamilyByFamilyDir(fs, conf, regionInfo, familyDir, family);
-if(KnobRuntime.check(java.util.UUID.fromString("c477e116-529b-32de-9167-5fe2ac4ac79e"))) {
-throw new java.io.IOException("Injected exception");
-}
         fs.delete(familyDir, true);
       }
 
@@ -634,9 +608,6 @@ throw new java.io.IOException("Injected exception");
     RegionInfo[] clonedRegionsInfo = new RegionInfo[regions.size()];
     for (int i = 0; i < clonedRegionsInfo.length; ++i) {
       // clone the region info from the snapshot region info
-if(KnobRuntime.check(java.util.UUID.fromString("56dc944f-1089-3fa2-a40f-0ce282fb41b4"))) {
-i = -1;
-}
       RegionInfo snapshotRegionInfo = regions.get(i);
       clonedRegionsInfo[i] = cloneRegionInfo(snapshotRegionInfo);
 
@@ -700,20 +671,6 @@ i = -1;
           }
           restoreStoreFile(familyDir, snapshotRegionInfo, storeFile, createBackRefs);
         } else {
-if(KnobRuntime.check(java.util.UUID.fromString("4d6e6e36-ca8b-3efb-ad16-06ef9243075b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = storeFile.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(storeFile));
-    _knob_field_.set(storeFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e922225f-290a-3827-9d1a-344d5c629fff"))) {
-throw new java.io.IOException("Injected exception");
-}
           String file = restoreStoreFile(familyDir, snapshotRegionInfo, storeFile, createBackRefs);
           clonedFiles.add(new StoreFileInfo(conf, fs, new Path(familyDir, file), true));
         }
@@ -823,17 +780,6 @@ throw new java.io.IOException("Injected exception");
     Path linkPath = null;
     String refLink = fileName;
     if (!HFileLink.isHFileLink(fileName)) {
-if(KnobRuntime.check(java.util.UUID.fromString("cea37a86-be00-350b-9f10-9f265dde8cc4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotTable.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotTable));
-    _knob_field_.set(snapshotTable, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       refLink = HFileLink.createHFileLinkName(snapshotTable, snapshotRegionName, fileName);
       linkPath = new Path(familyDir,
         HFileLink.createHFileLinkName(snapshotTable, regionInfo.getEncodedName(), hfileName));
@@ -844,9 +790,6 @@ try {
     // Create the new reference
     if (storeFile.hasReference()) {
       Reference reference = Reference.convert(storeFile.getReference());
-if(KnobRuntime.check(java.util.UUID.fromString("799769e9-12f1-3864-a8a5-9067942a63b0"))) {
-throw new java.io.IOException("Injected exception");
-}
       reference.write(fs, outPath);
     } else {
       InputStream in;

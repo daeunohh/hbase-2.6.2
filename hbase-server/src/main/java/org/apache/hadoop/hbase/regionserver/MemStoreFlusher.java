@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.context.Scope;
@@ -126,7 +125,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
     this.threadWakeFrequency = conf.getLong(HConstants.THREAD_WAKE_FREQUENCY, 10 * 1000);
     this.blockingWaitTime = conf.getInt("hbase.hstore.blockingWaitTime", 90000);
     int handlerCount = 0;
-    if (((KnobRuntime.check(java.util.UUID.fromString("276c5fa0-65de-3755-a9ed-3466be98f576"), "regionserver", this.server)) ? ((server) != (null)) : (server != null))) {
+    if (server != null) {
       handlerCount = getHandlerCount(conf);
       LOG.info("globalMemStoreLimit="
         + TraditionalBinaryPrefix
@@ -321,9 +320,9 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
         try {
           wakeupPending.set(false); // allow someone to wake us up again
           fqe = flushQueue.poll(threadWakeFrequency, TimeUnit.MILLISECONDS);
-          if (((KnobRuntime.check(java.util.UUID.fromString("5c4e46f9-1c3c-36a9-9c18-d480f3e1e4d8"))) ? (((fqe) == (null)) && ((fqe) != (WAKEUPFLUSH_INSTANCE))) : (((KnobRuntime.check(java.util.UUID.fromString("8a6a052b-0494-30cb-abba-b0e547cd7d57"))) ? ((fqe == null) || (fqe == WAKEUPFLUSH_INSTANCE)) : (fqe == null || fqe == WAKEUPFLUSH_INSTANCE))))) {
+          if (fqe == null || fqe == WAKEUPFLUSH_INSTANCE) {
             FlushType type = isAboveLowWaterMark();
-            if (((KnobRuntime.check(java.util.UUID.fromString("13d347a8-2a0d-329b-86bc-388c94049b57"))) ? ((type) == (FlushType.NORMAL)) : (type != FlushType.NORMAL))) {
+            if (type != FlushType.NORMAL) {
               LOG.debug("Flush thread woke up because memory above low water="
                 + TraditionalBinaryPrefix.long2String(
                   server.getRegionServerAccounting().getGlobalMemStoreLimitLowMark(), "", 1));
@@ -523,7 +522,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
       new ThreadFactoryBuilder().setDaemon(true).setUncaughtExceptionHandler(eh).build();
     lock.readLock().lock();
     try {
-      if (KnobRuntime.check(java.util.UUID.fromString("2cdf20f0-84a0-38a3-b576-313ac9a2eb9c"), "regionserver", this.server)) { startFlushHandlerThreads(flushHandlers, 0, 0); } else { startFlushHandlerThreads(flushHandlers, 0, flushHandlers.length); }
+      startFlushHandlerThreads(flushHandlers, 0, flushHandlers.length);
     } finally {
       lock.readLock().unlock();
     }
@@ -993,7 +992,7 @@ public class MemStoreFlusher implements FlushRequester, ConfigurationObserver {
 
   private void stopFlushHandlerThreads(FlushHandler[] flushHandlers, int start, int end) {
     for (int i = start; i < end; i++) {
-      if (KnobRuntime.check(java.util.UUID.fromString("35a848a4-d624-3179-8b4a-792ef7d474ae"), "regionserver", this.server)) { wakeUpIfBlocking(); } else { flushHandlers[i].shutdown(); }
+      flushHandlers[i].shutdown();
       if (LOG.isDebugEnabled()) {
         LOG.debug("send shutdown signal to {}", flushHandlers[i].getName());
       }

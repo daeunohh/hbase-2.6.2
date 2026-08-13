@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HREGION_OLDLOGDIR_NAME;
 
@@ -103,7 +102,7 @@ public final class MasterRegionWALRoller extends AbstractWALRoller<Abortable> {
     conf.setBoolean(AbstractFSWALProvider.SEPARATE_OLDLOGDIR, false);
     conf.setLong(WAL_ROLL_PERIOD_KEY, rollPeriodMs);
     // make the roll size the same with the flush size, as we only have one region here
-    if (KnobRuntime.check(java.util.UUID.fromString("bea64240-6240-3724-82c4-cc39af851ac1"))) { conf.setLong(WALUtil.WAL_BLOCK_SIZE, (flushSize) * (2)); } else { conf.setLong(WALUtil.WAL_BLOCK_SIZE, flushSize * 2); }
+    conf.setLong(WALUtil.WAL_BLOCK_SIZE, flushSize * 2);
     conf.setFloat(AbstractFSWAL.WAL_ROLL_MULTIPLIER, 0.5f);
     return new MasterRegionWALRoller(name, conf, abortable, fs, walRootDir, globalWALRootDir,
       archivedWALSuffix);

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.NavigableSet;
@@ -73,7 +72,7 @@ public abstract class UserScanQueryMatcher extends ScanQueryMatcher {
     super(createStartKey(scan, scanInfo), scanInfo, columns, oldestUnexpiredTS, now);
     this.hasNullColumn = hasNullColumn;
     this.filter = scan.getFilter();
-    if (((KnobRuntime.check(java.util.UUID.fromString("38b5ce45-c1e3-3410-b97d-484e32440188"))) ? ((this.filter) != (null)) : (this.filter != null))) {
+    if (this.filter != null) {
       this.versionsAfterFilter = scan.isRaw()
         ? scan.getMaxVersions()
         : Math.min(scan.getMaxVersions(), scanInfo.getMaxVersions());
@@ -247,7 +246,7 @@ public abstract class UserScanQueryMatcher extends ScanQueryMatcher {
         matchCode = MatchCode.SEEK_NEXT_COL;
       }
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("2bec4e3d-885c-3c30-8069-7984cc1bbc9d"))) ? (((matchCode) != (MatchCode.INCLUDE_AND_SEEK_NEXT_COL)) && ((matchCode) == (MatchCode.SEEK_NEXT_COL))) : (((KnobRuntime.check(java.util.UUID.fromString("99c23519-9fde-3b81-a020-2432db14e964"))) ? ((matchCode) != (MatchCode.SEEK_NEXT_COL)) : (((KnobRuntime.check(java.util.UUID.fromString("032d64ff-edb5-3bd3-bf4f-ff0846a5b534"))) ? (((matchCode) != (MatchCode.INCLUDE_AND_SEEK_NEXT_COL)) || ((matchCode) == (MatchCode.SEEK_NEXT_COL))) : (matchCode == MatchCode.INCLUDE_AND_SEEK_NEXT_COL || matchCode == MatchCode.SEEK_NEXT_COL))))))) {
+    if (matchCode == MatchCode.INCLUDE_AND_SEEK_NEXT_COL || matchCode == MatchCode.SEEK_NEXT_COL) {
       // Update column tracker to next column, As we use the column hint from the tracker to seek
       // to next cell (HBASE-19749)
       columns.doneWithColumn(cell);
@@ -289,75 +288,6 @@ public abstract class UserScanQueryMatcher extends ScanQueryMatcher {
       return RawScanQueryMatcher.create(scan, scanInfo, columnTracker, hasNullColumn,
         oldestUnexpiredTS, now);
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("dcdd33bd-185b-3052-a290-e9e02763967f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("maxVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scanInfo));
-    _knob_field_.set(scanInfo, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("66570bf5-6d2d-344e-9a30-99c680313f1d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bfd1fc15-b477-3fec-99a1-db9f9b7535f2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("tableMaxRowSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(scanInfo));
-    _knob_field_.set(scanInfo, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("08a088b7-5d25-3130-8291-8b529d45fec2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("minVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scanInfo));
-    _knob_field_.set(scanInfo, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8f5de7b6-0ef3-38a7-9728-81beaaf9e4a1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("limit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f7c19017-2acd-322d-a4e2-206f1d31f454"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeOffset");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c47a70ec-2e80-3847-b87f-1e401e68e33a"))) {
-oldestUnexpiredTS += 1;
-}
       return NormalUserScanQueryMatcher.create(scan, scanInfo, columnTracker, deleteTracker,
         hasNullColumn, oldestUnexpiredTS, now);
     }

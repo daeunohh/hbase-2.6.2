@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -89,9 +88,6 @@ class BufferChain {
   }
 
   ByteBuffer[] getBuffers() {
-if(KnobRuntime.check(java.util.UUID.fromString("13912423-10a5-3676-9096-14adfa7cf648"))) {
-return null;
-}
     return this.buffers;
   }
 }

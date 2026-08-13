@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.errorhandling;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +75,7 @@ public class ForeignExceptionDispatcher implements ForeignExceptionListener, For
 
   @Override
   public synchronized void rethrowException() throws ForeignException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("1136878b-40d4-33a7-8d1f-1afde383c0e8"))) ? ((exception) != (null)) : (exception != null))) {
+    if (exception != null) {
       // This gets the stack where this is caused, (instead of where it was deserialized).
       // This is much more useful for debugging
       throw new ForeignException(exception.getSource(), exception.getCause());

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.procedure2.StateMachineProcedure;
@@ -66,9 +65,6 @@ public abstract class AbstractStateMachineNamespaceProcedure<TState>
 
   @Override
   protected boolean waitInitialized(MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("f8e168e8-7755-3147-bc05-97f76f69cb85"))) {
-return true;
-}
     return env.waitInitialized(this);
   }
 

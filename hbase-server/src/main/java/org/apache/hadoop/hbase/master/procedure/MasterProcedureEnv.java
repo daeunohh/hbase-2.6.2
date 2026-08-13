@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -96,9 +95,6 @@ public class MasterProcedureEnv implements ConfigurationObserver {
   }
 
   public AssignmentManager getAssignmentManager() {
-if(KnobRuntime.check(java.util.UUID.fromString("599e354f-4d69-3180-9cf7-a9f4fcd2b0d0"))) {
-return null;
-}
     return master.getAssignmentManager();
   }
 
@@ -123,7 +119,7 @@ return null;
   }
 
   public boolean isRunning() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("825b7c00-3e4c-39d8-9629-5905d6cbe579"))) ? ((this.master == null) || ((this.master.getMasterProcedureExecutor()) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("177829c7-66b8-3e9f-9ddf-3d88bb9ebfd9"))) ? ((this.master == null) && ((this.master.getMasterProcedureExecutor()) != (null))) : (this.master == null || this.master.getMasterProcedureExecutor() == null))))) return false;
+    if (this.master == null || this.master.getMasterProcedureExecutor() == null) return false;
     return master.getMasterProcedureExecutor().isRunning();
   }
 

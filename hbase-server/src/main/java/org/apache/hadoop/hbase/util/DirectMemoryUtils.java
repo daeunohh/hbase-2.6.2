@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.InvocationTargetException;
@@ -67,7 +66,7 @@ public class DirectMemoryUtils {
       s = ManagementFactory.getPlatformMBeanServer();
     }
     BEAN_SERVER = s;
-    if (((KnobRuntime.check(java.util.UUID.fromString("bb115d76-29ba-3dc2-83b5-c767a33136a1"))) ? ((BEAN_SERVER) != (null)) : (BEAN_SERVER != null))) {
+    if (BEAN_SERVER != null) {
       try {
         a = BEAN_SERVER.getAttribute(NIO_DIRECT_POOL, MEMORY_USED);
       } catch (JMException e) {

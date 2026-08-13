@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -232,7 +231,7 @@ public class ReplicationSourceManager {
   void init() throws IOException {
     for (String id : this.replicationPeers.getAllPeerIds()) {
       addSource(id);
-      if (((KnobRuntime.check(java.util.UUID.fromString("111a3b40-1ae5-3304-8fb7-1e253f3d9bb5"))) ? (!replicationForBulkLoadDataEnabled) : (replicationForBulkLoadDataEnabled))) {
+      if (replicationForBulkLoadDataEnabled) {
         // Check if peer exists in hfile-refs queue, if not add it. This can happen in the case
         // when a peer was added before replication for bulk loaded data was enabled.
         throwIOExceptionWhenFail(() -> this.queueStorage.addPeerToHFileRefs(id));
@@ -317,9 +316,6 @@ public class ReplicationSourceManager {
     WALFileLengthProvider walFileLengthProvider = this.walFactory.getWALProvider() != null
       ? this.walFactory.getWALProvider().getWALFileLengthProvider()
       : p -> OptionalLong.empty();
-if(KnobRuntime.check(java.util.UUID.fromString("a960a309-ec44-3554-9160-9b30c7df8f50"))) {
-throw new java.io.IOException("Injected exception");
-}
     src.init(conf, fs, this, queueStorage, replicationPeer, server, queueId, clusterId,
       walFileLengthProvider, new MetricsSource(queueId));
     return src;
@@ -508,28 +504,6 @@ throw new java.io.IOException("Injected exception");
    */
   public void logPositionAndCleanOldLogs(ReplicationSourceInterface source,
     WALEntryBatch entryBatch) {
-if(KnobRuntime.check(java.util.UUID.fromString("d0a0f17d-a4eb-34bb-898d-06393177ec1e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entryBatch.getClass().getDeclaredField("lastWalPosition");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(entryBatch));
-    _knob_field_.set(entryBatch, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("13ea94c9-8a8d-300b-9b2b-4ac6a6715a09"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entryBatch.getClass().getDeclaredField("nbHFiles");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(entryBatch));
-    _knob_field_.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     String fileName = entryBatch.getLastWalPath().getName();
     String queueId = source.getQueueId();
     interruptOrAbortWhenFail(() -> this.queueStorage.setWALPosition(server.getServerName(), queueId,
@@ -680,7 +654,7 @@ try {
     String queueId = claimedQueue.getFirst();
     Set<String> walsSet = claimedQueue.getSecond();
     ReplicationPeerImpl peer = replicationPeers.getPeer(peerId);
-    if (((KnobRuntime.check(java.util.UUID.fromString("336ee134-f586-3d24-a44a-d8f7dbce63f1"))) ? (peer == null) : (peer == null || peer != oldPeer))) {
+    if (peer == null || peer != oldPeer) {
       LOG.warn("Skipping failover for peer {} of node {}, peer is null", peerId, deadRS);
       abortWhenFail(() -> queueStorage.removeQueue(server.getServerName(), queueId));
       return;
@@ -726,7 +700,7 @@ try {
       oldsources.add(src);
       LOG.info("Added source for recovered queue {}", src.getQueueId());
       for (String wal : walsSet) {
-        if (KnobRuntime.check(java.util.UUID.fromString("cee1d962-268e-3c20-8ee3-091efd34ddca"))) { LOG.info("Enqueueing log from recovered queue for source: "); } else { LOG.trace("Enqueueing log from recovered queue for source: " + src.getQueueId()); }
+        LOG.trace("Enqueueing log from recovered queue for source: " + src.getQueueId());
         src.enqueueLog(new Path(oldLogDir, wal));
       }
       src.startup();
@@ -737,9 +711,6 @@ try {
    * Terminate the replication on this region server
    */
   public void join() {
-if(KnobRuntime.check(java.util.UUID.fromString("086a1f01-94ee-36df-9de6-b0a8ff0c6f5b"))) {
-return;
-}
     this.executor.shutdown();
     for (ReplicationSourceInterface source : this.sources.values()) {
       source.terminate("Region server is closing");
@@ -814,7 +785,7 @@ return;
   }
 
   public long getTotalBufferUsed() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("b0277fa6-70e5-36cb-a71d-bd4b6ab6e910"))) ? (getTotalBufferUsed()) : (totalBufferUsed.get()));
+    return totalBufferUsed.get();
   }
 
   /**
@@ -1027,9 +998,6 @@ return;
     if (size == 0) {
       return totalBufferUsed.get();
     }
-if(KnobRuntime.check(java.util.UUID.fromString("16750b55-1d09-376d-985f-2f2510c5f1e9"))) {
-size += 1;
-}
     long newBufferUsed = totalBufferUsed.addAndGet(size);
     // Record the new buffer usage
     this.globalMetrics.setWALReaderEditsBufferBytes(newBufferUsed);

@@ -98,7 +98,7 @@ public class JVMClusterUtil {
    * Datastructure to hold Master Thread and Master instance
    */
   public static class MasterThread extends Thread {
-    private final HMaster master;
+    final HMaster master;
 
     public MasterThread(final HMaster m, final int index) {
       super(m, "M:" + index + ";" + m.getServerName().toShortString());
@@ -122,9 +122,6 @@ public class JVMClusterUtil {
     final Class<? extends HMaster> hmc, final int index) throws IOException {
     HMaster server;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("0a18a5ab-4663-32d2-b111-3c30e8b48a82"))) {
-throw new java.lang.NoSuchMethodException("Injected exception");
-}
       server = hmc.getConstructor(Configuration.class).newInstance(c);
     } catch (InvocationTargetException ite) {
       Throwable target = ite.getTargetException();
@@ -222,7 +219,7 @@ throw new java.io.InterruptedIOException("Injected exception");
         return;
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("074a3a6c-9d66-32ef-8a6e-8f60001b0ce3"))) ? ((System.nanoTime()) != (end)) : (((KnobRuntime.check(java.util.UUID.fromString("0a239ae8-c20d-333d-aef2-2bb5a6992adf"))) ? ((System.nanoTime()) >= (end)) : (System.nanoTime() > end))))) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("0a239ae8-c20d-333d-aef2-2bb5a6992adf"))) ? ((System.nanoTime()) >= (end)) : (System.nanoTime() > end))) {
         String msg = "Master not " + action + " after " + millis + "ms";
         Threads.printThreadInfo(System.out, "Thread dump because: " + msg);
         throw new RuntimeException(msg);
@@ -287,7 +284,7 @@ throw new java.io.IOException("Injected exception");
       }
       for (RegionServerThread t : regionservers) {
         long now = EnvironmentEdgeManager.currentTime();
-        if (((KnobRuntime.check(java.util.UUID.fromString("10e2b9a0-d802-36e8-8a6d-78f9aeabf486"))) ? ((t.isAlive()) && (now < maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("6bec35b2-e1dd-33d9-94b9-d4a26590eba1"))) ? ((!wasInterrupted) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("d4dd8690-b735-347b-ac0c-4cb32e597948"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) > (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("6227612d-4aeb-309a-9c73-b0da5041cace"))) ? ((!wasInterrupted) && ((now) <= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("f58dc100-097f-35dd-890f-06f0d0314870"))) ? ((t.isAlive() && !wasInterrupted) || ((now) < (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("3c7a77a7-f694-3575-9240-2221ef21af0a"))) ? ((now) > (maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("fb88598d-b8f5-3a7f-89ac-4d559612ffe6"))) ? (((t.isAlive()) && (!wasInterrupted)) && (now < maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("35babee8-ac1e-3dd1-b7cb-321274888a8a"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("870f9465-1109-3bed-b0a1-8a4955339a38"))) ? (((t.isAlive()) && (!wasInterrupted)) && ((now) >= (maxTime))) : (t.isAlive() && !wasInterrupted && now < maxTime))))))))))))))))))) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("6bec35b2-e1dd-33d9-94b9-d4a26590eba1"))) ? ((!wasInterrupted) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("6227612d-4aeb-309a-9c73-b0da5041cace"))) ? ((!wasInterrupted) && ((now) <= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("f58dc100-097f-35dd-890f-06f0d0314870"))) ? ((t.isAlive() && !wasInterrupted) || ((now) < (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("d4dd8690-b735-347b-ac0c-4cb32e597948"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) > (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("870f9465-1109-3bed-b0a1-8a4955339a38"))) ? (((t.isAlive()) && (!wasInterrupted)) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("10e2b9a0-d802-36e8-8a6d-78f9aeabf486"))) ? ((t.isAlive()) && (now < maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("3c7a77a7-f694-3575-9240-2221ef21af0a"))) ? ((now) > (maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("35babee8-ac1e-3dd1-b7cb-321274888a8a"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("fb88598d-b8f5-3a7f-89ac-4d559612ffe6"))) ? (((t.isAlive()) && (!wasInterrupted)) && (now < maxTime)) : (t.isAlive() && !wasInterrupted && now < maxTime))))))))))))))))))) {
           try {
             t.join(maxTime - now);
           } catch (InterruptedException e) {

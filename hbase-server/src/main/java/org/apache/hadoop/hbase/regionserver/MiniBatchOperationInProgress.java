@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.hadoop.hbase.client.Mutation;
@@ -165,9 +164,6 @@ public class MiniBatchOperationInProgress<T> {
   }
 
   public void incrementNumOfIncrements() {
-if(KnobRuntime.check(java.util.UUID.fromString("d2b1bcf2-8dd2-3afe-ae53-e363755bbdae"))) {
-return;
-}
     this.numOfIncrements += 1;
   }
 

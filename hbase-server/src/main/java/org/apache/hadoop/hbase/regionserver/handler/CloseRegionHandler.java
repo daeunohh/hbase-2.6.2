@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.handler;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HConstants;
@@ -103,46 +102,13 @@ public class CloseRegionHandler extends EventHandler {
       }
 
       // Close the region
-      if (((KnobRuntime.check(java.util.UUID.fromString("f87f0944-4a10-3778-94b9-f1b229281126"))) ? ((region.close(!abort, false, true)) == (null)) : (region.close(abort, false, true) == null))) {
+      if (region.close(abort, false, true) == null) {
         // This region has already been closed. Should not happen (A unit test makes this
         // happen as a side effect, TestRegionObserverInterface.testPreWALAppendNotCalledOnMetaEdit)
         LOG.warn("Can't close {}; already closed", name);
         return;
       }
 
-if(KnobRuntime.check(java.util.UUID.fromString("4a960d2b-7d85-3b2c-bd76-4465ab7fb1e1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxFlushedSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e76bf465-530c-375c-8531-40afe2d1242c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxCellSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("29397c28-ca36-38fa-9bea-ab273c52c885"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("maxFlushedSeqId");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       this.rsServices.removeRegion(region, destination);
       rsServices.reportRegionStateTransition(new RegionStateTransitionContext(TransitionCode.CLOSED,
         HConstants.NO_SEQNUM, Procedure.NO_PROC_ID, -1, regionInfo, -1));

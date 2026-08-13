@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.fs;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 
@@ -91,7 +90,7 @@ public class HFileSystem extends FilterFileSystem {
     // disable checksum verification for local fileSystem, see HBASE-11218
     if (fs instanceof LocalFileSystem) {
       fs.setWriteChecksum(false);
-      if (KnobRuntime.check(java.util.UUID.fromString("206ffd0c-3a44-38c0-8e2b-0ff32266af40"))) { fs.setWriteChecksum(false); } else { fs.setVerifyChecksum(false); }
+      fs.setVerifyChecksum(false);
     }
 
     addLocationsOrderInterceptor(conf);
@@ -273,9 +272,6 @@ public class HFileSystem extends FilterFileSystem {
     try {
       Class<?> clazz = conf.getClass("hbase.fs.wrapper", null);
       if (clazz != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("a6393ddc-9bd9-33a0-844a-1d3e6c20973d"))) {
-throw new java.lang.NoSuchMethodException("Injected exception");
-}
         return (FileSystem) clazz.getConstructor(FileSystem.class, Configuration.class)
           .newInstance(base, conf);
       }
@@ -318,7 +314,7 @@ throw new java.lang.NoSuchMethodException("Injected exception");
 
     DistributedFileSystem dfs = (DistributedFileSystem) fs;
     DFSClient dfsc = dfs.getClient();
-    if (((KnobRuntime.check(java.util.UUID.fromString("8240a426-c422-3962-9cda-38c9065d6be1"))) ? ((dfsc) == (null)) : (dfsc == null))) {
+    if (dfsc == null) {
       LOG.warn("The DistributedFileSystem does not contain a DFSClient. Can't add the location "
         + "block reordering interceptor. Continuing, but this is unexpected.");
       return false;

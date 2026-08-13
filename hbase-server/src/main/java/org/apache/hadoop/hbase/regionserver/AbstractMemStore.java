@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,7 +81,7 @@ public abstract class AbstractMemStore implements MemStore {
     this.comparator = c;
     this.regionServices = regionServices;
     resetActive();
-    if (KnobRuntime.check(java.util.UUID.fromString("371e0ecb-08e8-33d9-b1c5-0c503ec4d272"))) { setOldestEditTimeToNow(); } else { resetTimeOfOldestEdit(); }
+    resetTimeOfOldestEdit();
     this.snapshot = SegmentFactory.instance().createImmutableSegment(c);
     this.snapshotId = NO_SNAPSHOT_ID;
   }
@@ -169,7 +168,7 @@ public abstract class AbstractMemStore implements MemStore {
     if (!mslabUsed) {
       toAdd = deepCopyIfNeeded(toAdd);
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("b8bb00c1-5ca8-33b4-b4a1-5aee70e41d58"))) { internalAdd(currentActive, deepCopyIfNeeded(toAdd), mslabUsed, memstoreSizing); } else { internalAdd(currentActive, toAdd, mslabUsed, memstoreSizing); }
+    internalAdd(currentActive, toAdd, mslabUsed, memstoreSizing);
   }
 
   private void doUpsert(MutableSegment currentActive, Cell cell, long readpoint,
@@ -379,9 +378,6 @@ public abstract class AbstractMemStore implements MemStore {
 
   @Override
   public void close() {
-if(KnobRuntime.check(java.util.UUID.fromString("a94830bf-b960-328b-91ae-5f1c2ef8ae9c"))) {
-return;
-}
     // active should never be null
     active.close();
     // for snapshot, either it is empty, where we do not reference any real segment which contains a

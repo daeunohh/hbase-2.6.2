@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +96,7 @@ class SyncFuture {
    * @param txid the new transaction id
    */
   SyncFuture reset(long txid, boolean forceSync) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("9fcfda67-aa8d-3036-a9f4-fa5774da4e7a"))) ? ((t != null) && (t != Thread.currentThread())) : (((KnobRuntime.check(java.util.UUID.fromString("52b0e85c-1092-355f-9f5b-33c6bf17ded1"))) ? (((t) != (null)) && ((t) != (Thread.currentThread()))) : (((KnobRuntime.check(java.util.UUID.fromString("3cd17f8f-ddfc-3045-b8d5-9190f75334e4"))) ? (((t) == (null)) && (t != Thread.currentThread())) : (t != null && t != Thread.currentThread()))))))) {
+    if (t != null && t != Thread.currentThread()) {
       throw new IllegalStateException();
     }
     t = Thread.currentThread();
@@ -147,7 +146,7 @@ class SyncFuture {
         return false;
       }
       this.throwable = t;
-      if (((KnobRuntime.check(java.util.UUID.fromString("449785e2-55b9-3590-a51a-ccd87608046a"))) ? ((txid) >= (this.txid)) : (txid < this.txid))) {
+      if (txid < this.txid) {
         // Something badly wrong.
         if (throwable == null) {
           this.throwable =

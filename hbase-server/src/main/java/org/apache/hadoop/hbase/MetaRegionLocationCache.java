@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,17 +102,6 @@ public class MetaRegionLocationCache extends ZKListener {
    * @param retryCounter controls the number of retries and sleep between retries.
    */
   private void loadMetaLocationsFromZk(RetryCounter retryCounter, ZNodeOpType opType) {
-if(KnobRuntime.check(java.util.UUID.fromString("85b33cf4-7d67-3346-acfe-699f891c8b4e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = retryCounter.getClass().getDeclaredField("attempts");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(retryCounter));
-    _knob_field_.set(retryCounter, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     TraceUtil.trace(() -> {
       List<String> znodes = null;
       while (retryCounter.shouldRetry()) {
@@ -182,7 +170,7 @@ try {
     HRegionLocation location = null;
     while (retryCounter.shouldRetry()) {
       try {
-        if (((KnobRuntime.check(java.util.UUID.fromString("6789592d-7576-3119-846a-000f68504e81"))) ? ((opType) != (ZNodeOpType.DELETED)) : (opType == ZNodeOpType.DELETED))) {
+        if (opType == ZNodeOpType.DELETED) {
           if (!ZKUtil.watchAndCheckExists(watcher, path)) {
             // The path does not exist, we've set the watcher and we can break for now.
             break;
@@ -244,9 +232,6 @@ try {
 
   @Override
   public void nodeDeleted(String path) {
-if(KnobRuntime.check(java.util.UUID.fromString("3f9578aa-d058-3e4d-b6e4-8311a8a01e29"))) {
-return;
-}
     updateMetaLocation(path, ZNodeOpType.DELETED);
   }
 

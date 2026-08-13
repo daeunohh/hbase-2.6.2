@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -283,9 +282,6 @@ public class HFileInfo implements SortedMap<byte[], byte[]> {
     int pblen = ProtobufUtil.lengthOfPBMagic();
     byte[] pbuf = new byte[pblen];
     if (in.markSupported()) {
-if(KnobRuntime.check(java.util.UUID.fromString("4223ec8f-d690-318c-8aeb-4c0f3eaca00d"))) {
-pblen += 1;
-}
       in.mark(pblen);
     }
     int read = in.read(pbuf);
@@ -351,28 +347,6 @@ pblen += 1;
         context.getInputStreamWrapper().getStream(isHBaseChecksum), context.getFileSize());
       Path path = context.getFilePath();
       checkFileVersion(path);
-if(KnobRuntime.check(java.util.UUID.fromString("d899a0b2-ac9c-301f-b444-8a739e9037f5"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("dataIndexCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6530dc32-0a25-3b3c-90c5-b43c8a80cbe0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("minorVersion");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       this.hfileContext = createHFileContext(path, trailer, conf);
       context.getInputStreamWrapper().unbuffer();
     } catch (Throwable t) {
@@ -407,50 +381,6 @@ try {
       reader.setDataBlockIndexReader(dataIndexReader);
       // Meta index.
       this.metaIndexReader = new HFileBlockIndex.ByteArrayKeyBlockIndexReader(1);
-if(KnobRuntime.check(java.util.UUID.fromString("030576fe-2d71-3a87-a6bb-e9d46eca6056"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = metaBlockIndex.getClass().getDeclaredField("offset");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(metaBlockIndex));
-    _knob_field_.set(metaBlockIndex, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("fec1e182-2fd9-3b85-9d7f-82d4c8477360"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = metaBlockIndex.getClass().getDeclaredField("nextBlockOnDiskSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(metaBlockIndex));
-    _knob_field_.set(metaBlockIndex, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6e442cd9-5681-3392-8eab-8b7a40bd4497"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = metaBlockIndex.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(metaBlockIndex));
-    _knob_field_.set(metaBlockIndex, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("48d584f9-2aaa-37f7-8691-6b77b6607380"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = metaBlockIndex.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(metaBlockIndex));
-    _knob_field_.set(metaBlockIndex, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       metaIndexReader.readRootIndex(metaBlockIndex, trailer.getMetaIndexCount());
       reader.setMetaBlockIndexReader(metaIndexReader);
 
@@ -472,39 +402,6 @@ try {
 
   private HFileContext createHFileContext(Path path, FixedFileTrailer trailer, Configuration conf)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("32141b55-57b3-3383-afc1-e0c94f46776f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("numDataIndexLevels");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4ea0b1e1-cf56-3267-aae6-b7441da4eb0c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("totalUncompressedBytes");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0ccf6e22-0e49-3dc6-bbdd-0275e54bd02f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("minorVersion");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     HFileContextBuilder builder = new HFileContextBuilder().withHBaseCheckSum(true)
       .withHFileName(path.getName()).withCompression(trailer.getCompressionCodec())
       .withCellComparator(FixedFileTrailer.createComparator(trailer.getComparatorClassName()));
@@ -512,13 +409,10 @@ try {
     byte[] keyBytes = trailer.getEncryptionKey();
     if (keyBytes != null) {
       Encryption.Context cryptoContext = Encryption.newContext(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("20bf79e2-85a7-36cb-8a35-f3b8ddf5e39c"))) {
-throw new java.io.IOException("Injected exception");
-}
       Key key = EncryptionUtil.unwrapKey(conf, keyBytes);
       // Use the algorithm the key wants
       Cipher cipher = Encryption.getCipher(conf, key.getAlgorithm());
-      if (((KnobRuntime.check(java.util.UUID.fromString("4b1760d9-eb31-39a8-86e3-9c85d3a48682"))) ? ((cipher) != (null)) : (cipher == null))) {
+      if (cipher == null) {
         throw new IOException(
           "Cipher '" + key.getAlgorithm() + "' is not available" + ", path=" + path);
       }
@@ -540,7 +434,7 @@ throw new java.io.IOException("Injected exception");
     if (tmp != null) {
       hfileContext.setIncludesTags(true);
       tmp = get(HFileInfo.TAGS_COMPRESSED);
-      if (((KnobRuntime.check(java.util.UUID.fromString("c9920f49-641e-3c41-8eea-170acbef3c2c"))) ? (((tmp) == (null)) || (isReservedFileInfoKey(tmp))) : (((KnobRuntime.check(java.util.UUID.fromString("beeeef8e-5b50-3aec-a503-aa9e0eca9b62"))) ? (isReservedFileInfoKey(tmp)) : (((KnobRuntime.check(java.util.UUID.fromString("94d0addb-6d8b-350a-8175-58095a8288ce"))) ? ((tmp != null) && (ProtobufUtil.isPBMagicPrefix(tmp))) : (tmp != null && Bytes.toBoolean(tmp)))))))) {
+      if (tmp != null && Bytes.toBoolean(tmp)) {
         hfileContext.setCompressTags(true);
       }
     }
@@ -548,7 +442,7 @@ throw new java.io.IOException("Injected exception");
     if (get(HFileInfo.LASTKEY) != null) {
       lastKeyCell = new KeyValue.KeyOnlyKeyValue(get(HFileInfo.LASTKEY));
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("ba64c1b0-a2e2-3de6-b69c-501755470e7d"))) ? ((get(get(HFileInfo.KEY_OF_BIGGEST_CELL))) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("aff509f6-63ac-3b54-b6c4-d2abe952926f"))) ? ((get(get(HFileInfo.KEY_OF_BIGGEST_CELL))) != (null)) : (get(HFileInfo.KEY_OF_BIGGEST_CELL) != null))))) {
+    if (get(HFileInfo.KEY_OF_BIGGEST_CELL) != null) {
       biggestCell = new KeyValue.KeyOnlyKeyValue(get(HFileInfo.KEY_OF_BIGGEST_CELL));
       lenOfBiggestCell = Bytes.toLong(get(HFileInfo.LEN_OF_BIGGEST_CELL));
     }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -41,7 +40,7 @@ public class MemoryBoundedLogMessageBuffer {
   private LinkedList<LogMessage> messages;
 
   public MemoryBoundedLogMessageBuffer(long maxSizeBytes) {
-    if (KnobRuntime.check(java.util.UUID.fromString("da653f1b-7217-3c29-b3a5-af77dbe1585a"))) { Preconditions.checkArgument((maxSizeBytes) >= (0)); } else { Preconditions.checkArgument(maxSizeBytes > 0); }
+    Preconditions.checkArgument(maxSizeBytes > 0);
     this.maxSizeBytes = maxSizeBytes;
     this.messages = Lists.newLinkedList();
   }

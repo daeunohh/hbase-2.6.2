@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -263,12 +262,6 @@ public class MasterFileSystem {
     }
     // Make sure cluster ID exists
     if (!FSUtils.checkClusterIdExists(fs, rd, threadWakeFrequency)) {
-if(KnobRuntime.check(java.util.UUID.fromString("b5d4984a-e561-38b7-b926-56ef6544b092"))) {
-threadWakeFrequency = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ccc1112a-7272-3623-a25a-1fce3e877ef0"))) {
-threadWakeFrequency += 1;
-}
       FSUtils.setClusterId(fs, rd, new ClusterId(), threadWakeFrequency);
     }
     clusterId = FSUtils.getClusterId(fs, rd);

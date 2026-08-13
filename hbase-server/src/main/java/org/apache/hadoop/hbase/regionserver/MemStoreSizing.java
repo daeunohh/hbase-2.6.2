@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -94,28 +93,6 @@ public interface MemStoreSizing {
     int cellsCountDelta);
 
   default long incMemStoreSize(MemStoreSize delta) {
-if(KnobRuntime.check(java.util.UUID.fromString("81dd9ff7-67d5-3540-84f5-7f9b5ca95aa8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = delta.getClass().getDeclaredField("dataSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(delta));
-    _knob_field_.set(delta, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5d876e54-e5fd-300c-b8c8-4bd55cec00b7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = delta.getClass().getDeclaredField("offHeapSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(delta));
-    _knob_field_.set(delta, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return incMemStoreSize(delta.getDataSize(), delta.getHeapSize(), delta.getOffHeapSize(),
       delta.getCellsCount());
   }
@@ -123,24 +100,10 @@ try {
   /** Returns The new dataSize ONLY as a convenience */
   default long decMemStoreSize(long dataSizeDelta, long heapSizeDelta, long offHeapSizeDelta,
     int cellsCountDelta) {
-if(KnobRuntime.check(java.util.UUID.fromString("cee2061d-75d1-360b-91c4-c1c996cfab6b"))) {
-return 0;
-}
     return incMemStoreSize(-dataSizeDelta, -heapSizeDelta, -offHeapSizeDelta, -cellsCountDelta);
   }
 
   default long decMemStoreSize(MemStoreSize delta) {
-if(KnobRuntime.check(java.util.UUID.fromString("8ebc2289-8804-325b-be96-b65da636399e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = delta.getClass().getDeclaredField("dataSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(delta));
-    _knob_field_.set(delta, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return incMemStoreSize(-delta.getDataSize(), -delta.getHeapSize(), -delta.getOffHeapSize(),
       -delta.getCellsCount());
   }

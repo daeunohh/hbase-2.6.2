@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -91,46 +90,13 @@ public class ActivePolicyEnforcement {
         policy = locallyCachedPolicies.get(tableName);
         // We have already created/cached the enforcement, use it again. `activePolicies` and
         // `snapshots` are immutable, thus this policy is valid for the lifetime of `this`.
-        if (((KnobRuntime.check(java.util.UUID.fromString("81382abf-83e3-300e-a149-2025e426e41a"))) ? ((policy) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("0f22c63c-ead9-34d5-8ef7-a287afc49069"))) ? ((policy) == (null)) : (policy != null))))) {
+        if (policy != null) {
           return policy;
         }
         // Create a PolicyEnforcement for this table and snapshot. The snapshot may be null
         // which is OK.
-if(KnobRuntime.check(java.util.UUID.fromString("683c8774-6593-3d8d-b349-083d50e4ba8f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("41473c3b-44b3-3710-b280-375af9c1184b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         policy = factory.createWithoutViolation(rss, tableName, snapshots.get(tableName));
         // Cache the policy we created
-if(KnobRuntime.check(java.util.UUID.fromString("d0ce08e1-05ea-367d-9685-813b756a9f84"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         locallyCachedPolicies.put(tableName, policy);
       }
     }

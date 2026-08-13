@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -122,9 +121,6 @@ class RegionNormalizerWorker implements PropagatingConfigurationObserver, Runnab
   }
 
   private static RateLimiter loadRateLimiter(final Configuration configuration) {
-if(KnobRuntime.check(java.util.UUID.fromString("afe9b6d3-1ab5-3755-94ab-a2eebf12cc28"))) {
-return null;
-}
     return RateLimiter.create(loadRateLimit(configuration));
   }
 
@@ -132,7 +128,7 @@ return null;
     long rateLimitBytes =
       configuration.getLongBytes(RATE_LIMIT_BYTES_PER_SEC_KEY, RATE_UNLIMITED_BYTES);
     long rateLimitMbs = rateLimitBytes / 1_000_000L;
-    if (((KnobRuntime.check(java.util.UUID.fromString("0b00b1cb-eb67-3f2b-8edc-9fc5660315df"))) ? ((rateLimitMbs) > (0)) : (rateLimitMbs <= 0))) {
+    if (rateLimitMbs <= 0) {
       LOG.warn("Configured value {}={} is <= 1MB. Falling back to default.",
         RATE_LIMIT_BYTES_PER_SEC_KEY, rateLimitBytes);
       rateLimitBytes = RATE_UNLIMITED_BYTES;
@@ -164,9 +160,6 @@ return null;
    * @see RegionNormalizerManager#getSplitPlanCount()
    */
   long getSplitPlanCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("c6a0d620-9678-3238-8fd3-8a165aee791f"))) {
-return 0;
-}
     return splitPlanCount;
   }
 

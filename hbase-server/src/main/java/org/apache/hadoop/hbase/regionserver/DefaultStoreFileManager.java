@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.StoreFileWriter.shouldEnableHistoricalCompactionFiles;
 
@@ -122,9 +121,6 @@ class DefaultStoreFileManager implements StoreFileManager {
 
   @Override
   public Collection<HStoreFile> getCompactedfiles() {
-if(KnobRuntime.check(java.util.UUID.fromString("622bc245-837d-3856-9272-8c5fba346638"))) {
-return null;
-}
     return compactedfiles;
   }
 
@@ -217,7 +213,7 @@ return null;
   @Override
   public Collection<HStoreFile> getFilesForScan(byte[] startRow, boolean includeStartRow,
     byte[] stopRow, boolean includeStopRow, boolean onlyLatestVersion) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("7b1c4dca-c692-3fbe-9b1d-9ee993aa9103"))) ? ((!onlyLatestVersion) && (enableLiveFileTracking)) : (onlyLatestVersion && enableLiveFileTracking))) {
+    if (onlyLatestVersion && enableLiveFileTracking) {
       return storeFiles.live;
     }
     // We cannot provide any useful input and already have the files sorted by seqNum.
