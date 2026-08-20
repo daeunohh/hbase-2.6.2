@@ -160,7 +160,7 @@ public class JVMClusterUtil {
 
     Configuration configuration = null;
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("80ebe52b-ade8-3919-9902-8e902cb6580d"))) ? ((masters) == (null)) : (masters == null || masters.isEmpty()))) {
+    if (masters == null || masters.isEmpty()) {
       return null;
     }
 
@@ -188,9 +188,6 @@ public class JVMClusterUtil {
     final int initTimeout = configuration != null
       ? Integer.parseInt(configuration.get("hbase.master.init.timeout.localHBaseCluster", "200000"))
       : 200000;
-if(KnobRuntime.check(java.util.UUID.fromString("dd313800-3588-35d8-bfcb-4202aadb3dac"))) {
-throw new java.io.InterruptedIOException("Injected exception");
-}
     waitForEvent(initTimeout, "initialized", () -> {
       JVMClusterUtil.MasterThread t = findActiveMaster(masters);
       // master thread should never be null at this point, but let's keep the check anyway
@@ -219,7 +216,7 @@ throw new java.io.InterruptedIOException("Injected exception");
         return;
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("0a239ae8-c20d-333d-aef2-2bb5a6992adf"))) ? ((System.nanoTime()) >= (end)) : (System.nanoTime() > end))) {
+      if (System.nanoTime() > end) {
         String msg = "Master not " + action + " after " + millis + "ms";
         Threads.printThreadInfo(System.out, "Thread dump because: " + msg);
         throw new RuntimeException(msg);
@@ -239,7 +236,7 @@ throw new java.io.InterruptedIOException("Injected exception");
   public static void shutdown(final List<MasterThread> masters,
     final List<RegionServerThread> regionservers) {
     LOG.debug("Shutting down HBase Cluster");
-    if (((KnobRuntime.check(java.util.UUID.fromString("50bb60aa-f911-3449-8e06-18c6aba9a754"))) ? ((masters) != (null)) : (masters != null))) {
+    if (masters != null) {
       // Do backups first.
       JVMClusterUtil.MasterThread activeMaster = null;
       for (JVMClusterUtil.MasterThread t : masters) {
@@ -247,9 +244,6 @@ throw new java.io.InterruptedIOException("Injected exception");
         if (!t.master.isStopped()) {
           if (!t.master.isActiveMaster()) {
             try {
-if(KnobRuntime.check(java.util.UUID.fromString("9295505f-df1f-3e2f-96a0-594a1b2719ee"))) {
-throw new java.io.IOException("Injected exception");
-}
               t.master.stopMaster();
             } catch (IOException e) {
               LOG.error("Exception occurred while stopping master", e);
@@ -284,7 +278,7 @@ throw new java.io.IOException("Injected exception");
       }
       for (RegionServerThread t : regionservers) {
         long now = EnvironmentEdgeManager.currentTime();
-        if (((KnobRuntime.check(java.util.UUID.fromString("6bec35b2-e1dd-33d9-94b9-d4a26590eba1"))) ? ((!wasInterrupted) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("6227612d-4aeb-309a-9c73-b0da5041cace"))) ? ((!wasInterrupted) && ((now) <= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("f58dc100-097f-35dd-890f-06f0d0314870"))) ? ((t.isAlive() && !wasInterrupted) || ((now) < (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("d4dd8690-b735-347b-ac0c-4cb32e597948"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) > (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("870f9465-1109-3bed-b0a1-8a4955339a38"))) ? (((t.isAlive()) && (!wasInterrupted)) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("10e2b9a0-d802-36e8-8a6d-78f9aeabf486"))) ? ((t.isAlive()) && (now < maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("3c7a77a7-f694-3575-9240-2221ef21af0a"))) ? ((now) > (maxTime)) : (((KnobRuntime.check(java.util.UUID.fromString("35babee8-ac1e-3dd1-b7cb-321274888a8a"))) ? (((t.isAlive()) || (!wasInterrupted)) && ((now) >= (maxTime))) : (((KnobRuntime.check(java.util.UUID.fromString("fb88598d-b8f5-3a7f-89ac-4d559612ffe6"))) ? (((t.isAlive()) && (!wasInterrupted)) && (now < maxTime)) : (t.isAlive() && !wasInterrupted && now < maxTime))))))))))))))))))) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("10e2b9a0-d802-36e8-8a6d-78f9aeabf486"))) ? ((t.isAlive()) && (now < maxTime)) : (t.isAlive() && !wasInterrupted && now < maxTime))) {
           try {
             t.join(maxTime - now);
           } catch (InterruptedException e) {
@@ -325,7 +319,7 @@ throw new java.io.IOException("Injected exception");
 
     if (masters != null) {
       for (JVMClusterUtil.MasterThread t : masters) {
-        while (((KnobRuntime.check(java.util.UUID.fromString("a9dc3072-5436-350d-95f9-9e13e8e65bbf"))) ? (t.master.isInitialized()) : (((KnobRuntime.check(java.util.UUID.fromString("159ae5f8-b62f-375c-9005-e43a0ffedd7f"))) ? ((t.master.isInitialized()) || (!wasInterrupted)) : (t.master.isAlive() && !wasInterrupted))))) {
+        while (t.master.isAlive() && !wasInterrupted) {
           try {
             // The below has been replaced to debug sometime hangs on end of
             // tests.

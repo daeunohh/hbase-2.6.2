@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.FileNotFoundException;
@@ -465,9 +464,6 @@ public class RSRpcServices implements HBaseRPCErrorHandler, AdminService.Blockin
 
     @Override
     public void run() {
-if(KnobRuntime.check(java.util.UUID.fromString("91bb632b-7680-37ee-87b9-6f4367a29895"))) {
-return;
-}
       for (RegionScanner scanner : scanners) {
         try {
           scanner.close();
@@ -804,9 +800,6 @@ return;
     final RegionActionResult.Builder builder, List<CellScannable> cellsToReturn, long nonceGroup,
     final RegionScannersCloseCallBack closeCallBack, RpcCallContext context,
     ActivePolicyEnforcement spaceQuotaEnforcement) {
-if(KnobRuntime.check(java.util.UUID.fromString("90da879f-3837-3d55-9ff4-ad980082832c"), "regionserver", this.regionServer)) {
-return null;
-}
     // Gather up CONTIGUOUS Puts and Deletes in this mutations List. Idea is that rather than do
     // one at a time, we instead pass them in batch. Be aware that the corresponding
     // ResultOrException instance that matches each Put or Delete is then added down in the
