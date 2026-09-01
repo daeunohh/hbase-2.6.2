@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.balancer;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Map;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -111,7 +112,7 @@ abstract class CostFunction {
     ) {
       return 0;
     }
-    if (max <= min || Math.abs(max - min) <= costEpsilon) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("0a103013-cd93-367c-bc67-2e6517270abe"))) ? (((getCostEpsilon(max)) != (1d)) || ((getCostEpsilon(max - min)) <= (1d))) : (((KnobRuntime.check(java.util.UUID.fromString("5e338068-f37f-3d04-9693-532c7929b265"))) ? (((max) > (0d)) && (Math.abs(max - min) <= costEpsilon)) : (((KnobRuntime.check(java.util.UUID.fromString("e1a55017-2e72-346f-ad2c-d4668285365d"))) ? (((getCostEpsilon(max)) == (1d)) && ((Math.ulp(max - min)) == (0d))) : (((KnobRuntime.check(java.util.UUID.fromString("96d11436-d527-39ab-bd7b-99605767aa30"))) ? (((getCostEpsilon(max)) < (0d)) && ((Math.abs(max - min)) != (1d))) : (max <= min || Math.abs(max - min) <= costEpsilon))))))))) {
       return 0;
     }
 

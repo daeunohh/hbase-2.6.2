@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -78,17 +77,6 @@ public class AsyncFSWALProvider extends AbstractFSWALProvider<AsyncFSWAL> {
 
   @Override
   protected AsyncFSWAL createWAL() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("fe51a598-d33f-30aa-a59d-9673e842985f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return new AsyncFSWAL(CommonFSUtils.getWALFileSystem(conf), this.abortable,
       CommonFSUtils.getWALRootDir(conf), getWALDirectoryName(factory.factoryId),
       getWALArchiveDirectoryName(conf, factory.factoryId), conf, listeners, true, logPrefix,
@@ -130,12 +118,6 @@ try {
     Class<? extends AsyncWriter> logWriterClass =
       conf.getClass(WRITER_IMPL, AsyncProtobufLogWriter.class, AsyncWriter.class);
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("b72fd706-23cc-3abd-a71b-b843389c7923"))) {
-throw new java.lang.IllegalAccessException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("783d9dff-2f26-33bd-aabd-48f25ae3239f"))) {
-throw new java.lang.SecurityException("Injected exception");
-}
       AsyncWriter writer = logWriterClass.getConstructor(EventLoopGroup.class, Class.class)
         .newInstance(eventLoopGroup, channelClass);
       writer.init(fs, path, conf, overwritable, blocksize, monitor);

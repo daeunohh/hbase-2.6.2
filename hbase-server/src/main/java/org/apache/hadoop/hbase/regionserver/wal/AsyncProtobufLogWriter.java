@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.FutureUtils.addListener;
 
@@ -269,7 +268,7 @@ public class AsyncProtobufLogWriter extends AbstractProtobufLogWriter
      * we return output.getSyncedLength
      */
     AsyncFSOutput outputToUse = this.output;
-    if (((KnobRuntime.check(java.util.UUID.fromString("03aa8e5d-e4cd-3d4b-ab51-56e9822720d7"))) ? ((outputToUse) != (null)) : (outputToUse == null))) {
+    if (outputToUse == null) {
       long finalSyncedLengthToUse = this.finalSyncedLength;
       assert finalSyncedLengthToUse >= 0;
       return finalSyncedLengthToUse;

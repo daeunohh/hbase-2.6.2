@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -637,7 +636,7 @@ public abstract class CoprocessorHost<C extends Coprocessor, E extends Coprocess
       }
       // Internal to shouldBypass, it checks if obeserverOperation#isBypassable().
       bypass |= observerOperation.shouldBypass();
-      if (KnobRuntime.check(java.util.UUID.fromString("b10ea1d6-df05-3eae-9c70-ac2abd6ee317"))) { observerOperation.callObserver(); } else { observerOperation.postEnvCall(); }
+      observerOperation.postEnvCall();
       if (bypass) {
         // If CP says bypass, skip out w/o calling any following CPs; they might ruin our response.
         // In hbase1, this used to be called 'complete'. In hbase2, we unite bypass and 'complete'.

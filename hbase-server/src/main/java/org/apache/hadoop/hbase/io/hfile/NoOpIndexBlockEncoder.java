@@ -108,10 +108,7 @@ public class NoOpIndexBlockEncoder implements HFileIndexBlockEncoder {
   private void writeRoot(BlockIndexChunk blockIndexChunk, DataOutput out) throws IOException {
     for (int i = 0; i < blockIndexChunk.getNumEntries(); ++i) {
       out.writeLong(blockIndexChunk.getBlockOffset(i));
-if(KnobRuntime.check(java.util.UUID.fromString("36ea64a1-661e-3ac9-a229-c3e69be00b9e"))) {
-i = 0;
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("efe4ee6d-f861-3e92-86ba-a092f54504e6"))) { out.writeInt(ClassSize.align(0)); } else { out.writeInt(blockIndexChunk.getOnDiskDataSize(i)); }
+      out.writeInt(blockIndexChunk.getOnDiskDataSize(i));
       Bytes.writeByteArray(out, blockIndexChunk.getBlockKey(i));
     }
   }
@@ -164,7 +161,7 @@ i = 0;
         heapSize += ClassSize.align(ClassSize.ARRAY + blockDataSizes.length * Bytes.SIZEOF_INT);
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("ae9b1908-9b3b-36ea-9c79-0eea051b98eb"))) ? ((blockKeys) == (null)) : (blockKeys != null))) {
+      if (blockKeys != null) {
         heapSize += ClassSize.REFERENCE;
         // Adding array + references overhead
         heapSize += ClassSize.align(ClassSize.ARRAY + blockKeys.length * ClassSize.REFERENCE);
@@ -206,64 +203,6 @@ i = 0;
     }
 
     private void init(HFileBlock blk, int numEntries) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("91b64b7a-f6f2-3906-89db-36be2b98ff83"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("156b1382-4bd1-33c1-af0c-8df35e7cfa16"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("nextBlockOnDiskSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9adaee27-f067-3973-a756-8eb8f7995add"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("nextBlockOnDiskSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ffe9aca2-5e53-3094-938d-5c2f828746fd"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3bfe7f61-5887-332a-8570-c90f3ee50f6c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6c158de2-0b58-3267-900a-49c1fa0f0583"))) {
-throw new java.io.IOException("Injected exception");
-}
       DataInputStream in = readRootIndex(blk, numEntries);
       // HFileBlock.getByteStream() returns a byte stream for reading the data(excluding checksum)
       // of root index block, so after reading the root index there is no need to subtract the
@@ -294,27 +233,12 @@ throw new java.io.IOException("Injected exception");
           long offset = in.readLong();
           int dataSize = in.readInt();
           byte[] key = Bytes.readByteArray(in);
-if(KnobRuntime.check(java.util.UUID.fromString("08f0c853-35f7-37fb-919a-cf79940dea9f"))) {
-dataSize *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9717e220-bfbf-319d-92aa-911a38c7d8de"))) {
-dataSize -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("29459793-67bc-35ec-b0cf-f488f093e24d"))) {
-dataSize /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e1082f5d-34a8-3cda-9606-f0e7d83676b2"))) {
-offset -= 1;
-}
           add(key, offset, dataSize);
         }
       }
     }
 
     private void initialize(int numEntries) {
-if(KnobRuntime.check(java.util.UUID.fromString("8d28ad35-c16b-3ad5-ab1d-3bbc6f41688d"))) {
-return;
-}
       blockKeys = new Cell[numEntries];
     }
 
@@ -408,7 +332,7 @@ return;
             BlockType expectedBlockType;
             if (lookupLevel < searchTreeLevel - 1) {
               expectedBlockType = BlockType.INTERMEDIATE_INDEX;
-            } else if (lookupLevel == searchTreeLevel - 1) {
+            } else if (((KnobRuntime.check(java.util.UUID.fromString("f7171f04-acc7-3640-b590-952d07f65b9b"))) ? ((lookupLevel) != (1)) : (lookupLevel == searchTreeLevel - 1))) {
               expectedBlockType = BlockType.LEAF_INDEX;
             } else {
               // this also accounts for ENCODED_DATA
@@ -469,7 +393,7 @@ return;
         // Though we have retrieved a data block we have found an issue
         // in the retrieved data block. Hence returned the block so that
         // the ref count can be decremented
-        if (((KnobRuntime.check(java.util.UUID.fromString("fb0c2bd5-7c86-3eca-b8a5-952885df9f65"))) ? ((block) == (null)) : (block != null))) {
+        if (block != null) {
           block.release();
         }
         throw new IOException("Reached a data block at level " + lookupLevel

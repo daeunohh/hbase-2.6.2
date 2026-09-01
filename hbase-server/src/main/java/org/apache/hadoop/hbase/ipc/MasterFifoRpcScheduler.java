@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -91,7 +92,7 @@ public class MasterFifoRpcScheduler extends FifoRpcScheduler {
   @Override
   public boolean dispatch(final CallRunner task) {
     String method = getCallMethod(task);
-    if (rsReportExecutor != null && method != null && method.equals(REGION_SERVER_REPORT)) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b860fb9e-4123-3167-8911-033cb457da46"))) ? ((((rsReportExecutor) != (null)) || ((method) == (null))) && (method.equals(REGION_SERVER_REPORT))) : (rsReportExecutor != null && method != null && method.equals(REGION_SERVER_REPORT)))) {
       return executeRpcCall(rsReportExecutor, rsReportQueueSize, task);
     } else {
       return executeRpcCall(executor, queueSize, task);

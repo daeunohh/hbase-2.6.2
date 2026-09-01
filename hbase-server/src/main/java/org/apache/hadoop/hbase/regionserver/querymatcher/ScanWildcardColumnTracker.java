@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.Cell;
@@ -70,9 +69,6 @@ public class ScanWildcardColumnTracker implements ColumnTracker {
    */
   @Override
   public MatchCode checkColumn(Cell cell, byte type) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0cb25e4f-5e33-3b55-bbf4-0cbe10c6a5c7"))) {
-throw new java.io.IOException("Injected exception");
-}
     return MatchCode.INCLUDE;
   }
 
@@ -90,9 +86,6 @@ throw new java.io.IOException("Injected exception");
         return ScanQueryMatcher.MatchCode.INCLUDE;
       }
       // do not count a delete marker as another version
-if(KnobRuntime.check(java.util.UUID.fromString("36f43291-6aac-3f7d-a6fd-3885d03d14fd"))) {
-timestamp = 0;
-}
       return checkVersion(type, timestamp);
     }
     int cmp = comparator.compareQualifiers(cell, this.columnCell);
@@ -111,15 +104,12 @@ timestamp = 0;
     resetTSAndType();
 
     // new col > old col
-    if (((KnobRuntime.check(java.util.UUID.fromString("2ee4ba0e-1f75-381b-bb14-b6d1893be771"))) ? ((cmp) <= (0)) : (cmp > 0))) {
+    if (cmp > 0) {
       // switched columns, lets do something.x
       resetCell(cell);
       if (ignoreCount) {
         return ScanQueryMatcher.MatchCode.INCLUDE;
       }
-if(KnobRuntime.check(java.util.UUID.fromString("3c94d282-c44f-3827-8ff3-56e652405158"))) {
-timestamp += 1;
-}
       return checkVersion(type, timestamp);
     }
 
@@ -146,14 +136,11 @@ timestamp += 1;
     if (!PrivateCellUtil.isDelete(type)) {
       currentCount++;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("8e9ffd95-8a18-3ff4-9ae6-c1c17c52d1de"))) ? ((currentCount++) != (maxVersions)) : (((KnobRuntime.check(java.util.UUID.fromString("adcc60a6-4470-38cd-9019-add7089b6930"))) ? ((currentCount) == (maxVersions)) : (currentCount > maxVersions))))) {
+    if (currentCount > maxVersions) {
       return ScanQueryMatcher.MatchCode.SEEK_NEXT_COL; // skip to next col
     }
     // keep the KV if required by minversions or it is not expired, yet
-    if (((KnobRuntime.check(java.util.UUID.fromString("be05c850-a5de-37a7-b513-7e82b83c00d9"))) ? (((currentCount++) <= (minVersions)) || (!isExpired(timestamp))) : (((KnobRuntime.check(java.util.UUID.fromString("1c1eb821-d5e1-3426-9a18-083d77e31e2c"))) ? (((currentCount) >= (minVersions)) || (!isExpired(timestamp))) : (((KnobRuntime.check(java.util.UUID.fromString("2094e383-a1e6-3822-ba4e-aebe377a4967"))) ? (((currentCount) == (minVersions)) && (!isExpired(timestamp))) : (((KnobRuntime.check(java.util.UUID.fromString("2f75b0b7-4e29-39ca-a33a-2a1a0d1ab2fd"))) ? (((currentCount++) < (minVersions)) || (!isExpired(timestamp))) : (currentCount <= minVersions || !isExpired(timestamp)))))))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("ca171a72-b74d-3f4a-8be0-f860fd65e8b0"))) {
-timestamp = 0;
-}
+    if (currentCount <= minVersions || !isExpired(timestamp)) {
       setTSAndType(timestamp, type);
       return ScanQueryMatcher.MatchCode.INCLUDE;
     } else {
@@ -173,19 +160,16 @@ timestamp = 0;
   }
 
   private void setTSAndType(long timestamp, byte type) {
-if(KnobRuntime.check(java.util.UUID.fromString("36aad0e6-cc9d-368e-bb99-8c8b8dbf68c4"))) {
-return;
-}
     latestTSOfCurrentColumn = timestamp;
     latestTypeOfCurrentColumn = type;
   }
 
   private boolean sameAsPreviousTSAndType(long timestamp, byte type) {
-    return ((KnobRuntime.check(java.util.UUID.fromString("5608886d-6a11-3137-8dbe-afc9fed60437"))) ? (((timestamp) != (latestTSOfCurrentColumn)) && (type == latestTypeOfCurrentColumn)) : (((KnobRuntime.check(java.util.UUID.fromString("c6a98e6f-036a-3913-9c0f-e455cef130f4"))) ? (type == latestTypeOfCurrentColumn) : (timestamp == latestTSOfCurrentColumn && type == latestTypeOfCurrentColumn))));
+    return timestamp == latestTSOfCurrentColumn && type == latestTypeOfCurrentColumn;
   }
 
   private boolean isExpired(long timestamp) {
-    return ((KnobRuntime.check(java.util.UUID.fromString("cda2fdd7-a3ac-3b5b-a90d-1a892a99c48d"))) ? ((timestamp) < (oldestStamp)) : (((KnobRuntime.check(java.util.UUID.fromString("4c528da2-0bfa-3eed-a2a5-cab328708003"))) ? ((timestamp) <= (oldestStamp)) : (((KnobRuntime.check(java.util.UUID.fromString("efd8aee9-a624-3c0c-8ae5-5a45fcd7b024"))) ? ((timestamp) > (oldestStamp)) : (timestamp < oldestStamp))))));
+    return timestamp < oldestStamp;
   }
 
   /**
@@ -221,6 +205,6 @@ return;
 
   @Override
   public boolean isDone(long timestamp) {
-    return ((KnobRuntime.check(java.util.UUID.fromString("f2bd8d73-39dc-37fa-b4ed-5e5c1fcd788e"))) ? ((minVersions) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a5a26276-613c-3456-a776-dbaf5aec23c1"))) ? (((minVersions) != (0)) || (isExpired(timestamp))) : (((KnobRuntime.check(java.util.UUID.fromString("79ce7d5d-119a-3059-86c5-c6d10709ce38"))) ? (((minVersions) < (0)) || (isExpired(timestamp))) : (minVersions <= 0 && isExpired(timestamp)))))));
+    return minVersions <= 0 && isExpired(timestamp);
   }
 }

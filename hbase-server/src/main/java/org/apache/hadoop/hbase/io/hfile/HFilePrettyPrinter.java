@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
@@ -308,7 +309,7 @@ public class HFilePrettyPrinter extends Configured implements Tool {
 
     KeyValueStatsCollector fileStats = null;
 
-    if (verbose || printKey || checkRow || checkFamily || printStats || checkMobIntegrity) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("c5e0631a-a0c5-3cfa-a22e-fbb8316d242e"))) ? ((((verbose || printKey || checkRow) && (checkFamily)) || (!printStats)) && (checkMobIntegrity)) : (verbose || printKey || checkRow || checkFamily || printStats || checkMobIntegrity))) {
       // scan over file and read key/value's and check if requested
       HFileScanner scanner = reader.getScanner(getConf(), false, false, false);
       fileStats = new KeyValueStatsCollector();

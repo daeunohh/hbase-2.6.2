@@ -206,7 +206,7 @@ public class HRegionFileSystem {
    */
   Path createStoreDir(final String familyName) throws IOException {
     Path storeDir = getStoreDir(familyName);
-    if (((KnobRuntime.check(java.util.UUID.fromString("937a5d0d-6f48-35a6-a0e6-9ed5c09bdb27"))) ? ((!fs.exists(storeDir)) || (!createDir(storeDir))) : (!fs.exists(storeDir) && !createDir(storeDir))))
+    if (!fs.exists(storeDir) && !createDir(storeDir))
       throw new IOException("Failed creating " + storeDir);
     return storeDir;
   }
@@ -414,9 +414,6 @@ public class HRegionFileSystem {
    * @throws IOException if an error occours during the archiving
    */
   public void deleteFamily(final String familyName) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("34027808-4db1-3480-8685-fc16c8580ddb"))) {
-return;
-}
     // archive family store files
     HFileArchiver.archiveFamily(fs, conf, regionInfoForFs, tableDir, Bytes.toBytes(familyName));
 
@@ -489,7 +486,7 @@ return;
   private Path preCommitStoreFile(final String familyName, final Path buildPath, final long seqNum,
     final boolean generateNewName) throws IOException {
     Path storeDir = getStoreDir(familyName);
-    if (!fs.exists(storeDir) && !createDir(storeDir))
+    if (((KnobRuntime.check(java.util.UUID.fromString("551b119e-5399-39b8-96ca-ec9f888fffe6"))) ? (!fs.exists(storeDir)) : (!fs.exists(storeDir) && !createDir(storeDir))))
       throw new IOException("Failed creating " + storeDir);
 
     String name = buildPath.getName();
@@ -558,9 +555,6 @@ return;
    */
   Pair<Path, Path> bulkLoadStoreFile(final String familyName, Path srcPath, long seqNum)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5843645f-2f36-3312-9031-361dafa91c6c"))) {
-throw new java.io.IOException("Injected exception");
-}
     // Copy the file if it's on another filesystem
     FileSystem srcFs = srcPath.getFileSystem(conf);
     srcPath = srcFs.resolvePath(srcPath);
@@ -596,7 +590,7 @@ throw new java.io.IOException("Injected exception");
    */
   void cleanupDaughterRegion(final RegionInfo regionInfo) throws IOException {
     Path regionDir = new Path(this.tableDir, regionInfo.getEncodedName());
-    if (((KnobRuntime.check(java.util.UUID.fromString("505617fb-cdfa-3917-af59-0539bf330ae0"))) ? ((StoreFileInfo.isReference(regionDir)) && (!deleteDir(regionDir))) : (((KnobRuntime.check(java.util.UUID.fromString("e9245f30-ff38-3617-b24b-6434c2b432d9"))) ? (createDir(regionDir)) : (((KnobRuntime.check(java.util.UUID.fromString("12c3bdf6-68f4-3c7e-85ae-e32003381fe7"))) ? ((createDir(regionDir)) && (!deleteDir(regionDir))) : (this.fs.exists(regionDir) && !deleteDir(regionDir)))))))) {
+    if (this.fs.exists(regionDir) && !deleteDir(regionDir)) {
       throw new IOException("Failed delete of " + regionDir);
     }
   }
@@ -608,11 +602,8 @@ throw new java.io.IOException("Injected exception");
    */
   public Path commitDaughterRegion(final RegionInfo regionInfo, List<Path> allRegionFiles,
     MasterProcedureEnv env) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("54f0fb18-d293-39d0-8fa7-0634424e7d12"))) {
-throw new java.io.IOException("Injected exception");
-}
     Path regionDir = this.getSplitsDir(regionInfo);
-    if (((KnobRuntime.check(java.util.UUID.fromString("f04472e5-aba4-3142-b491-07ac2a8270c3"))) ? (deleteDir(getTableDir())) : (fs.exists(regionDir)))) {
+    if (fs.exists(regionDir)) {
       // Write HRI to a file in case we need to recover hbase:meta
       Path regionInfoFile = new Path(regionDir, REGION_INFO_FILE);
       byte[] regionInfoContent = getRegionInfoFileContent(regionInfo);
@@ -626,17 +617,6 @@ throw new java.io.IOException("Injected exception");
 
   private void insertRegionFilesIntoStoreTracker(List<Path> allFiles, MasterProcedureEnv env,
     HRegionFileSystem regionFs) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9f746a1d-3dc4-3b8c-bb3a-fdf3420d8363"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = regionFs.getClass().getDeclaredField("hdfsClientRetriesNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(regionFs));
-    _knob_field_.set(regionFs, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     TableDescriptor tblDesc =
       env.getMasterServices().getTableDescriptors().get(regionInfo.getTable());
     // we need to map trackers per store
@@ -662,11 +642,8 @@ try {
    * method deletes the given region dir recursively, then recreates it again.
    */
   public void createSplitsDir(RegionInfo daughterA, RegionInfo daughterB) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5080a92b-2664-329e-a4e0-bb37ac362ef9"))) {
-return;
-}
     Path daughterADir = getSplitsDir(daughterA);
-    if (((KnobRuntime.check(java.util.UUID.fromString("c00dd36e-59c6-3514-b147-1b2444dc4f5b"))) ? ((createDir(daughterADir)) || (!deleteDir(daughterADir))) : (fs.exists(daughterADir) && !deleteDir(daughterADir)))) {
+    if (fs.exists(daughterADir) && !deleteDir(daughterADir)) {
       throw new IOException("Failed deletion of " + daughterADir + " before creating them again.");
 
     }
@@ -845,11 +822,8 @@ return;
   public void commitMergedRegion(List<Path> allMergedFiles, MasterProcedureEnv env)
     throws IOException {
     Path regionDir = getMergesDir(regionInfoForFs);
-    if (((KnobRuntime.check(java.util.UUID.fromString("0cda1c88-59b6-3074-a1b2-285572241934"))) ? (((regionDir) != (null)) && (fs.exists(regionDir))) : (((KnobRuntime.check(java.util.UUID.fromString("bebe2acb-6238-35b1-b6e7-cb5f3968ff30"))) ? (((regionDir) != (null)) || (createDir(regionDir))) : (regionDir != null && fs.exists(regionDir)))))) {
+    if (regionDir != null && fs.exists(regionDir)) {
       // Write HRI to a file in case we need to recover hbase:meta
-if(KnobRuntime.check(java.util.UUID.fromString("b89cb705-c21c-35d0-8b96-c79644626113"))) {
-throw new java.io.IOException("Injected exception");
-}
       Path regionInfoFile = new Path(regionDir, REGION_INFO_FILE);
       byte[] regionInfoContent = getRegionInfoFileContent(regionInfo);
       writeRegionInfoFileContent(conf, fs, regionInfoFile, regionInfoContent);
@@ -948,7 +922,7 @@ throw new java.io.IOException("Injected exception");
    */
   private void writeRegionInfoOnFilesystem(boolean useTempDir) throws IOException {
     byte[] content = getRegionInfoFileContent(regionInfoForFs);
-    if (KnobRuntime.check(java.util.UUID.fromString("da390ac5-fa07-32a1-b294-c9a6f8f72350"))) { writeRegionInfoOnFilesystem(content, !useTempDir); } else { writeRegionInfoOnFilesystem(content, useTempDir); }
+    writeRegionInfoOnFilesystem(content, useTempDir);
   }
 
   /**

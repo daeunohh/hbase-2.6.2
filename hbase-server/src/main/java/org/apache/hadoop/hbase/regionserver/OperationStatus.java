@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.HBaseInterfaceAudience;
 import org.apache.hadoop.hbase.HConstants.OperationStatusCode;
@@ -69,9 +68,6 @@ public class OperationStatus {
   /**
    *   */
   public OperationStatusCode getOperationStatusCode() {
-if(KnobRuntime.check(java.util.UUID.fromString("e60cd59c-8321-3427-8b95-418bd7631bf3"))) {
-return null;
-}
     return code;
   }
 

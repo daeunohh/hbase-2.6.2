@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.procedure.ReopenTableRegionsProcedure.PROGRESSIVE_BATCH_BACKOFF_MILLIS_DEFAULT;
 import static org.apache.hadoop.hbase.master.procedure.ReopenTableRegionsProcedure.PROGRESSIVE_BATCH_BACKOFF_MILLIS_KEY;
@@ -192,18 +191,7 @@ public class ModifyTableProcedure extends AbstractStateMachineTableProcedure<Mod
           setNextState(ModifyTableState.MODIFY_TABLE_PRE_OPERATION);
           break;
         case MODIFY_TABLE_PRE_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("fb662384-5418-3fe9-834a-9916ffdc502e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-          if (KnobRuntime.check(java.util.UUID.fromString("9b160fbb-1381-3763-b550-37381e434fa1"))) { postModify(env, state); } else if (KnobRuntime.check(java.util.UUID.fromString("f9874790-f45f-367b-afd9-8c19507490c9"))) { runCoprocessorAction(env, state); } else { preModify(env, state); }
+          preModify(env, state);
           // We cannot allow changes to region replicas when 'reopenRegions==false',
           // as this mode bypasses the state management required for modifying region replicas.
           if (reopenRegions) {
@@ -286,17 +274,6 @@ try {
           throw new UnsupportedOperationException("unhandled state=" + state);
       }
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("ae4f5b54-9818-3416-b0e1-34fb3992ce14"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       if (isRollbackSupported(state)) {
         setFailure("master-modify-table", e);
       } else {
@@ -387,7 +364,7 @@ try {
       modifyTableMsg.hasShouldCheckDescriptor() ? modifyTableMsg.getShouldCheckDescriptor() : false;
     reopenRegions = modifyTableMsg.hasReopenRegions() ? modifyTableMsg.getReopenRegions() : true;
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("c09b21fa-fef7-3d9b-a886-06edc1b6c962"))) ? (modifyTableMsg.hasShouldCheckDescriptor()) : (((KnobRuntime.check(java.util.UUID.fromString("24b50f36-dcaa-3626-b78b-ce4828b79f21"))) ? (modifyTableMsg.getShouldCheckDescriptor()) : (modifyTableMsg.hasUnmodifiedTableSchema()))))) {
+    if (modifyTableMsg.hasUnmodifiedTableSchema()) {
       unmodifiedTableDescriptor =
         ProtobufUtil.toTableDescriptor(modifyTableMsg.getUnmodifiedTableSchema());
     }
@@ -575,9 +552,6 @@ try {
             modifiedTableDescriptor, getUser());
           break;
         case MODIFY_TABLE_POST_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("4b8c0b8a-a403-3f09-9db4-391d365f0165"))) {
-throw new java.io.IOException("Injected exception");
-}
           cpHost.postCompletedModifyTableAction(getTableName(), unmodifiedTableDescriptor,
             modifiedTableDescriptor, getUser());
           break;

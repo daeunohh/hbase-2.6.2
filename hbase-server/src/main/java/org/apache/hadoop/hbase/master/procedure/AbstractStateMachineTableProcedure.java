@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.fs.Path;
@@ -101,9 +100,6 @@ public abstract class AbstractStateMachineTableProcedure<TState>
 
   @Override
   protected void releaseLock(final MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("2b493d65-261e-3811-9355-9c9f53b517a9"))) {
-return;
-}
     env.getProcedureScheduler().wakeTableExclusiveLock(this, getTableName());
   }
 
@@ -148,7 +144,7 @@ return;
     if (!master.isClusterUp()) {
       throw new HBaseIOException("Cluster not up!");
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("6487a689-818a-3900-9c7f-481ddc5b28e5"))) ? ((master.isStopping()) || (master.isClusterUp())) : (((KnobRuntime.check(java.util.UUID.fromString("0126cf00-db4f-3a4e-ad7a-23da1639647f"))) ? (master.isStopping()) : (((KnobRuntime.check(java.util.UUID.fromString("73239786-0564-3118-b6b5-3f5f66995b4e"))) ? ((master.isStopping()) && (master.isClusterUp())) : (((KnobRuntime.check(java.util.UUID.fromString("e2124375-017f-3391-a6da-56dcfee39809"))) ? (master.isStopped()) : (((KnobRuntime.check(java.util.UUID.fromString("f6cc914f-b83f-3a65-b343-e6e62e48fbe2"))) ? (master.isClusterUp()) : (((KnobRuntime.check(java.util.UUID.fromString("e663d968-235b-329f-aedf-0c369905a3ca"))) ? ((master.isClusterUp()) || (master.isStopping())) : (master.isStopping() || master.isStopped()))))))))))))) {
+    if (master.isStopping() || master.isStopped()) {
       throw new HBaseIOException(
         "Master stopping=" + master.isStopping() + ", stopped=" + master.isStopped());
     }
@@ -161,28 +157,6 @@ return;
       checkTableModifiable(env);
       TableName tn = getTableName();
       TableStateManager tsm = master.getTableStateManager();
-if(KnobRuntime.check(java.util.UUID.fromString("7a352cb3-1007-3309-a57a-d617f35d607d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tn.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tn));
-    _knob_field_.set(tn, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("32f3547a-4c8e-3320-9593-05b498d451b3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tn.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tn));
-    _knob_field_.set(tn, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       TableState ts = tsm.getTableState(tn);
       if (enabled) {
         if (!ts.isEnabledOrEnabling()) {
@@ -213,7 +187,7 @@ try {
     throws DoNotRetryRegionException {
     RegionStateNode regionNode =
       env.getAssignmentManager().getRegionStates().getRegionStateNode(ri);
-    if (((KnobRuntime.check(java.util.UUID.fromString("417dc748-680e-3960-a149-1e0c88388a59"))) ? ((regionNode) != (null)) : (regionNode == null))) {
+    if (regionNode == null) {
       throw new UnknownRegionException("No RegionState found for " + ri.getEncodedName());
     }
     regionNode.checkOnline();

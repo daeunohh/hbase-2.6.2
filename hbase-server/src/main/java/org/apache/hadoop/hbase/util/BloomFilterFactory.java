@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataInput;
 import java.io.IOException;
@@ -111,17 +110,6 @@ public final class BloomFilterFactory {
 
   /** Returns true if Delete Family Bloom filters are enabled in the given configuration */
   public static boolean isDeleteFamilyBloomEnabled(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("a5f111b9-bcbf-3dbb-b302-71be05486995"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return conf.getBoolean(IO_STOREFILE_DELETEFAMILY_BLOOM_ENABLED, true);
   }
 
@@ -156,31 +144,6 @@ try {
    */
   public static BloomFilterWriter createGeneralBloomAtWrite(Configuration conf,
     CacheConfig cacheConf, BloomType bloomType, int maxKeys, HFile.Writer writer) {
-if(KnobRuntime.check(java.util.UUID.fromString("60146e7a-0d0b-3c95-bf46-e0670ff71ab2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheDataOnWrite");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(cacheConf);
-    _knob_field_.set(cacheConf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("449a63b3-4927-3583-a4a2-784085f28e72"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheCompactedDataOnWriteThreshold");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(cacheConf));
-    _knob_field_.set(cacheConf, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("280415d0-b835-3109-8257-f26015544378"))) {
-return null;
-}
     if (!isGeneralBloomEnabled(conf)) {
       LOG.trace("Bloom filters are disabled by configuration for " + writer.getPath()
         + (conf == null ? " (configuration is null)" : ""));
@@ -204,17 +167,6 @@ return null;
 
     // Do we support compound bloom filters?
     // In case of compound Bloom filters we ignore the maxKeys hint.
-if(KnobRuntime.check(java.util.UUID.fromString("2cef310b-4f3f-34c5-9c4e-1976bcb74d06"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     CompoundBloomFilterWriter bloomWriter = new CompoundBloomFilterWriter(getBloomBlockSize(conf),
       err, Hash.getHashType(conf), maxFold, cacheConf.shouldCacheBloomsOnWrite(),
       bloomType == BloomType.ROWCOL ? CellComparatorImpl.COMPARATOR : null, bloomType);

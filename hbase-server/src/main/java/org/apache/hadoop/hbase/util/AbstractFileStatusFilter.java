@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.CheckForNull;
 import java.io.IOException;
@@ -50,9 +49,6 @@ public abstract class AbstractFileStatusFilter implements PathFilter, FileStatus
 
   @Override
   public boolean accept(Path p) {
-if(KnobRuntime.check(java.util.UUID.fromString("d4387c79-5d1d-340b-ade5-cc58a2390fbf"))) {
-return false;
-}
     return accept(p, null);
   }
 
@@ -62,9 +58,6 @@ return false;
 
   protected boolean isDirectory(FileSystem fs, @CheckForNull Boolean isDir, Path p)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("412dc80a-fe28-39d5-8e32-d4d02c205365"))) {
-throw new java.io.IOException("Injected exception");
-}
     return isDir != null ? isDir : fs.isDirectory(p);
   }
 }

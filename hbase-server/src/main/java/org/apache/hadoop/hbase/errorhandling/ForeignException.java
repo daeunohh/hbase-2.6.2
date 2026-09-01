@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.errorhandling;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class ForeignException extends IOException {
   public ForeignException(String source, Throwable cause) {
     super(cause);
     assert source != null;
-    assert ((KnobRuntime.check(java.util.UUID.fromString("8d38929d-b628-370c-a2fc-906183a4fd80"))) ? ((cause) == (null)) : (cause != null));
+    assert cause != null;
     this.source = source;
   }
 

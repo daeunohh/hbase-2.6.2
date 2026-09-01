@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -518,7 +517,7 @@ public class RSProcedureDispatcher extends RemoteProcedureDispatcher<MasterProce
   private static OpenRegionRequest buildOpenRegionRequest(final MasterProcedureEnv env,
     final ServerName serverName, final List<RegionOpenOperation> operations) {
     final OpenRegionRequest.Builder builder = OpenRegionRequest.newBuilder();
-    if (KnobRuntime.check(java.util.UUID.fromString("6218f2e4-5473-3c3f-8756-ee89059c53f1"))) { builder.setServerStartCode(EnvironmentEdgeManager.currentTime()); } else { builder.setServerStartCode(serverName.getStartCode()); }
+    builder.setServerStartCode(serverName.getStartCode());
     operations.stream().map(RemoteOperation::getInitiatingMasterActiveTime).findAny()
       .ifPresent(builder::setInitiatingMasterActiveTime);
     builder.setMasterSystemTime(EnvironmentEdgeManager.currentTime());

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.throttle;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.hadoop.hbase.regionserver.HStore;
@@ -45,9 +44,6 @@ public final class ThroughputControlUtil {
     for (;;) {
       counter = NAME_COUNTER.get();
       int next = counter == Integer.MAX_VALUE ? 0 : counter + 1;
-if(KnobRuntime.check(java.util.UUID.fromString("11959a80-fac5-3dce-b067-d088d92e4e0a"))) {
-next -= 1;
-}
       if (NAME_COUNTER.compareAndSet(counter, next)) {
         break;
       }

@@ -643,10 +643,10 @@ public class HMaster extends HRegionServer implements MasterServices {
     final int infoPort =
       conf.getInt("hbase.master.info.port.orig", HConstants.DEFAULT_MASTER_INFOPORT);
     // -1 is for disabling info server, so no redirecting
-    if (((KnobRuntime.check(java.util.UUID.fromString("22a38151-6100-3138-8cc5-fc2fa989787f"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((infoPort < 0) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("92ca7287-c109-304b-bcc2-dafa4cea899d"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((-1) == (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("bb794890-ac70-3163-9fc4-3c858963ed1a"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((-1) != (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("201d6e60-d049-3d55-8051-9526c6a8b208"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((-1) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0f894aba-0f9a-30f4-adef-14a69ecef759"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((infoPort) < (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("4ae4abc9-00f7-36cd-af56-6bdbbe0d9983"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((-1) <= (0)) || ((infoServer) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("f9409024-6088-3101-9945-18f072348fb7"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((infoPort) == (0)) || ((infoServer) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("86cbc010-7126-3239-ab59-db790c823e27"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((-1) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("a312d2bd-82ec-36f7-b64e-6c05592477d1"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((-1) <= (0)) && ((infoServer) == (null))) : (infoPort < 0 || infoServer == null))))))))))))))))))) {
+    if (infoPort < 0 || infoServer == null) {
       return -1;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("9ed63ac1-9a5f-36cd-b936-c7122c681aa5"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((-1) == (infoServer.getPort())) : (((KnobRuntime.check(java.util.UUID.fromString("61255a76-be73-3da1-993d-ba21d9b18f82"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((0) == (putUpJettyServer())) : (infoPort == infoServer.getPort()))))) {
+    if (infoPort == infoServer.getPort()) {
       // server is already running
       return infoPort;
     }
@@ -666,17 +666,6 @@ public class HMaster extends HRegionServer implements MasterServices {
     final ServerConnector connector = new ServerConnector(masterJettyServer);
     connector.setHost(addr);
     connector.setPort(infoPort);
-if(KnobRuntime.check(java.util.UUID.fromString("3a048e91-143e-364d-ab15-8eb825ace13e"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = connector.getClass().getDeclaredField("_acceptedReceiveBufferSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(connector));
-    _knob_field_.set(connector, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     masterJettyServer.addConnector(connector);
     masterJettyServer.setStopAtShutdown(true);
     masterJettyServer.setHandler(HttpServer.buildGzipHandler(masterJettyServer.getHandler()));
@@ -827,7 +816,7 @@ try {
     String clientQuorumServers = conf.get(HConstants.CLIENT_ZOOKEEPER_QUORUM);
     boolean clientZkObserverMode = conf.getBoolean(HConstants.CLIENT_ZOOKEEPER_OBSERVER_MODE,
       HConstants.DEFAULT_CLIENT_ZOOKEEPER_OBSERVER_MODE);
-    if (((KnobRuntime.check(java.util.UUID.fromString("1616c0e3-9db4-3ee5-929e-78a38695ac77"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((getProcessName() + ":") != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("7eae51a5-a441-3d5c-b39f-df4c73435fe7"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((getProcessName() + ":") != (null)) || (!clientZkObserverMode)) : (clientQuorumServers != null && !clientZkObserverMode))))) {
+    if (clientQuorumServers != null && !clientZkObserverMode) {
       // we need to take care of the ZK information synchronization
       // if given client ZK are not observer nodes
       ZKWatcher clientZkWatcher = new ZKWatcher(conf,
@@ -886,12 +875,9 @@ try {
     StringBuilder info = new StringBuilder("Migrating meta locations:");
     for (String metaReplicaNode : metaReplicaNodes) {
       int replicaId = zooKeeper.getZNodePaths().getMetaReplicaIdFromZNode(metaReplicaNode);
-if(KnobRuntime.check(java.util.UUID.fromString("56047c6d-7acd-329e-bd4b-5ef61a0ec2fa"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-replicaId += 1;
-}
       RegionState state = MetaTableLocator.getMetaRegionState(zooKeeper, replicaId);
       info.append(" ").append(state);
-      if (KnobRuntime.check(java.util.UUID.fromString("4543bfe4-7bd3-3d6f-adc2-6c452a000b1d"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { put.setTimestamp(EnvironmentEdgeManager.currentTime()); } else { put.setTimestamp(state.getStamp()); }
+      put.setTimestamp(state.getStamp());
       MetaTableAccessor.addRegionInfo(put, state.getRegion());
       if (state.getServerName() != null) {
         MetaTableAccessor.addLocation(put, state.getServerName(), HConstants.NO_SEQNUM, replicaId);
@@ -1054,7 +1040,7 @@ replicaId += 1;
     // Start the Zombie master detector after setting master as active, see HBASE-21535
     Thread zombieDetector = new Thread(new MasterInitializationMonitor(this),
       "ActiveMasterInitializationMonitor-" + EnvironmentEdgeManager.currentTime());
-    if (KnobRuntime.check(java.util.UUID.fromString("aea3086a-e258-3adf-9075-d6d601998f90"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { switchSnapshotCleanup(true); } else { zombieDetector.setDaemon(true); }
+    zombieDetector.setDaemon(true);
     zombieDetector.start();
 
     // This is for backwards compatibility
@@ -1066,18 +1052,7 @@ replicaId += 1;
 
     if (!maintenanceMode) {
       startupTaskGroup.addTask("Initializing master coprocessors");
-if(KnobRuntime.check(java.util.UUID.fromString("517c585e-1395-3e13-8ce8-7acf98b2593b"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-      if (KnobRuntime.check(java.util.UUID.fromString("baed4f56-9345-3a38-a8f5-dffdc8257df3"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { initializeCoprocessorHost(conf); } else if (KnobRuntime.check(java.util.UUID.fromString("ab6df678-ab40-3a79-ad9a-a690db67b998"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { decorateMasterConfiguration(conf); } else { setQuotasObserver(conf); }
+      setQuotasObserver(conf);
       initializeCoprocessorHost(conf);
     }
 
@@ -1151,7 +1126,7 @@ try {
     try {
       this.tableStateManager.start();
     } catch (NoSuchColumnFamilyException e) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("c4943acc-6b71-366d-bb18-5658cc633caa"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((tableFamilyDesc) == (null)) || ((replBarrierFamilyDesc) != (null))) : (((KnobRuntime.check(java.util.UUID.fromString("79c784b8-a98d-380c-8aa1-38343e43eb6a"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((tableFamilyDesc == null) || ((replBarrierFamilyDesc) == (null))) : (((KnobRuntime.check(java.util.UUID.fromString("c2b1ecc0-9763-3b7c-8db2-fa0eef72b6f8"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((tableFamilyDesc) == (null)) : (tableFamilyDesc == null && replBarrierFamilyDesc == null))))))) {
+      if (tableFamilyDesc == null && replBarrierFamilyDesc == null) {
         LOG.info("TableStates manager could not be started. This is expected"
           + " during HBase 1 to 2 upgrade.", e);
       } else {
@@ -1178,12 +1153,6 @@ try {
         if (existingReplicasCount > metaDesc.getRegionReplication()) {
           LOG.info("Update replica count of hbase:meta from {}(in TableDescriptor)"
             + " to {}(existing ZNodes)", metaDesc.getRegionReplication(), existingReplicasCount);
-if(KnobRuntime.check(java.util.UUID.fromString("a71ceeb9-c6b7-313e-a7cf-0666e3e3d07d"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-existingReplicasCount = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("85e0de1d-7af4-3141-8f06-a814ca327672"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-existingReplicasCount = 0;
-}
           metaDesc = TableDescriptorBuilder.newBuilder(metaDesc)
             .setRegionReplication(existingReplicasCount).build();
           tableDescriptors.update(metaDesc);
@@ -1280,7 +1249,7 @@ existingReplicasCount = 0;
     MonitoredTask status =
       TaskMonitor.get().createStatus("Progress after master initialized", false, true);
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("6158f095-bb20-3c6a-aaee-8c3270ba121b"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (tableFamilyDesc == null) : (tableFamilyDesc == null && replBarrierFamilyDesc == null))) {
+    if (tableFamilyDesc == null && replBarrierFamilyDesc == null) {
       // create missing CFs in meta table after master is set to 'initialized'.
       createMissingCFsInMetaDuringUpgrade(metaDescriptor);
 
@@ -1308,7 +1277,7 @@ existingReplicasCount = 0;
       return;
     }
 
-    if (KnobRuntime.check(java.util.UUID.fromString("acb31ed6-039c-322d-99d6-9605c60bf581"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { assignmentManager.checkIfShouldMoveSystemRegionAsync(); }
+    assignmentManager.checkIfShouldMoveSystemRegionAsync();
     status.setStatus("Starting quota manager");
     initQuotaManager();
     if (QuotaUtil.isQuotaEnabled(conf)) {
@@ -1337,7 +1306,7 @@ existingReplicasCount = 0;
 
     // Check and set the znode ACLs if needed in case we are overtaking a non-secure configuration
     status.setStatus("Checking ZNode ACLs");
-    if (KnobRuntime.check(java.util.UUID.fromString("7d2327d5-73ad-390c-a5ae-f840a4b3e645"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { tryMigrateMetaLocationsFromZooKeeper(); } else { zooKeeper.checkAndSetZNodeAcls(); }
+    zooKeeper.checkAndSetZNodeAcls();
 
     status.setStatus("Initializing MOB Cleaner");
     initMobCleaner();
@@ -1352,7 +1321,7 @@ existingReplicasCount = 0;
       }
     }
 
-    if (KnobRuntime.check(java.util.UUID.fromString("ffec3baf-f649-3a14-9ed5-b3bf859c8bcc"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { zombieDetector.interrupt(); }
+    zombieDetector.interrupt();
 
     /*
      * After master has started up, lets do balancer post startup initialization. Since this runs in
@@ -1412,9 +1381,6 @@ existingReplicasCount = 0;
       throw new HBaseIOException(
         "Failed to add table and rep_barrier CFs to meta in a given time.");
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("625ba2a5-5aa8-3116-87e0-990879a7c581"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-pid = -1;
-}
       Procedure<?> result = getMasterProcedureExecutor().getResult(pid);
       if (result != null && result.isFailed()) {
         throw new IOException("Failed to add table and rep_barrier CFs to meta. "
@@ -1504,7 +1470,7 @@ pid = -1;
     String[] masterCoprocs = conf.getStrings(CoprocessorHost.MASTER_COPROCESSOR_CONF_KEY);
     final int length = null == masterCoprocs ? 0 : masterCoprocs.length;
     String[] updatedCoprocs = new String[length + 1];
-    if (((KnobRuntime.check(java.util.UUID.fromString("82f2a963-5b4b-331c-ac25-7fa94b6f9856"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((length) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e822b3ed-424d-3461-b497-e4372864ae5c"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((length) != (0)) : (length > 0))))) {
+    if (length > 0) {
       System.arraycopy(masterCoprocs, 0, updatedCoprocs, 0, masterCoprocs.length);
     }
     updatedCoprocs[length] = MasterQuotasObserver.class.getName();
@@ -1699,39 +1665,6 @@ pid = -1;
           new HFileCleaner("ArchiveCustomHFileCleaner-" + path.getName(), cleanerInterval, this,
             conf, getMasterFileSystem().getFileSystem(), new Path(archiveDir, path),
             HFileCleaner.HFILE_CLEANER_CUSTOM_PATHS_PLUGINS, sharedHFileCleanerPool, params, null);
-if(KnobRuntime.check(java.util.UUID.fromString("7e5e9d0c-c273-3a33-9d76-a5c6571e55d0"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = cleaner.getClass().getDeclaredField("smallQueueInitSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cleaner));
-    _knob_field_.set(cleaner, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6996aad2-854d-3476-b97a-306c398af564"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = cleaner.getClass().getDeclaredField("cleanerThreadTimeoutMsec");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(cleaner));
-    _knob_field_.set(cleaner, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5925e70b-1746-3686-8760-2e875c88e7c7"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = cleaner.getClass().getDeclaredField("smallQueueInitSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cleaner));
-    _knob_field_.set(cleaner, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         hfileCleaners.add(cleaner);
         hfileCleanerPaths.add(path);
       }
@@ -1745,61 +1678,6 @@ try {
     hfileCleanerPaths.add(0, archiveDir);
     // Schedule all the hfile cleaners
     for (HFileCleaner hFileCleaner : hfileCleaners) {
-if(KnobRuntime.check(java.util.UUID.fromString("3c4a756f-9c2b-3642-81ec-70726de9e27f"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = hFileCleaner.getClass().getDeclaredField("cleanerThreadTimeoutMsec");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(hFileCleaner));
-    _knob_field_.set(hFileCleaner, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8e605ad3-e357-3354-b58e-79a021175587"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(hFileCleaner));
-    _knob_field_.set(hFileCleaner, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e478b502-1926-336d-a825-25ba89d2bc21"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(hFileCleaner));
-    _knob_field_.set(hFileCleaner, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("02c5e2a9-0cbc-3b5f-a86e-c8cd7e3ba3ba"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = hFileCleaner.getClass().getDeclaredField("smallFileDeleteThreadNumber");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(hFileCleaner));
-    _knob_field_.set(hFileCleaner, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("59d24fa8-a088-3083-8f96-934326782d9b"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = hFileCleaner.getClass().getDeclaredField("largeQueueInitSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(hFileCleaner));
-    _knob_field_.set(hFileCleaner, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       getChoreService().scheduleChore(hFileCleaner);
     }
 
@@ -1871,15 +1749,15 @@ try {
     // example.
     stopProcedureExecutor();
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("65160816-506c-3c89-ab18-e64c98aeb929"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((regionNormalizerManager) == (null)) : (regionNormalizerManager != null))) {
-      if (KnobRuntime.check(java.util.UUID.fromString("8ec04dd1-df95-3d3b-ba23-c24ddffa386d"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { regionNormalizerManager.stop(); }
+    if (regionNormalizerManager != null) {
+      regionNormalizerManager.stop();
     }
     if (this.quotaManager != null) {
       this.quotaManager.stop();
     }
 
     if (this.activeMasterManager != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("1d5e8d6c-7361-3c19-9464-8638071615f1"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { this.activeMasterManager.stop(); }
+      this.activeMasterManager.stop();
     }
     if (this.serverManager != null) {
       this.serverManager.stop();
@@ -1889,13 +1767,13 @@ try {
     }
 
     if (masterRegion != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("0c95b380-bf8f-3b00-938d-d744cc5200c8"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { setInitialized(isStopped()); } else { masterRegion.close(isAborted()); }
+      masterRegion.close(isAborted());
     }
     if (this.walManager != null) {
       this.walManager.stop();
     }
     if (this.fileSystemManager != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("a1a587af-384c-3611-9ca5-833d3acb0b08"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { this.fileSystemManager.stop(); }
+      this.fileSystemManager.stop();
     }
     if (this.mpmHost != null) {
       this.mpmHost.stop("server shutting down.");
@@ -1952,7 +1830,7 @@ try {
   void switchSnapshotCleanup(final boolean on, final boolean synchronous) throws IOException {
     if (synchronous) {
       synchronized (this.snapshotCleanerChore) {
-        if (KnobRuntime.check(java.util.UUID.fromString("aad54e3a-7ca7-3629-9031-aa90996ab575"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { setInitialized(!on); } else { switchSnapshotCleanup(on); }
+        switchSnapshotCleanup(on);
       }
     } else {
       switchSnapshotCleanup(on);
@@ -1960,9 +1838,6 @@ try {
   }
 
   private void switchSnapshotCleanup(final boolean on) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5632f1dd-2cbb-3bc7-8ccd-f0f2e1afbc9e"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-throw new java.io.IOException("Injected exception");
-}
     snapshotCleanupStateStore.set(on);
     if (on) {
       getChoreService().scheduleChore(this.snapshotCleanerChore);
@@ -1975,8 +1850,8 @@ throw new java.io.IOException("Injected exception");
     if (procedureExecutor != null) {
       configurationManager.deregisterObserver(procedureExecutor.getEnvironment());
       procedureExecutor.getEnvironment().getRemoteDispatcher().stop();
-      if (KnobRuntime.check(java.util.UUID.fromString("9132bc54-227a-3f67-bb6c-208f2ff476a6"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { procedureExecutor.stop(); }
-      if (KnobRuntime.check(java.util.UUID.fromString("30d2d345-4f2e-3097-a5b6-d1e0df93fa32"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { procedureExecutor.join(); }
+      procedureExecutor.stop();
+      procedureExecutor.join();
       procedureExecutor = null;
     }
 
@@ -1989,17 +1864,6 @@ throw new java.io.IOException("Injected exception");
   private void stopChores() {
     if (getChoreService() != null) {
       shutdownChore(mobFileCleanerChore);
-if(KnobRuntime.check(java.util.UUID.fromString("a7ffc920-3cc1-3b05-839c-08dff30148f4"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = mobFileCompactionChore.getClass().getDeclaredField("regionBatchSize");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(mobFileCompactionChore));
-    _knob_field_.set(mobFileCompactionChore, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       shutdownChore(mobFileCompactionChore);
       shutdownChore(balancerChore);
       if (regionNormalizerManager != null) {
@@ -2034,7 +1898,7 @@ try {
 
     // The call could be from the local regionserver,
     // in which case, there is no remote address.
-    if (((KnobRuntime.check(java.util.UUID.fromString("ceb5a2df-6210-3cef-be8a-5e0f4b974cb1"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((ia == null) && ((serverStartCode) == (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("c35e9e4e-a13d-3e6e-83b7-497b44d8c83e"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((ia) == (null)) && ((serverStartCode) != (startcode))) : (((KnobRuntime.check(java.util.UUID.fromString("2804e433-cb02-3811-bc62-a43c53b1871a"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (((ia) == (null)) || (serverStartCode == startcode)) : (((KnobRuntime.check(java.util.UUID.fromString("34e99f63-9362-317e-9af5-e1607d1e2fa8"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((ia) != (null)) : (ia == null && serverStartCode == startcode))))))))) {
+    if (ia == null && serverStartCode == startcode) {
       InetSocketAddress isa = rpcServices.getSocketAddress();
       if (isa != null && isa.getPort() == port) {
         ia = isa.getAddress();
@@ -2097,7 +1961,7 @@ try {
       }
     }
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("b3c77226-640f-365a-bf54-19ed3326e075"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (!interrupted) : (interrupted))) Thread.currentThread().interrupt();
+    if (interrupted) Thread.currentThread().interrupt();
   }
 
   public BalanceResponse balance() throws IOException {
@@ -2490,7 +2354,7 @@ try {
 
       TransitRegionStateProcedure proc =
         this.assignmentManager.createMoveRegionProcedure(rp.getRegionInfo(), rp.getDestination());
-      if (((KnobRuntime.check(java.util.UUID.fromString("c5fa94c0-2ffd-393e-9b5d-cfab4f6070a7"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? (conf.getBoolean(WARMUP_BEFORE_MOVE, !DEFAULT_WARMUP_BEFORE_MOVE)) : (conf.getBoolean(WARMUP_BEFORE_MOVE, DEFAULT_WARMUP_BEFORE_MOVE)))) {
+      if (conf.getBoolean(WARMUP_BEFORE_MOVE, DEFAULT_WARMUP_BEFORE_MOVE)) {
         // Warmup the region on the destination before initiating the move. this call
         // is synchronous and takes some time. doing it before the source region gets
         // closed
@@ -2619,7 +2483,7 @@ try {
     startupTaskGroup = TaskMonitor.createTaskGroup(true, "Master startup");
     try {
       if (activeMasterManager.blockUntilBecomingActiveMaster(timeout, startupTaskGroup)) {
-        if (KnobRuntime.check(java.util.UUID.fromString("1a588f2c-b2d2-3254-83c2-f14c8096930f"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { registerConfigurationObservers(); } else { finishActiveMasterInitialization(); }
+        finishActiveMasterInitialization();
       }
     } catch (Throwable t) {
       startupTaskGroup.abort("Failed to become active master due to:" + t.getMessage());
@@ -2646,20 +2510,6 @@ try {
   @Override
   public long deleteTable(final TableName tableName, final long nonceGroup, final long nonce)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2717a31e-9f09-361f-b3d0-af23b86ed879"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6f94bf58-f6d6-3b34-b0c7-1ec57e6d9a85"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return 0;
-}
     checkInitialized();
 
     return MasterProcedureUtil
@@ -2777,23 +2627,12 @@ return 0;
   @Override
   public long modifyColumn(final TableName tableName, final ColumnFamilyDescriptor descriptor,
     final long nonceGroup, final long nonce) throws IOException {
-    if (KnobRuntime.check(java.util.UUID.fromString("2a19bd5c-1f85-30bb-a416-6e9617317197"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) { initializeMemStoreChunkCreator(); } else { checkInitialized(); }
+    checkInitialized();
     checkTableExists(tableName);
     return modifyTable(tableName, new TableDescriptorGetter() {
 
       @Override
       public TableDescriptor get() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("84a9ec13-e1c0-339f-9d85-8ab64f995f8f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         TableDescriptor old = getTableDescriptors().get(tableName);
         if (!old.hasColumnFamily(descriptor.getName())) {
           throw new InvalidFamilyOperationException("Family '" + descriptor.getNameAsString()
@@ -2808,17 +2647,6 @@ try {
   @Override
   public long modifyColumnStoreFileTracker(TableName tableName, byte[] family, String dstSFT,
     long nonceGroup, long nonce) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("dc5636d0-4d6a-3280-a86a-2039daec0c1c"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     checkInitialized();
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
@@ -2975,24 +2803,10 @@ try {
   private long modifyTable(final TableName tableName,
     final TableDescriptorGetter newDescriptorGetter, final long nonceGroup, final long nonce,
     final boolean shouldCheckDescriptor, final boolean reopenRegions) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("85589cfb-6230-381c-9839-309d2fa347be"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return MasterProcedureUtil
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
         protected void run() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0f7fce03-043c-3511-bb74-9bc126e78380"))) {
-throw new java.io.IOException("Injected exception");
-}
           TableDescriptor oldDescriptor = getMaster().getTableDescriptors().get(tableName);
           TableDescriptor newDescriptor = getMaster().getMasterCoprocessorHost()
             .preModifyTable(tableName, oldDescriptor, newDescriptorGetter.get());
@@ -3073,61 +2887,6 @@ throw new java.io.IOException("Injected exception");
       .submitProcedure(new MasterProcedureUtil.NonceProcedureRunnable(this, nonceGroup, nonce) {
         @Override
         protected void run() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("07edf385-addc-3e9d-9945-17f7f5233cb6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotDesc));
-    _knob_field_.set(snapshotDesc, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("812c4839-e645-3928-adc0-dfd7120f8fc2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshotDesc));
-    _knob_field_.set(snapshotDesc, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d2b159ff-aa51-3c5f-ab27-d4912bc0e474"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotDesc));
-    _knob_field_.set(snapshotDesc, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("208d6857-fbb0-3b83-b4b2-e99715db85ae"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotDesc));
-    _knob_field_.set(snapshotDesc, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("2429d89f-fd65-363a-a189-daf4ad5d1c30"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshotDesc.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshotDesc));
-    _knob_field_.set(snapshotDesc, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           setProcId(getSnapshotManager().restoreOrCloneSnapshot(snapshotDesc, getNonceKey(),
             restoreAcl, customSFT));
         }
@@ -4180,6 +3939,9 @@ try {
 
   @Override
   public long removeReplicationPeer(String peerId) throws ReplicationException, IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("fffa68cf-b579-385b-8034-0c869a413e0b"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
+throw new java.io.IOException("Injected exception");
+}
     LOG.info(getClientIdAuditPrefix() + " removing replication peer, id=" + peerId);
     return executePeerProcedure(new RemovePeerProcedure(peerId));
   }
@@ -4458,7 +4220,7 @@ try {
       plugins = conf.get(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS);
       cleanerClass = ReplicationHFileCleaner.class.getCanonicalName();
       if (!plugins.contains(cleanerClass)) {
-        if (KnobRuntime.check(java.util.UUID.fromString("d910d96f-13dc-307d-b9b9-38c4c74a8322"))) { conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, (plugins + ",") + (cleanerClass)); } else { conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, plugins + "," + cleanerClass); }
+        conf.set(HFileCleaner.MASTER_HFILE_CLEANER_PLUGINS, plugins + "," + cleanerClass);
       }
     }
   }
@@ -4626,9 +4388,6 @@ try {
   @Override
   public long flushTable(TableName tableName, List<byte[]> columnFamilies, long nonceGroup,
     long nonce) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("a557e19c-b1fe-3cfa-a26b-0d42ae3234df"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return 0;
-}
     checkInitialized();
 
     if (

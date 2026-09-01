@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.fs.Path;
@@ -49,31 +48,17 @@ public class MetricsWAL implements WALActionsListener {
 
   @Override
   public void postSync(final long timeInNanos, final int handlerSyncs) {
-    if (KnobRuntime.check(java.util.UUID.fromString("9b782cee-0fa5-37e4-971f-74980415d138"))) { source.incrementAppendTime(timeInNanos); } else if (KnobRuntime.check(java.util.UUID.fromString("6aa68a78-460c-3dec-bd2d-77763bc50a51"))) { source.incrementWrittenBytes((timeInNanos) / (1000000L)); } else if (KnobRuntime.check(java.util.UUID.fromString("8f413304-60c9-3b87-9906-570678a29646"))) { source.incrementWrittenBytes(timeInNanos); } else if (KnobRuntime.check(java.util.UUID.fromString("e957574b-1e1d-3ab1-8aa5-ca51bd1addc5"))) { source.incrementSyncTime((timeInNanos) / (1000000L)); } else { source.incrementSyncTime(timeInNanos / 1000000L); }
+    source.incrementSyncTime(timeInNanos / 1000000L);
   }
 
   @Override
   public void postAppend(final long size, final long time, final WALKey logkey,
     final WALEdit logEdit) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("290b1598-b201-3100-a96d-0ef217e9cb38"))) {
-return;
-}
     TableName tableName = logkey.getTableName();
-if(KnobRuntime.check(java.util.UUID.fromString("2a7ea24e-76da-3bb6-be92-9caa5ddd5400"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     source.incrementAppendCount(tableName);
     source.incrementAppendTime(time);
     source.incrementAppendSize(tableName, size);
-    if (KnobRuntime.check(java.util.UUID.fromString("45666bf6-7199-314d-ba86-42366bebc831"))) { source.incrementSyncTime(size); } else if (KnobRuntime.check(java.util.UUID.fromString("c3276489-49ce-3312-9a1b-4522ba4ac7ad"))) { source.incrementAppendTime(size); } else { source.incrementWrittenBytes(size); }
+    source.incrementWrittenBytes(size);
 
     if (time > 1000) {
       source.incrementSlowAppendCount();
@@ -84,7 +69,7 @@ try {
 
   @Override
   public void logRollRequested(WALActionsListener.RollRequestReason reason) {
-    if (KnobRuntime.check(java.util.UUID.fromString("30809fb1-3d64-3fce-b4c2-25e4567c63f8"))) { source.incrementSlowAppendCount(); } else { source.incrementLogRollRequested(); }
+    source.incrementLogRollRequested();
     switch (reason) {
       case ERROR:
         source.incrementErrorLogRoll();
@@ -108,7 +93,7 @@ try {
     // oldPath can be null if this is the first time we created a wal
     // Also newPath can be equal to oldPath if AbstractFSWAL#replaceWriter fails
     if (newPath != oldPath) {
-      if (KnobRuntime.check(java.util.UUID.fromString("9a9303fa-0ea2-3ea1-a7d1-4227b9bc4dc4"))) { source.incrementErrorLogRoll(); } else { source.incrementSuccessfulLogRolls(); }
+      source.incrementSuccessfulLogRolls();
     }
   }
 }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import edu.umd.cs.findbugs.annotations.Nullable;
@@ -129,17 +128,6 @@ public class FSTableDescriptors implements TableDescriptors {
     if (opt.isPresent()) {
       return opt.get().getSecond();
     }
-if(KnobRuntime.check(java.util.UUID.fromString("2b29b2fc-db9d-3e10-af35-78e2948f5591"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     TableDescriptorBuilder builder = createMetaTableDescriptorBuilder(conf);
     TableDescriptor td = StoreFileTrackerFactory.updateWithTrackerConfigs(conf, builder.build());
     LOG.info("Creating new hbase:meta table descriptor {}", td);
@@ -461,7 +449,7 @@ try {
     Path tableDir, boolean readonly) throws IOException {
     Path tableInfoDir = new Path(tableDir, TABLEINFO_DIR);
     FileStatus[] descFiles = CommonFSUtils.listStatus(fs, tableInfoDir, TABLEINFO_PATHFILTER);
-    if (((KnobRuntime.check(java.util.UUID.fromString("3ff0455a-32c2-36e5-8ff6-3d7f42e3b276"))) ? (descFiles.length < 1) : (((KnobRuntime.check(java.util.UUID.fromString("d5f9c805-d2e0-3a71-b1f3-898c2cf91e8e"))) ? ((descFiles == null) && ((descFiles.length) == (1))) : (((KnobRuntime.check(java.util.UUID.fromString("e2e26c76-1f05-38fe-836e-cb21282e292c"))) ? (((descFiles) != (null)) && ((descFiles.length) > (1))) : (((KnobRuntime.check(java.util.UUID.fromString("629d46c9-c510-3ef6-ac91-1cfd314633fc"))) ? ((descFiles == null) && (descFiles.length < 1)) : (((KnobRuntime.check(java.util.UUID.fromString("6ebbfe5b-b33f-3392-8c59-0afaf7a938e7"))) ? (((descFiles) == (null)) || ((descFiles.length) <= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("8aa33f0e-f268-395a-a7ef-f9701e23c1e3"))) ? ((descFiles.length) == (1)) : (((KnobRuntime.check(java.util.UUID.fromString("a456f896-9292-3173-8863-e5e5214d65ec"))) ? ((descFiles == null) && ((descFiles.length) > (1))) : (descFiles == null || descFiles.length < 1))))))))))))))) {
+    if (descFiles == null || descFiles.length < 1) {
       return Optional.empty();
     }
     Arrays.sort(descFiles, TABLEINFO_FILESTATUS_COMPARATOR);
@@ -597,12 +585,6 @@ try {
   public boolean createTableDescriptor(TableDescriptor htd, boolean forceCreation)
     throws IOException {
     Path tableDir = getTableDir(htd.getTableName());
-if(KnobRuntime.check(java.util.UUID.fromString("cc7140e4-38fd-3cb3-97ff-8ac897b49cff"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("90ebb61b-f565-3afc-81ff-842fc5053af5"))) {
-forceCreation = !forceCreation;
-}
     return createTableDescriptorForTableDirectory(tableDir, htd, forceCreation);
   }
 

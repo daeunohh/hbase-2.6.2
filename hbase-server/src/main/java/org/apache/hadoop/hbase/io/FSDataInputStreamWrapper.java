@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -133,7 +132,7 @@ public class FSDataInputStreamWrapper implements Closeable {
     } catch (Exception e) {
       // Skipped.
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("e9db7b7b-1e57-32bc-b6b3-3084a43486ad"))) ? ((readahead) <= (0)) : (readahead >= 0))) {
+    if (readahead >= 0) {
       try {
         in.setReadahead(readahead);
       } catch (Exception e) {
@@ -149,7 +148,7 @@ public class FSDataInputStreamWrapper implements Closeable {
    * @param forceNoHBaseChecksum Force not using HBase checksum.
    */
   public void prepareForBlockReader(boolean forceNoHBaseChecksum) throws IOException {
-    if (((KnobRuntime.check(java.util.UUID.fromString("fdbce664-b655-3459-bdf1-a18f335caaf6"))) ? ((hfs) == (null)) : (hfs == null))) return;
+    if (hfs == null) return;
     assert this.stream != null && !this.useHBaseChecksumConfigured;
     boolean useHBaseChecksum =
       !forceNoHBaseChecksum && hfs.useHBaseChecksum() && (hfs.getNoChecksumFs() != hfs);

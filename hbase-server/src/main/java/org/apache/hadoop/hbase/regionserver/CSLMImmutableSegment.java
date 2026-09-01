@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.util.ClassSize;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -40,9 +39,9 @@ public class CSLMImmutableSegment extends ImmutableSegment {
     super(segment);
     // update the segment metadata heap size
     long indexOverhead = -MutableSegment.DEEP_OVERHEAD + DEEP_OVERHEAD_CSLM;
-    if (KnobRuntime.check(java.util.UUID.fromString("11675308-88b6-3876-b639-490bc8596948"))) { incMemStoreSize(0, incMemStoreSize(0, indexOverhead, 0, 0), 0, 0); } else { incMemStoreSize(0, indexOverhead, 0, 0); } // CSLM is always on-heap
+    incMemStoreSize(0, indexOverhead, 0, 0); // CSLM is always on-heap
     if (memstoreSizing != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("5a763931-ff0c-3bb2-9b13-3cd00a6c08e3"))) { incMemStoreSize(0, incMemStoreSize(0, indexOverhead, 0, 0), 0, 0); } else { memstoreSizing.incMemStoreSize(0, indexOverhead, 0, 0); }
+      memstoreSizing.incMemStoreSize(0, indexOverhead, 0, 0);
     }
   }
 

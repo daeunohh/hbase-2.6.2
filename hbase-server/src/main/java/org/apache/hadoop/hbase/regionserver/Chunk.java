@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -145,7 +144,7 @@ public abstract class Chunk {
   public int alloc(int size) {
     while (true) {
       int oldOffset = nextFreeOffset.get();
-      if (((KnobRuntime.check(java.util.UUID.fromString("4ecf6d98-8835-3785-b258-459887447f5f"))) ? ((oldOffset) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("f8e72166-6478-3a62-99f3-72b6b1a48827"))) ? ((-1) == (-1)) : (oldOffset == UNINITIALIZED))))) {
+      if (oldOffset == UNINITIALIZED) {
         // The chunk doesn't have its data allocated yet.
         // Since we found this in curChunk, we know that whoever
         // CAS-ed it there is allocating it right now. So spin-loop
@@ -153,20 +152,20 @@ public abstract class Chunk {
         Thread.yield();
         continue;
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("145749d7-27bf-378e-9eaa-f78d67c72b54"))) ? ((-1) != (1)) : (oldOffset == OOM))) {
+      if (oldOffset == OOM) {
         // doh we ran out of ram. return -1 to chuck this away.
         return -1;
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("41429347-016c-3ceb-8b34-5418027bf41b"))) ? ((oldOffset + size) == (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("add442b3-df56-3300-9160-4ff0c1525cf8"))) ? (((1) + (-1)) < (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("054ea9e4-5390-35c8-82bb-1920a66017fc"))) ? ((size) == (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("65da01ac-0687-3cde-be04-b5b08a45f7a4"))) ? ((-1) >= (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("31c3e540-fcd4-3e29-88f3-edb744c18adc"))) ? (((-1) + (1)) != (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("54ea4fe0-fd75-3cf3-8801-ce66af4f160e"))) ? ((size) >= (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("31f4ad5f-3e23-31e0-81c1-b8d4589e442a"))) ? ((oldOffset) > (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("38d727f4-f6ff-326c-a49e-39d37cf09df8"))) ? ((1) <= (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("0c8295dd-3ea4-3548-9cbe-7789331faaac"))) ? (((-1) + (-1)) != (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("243c09f9-fe29-3fb3-b7df-5101a5cf09b3"))) ? (((1) + (size)) != (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("51dc13a4-6ff8-39c2-b79c-932d9a11acc4"))) ? ((size) > (data.capacity())) : (((KnobRuntime.check(java.util.UUID.fromString("a50d0a91-168b-358c-8c72-411738a0e510"))) ? (((oldOffset) + (size)) != (data.capacity())) : (oldOffset + size > data.capacity()))))))))))))))))))))))))) {
+      if (oldOffset + size > data.capacity()) {
         return -1; // alloc doesn't fit
       }
       // TODO : If seqID is to be written add 8 bytes here for nextFreeOFfset
       // Try to atomically claim this chunk
-      if (((KnobRuntime.check(java.util.UUID.fromString("98392fed-ce7a-3907-92a6-337a7060b96f"))) ? (nextFreeOffset.compareAndSet(oldOffset, (1) + (-1))) : (nextFreeOffset.compareAndSet(oldOffset, oldOffset + size)))) {
+      if (nextFreeOffset.compareAndSet(oldOffset, oldOffset + size)) {
         // we got the alloc
         allocCount.incrementAndGet();
-        return ((KnobRuntime.check(java.util.UUID.fromString("9b8453ed-da85-3e3e-8005-5e7fe2bfca6f"))) ? (1) : (oldOffset));
+        return oldOffset;
       }
       // we raced and lost alloc, try again
     }

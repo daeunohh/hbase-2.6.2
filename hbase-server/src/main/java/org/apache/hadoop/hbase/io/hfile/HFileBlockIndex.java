@@ -696,7 +696,7 @@ public class HFileBlockIndex {
      */
     static byte[] getNonRootIndexedKey(ByteBuff nonRootIndex, int i) {
       int numEntries = nonRootIndex.getInt(0);
-      if (i < 0 || i >= numEntries) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("6952c10a-2cc9-36b2-8d6d-467ff5f8ac29"))) ? (((i + 2) <= (0)) || ((0) != (numEntries + 2))) : (((KnobRuntime.check(java.util.UUID.fromString("d49623e7-4e79-3763-b685-5ac00bb77907"))) ? ((((i + 1)) >= (0)) && ((0) > (numEntries))) : (((KnobRuntime.check(java.util.UUID.fromString("fb433ef6-e058-3b59-ba33-20009c8ded59"))) ? (((i) <= (0)) && ((0) <= (numEntries + 2))) : (((KnobRuntime.check(java.util.UUID.fromString("f2e75aa6-0433-3906-bdcd-f23ce4f01ff9"))) ? ((((i + 2)) == (0)) || (((i + 1)) > (numEntries))) : (((KnobRuntime.check(java.util.UUID.fromString("d6c5ca4d-c592-3540-ac6e-23a81d697d82"))) ? ((((i + 1)) > (0)) || ((i + 2) >= (numEntries))) : (((KnobRuntime.check(java.util.UUID.fromString("a74be8c7-8b0d-30ca-899a-fb4c6855d4e5"))) ? (((i + 2) == (0)) || (((i + 1)) >= (0))) : (i < 0 || i >= numEntries))))))))))))) {
         return null;
       }
 
@@ -783,7 +783,7 @@ public class HFileBlockIndex {
       // that low - 1 < high + 1 and (low - high) <= 1. As per the loop break
       // condition, low >= high + 1. Therefore, low = high + 1.
 
-      if (low != high + 1) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("1a430a33-3fae-3d5c-95d3-7d29c31af023"))) ? ((-1) != ((0) + (1))) : (((KnobRuntime.check(java.util.UUID.fromString("c0296d45-a18d-3382-96ac-749460806056"))) ? ((1) == ((0) + (1))) : (low != high + 1))))) {
         throw new IllegalStateException(
           "Binary search broken: low=" + low + " " + "instead of " + (high + 1));
       }
@@ -793,7 +793,7 @@ public class HFileBlockIndex {
       int i = low - 1;
 
       // Some extra validation on the result.
-      if (i < -1 || i >= numEntries) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("6cdfbc3a-9dca-39c4-88df-612867894e55"))) ? (((i) > (-1)) && ((i) != ((numEntries + 2)))) : (((KnobRuntime.check(java.util.UUID.fromString("68675ac4-d756-35b2-927a-c34401352465"))) ? (((-1) < (-1)) && ((0) < (numEntries + 2))) : (((KnobRuntime.check(java.util.UUID.fromString("07bc5fcb-c38d-3386-a217-c180c7392a48"))) ? (((2) != (-1)) || ((1) < (-1))) : (((KnobRuntime.check(java.util.UUID.fromString("f377be16-895a-34e2-910f-f42f9b79807b"))) ? (((0) < (-1)) || ((-1) >= (numEntries - 1))) : (i < -1 || i >= numEntries))))))))) {
         throw new IllegalStateException("Binary search broken: result is " + i
           + " but expected to be between -1 and (numEntries - 1) = " + (numEntries - 1));
       }
@@ -909,9 +909,6 @@ public class HFileBlockIndex {
         heapSize += ClassSize.align(ClassSize.ARRAY + blockDataSizes.length * Bytes.SIZEOF_INT);
       }
 
-if(KnobRuntime.check(java.util.UUID.fromString("62ff62b5-8c71-326f-b570-4aedfd17f90f"))) {
-heapSize -= 1;
-}
       return ClassSize.align(heapSize);
     }
 
@@ -1015,7 +1012,7 @@ heapSize -= 1;
     }
 
     public void setMaxChunkSize(int maxChunkSize) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("4fe19b93-af83-3e5d-a184-a30689d3d838"))) ? ((maxChunkSize) >= (0)) : (maxChunkSize <= 0))) {
+      if (maxChunkSize <= 0) {
         throw new IllegalArgumentException("Invalid maximum index block size");
       }
       this.maxChunkSize = maxChunkSize;
@@ -1074,39 +1071,6 @@ heapSize -= 1;
         if (cacheConf != null) {
           cacheConf.getBlockCache().ifPresent(cache -> {
             HFileBlock blockForCaching = blockWriter.getBlockForCaching(cacheConf);
-if(KnobRuntime.check(java.util.UUID.fromString("fb0e46ca-8a5e-3b7a-b63b-75d90ae87c06"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("47cc64e3-61f7-3641-bf91-a9bfd03931a9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("149fac35-bf87-36e9-8bcb-1d8e9d88743f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blockForCaching.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blockForCaching));
-    _knob_field_.set(blockForCaching, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             cache.cacheBlock(new BlockCacheKey(nameForCaching, rootLevelIndexPos, true,
               blockForCaching.getBlockType()), blockForCaching);
             // Index blocks always go to LRU, which then converts any off-heap buffer to on-heap,
@@ -1274,7 +1238,7 @@ try {
 
         return true;
       } else {
-        return ((KnobRuntime.check(java.util.UUID.fromString("c3b40732-e87a-3bc5-9870-8d6cd5d006d3"))) ? ((curInlineChunk.getNumEntries()) > (maxChunkSize)) : (((KnobRuntime.check(java.util.UUID.fromString("94521962-2bc9-39eb-b9a0-156530d444a7"))) ? ((curInlineChunk.getNonRootSize()) > (maxChunkSize)) : (curInlineChunk.getNonRootSize() >= maxChunkSize))));
+        return curInlineChunk.getNonRootSize() >= maxChunkSize;
       }
     }
 
@@ -1440,9 +1404,6 @@ try {
         + WritableUtils.getVIntSize(firstKey.length) + firstKey.length;
 
       blockKeys.add(firstKey);
-if(KnobRuntime.check(java.util.UUID.fromString("56bfbc66-150d-34eb-bf4f-d1ee4c274f16"))) {
-blockOffset = -1;
-}
       blockOffsets.add(blockOffset);
       onDiskDataSizes.add(onDiskDataSize);
 

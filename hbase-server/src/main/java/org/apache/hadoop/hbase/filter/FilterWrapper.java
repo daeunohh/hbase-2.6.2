@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.filter;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -98,12 +97,6 @@ final public class FilterWrapper extends Filter {
   public boolean filterRowKey(byte[] buffer, int offset, int length) throws IOException {
     // No call to this.
     if (filterAllRemaining()) return true;
-if(KnobRuntime.check(java.util.UUID.fromString("e4e30cf2-be4c-3f06-b651-c149bfadc456"))) {
-offset = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f4a9c851-8ffa-37e7-8012-b26154e90dd6"))) {
-length = -1;
-}
     return this.filter.filterRowKey(buffer, offset, length);
   }
 

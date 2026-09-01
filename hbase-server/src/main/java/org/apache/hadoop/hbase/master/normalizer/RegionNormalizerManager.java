@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.normalizer;
-import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
@@ -92,17 +91,6 @@ public class RegionNormalizerManager implements PropagatingConfigurationObserver
       }
       if (worker != null) {
         // worker will be null when master is in maintenance mode.
-if(KnobRuntime.check(java.util.UUID.fromString("8bc88b1e-6fe5-329c-813a-738bc8bc0a50"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = worker.getClass().getDeclaredField("splitPlanCount");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(worker));
-    _knob_field_.set(worker, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         pool.submit(worker);
       }
       started = true;

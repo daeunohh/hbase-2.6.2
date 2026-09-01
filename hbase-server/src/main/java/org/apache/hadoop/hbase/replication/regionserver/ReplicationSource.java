@@ -303,7 +303,7 @@ public class ReplicationSource implements ReplicationSourceInterface {
     if (rsServerHost != null) {
       ReplicationEndpoint newReplicationEndPoint =
         rsServerHost.postCreateReplicationEndPoint(replicationEndpoint);
-      if (((KnobRuntime.check(java.util.UUID.fromString("d919c524-7e89-3943-8c8b-479a7be92c9f"))) ? ((newReplicationEndPoint) == (null)) : (newReplicationEndPoint != null))) {
+      if (newReplicationEndPoint != null) {
         // Override the newly created endpoint from the hook with configured end point
         replicationEndpoint = newReplicationEndPoint;
       }
@@ -328,7 +328,7 @@ public class ReplicationSource implements ReplicationSourceInterface {
     // get the WALEntryFilter from ReplicationEndpoint and add it to default filters
     List<WALEntryFilter> filters = new ArrayList<>(this.baseFilterOutWALEntries);
     WALEntryFilter filterFromEndpoint = this.replicationEndpoint.getWALEntryfilter();
-    if (((KnobRuntime.check(java.util.UUID.fromString("8d5da94f-7012-349e-8605-91ea4efb592b"))) ? ((filterFromEndpoint) == (null)) : (filterFromEndpoint != null))) {
+    if (filterFromEndpoint != null) {
       filters.add(filterFromEndpoint);
     }
     filters.add(new ClusterMarkingEntryFilter(clusterId, peerClusterId, replicationEndpoint));
@@ -345,41 +345,8 @@ public class ReplicationSource implements ReplicationSourceInterface {
         ReplicationSourceShipper worker = createNewShipper(walGroupId);
         ReplicationSourceWALReader walReader =
           createNewWALReader(walGroupId, worker.getStartPosition());
-if(KnobRuntime.check(java.util.UUID.fromString("5e38b740-41a0-3444-a3b4-d50f4db79b04"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walReader.getClass().getDeclaredField("sleepForRetries");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(walReader));
-    _knob_field_.set(walReader, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         Threads.setDaemonThreadRunning(walReader, Thread.currentThread().getName()
           + ".replicationSource.wal-reader." + walGroupId + "," + queueId, this::retryRefreshing);
-if(KnobRuntime.check(java.util.UUID.fromString("f2a94c7d-b2d3-3411-943f-253a3fbbf7a1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walReader.getClass().getDeclaredField("maxRetriesMultiplier");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walReader));
-    _knob_field_.set(walReader, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a2ba483c-1623-37fb-9ab4-73002e124314"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walReader.getClass().getDeclaredField("replicationBatchCountCapacity");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walReader));
-    _knob_field_.set(walReader, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         worker.setWALReader(walReader);
         worker.startup(this::retryRefreshing);
         return worker;
@@ -399,7 +366,7 @@ try {
       replicationDelay = metrics.getReplicationDelay();
       Path currentPath = shipper.getCurrentPath();
       fileSize = -1;
-      if (((KnobRuntime.check(java.util.UUID.fromString("fb7aee5f-5c58-3423-af57-e65b32235e83"))) ? ((currentPath) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("8afd2187-4344-3b95-911a-9b5213d8f286"))) ? ((currentPath) != (null)) : (currentPath != null))))) {
+      if (currentPath != null) {
         try {
           fileSize = getFileSize(currentPath);
         } catch (IOException e) {
@@ -410,15 +377,6 @@ try {
         LOG.warn("{} No replication ongoing, waiting for new log", logPeerId());
       }
       ReplicationStatus.ReplicationStatusBuilder statusBuilder = ReplicationStatus.newBuilder();
-if(KnobRuntime.check(java.util.UUID.fromString("3aa61661-18e2-3a46-ad39-ed6474b299e0"))) {
-queueSize -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f6da9adc-7e20-3b77-9d21-787a1ac95e1b"))) {
-fileSize -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("13366885-f814-318c-b0e8-537c4078ade4"))) {
-queueSize /= 2;
-}
       statusBuilder.withPeerId(this.getPeerId()).withQueueSize(queueSize).withWalGroup(walGroupId)
         .withCurrentPath(currentPath).withCurrentPosition(shipper.getCurrentPosition())
         .withFileSize(fileSize).withAgeOfLastShippedOp(ageOfLastShippedOp)
@@ -561,9 +519,6 @@ queueSize /= 2;
    */
   @Override
   public boolean isPeerEnabled() {
-if(KnobRuntime.check(java.util.UUID.fromString("ed1b9645-277c-3975-bcae-f898ea50166c"))) {
-return false;
-}
     return replicationPeer.isPeerEnabled();
   }
 
@@ -610,7 +565,7 @@ return false;
     // delay this until we are in an asynchronous thread
     for (;;) {
       peerClusterId = replicationEndpoint.getPeerUUID();
-      if (((KnobRuntime.check(java.util.UUID.fromString("b4ae8cb5-0a74-36c0-b71a-da8daa0c3d71"))) ? (peerClusterId == null) : (this.isSourceActive() && peerClusterId == null))) {
+      if (this.isSourceActive() && peerClusterId == null) {
         if (LOG.isDebugEnabled()) {
           LOG.debug("{} Could not connect to Peer ZK. Sleeping for {} millis", logPeerId(),
             (this.sleepForRetries * sleepMultiplier));
@@ -716,7 +671,7 @@ return false;
     Collection<ReplicationSourceShipper> workers = workerThreads.values();
 
     for (ReplicationSourceShipper worker : workers) {
-      if (KnobRuntime.check(java.util.UUID.fromString("95c8edf1-b12c-32f3-8bff-ff14980af38c"))) { initialize(); } else { worker.stopWorker(); }
+      worker.stopWorker();
       if (worker.entryReader != null) {
         worker.entryReader.setReaderRunning(false);
       }
@@ -727,7 +682,7 @@ return false;
     }
 
     for (ReplicationSourceShipper worker : workers) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("6bd8e2d3-4f23-358f-83e4-10ba4c1bbccf"))) ? ((worker.isAlive()) && (worker.entryReader.isAlive())) : (worker.isAlive() || worker.entryReader.isAlive()))) {
+      if (worker.isAlive() || worker.entryReader.isAlive()) {
         try {
           // Wait worker to stop
           Thread.sleep(this.sleepForRetries);
@@ -744,7 +699,7 @@ return false;
           worker.entryReader.interrupt();
         }
       }
-      if (((KnobRuntime.check(java.util.UUID.fromString("5fb9a8e0-5c83-3bb4-98ef-422fb0592e7c"))) ? ((!server.isAborted()) || (!server.isStopped())) : (!server.isAborted() && !server.isStopped()))) {
+      if (!server.isAborted() && !server.isStopped()) {
         // If server is running and worker is already stopped but there was still entries batched,
         // we need to clear buffer used for non processed entries
         worker.clearWALEntryBatch();
@@ -808,9 +763,6 @@ return false;
   }
 
   public boolean isWorkerRunning() {
-if(KnobRuntime.check(java.util.UUID.fromString("ebe9fd3c-b54f-313b-a634-86dad09c4ceb"))) {
-return true;
-}
     for (ReplicationSourceShipper worker : this.workerThreads.values()) {
       if (worker.isActive()) {
         return worker.isActive();
@@ -849,8 +801,8 @@ return true;
   // offsets totalBufferUsed by deducting shipped batchSize.
   public void postShipEdits(List<Entry> entries, long batchSize) {
     if (throttler.isEnabled()) {
-if(KnobRuntime.check(java.util.UUID.fromString("4434438a-ee69-3f0b-baa7-f87f13de8eb2"))) {
-batchSize = -1;
+if(KnobRuntime.check(java.util.UUID.fromString("873542d6-a764-33d1-87a8-a33b21db94ae"))) {
+batchSize -= 1;
 }
       throttler.addPushSize(batchSize);
     }

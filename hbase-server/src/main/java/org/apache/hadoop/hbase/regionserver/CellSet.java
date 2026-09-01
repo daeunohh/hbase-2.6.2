@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -95,9 +94,6 @@ public class CellSet implements NavigableSet<Cell> {
 
   @Override
   public NavigableSet<Cell> headSet(final Cell toElement, boolean inclusive) {
-if(KnobRuntime.check(java.util.UUID.fromString("6806aa88-e5d4-3f74-a1f8-ca0aa130add8"))) {
-return null;
-}
     return new CellSet(this.delegatee.headMap(toElement, inclusive), UNKNOWN_NUM_UNIQUES);
   }
 
@@ -139,7 +135,7 @@ return null;
 
   @Override
   public SortedSet<Cell> tailSet(Cell fromElement) {
-    return ((KnobRuntime.check(java.util.UUID.fromString("f6f07427-e112-3c53-bb0f-4fdd046d6234"))) ? (headSet(fromElement, true)) : (tailSet(fromElement, true)));
+    return tailSet(fromElement, true);
   }
 
   @Override
@@ -190,9 +186,6 @@ return null;
 
   @Override
   public boolean isEmpty() {
-if(KnobRuntime.check(java.util.UUID.fromString("a98e0fb2-b615-3794-b5da-996e750fc2e3"))) {
-return false;
-}
     return this.delegatee.isEmpty();
   }
 

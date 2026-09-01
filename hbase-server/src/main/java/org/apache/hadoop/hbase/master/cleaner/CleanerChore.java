@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
     this.oldFileDir = oldFileDir;
     this.conf = conf;
     this.params = params;
-    if (((KnobRuntime.check(java.util.UUID.fromString("46d98bf8-53de-38b3-9d0b-2daab2517563"))) ? (((excludePaths) != (null)) || (!excludePaths.isEmpty())) : (excludePaths != null && !excludePaths.isEmpty()))) {
+    if (excludePaths != null && !excludePaths.isEmpty()) {
       excludeDirs = new ArrayList<>(excludePaths.size());
       for (Path path : excludePaths) {
         StringBuilder dirPart = new StringBuilder(path.toString());
@@ -147,7 +146,7 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
       // If poolSize is an integer, return it directly,
       // but upmost to the number of available processors.
       int size = Math.min(Integer.parseInt(poolSize), AVAIL_PROCESSORS);
-      if (((KnobRuntime.check(java.util.UUID.fromString("10d53e26-ffeb-32e5-9f28-bb9989ec68c7"))) ? ((size) != (1)) : (size == AVAIL_PROCESSORS))) {
+      if (size == AVAIL_PROCESSORS) {
         LOG.warn("Use full core processors to scan dir, size={}", size);
       }
       return size;
@@ -182,7 +181,7 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
   private void initCleanerChain(String confKey) {
     this.cleanersChain = new ArrayList<>();
     String[] cleaners = conf.getStrings(confKey);
-    if (((KnobRuntime.check(java.util.UUID.fromString("bf5cf2ae-632d-33b5-8622-cb522b55c278"))) ? ((cleaners) == (null)) : (cleaners != null))) {
+    if (cleaners != null) {
       for (String className : cleaners) {
         className = className.trim();
         if (className.isEmpty()) {
@@ -190,7 +189,7 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
         }
         T logCleaner = newFileCleaner(className, conf);
         if (logCleaner != null) {
-          if (KnobRuntime.check(java.util.UUID.fromString("e1a25d88-1fee-3d78-9b40-226758596a03"))) { LOG.info("Initialize cleaner={}", className.trim()); } else { LOG.info("Initialize cleaner={}", className); }
+          LOG.info("Initialize cleaner={}", className);
           this.cleanersChain.add(logCleaner);
         }
       }
@@ -265,7 +264,7 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
     } catch (Exception e) {
       LOG.info("Failed to traverse and delete the dir: {}", oldFileDir, e);
     } finally {
-      if (KnobRuntime.check(java.util.UUID.fromString("87272289-ac4e-3f75-9daf-b1a28d20fd94"))) { preRunCleaner(); } else { postRunCleaner(); }
+      postRunCleaner();
       synchronized (this) {
         future = null;
         forceRun = false;
@@ -280,9 +279,6 @@ public abstract class CleanerChore<T extends FileCleanerDelegate> extends Schedu
   }
 
   private void preRunCleaner() {
-if(KnobRuntime.check(java.util.UUID.fromString("1c198952-7296-3ec2-943f-e3cdff9c7845"))) {
-return;
-}
     cleanersChain.forEach(FileCleanerDelegate::preClean);
   }
 
@@ -312,7 +308,7 @@ return;
    * @param dirs the list to sort, element in it should be directory (not file)
    */
   private void sortByConsumedSpace(List<FileStatus> dirs) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("50209457-fd94-35f9-94d8-48e8684f85d0"))) ? (((dirs) == (null)) && ((dirs.size()) <= (2))) : (((KnobRuntime.check(java.util.UUID.fromString("622b6269-9e14-38c0-8cfe-a454c3a43795"))) ? (((dirs) != (null)) || ((dirs.size()) == (2))) : (((KnobRuntime.check(java.util.UUID.fromString("7b900ffb-7ab8-3fdd-ac1e-11eb0e9df7b6"))) ? ((dirs == null) || ((dirs.size()) != (2))) : (((KnobRuntime.check(java.util.UUID.fromString("d0b5b8fb-84c2-31d4-86cb-c08e5d446726"))) ? (((dirs) == (null)) || ((dirs.size()) == (2))) : (((KnobRuntime.check(java.util.UUID.fromString("b3ee2f97-d918-3dac-8517-32da09a01518"))) ? ((dirs == null) && (dirs.size() < 2)) : (((KnobRuntime.check(java.util.UUID.fromString("789ec1a4-3a85-3850-8865-b66f2de4f5a0"))) ? (((dirs) == (null)) && ((dirs.size()) == (2))) : (((KnobRuntime.check(java.util.UUID.fromString("bf668393-42f7-37b3-8a16-700d3d4d0340"))) ? (((dirs) != (null)) && ((dirs.size()) == (2))) : (((KnobRuntime.check(java.util.UUID.fromString("feef4a5d-0633-372b-b3e4-bb70eff8dfcf"))) ? ((dirs == null) || ((getPeriod()) >= (2))) : (((KnobRuntime.check(java.util.UUID.fromString("93f16bdf-d967-386f-9bfb-2a5e6a7673c4"))) ? ((dirs.size()) > (2)) : (((KnobRuntime.check(java.util.UUID.fromString("105cf613-308a-3b8a-a700-0bac27980cd3"))) ? ((getPeriod()) > (2)) : (dirs == null || dirs.size() < 2))))))))))))))))))))) {
+    if (dirs == null || dirs.size() < 2) {
       // no need to sort for empty or single directory
       return;
     }
@@ -321,29 +317,7 @@ return;
 
       @Override
       public int compare(FileStatus f1, FileStatus f2) {
-if(KnobRuntime.check(java.util.UUID.fromString("d9eae24a-d431-31f4-acba-46965247c9eb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = f1.getClass().getDeclaredField("access_time");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(f1));
-    _knob_field_.set(f1, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         long f1ConsumedSpace = getSpace(f1);
-if(KnobRuntime.check(java.util.UUID.fromString("cb7fec54-dcd3-3f3d-a045-2d00d80507ab"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = f2.getClass().getDeclaredField("access_time");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(f2));
-    _knob_field_.set(f2, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         long f2ConsumedSpace = getSpace(f2);
         return Long.compare(f2ConsumedSpace, f1ConsumedSpace);
       }
@@ -373,7 +347,7 @@ try {
    * @return true iff successfully deleted all files
    */
   private boolean checkAndDeleteFiles(List<FileStatus> files) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("8209ea61-12fa-3307-a4ff-7e6c995c9398"))) ? ((files) == (null)) : (files == null))) {
+    if (files == null) {
       return true;
     }
 
@@ -381,18 +355,7 @@ try {
     List<FileStatus> validFiles = Lists.newArrayListWithCapacity(files.size());
     List<FileStatus> invalidFiles = Lists.newArrayList();
     for (FileStatus file : files) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("5ad3867f-96e5-3b27-9e0f-962e2aba9f77"))) ? (isEmptyDirDeletable(file.getPath())) : (validate(file.getPath())))) {
-if(KnobRuntime.check(java.util.UUID.fromString("15382531-ae3d-3cc9-86d9-0fe6ca8f7ce8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = file.getClass().getDeclaredField("blocksize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(file));
-    _knob_field_.set(file, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
+      if (validate(file.getPath())) {
         validFiles.add(file);
       } else {
         LOG.warn("Found a wrongly formatted file: " + file.getPath() + " - will delete it.");
@@ -403,7 +366,7 @@ try {
     Iterable<FileStatus> deletableValidFiles = validFiles;
     // check each of the cleaners for the valid files
     for (T cleaner : cleanersChain) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("8442a829-21c2-3102-a811-5cc7842b3af8"))) ? ((triggerNow()) && (this.getStopper().isStopped())) : (cleaner.isStopped() || this.getStopper().isStopped()))) {
+      if (cleaner.isStopped() || this.getStopper().isStopped()) {
         LOG.warn("A file cleaner" + this.getName() + " is stopped, won't delete any more files in:"
           + this.oldFileDir);
         return false;
@@ -412,7 +375,7 @@ try {
       Iterable<FileStatus> filteredFiles = cleaner.getDeletableFiles(deletableValidFiles);
 
       // trace which cleaner is holding on to each file
-      if (((KnobRuntime.check(java.util.UUID.fromString("6fd1f9ce-27e3-3d69-9a6d-8b27d579c964"))) ? (triggerNow()) : (LOG.isTraceEnabled()))) {
+      if (LOG.isTraceEnabled()) {
         ImmutableSet<FileStatus> filteredFileSet = ImmutableSet.copyOf(filteredFiles);
         for (FileStatus file : deletableValidFiles) {
           if (!filteredFileSet.contains(file)) {
@@ -574,9 +537,6 @@ try {
    * Check if a path should not perform clear
    */
   private boolean shouldExclude(FileStatus f) {
-if(KnobRuntime.check(java.util.UUID.fromString("a9ef775e-362c-3b7d-ae5f-080264252e40"))) {
-return false;
-}
     if (!f.isDirectory()) {
       return false;
     }
@@ -624,10 +584,7 @@ return false;
       LOG.info("unexpected exception: ", e);
       deleted = false;
     }
-if(KnobRuntime.check(java.util.UUID.fromString("7ef56650-8a01-3e3a-aea3-c2384f18c2e3"))) {
-deleted = true;
-}
     LOG.trace("Finish deleting {} under {}, deleted = {}", type, dir, deleted);
-    return ((KnobRuntime.check(java.util.UUID.fromString("e1a7febd-ea7d-341a-82d0-b5be678afe33"))) ? (false) : (deleted));
+    return deleted;
   }
 }

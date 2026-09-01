@@ -194,10 +194,10 @@ public class StoreScanner extends NonReversedNonLazyKeyValueScanner
       this.readType = Scan.ReadType.STREAM;
       this.scanUsePread = false;
     } else {
-      if (((KnobRuntime.check(java.util.UUID.fromString("51db8e40-bf94-39f7-a2ca-ffb60086829d"))) ? ((scan.getReadType()) != (Scan.ReadType.DEFAULT)) : (scan.getReadType() == Scan.ReadType.DEFAULT))) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("53df917c-8622-3511-ba00-09d80a442c0e"))) ? (scanInfo.isParallelSeekEnabled()) : (scanInfo.isUsePread()))) {
+      if (scan.getReadType() == Scan.ReadType.DEFAULT) {
+        if (scanInfo.isUsePread()) {
           this.readType = Scan.ReadType.PREAD;
-        } else if (((KnobRuntime.check(java.util.UUID.fromString("e977c57a-924b-3f88-b827-d2607deb0899"))) ? ((this.preadMaxBytes) >= (0)) : (this.preadMaxBytes < 0))) {
+        } else if (this.preadMaxBytes < 0) {
           this.readType = Scan.ReadType.STREAM;
         } else {
           this.readType = Scan.ReadType.DEFAULT;
@@ -211,7 +211,7 @@ public class StoreScanner extends NonReversedNonLazyKeyValueScanner
     }
     this.cellsPerHeartbeatCheck = scanInfo.getCellsPerTimeoutCheck();
     // Parallel seeking is on if the config allows and more there is more than one store file.
-    if (((KnobRuntime.check(java.util.UUID.fromString("3602e9da-5ad6-37ab-8a6b-4e82337e37d2"))) ? (((store) != (null)) || (store.getStorefilesCount() > 1)) : (((KnobRuntime.check(java.util.UUID.fromString("979fea83-0fcc-3eec-a39c-e78f00fa925a"))) ? ((store != null) || ((store.getStorefilesCount()) > (1))) : (store != null && store.getStorefilesCount() > 1))))) {
+    if (store != null && store.getStorefilesCount() > 1) {
       RegionServerServices rsService = store.getHRegion().getRegionServerServices();
       if (rsService != null && scanInfo.isParallelSeekEnabled()) {
         this.parallelSeekEnabled = true;
@@ -336,17 +336,6 @@ public class StoreScanner extends NonReversedNonLazyKeyValueScanner
 
   private void seekAllScanner(ScanInfo scanInfo, List<? extends KeyValueScanner> scanners)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0f199a2c-adca-3548-8f7a-70f361e326cf"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scanInfo.getClass().getDeclaredField("minVersions");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scanInfo));
-    _knob_field_.set(scanInfo, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // Seek all scanners to the initial key
     seekScanners(scanners, matcher.getStartKey(), false, parallelSeekEnabled);
     addCurrentScanners(scanners);
@@ -527,7 +516,7 @@ try {
         clearAndClose(scannersForDelayedClose);
         clearAndClose(memStoreScannersAfterFlush);
         clearAndClose(flushedstoreFileScanners);
-        if (((KnobRuntime.check(java.util.UUID.fromString("a98f2d33-1d99-3ba1-8ce1-e4a9350bb070"))) ? ((this.heap) == (null)) : (this.heap != null))) {
+        if (this.heap != null) {
           this.heap.close();
           this.currentScanners.clear();
           this.heap = null; // CLOSED!
@@ -535,7 +524,7 @@ try {
       } else {
         if (this.heap != null) {
           this.scannersForDelayedClose.add(this.heap);
-          if (KnobRuntime.check(java.util.UUID.fromString("c62b6fad-7b7c-3f0b-ab34-16aff9353777"))) { trySwitchToStreamRead(); } else { this.currentScanners.clear(); }
+          this.currentScanners.clear();
           this.heap = null;
         }
       }
@@ -585,7 +574,7 @@ try {
     // If no limits exists in the scope LimitScope.Between_Cells then we are sure we are changing
     // rows. Else it is possible we are still traversing the same row so we must perform the row
     // comparison.
-    if (((KnobRuntime.check(java.util.UUID.fromString("0ec01cfd-287c-3581-ac05-090df21eb604"))) ? (matcher.currentRow() == null) : (!scannerContext.hasAnyLimit(LimitScope.BETWEEN_CELLS) || matcher.currentRow() == null))) {
+    if (!scannerContext.hasAnyLimit(LimitScope.BETWEEN_CELLS) || matcher.currentRow() == null) {
       this.countPerRow = 0;
       matcher.setToNewRow(cell);
     }
@@ -673,9 +662,6 @@ try {
                */
               onlyFromMemstore = onlyFromMemstore && heap.isLatestCellFromMemstore();
               // Update the progress of the scanner context
-if(KnobRuntime.check(java.util.UUID.fromString("a388dee1-8b62-38f5-9f77-9902562aaa19"))) {
-cellSize *= 2;
-}
               scannerContext.incrementSizeProgress(cellSize, cell.heapSize());
               scannerContext.incrementBatchProgress(1);
 
@@ -689,7 +675,7 @@ cellSize *= 2;
                 throw new RowTooBigException(message);
               }
 
-              if (((KnobRuntime.check(java.util.UUID.fromString("8e20b51f-c711-3489-adad-2183d61a8c97"))) ? (((storeLimit) >= (-1)) || ((this.countPerRow) <= ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("dde477c2-29d2-38df-a3f6-55265d7d6b5e"))) ? (((storeLimit) != (-1)) && ((this.countPerRow) >= ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("4af9976d-23b1-3c39-b5d4-002ec9cc4e5c"))) ? (((storeLimit) <= (-1)) || ((this.countPerRow) < ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("b01d3178-1e27-32cd-94a0-9410edf19d59"))) ? ((storeLimit > -1) || (this.countPerRow >= (storeLimit + storeOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("bc5d557c-48a1-319b-8bda-183929970392"))) ? (storeLimit > -1) : (((KnobRuntime.check(java.util.UUID.fromString("378236fc-45dc-37af-af2b-8e53f11be551"))) ? ((storeLimit) == (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("c8aae352-b9a0-3cfb-9984-45a537bcd89a"))) ? (((storeLimit) > (-1)) && ((this.countPerRow) == ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("55a6e78e-ff62-3ffd-a3fb-5b2c235502dc"))) ? (((storeLimit) == (-1)) || (this.countPerRow >= (storeLimit + storeOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("6ba4f106-0625-3d21-a115-b7dfc77dad74"))) ? (((storeLimit) == (-1)) && ((this.countPerRow) < ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("da420aa3-9a2f-39ab-920f-7308b8acf9b4"))) ? (((storeLimit) == (-1)) && (this.countPerRow >= (storeLimit + storeOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("47495b67-f527-38db-81ba-2b89f3f68834"))) ? ((storeLimit) > (-1)) : (((KnobRuntime.check(java.util.UUID.fromString("bd1fbb50-ef4d-3535-bab9-59b048642110"))) ? (((storeLimit) >= (-1)) || ((this.countPerRow) != ((storeLimit + storeOffset)))) : (((KnobRuntime.check(java.util.UUID.fromString("e065b7bc-a98a-31d7-a051-09f0005ab276"))) ? (((storeLimit) < (-1)) || ((this.countPerRow) == ((storeLimit + storeOffset)))) : (storeLimit > -1 && this.countPerRow >= (storeLimit + storeOffset)))))))))))))))))))))))))))) {
+              if (storeLimit > -1 && this.countPerRow >= (storeLimit + storeOffset)) {
                 // do what SEEK_NEXT_ROW does.
                 if (!matcher.moreRowsMayExistAfter(cell)) {
                   close(false);// Do all cleanup except heap.close()
@@ -714,7 +700,7 @@ cellSize *= 2;
               this.heap.next();
             }
 
-            if (((KnobRuntime.check(java.util.UUID.fromString("0c78575e-8541-3250-b443-9e2ab1d77ee7"))) ? (scannerContext.checkTimeLimit(LimitScope.BETWEEN_CELLS)) : (scannerContext.checkBatchLimit(LimitScope.BETWEEN_CELLS)))) {
+            if (scannerContext.checkBatchLimit(LimitScope.BETWEEN_CELLS)) {
               break LOOP;
             }
             if (scannerContext.checkSizeLimit(LimitScope.BETWEEN_CELLS)) {
@@ -728,10 +714,10 @@ cellSize *= 2;
               // Then no more to this row... exit.
               close(false);// Do all cleanup except heap.close()
               // update metric
-              return ((KnobRuntime.check(java.util.UUID.fromString("5d44679e-9165-3d46-813c-a9a20283e7dd"))) ? (reopenAfterFlush()) : (scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues()));
+              return scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues();
             }
             matcher.clearCurrentRow();
-            return ((KnobRuntime.check(java.util.UUID.fromString("ce4a35da-040a-35cb-b029-80dcb8739abd"))) ? (checkFlushed()) : (scannerContext.setScannerState(NextState.MORE_VALUES).hasMoreValues()));
+            return scannerContext.setScannerState(NextState.MORE_VALUES).hasMoreValues();
 
           case DONE_SCAN:
             close(false);// Do all cleanup except heap.close()
@@ -742,7 +728,7 @@ cellSize *= 2;
             // us if there is an endKey in the scan.
             if (!matcher.moreRowsMayExistAfter(cell)) {
               close(false);// Do all cleanup except heap.close()
-              return ((KnobRuntime.check(java.util.UUID.fromString("775895eb-c71c-33ec-9d00-f0c84364d1c1"))) ? (reopenAfterFlush()) : (scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues()));
+              return scannerContext.setScannerState(NextState.NO_MORE_VALUES).hasMoreValues();
             }
             matcher.clearCurrentRow();
             seekOrSkipToNextRow(cell);
@@ -766,7 +752,7 @@ cellSize *= 2;
 
           case SEEK_NEXT_USING_HINT:
             Cell nextKV = matcher.getNextKeyHint(cell);
-            if (((KnobRuntime.check(java.util.UUID.fromString("357b24b5-8f2e-3085-af7c-d6fe13b5d8b2"))) ? ((nextKV) == (null)) : (nextKV != null))) {
+            if (nextKV != null) {
               int difference = comparator.compare(nextKV, cell);
               if (
                 ((!scan.isReversed() && difference > 0) || (scan.isReversed() && difference < 0))
@@ -935,9 +921,6 @@ cellSize *= 2;
    * @return true means skip to next column, false means not
    */
   protected boolean trySkipToNextColumn(Cell cell) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("fe1ce12a-a4d7-3fac-8d47-8cf939146ed5"))) {
-return false;
-}
     Cell nextCell = null;
     // used to guard against a changed next indexed key by doing a identity comparison
     // when the identity changes we need to compare the bytes again
@@ -1103,7 +1086,7 @@ return false;
   protected void checkScanOrder(Cell prevKV, Cell kv, CellComparator comparator)
     throws IOException {
     // Check that the heap gives us KVs in an increasing order.
-    assert prevKV == null || comparator == null || comparator.compare(prevKV, kv) <= 0
+    assert ((KnobRuntime.check(java.util.UUID.fromString("04742f23-2b21-325c-8550-8103364a63a6"))) ? (((prevKV == null) || ((comparator) != (null))) || ((comparator.compare(prevKV, kv)) <= (0))) : (prevKV == null || comparator == null || comparator.compare(prevKV, kv) <= 0))
       : "Key " + prevKV + " followed by a smaller key " + kv + " in cf " + store;
   }
 
@@ -1218,7 +1201,7 @@ return false;
         executor.submit(seekHandler);
         handlers.add(seekHandler);
       } else {
-        if (KnobRuntime.check(java.util.UUID.fromString("adb8c7d3-8030-313b-8fac-f6276320e63a"))) { seekToNextRow(kv); } else { scanner.seek(kv); }
+        scanner.seek(kv);
         latch.countDown();
       }
     }

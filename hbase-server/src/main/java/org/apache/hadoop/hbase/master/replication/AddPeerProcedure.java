@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.client.replication.ReplicationPeerConfigUtil;
@@ -117,10 +116,7 @@ public class AddPeerProcedure extends ModifyPeerProcedure {
 
   @Override
   protected void deserializeStateData(ProcedureStateSerializer serializer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("0ee6384e-abea-3229-bfb9-5b7065096735"))) {
-return;
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("f00a8f36-3178-3a35-a526-42e2db882d98"))) { super.serializeStateData(serializer); } else { super.deserializeStateData(serializer); }
+    super.deserializeStateData(serializer);
     AddPeerStateData data = serializer.deserialize(AddPeerStateData.class);
     peerConfig = ReplicationPeerConfigUtil.convert(data.getPeerConfig());
     enabled = data.getEnabled();

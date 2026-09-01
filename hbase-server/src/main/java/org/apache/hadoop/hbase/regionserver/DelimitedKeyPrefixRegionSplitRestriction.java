@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -50,7 +49,7 @@ public class DelimitedKeyPrefixRegionSplitRestriction extends RegionSplitRestric
   @Override
   public void initialize(TableDescriptor tableDescriptor, Configuration conf) throws IOException {
     String delimiterString = tableDescriptor.getValue(DELIMITER_KEY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("6ed59a44-d760-398a-842c-c61d932a1f0e"))) ? (((delimiterString) == (null)) || ((delimiterString.length()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("da1e0076-4e32-3eea-97a3-afd0a01fd703"))) ? ((delimiterString == null) || (delimiterString.length() == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("8c1c7f8c-fdb9-3af5-b38f-7b5294165242"))) ? ((delimiterString == null) && (delimiterString.length() == 0)) : (((KnobRuntime.check(java.util.UUID.fromString("d0ce165b-210b-31e0-ba60-ccad42378096"))) ? (((delimiterString) == (null)) && (delimiterString.length() == 0)) : (delimiterString == null || delimiterString.length() == 0))))))))) {
+    if (delimiterString == null || delimiterString.length() == 0) {
       delimiterString = conf.get(DELIMITER_KEY);
       if (delimiterString == null || delimiterString.length() == 0) {
         LOG.error("{} not specified for table {}. " + "Using the default RegionSplitRestriction",

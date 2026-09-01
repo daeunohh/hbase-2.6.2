@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -87,17 +86,6 @@ abstract class StoreFlusher {
     FlushLifeCycleTracker tracker) throws IOException {
     ScanInfo scanInfo;
     if (store.getCoprocessorHost() != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("55cabf0b-86f3-39e6-932b-d3d6fead7129"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = store.getClass().getDeclaredField("lastCompactSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(store));
-    _knob_field_.set(store, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       scanInfo = store.getCoprocessorHost().preFlushScannerOpen(store, tracker);
     } else {
       scanInfo = store.getScanInfo();

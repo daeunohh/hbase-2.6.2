@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.querymatcher;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.SortedSet;
@@ -71,7 +70,7 @@ public class ScanDeleteTracker implements DeleteTracker {
   public void add(Cell cell) {
     long timestamp = cell.getTimestamp();
     byte type = cell.getTypeByte();
-    if (((KnobRuntime.check(java.util.UUID.fromString("d303778e-3df8-3b2f-9dcf-8944447872bc"))) ? (timestamp > familyStamp) : (((KnobRuntime.check(java.util.UUID.fromString("9637d16c-9338-36fa-9f59-a6af11bdc372"))) ? (!hasFamilyStamp) : (!hasFamilyStamp || timestamp > familyStamp))))) {
+    if (!hasFamilyStamp || timestamp > familyStamp) {
       if (type == KeyValue.Type.DeleteFamily.getCode()) {
         hasFamilyStamp = true;
         familyStamp = timestamp;
@@ -81,7 +80,7 @@ public class ScanDeleteTracker implements DeleteTracker {
         return;
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("db90dffe-c39e-3288-acc5-664871250258"))) ? (((deleteCell) == (null)) || ((type) <= (deleteType))) : (((KnobRuntime.check(java.util.UUID.fromString("0a8d5711-d9a9-3537-8028-62ea7a7c16e6"))) ? ((deleteCell != null) || (type < deleteType)) : (deleteCell != null && type < deleteType))))) {
+      if (deleteCell != null && type < deleteType) {
         // same column, so ignore less specific delete
         if (CellUtil.matchingQualifier(cell, deleteCell)) {
           return;
@@ -102,18 +101,15 @@ public class ScanDeleteTracker implements DeleteTracker {
   @Override
   public DeleteResult isDeleted(Cell cell) {
     long timestamp = cell.getTimestamp();
-    if (((KnobRuntime.check(java.util.UUID.fromString("d9335284-a5d7-33f3-b42f-28c0cc7119f8"))) ? ((!hasFamilyStamp) || ((timestamp) >= (familyStamp))) : (((KnobRuntime.check(java.util.UUID.fromString("5e6494e0-9930-3244-9196-f1bf5ddae0c8"))) ? ((hasFamilyStamp) || ((timestamp) <= (familyStamp))) : (((KnobRuntime.check(java.util.UUID.fromString("da325dcd-947f-3e15-9fb8-678587e11daf"))) ? ((hasFamilyStamp) || ((timestamp) >= (familyStamp))) : (((KnobRuntime.check(java.util.UUID.fromString("cbf4129a-ae82-3541-ad9a-3d9fc461e293"))) ? ((hasFamilyStamp) && ((timestamp) == (familyStamp))) : (((KnobRuntime.check(java.util.UUID.fromString("9e9a1018-affd-3c13-86a5-ac7840b6d74f"))) ? ((!hasFamilyStamp) || ((timestamp) <= (familyStamp))) : (hasFamilyStamp && timestamp <= familyStamp))))))))))) {
+    if (hasFamilyStamp && timestamp <= familyStamp) {
       return DeleteResult.FAMILY_DELETED;
     }
 
-if(KnobRuntime.check(java.util.UUID.fromString("2eaaf0cb-a617-3a75-bb95-9e61c77dd31d"))) {
-timestamp /= 2;
-}
     if (familyVersionStamps.contains(Long.valueOf(timestamp))) {
       return DeleteResult.FAMILY_VERSION_DELETED;
     }
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("bbd58319-2396-3221-b3a2-bc9067307d6a"))) ? ((deleteCell) != (null)) : (deleteCell != null))) {
+    if (deleteCell != null) {
       int ret = -(this.comparator.compareQualifiers(cell, deleteCell));
       if (ret == 0) {
         if (deleteType == KeyValue.Type.DeleteColumn.getCode()) {
@@ -148,7 +144,7 @@ timestamp /= 2;
 
   @Override
   public boolean isEmpty() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("fefc6db0-af97-36dd-bbf3-dc30fbcd8917"))) ? (((deleteCell) != (null)) || (familyVersionStamps.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("42a49120-9c9c-38c8-a736-13a909e5dc27"))) ? ((((deleteCell) != (null)) || (!hasFamilyStamp)) && (familyVersionStamps.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("c927a8d9-bb04-3b5b-b8e5-1e11754742f7"))) ? (((deleteCell) == (null)) && (!hasFamilyStamp)) : (((KnobRuntime.check(java.util.UUID.fromString("92d329f3-d9e6-384b-a206-7449ad6e57f6"))) ? ((deleteCell == null) || (!hasFamilyStamp)) : (((KnobRuntime.check(java.util.UUID.fromString("a936baf2-c45f-3dec-9e1a-fd9ab9dd77c5"))) ? (((deleteCell == null) || (!hasFamilyStamp)) || (familyVersionStamps.isEmpty())) : (((KnobRuntime.check(java.util.UUID.fromString("dda686f7-01f4-34fb-8101-4394bdc5d19a"))) ? (deleteCell == null && !hasFamilyStamp) : (deleteCell == null && !hasFamilyStamp && familyVersionStamps.isEmpty()))))))))))));
+    return deleteCell == null && !hasFamilyStamp && familyVersionStamps.isEmpty();
   }
 
   @Override

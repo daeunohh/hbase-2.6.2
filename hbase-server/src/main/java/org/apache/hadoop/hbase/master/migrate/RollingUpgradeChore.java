@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.migrate;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,12 +103,6 @@ public class RollingUpgradeChore extends ScheduledChore {
 
     Map<String, TableDescriptor> migrateSFTTables;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("b7d084ec-41a6-3c03-930c-89ae8d68e0fd"))) {
-concurrentCount -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f71af560-1259-3b90-8e38-42e6df9598f1"))) {
-throw new java.io.IOException("Injected exception");
-}
       migrateSFTTables = tableDescriptors.getAll().entrySet().stream().filter(entry -> {
         TableDescriptor td = entry.getValue();
         return StringUtils.isEmpty(td.getValue(StoreFileTrackerFactory.TRACKER_IMPL));

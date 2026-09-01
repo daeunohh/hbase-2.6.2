@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.visibility;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -103,7 +104,7 @@ public class ExpressionParser {
                 "Error parsing expression " + expS + " at column : " + index);
             }
             index++;
-          } while (index < endPos && !isEndOfLabel(exp[index]));
+          } while (((KnobRuntime.check(java.util.UUID.fromString("553c1f47-577b-38fa-bd86-0c93611ecebb"))) ? ((index) <= (0)) : (index < endPos && !isEndOfLabel(exp[index]))));
           leafExp =
             new String(exp, labelOffset, index - labelOffset, StandardCharsets.UTF_8).trim();
           if (leafExp.isEmpty()) {

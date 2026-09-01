@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -244,13 +243,7 @@ public final class WALSplitUtil {
     Path wrongRegionWALDir =
       CommonFSUtils.getWrongWALRegionDir(conf, regionInfo.getTable(), regionInfo.getEncodedName());
     FileSystem walFs = CommonFSUtils.getWALFileSystem(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("7fa8b154-9751-368e-877f-2af8caff9239"))) {
-throw new java.io.IOException("Injected exception");
-}
     FileSystem rootFs = CommonFSUtils.getRootDirFileSystem(conf);
-if(KnobRuntime.check(java.util.UUID.fromString("5a80d3df-e04a-3130-ba81-58a5dcb05f75"))) {
-throw new java.io.IOException("Injected exception");
-}
     NavigableSet<Path> files = getSplitEditFilesSorted(walFs, regionWALDir);
     if (!files.isEmpty()) {
       return true;
@@ -287,12 +280,6 @@ throw new java.io.IOException("Injected exception");
       CommonFSUtils.getWrongWALRegionDir(conf, region.getTable(), region.getEncodedName());
     long maxSeqId = getMaxRegionSequenceId(walFs, regionWALDir);
     maxSeqId = Math.max(maxSeqId, getMaxRegionSequenceId(rootFs, regionDir));
-if(KnobRuntime.check(java.util.UUID.fromString("979edc36-01ce-334a-bbc5-f86a86db0a3d"))) {
-maxSeqId += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("d92a8fff-144a-3f97-9e96-b782e4b8293f"))) {
-maxSeqId -= 1;
-}
     maxSeqId = Math.max(maxSeqId, getMaxRegionSequenceId(walFs, wrongRegionWALDir));
     return maxSeqId;
   }

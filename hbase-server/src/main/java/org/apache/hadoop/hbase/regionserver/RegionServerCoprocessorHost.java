@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Service;
 import java.io.IOException;
@@ -173,9 +172,6 @@ public class RegionServerCoprocessorHost
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("d5d08ad6-898f-3a2f-8ef9-6f3c80e4294d"))) {
-throw new java.io.IOException("Injected exception");
-}
         observer.postReplicateLogEntries(this);
       }
     });
@@ -186,31 +182,6 @@ throw new java.io.IOException("Injected exception");
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("cdd610f0-6dcb-310f-a6af-f443f8dbc7f8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walEntry.getClass().getDeclaredField("associatedCellCount_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walEntry));
-    _knob_field_.set(walEntry, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9204bbcc-d321-3a5a-87c1-cfc49fa477a6"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("f95e057e-33e6-31f8-9865-4e360666dde9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = mutation.getClass().getDeclaredField("ts");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(mutation));
-    _knob_field_.set(mutation, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         observer.preReplicationSinkBatchMutate(this, walEntry, mutation);
       }
     });
@@ -221,17 +192,6 @@ try {
     execOperation(coprocEnvironments.isEmpty() ? null : new RegionServerObserverOperation() {
       @Override
       public void call(RegionServerObserver observer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f1d7fe0a-b913-3c41-b6d1-707aff263d89"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walEntry.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walEntry));
-    _knob_field_.set(walEntry, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         observer.postReplicationSinkBatchMutate(this, walEntry, mutation);
       }
     });

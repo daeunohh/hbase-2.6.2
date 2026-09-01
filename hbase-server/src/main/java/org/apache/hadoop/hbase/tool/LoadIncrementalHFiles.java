@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.tool;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static java.lang.String.format;
 
@@ -444,7 +445,7 @@ public class LoadIncrementalHFiles extends Configured implements Tool {
 
       int maxRetries = getConf().getInt(HConstants.BULKLOAD_MAX_RETRIES_NUMBER, 10);
       maxRetries = Math.max(maxRetries, startEndKeys.getFirst().length + 1);
-      if (maxRetries != 0 && count >= maxRetries) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("0f238fcd-2f5f-30f2-9cb1-cd7e3e14a92d"))) ? ((maxRetries != 0) && ((count++) != (maxRetries))) : (maxRetries != 0 && count >= maxRetries))) {
         throw new IOException(
           "Retry attempted " + count + " times without completing, bailing out");
       }

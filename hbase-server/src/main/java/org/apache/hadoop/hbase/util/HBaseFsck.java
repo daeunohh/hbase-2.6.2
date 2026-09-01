@@ -358,17 +358,6 @@ public class HBaseFsck extends Configured implements Closeable {
 
   /** Returns A retry counter factory configured for retrying lock file creation. */
   public static RetryCounterFactory createLockRetryCounterFactory(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("22e52659-d6dd-33dd-8b59-a6259ff16041"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return new RetryCounterFactory(
       conf.getInt("hbase.hbck.lockfile.attempts", DEFAULT_MAX_LOCK_FILE_ATTEMPTS),
       conf.getInt("hbase.hbck.lockfile.attempt.sleep.interval",
@@ -417,9 +406,6 @@ try {
         Path tmpDir = getTmpDir(conf);
         this.hbckLockPath = new Path(tmpDir, HBCK_LOCK_FILE);
         fs.mkdirs(tmpDir);
-if(KnobRuntime.check(java.util.UUID.fromString("2e505926-2323-3268-9606-777955153643"))) {
-throw new java.io.IOException("Injected exception");
-}
         final FSDataOutputStream out = createFileWithRetries(fs, this.hbckLockPath, defaultPerms);
         out.writeBytes(InetAddress.getLocalHost().toString());
         // Add a note into the file we write on why hbase2 is writing out an hbck1 lock file.
@@ -645,7 +631,7 @@ throw new java.io.IOException("Injected exception");
         // repair what's on HDFS
         restoreHdfsIntegrity();
         curIter++;// limit the number of iterations.
-      } while (fixes > 0 && curIter <= maxIterations);
+      } while (((KnobRuntime.check(java.util.UUID.fromString("f2cd7122-e175-3453-8dba-c260f32011f8"))) ? (((fixes) >= (0)) || ((0) > (restoreHdfsIntegrity()))) : (((KnobRuntime.check(java.util.UUID.fromString("dfae0641-481b-3004-8f2b-591f9756a650"))) ? (((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) <= (0)) && ((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) >= (getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)))) : (((KnobRuntime.check(java.util.UUID.fromString("73d4e622-fd94-3745-ace0-f4eb05d18649"))) ? (((restoreHdfsIntegrity()) >= (0)) && ((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) != (getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)))) : (((KnobRuntime.check(java.util.UUID.fromString("7650434c-61f9-3631-af9c-0f51953b2036"))) ? (((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) <= (0)) || ((curIter++) > (restoreHdfsIntegrity()))) : (((KnobRuntime.check(java.util.UUID.fromString("22b6bd08-8316-3f2f-aa90-7bd224b9306a"))) ? (((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) >= (0)) && ((curIter++) != (maxIterations))) : (((KnobRuntime.check(java.util.UUID.fromString("404eaa58-e1ea-3d05-ba48-740d9b6557b1"))) ? (((getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)) < (0)) || ((restoreHdfsIntegrity()) >= (getConf().getInt("hbase.hbck.integrityrepair.iterations.max", 3)))) : (((KnobRuntime.check(java.util.UUID.fromString("2f14d4ed-9e4e-3032-a17b-6a0a214b3bce"))) ? (((fixes) <= (0)) || ((curIter++) > (0))) : (fixes > 0 && curIter <= maxIterations)))))))))))))));
 
       // Repairs should be done in the first iteration and verification in the second.
       // If there are more than 2 passes, something funny has happened.
@@ -1776,7 +1762,7 @@ throw new java.io.IOException("Injected exception");
     // TODO: evaluate the consequence to continue the hbck operation without config.
     int terminateThreshold = getConf().getInt("hbase.hbck.skipped.regions.limit", 0);
     int numOfSkippedRegions = skippedRegions.size();
-    if (numOfSkippedRegions > 0 && numOfSkippedRegions > terminateThreshold) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("50d1c298-4b91-3c65-8923-7927e01e3a0e"))) ? (((getConf().getInt("hbase.hbck.skipped.regions.limit", 0)) >= (0)) && ((numOfSkippedRegions) == (terminateThreshold))) : (numOfSkippedRegions > 0 && numOfSkippedRegions > terminateThreshold))) {
       throw new IOException(
         numOfSkippedRegions + " region(s) could not be checked or repaired.  See logs for detail.");
     }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -249,7 +250,7 @@ public class StripeStoreFileManager
         leftSize += lastLeftSize;
       }
     }
-    if (leftSize == 0 || rightSize == 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("24f2043d-b568-3259-9b00-b4b22b71b21e"))) ? (((leftSize) == (0)) || ((rightSize) == (0))) : (leftSize == 0 || rightSize == 0))) {
       String errMsg = String.format(
         "Cannot split on a boundary - left index %d size %d, " + "right index %d size %d",
         leftIndex, leftSize, rightIndex, rightSize);

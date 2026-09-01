@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.handler;
-import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.Nullable;
 import java.io.IOException;
@@ -176,50 +175,6 @@ public class UnassignRegionHandler extends EventHandler {
   public static UnassignRegionHandler create(HRegionServer server, String encodedName,
     long closeProcId, boolean abort, @Nullable ServerName destination, boolean evictCache,
     long initiatingMasterActiveTime) {
-if(KnobRuntime.check(java.util.UUID.fromString("46098e56-f803-30a2-8647-dbacf8b7a5be"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("unitKB");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(server));
-    _knob_field_.set(server, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dcdc94ef-4a29-3e85-89bd-e71440bb5880"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("unitMB");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(server));
-    _knob_field_.set(server, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a6a56e63-5e92-3f17-b013-57e6d825a72b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("flushCheckFrequency");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(server));
-    _knob_field_.set(server, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("43ad23cf-c4eb-367d-9cc4-9ed4b75bb977"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = server.getClass().getDeclaredField("msgInterval");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(server));
-    _knob_field_.set(server, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // Just try our best to determine whether it is for closing meta. It is not the end of the world
     // if we put the handler into a wrong executor.
     Region region = server.getRegion(encodedName);

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.client.replication.ReplicationPeerConfigUtil;
@@ -64,9 +63,6 @@ public class RemovePeerProcedure extends ModifyPeerProcedure {
 
   @Override
   protected void updatePeerStorage(MasterProcedureEnv env) throws ReplicationException {
-if(KnobRuntime.check(java.util.UUID.fromString("7f498b3a-08ea-36b3-85ed-f8dceed5f29d"))) {
-return;
-}
     env.getReplicationPeerManager().removePeer(peerId);
   }
 
@@ -96,9 +92,6 @@ return;
 
   @Override
   protected void deserializeStateData(ProcedureStateSerializer serializer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("9fa97d0c-f962-3858-8827-3fbb86773316"))) {
-return;
-}
     super.deserializeStateData(serializer);
     RemovePeerStateData data = serializer.deserialize(RemovePeerStateData.class);
     if (data.hasPeerConfig()) {

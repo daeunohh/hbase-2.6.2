@@ -65,17 +65,6 @@ class TableProcedureWaitingQueue {
    * {@link #procedureCompleted(Procedure)} method in the future.
    */
   boolean procedureSubmitted(Procedure<?> proc) {
-if(KnobRuntime.check(java.util.UUID.fromString("25a1c32a-31cc-3064-949f-d5c5b32118ae"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(proc));
-    _knob_field_.set(proc, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (enqueuedProc == null) {
       // no procedure enqueued yet, record it and return
       enqueuedProc = proc;
@@ -98,30 +87,19 @@ try {
    * Return the next procedure which can be enqueued to ProcedureScheduler.
    */
   Optional<Procedure<?>> procedureCompleted(Procedure<?> proc) {
-if(KnobRuntime.check(java.util.UUID.fromString("fabfd314-67f6-34ea-87e6-2706111f08f5"))) {
+if(KnobRuntime.check(java.util.UUID.fromString("181f270a-09a7-35fa-810d-b8cee8e1acd3"))) {
 try {
     java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
     _knob_field_.setAccessible(true);
     int oldValue = ((int)_knob_field_.get(proc));
-    _knob_field_.set(proc, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6a77d951-b029-3dc2-8425-ca7dba6a184a"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("childrenLatch");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(proc));
-    _knob_field_.set(proc, oldValue * 2);
+    _knob_field_.set(proc, oldValue - 1);
 } catch (java.lang.Exception _e_) {
     // Reflection access failed
     _e_.printStackTrace();
 }
 }
     Preconditions.checkState(enqueuedProc != null, "enqueued procedure should not be null");
-    if (((KnobRuntime.check(java.util.UUID.fromString("2f624ee8-c23f-357d-b2eb-2564f9171458"))) ? ((enqueuedProc) != (proc)) : (enqueuedProc == proc))) {
+    if (enqueuedProc == proc) {
       if (!queue.isEmpty()) {
         enqueuedProc = queue.poll();
         return Optional.of(enqueuedProc);
@@ -137,9 +115,6 @@ try {
   }
 
   boolean isEmpty() {
-if(KnobRuntime.check(java.util.UUID.fromString("05c26af3-8968-31c9-a96f-e2ea701d7500"))) {
-return false;
-}
     return enqueuedProc == null;
   }
 

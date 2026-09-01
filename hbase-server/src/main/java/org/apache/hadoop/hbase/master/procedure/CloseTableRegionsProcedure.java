@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.function.Consumer;
@@ -56,12 +55,6 @@ public class CloseTableRegionsProcedure
 
   @Override
   protected CloseTableRegionsProcedureState getState(int stateId) {
-if(KnobRuntime.check(java.util.UUID.fromString("55954237-97a0-3cb8-aa9b-cda224cee731"))) {
-stateId += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6320f54a-137a-32e3-bb22-23d1def287e3"))) {
-return null;
-}
     return CloseTableRegionsProcedureState.forNumber(stateId);
   }
 
@@ -85,17 +78,6 @@ return null;
     super.serializeStateData(serializer);
     CloseTableRegionsProcedureStateData data = CloseTableRegionsProcedureStateData.newBuilder()
       .setTableName(ProtobufUtil.toProtoTableName(tableName)).build();
-if(KnobRuntime.check(java.util.UUID.fromString("1783b369-3978-3ce9-8f8f-4b31ddfb7874"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = data.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(data));
-    _knob_field_.set(data, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     serializer.serialize(data);
   }
 

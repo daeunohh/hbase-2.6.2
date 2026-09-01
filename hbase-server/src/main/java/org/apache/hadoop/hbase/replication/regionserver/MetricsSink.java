@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
 import org.apache.hadoop.hbase.util.EnvironmentEdgeManager;
@@ -76,13 +75,7 @@ public class MetricsSink {
    * @param hfileSize total number of hfiles that are applied/replicated
    */
   public void applyBatch(long batchSize, long hfileSize) {
-if(KnobRuntime.check(java.util.UUID.fromString("66a9a168-ccc5-3093-924e-ae71cde65569"))) {
-batchSize += 1;
-}
     applyBatch(batchSize);
-if(KnobRuntime.check(java.util.UUID.fromString("87867ad6-5a21-318c-baa4-5ff89e82372a"))) {
-hfileSize -= 1;
-}
     mss.incrAppliedHFiles(hfileSize);
   }
 

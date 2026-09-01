@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.cleaner;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.HBASE_MASTER_LOGCLEANER_PLUGINS;
 
@@ -174,21 +173,7 @@ public class LogCleaner extends CleanerChore<BaseLogCleanerDelegate>
         Preconditions.checkNotNull(context);
         FileStatus oldWalFile = context.getTargetToClean();
         try {
-if(KnobRuntime.check(java.util.UUID.fromString("c8de4a8a-7611-3fd5-8007-053b9add5a0e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = oldWalFile.getClass().getDeclaredField("modification_time");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(oldWalFile));
-    _knob_field_.set(oldWalFile, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           LOG.debug("Deleting {}", oldWalFile);
-if(KnobRuntime.check(java.util.UUID.fromString("c0a1d853-148e-3fcf-8c98-3605bbb92cf7"))) {
-throw new java.io.IOException("Injected exception");
-}
           boolean succeed = this.fs.delete(oldWalFile.getPath(), false);
           context.setResult(succeed);
         } catch (IOException e) {

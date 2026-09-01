@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -170,6 +171,9 @@ public class SplitLogWorker implements Runnable {
    * worker thread.
    */
   public void stopTask() {
+if(KnobRuntime.check(java.util.UUID.fromString("bde81bfc-d7e7-34fa-b7a7-c74f9522f32a"))) {
+return;
+}
     LOG.info("Sending interrupt to stop the worker thread");
     worker.interrupt(); // TODO interrupt often gets swallowed, do what else?
   }

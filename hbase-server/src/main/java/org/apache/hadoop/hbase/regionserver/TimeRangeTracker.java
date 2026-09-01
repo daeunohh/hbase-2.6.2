@@ -58,9 +58,6 @@ public abstract class TimeRangeTracker {
   static final long INITIAL_MAX_TIMESTAMP = -1L;
 
   public static TimeRangeTracker create(Type type) {
-if(KnobRuntime.check(java.util.UUID.fromString("938867bf-657b-31e5-8dc1-a9ac1f8cdb92"))) {
-return null;
-}
     switch (type) {
       case NON_SYNC:
         return new NonSyncTimeRangeTracker();
@@ -124,13 +121,7 @@ return null;
     long initialMinTimestamp = getMin();
     if (timestamp < initialMinTimestamp) {
       long curMinTimestamp = initialMinTimestamp;
-      while (((KnobRuntime.check(java.util.UUID.fromString("7252cb77-4e21-3393-8c2a-1cc154e280ea"))) ? ((timestamp) == (curMinTimestamp)) : (((KnobRuntime.check(java.util.UUID.fromString("3ef929f5-d1e8-3b86-b400-6bff6941320f"))) ? ((timestamp) >= (curMinTimestamp)) : (timestamp < curMinTimestamp))))) {
-if(KnobRuntime.check(java.util.UUID.fromString("9c67e15b-871c-3b73-bf41-e3ad8c2f1f23"))) {
-curMinTimestamp = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6a52a569-ca88-3dba-85f0-4421c23281e6"))) {
-curMinTimestamp = -1;
-}
+      while (timestamp < curMinTimestamp) {
         if (!compareAndSetMin(curMinTimestamp, timestamp)) {
           curMinTimestamp = getMin();
         } else {
@@ -158,7 +149,7 @@ curMinTimestamp = -1;
 
     long curMaxTimestamp = getMax();
 
-    if (timestamp > curMaxTimestamp) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f4c317db-5fa1-3375-811a-a32d858138c3"))) ? ((timestamp) == (curMaxTimestamp)) : (timestamp > curMaxTimestamp))) {
       while (timestamp > curMaxTimestamp) {
         if (!compareAndSetMax(curMaxTimestamp, timestamp)) {
           curMaxTimestamp = getMax();
@@ -238,10 +229,10 @@ curMinTimestamp = -1;
     long min = getMin();
     long max = getMax();
     // Initial TimeRangeTracker timestamps are the opposite of what you want for a TimeRange. Fix!
-    if (((KnobRuntime.check(java.util.UUID.fromString("3ffb0577-ec86-3bb6-9294-540908571d6e"))) ? ((getMin()) == (getMin())) : (((KnobRuntime.check(java.util.UUID.fromString("cb54551d-eb4b-3be7-8145-d6297b8c9ff3"))) ? ((min) != (getMin())) : (min == INITIAL_MIN_TIMESTAMP))))) {
+    if (min == INITIAL_MIN_TIMESTAMP) {
       min = TimeRange.INITIAL_MIN_TIMESTAMP;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("4f72cc72-7d65-37eb-8cc7-46085fb9e4da"))) ? ((getMin()) != (getMax())) : (((KnobRuntime.check(java.util.UUID.fromString("eb8fca5e-38c4-34c6-846a-feb9e26580e7"))) ? ((getMax()) == (getMax())) : (max == INITIAL_MAX_TIMESTAMP))))) {
+    if (max == INITIAL_MAX_TIMESTAMP) {
       max = TimeRange.INITIAL_MAX_TIMESTAMP;
     }
     return new TimeRange(min, max);
@@ -277,9 +268,6 @@ curMinTimestamp = -1;
 
     @Override
     protected boolean compareAndSetMin(long expect, long update) {
-if(KnobRuntime.check(java.util.UUID.fromString("153edc92-8856-338a-bfa7-f7c86373f3c5"))) {
-return false;
-}
       if (minimumTimestamp != expect) {
         return false;
       }

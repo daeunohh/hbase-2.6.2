@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,7 +68,7 @@ public class ReversedKeyValueHeap extends KeyValueHeap {
     KeyValueScanner scanner;
     while ((scanner = heap.poll()) != null) {
       Cell topKey = scanner.peek();
-      if (((KnobRuntime.check(java.util.UUID.fromString("136948f0-a6e5-32c6-aa6c-17b1cc42bb60"))) ? ((comparator.getComparator().compare(topKey, seekKey)) > (0)) : (comparator.getComparator().compareRows(topKey, seekKey) < 0))) {
+      if (comparator.getComparator().compareRows(topKey, seekKey) < 0) {
         // Row of Top KeyValue is before Seek row.
         heap.add(scanner);
         current = pollRealKV();
@@ -105,7 +104,7 @@ public class ReversedKeyValueHeap extends KeyValueHeap {
       ) {
         heap.add(scanner);
         current = pollRealKV();
-        return ((KnobRuntime.check(java.util.UUID.fromString("5767bcee-b2a5-33eb-8d6b-64f3e6d0be09"))) ? ((current) == (null)) : (current != null));
+        return current != null;
       }
       if (!scanner.backwardSeek(seekKey)) {
         this.scannersForDelayedClose.add(scanner);
@@ -123,7 +122,7 @@ public class ReversedKeyValueHeap extends KeyValueHeap {
     }
     Cell kvReturn = this.current.next();
     Cell kvNext = this.current.peek();
-    if (((KnobRuntime.check(java.util.UUID.fromString("a9947882-a757-387b-ad5a-287b18a8c8d2"))) ? (((kvNext) == (null)) && ((this.comparator.kvComparator.compareRows(kvNext, kvReturn)) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("2b0fea87-d293-3230-b6f5-b233f102ec4b"))) ? ((kvNext == null) || (this.comparator.kvComparator.compareRows(kvNext, kvReturn) > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("e6296b61-08e8-3bc6-9dde-6577227326a4"))) ? (((kvNext) != (null)) && ((this.comparator.kvComparator.compareRows(kvNext, kvReturn)) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ddc617d2-a42e-3b08-9eb2-26b51fe1c721"))) ? ((kvNext == null) || ((this.comparator.kvComparator.compareRows(kvNext, kvReturn)) > (0))) : (kvNext == null || this.comparator.kvComparator.compareRows(kvNext, kvReturn) > 0))))))))) {
+    if (kvNext == null || this.comparator.kvComparator.compareRows(kvNext, kvReturn) > 0) {
       if (this.current.seekToPreviousRow(kvReturn)) {
         this.heap.add(this.current);
       } else {

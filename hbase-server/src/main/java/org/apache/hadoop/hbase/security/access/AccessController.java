@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
+import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.RpcCallback;
@@ -458,7 +459,7 @@ public class AccessController implements MasterCoprocessor, RegionCoprocessor,
       // maps so we would not need to do this
       if (entry.getValue() instanceof Set) {
         Set<byte[]> set = (Set<byte[]>) entry.getValue();
-        if (set == null || set.isEmpty()) {
+        if (((KnobRuntime.check(java.util.UUID.fromString("c7db610e-a21f-3018-9f31-0c91cc1c457b"))) ? (((set) != (null)) && (set.isEmpty())) : (set == null || set.isEmpty()))) {
           get.addFamily(col);
         } else {
           for (byte[] qual : set) {

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -119,17 +118,11 @@ public class SnapshotProcedure extends AbstractStateMachineTableProcedure<Snapsh
 
   @Override
   protected void releaseLock(MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("52b02228-0359-336c-b644-82a5ad5906b4"))) {
-return;
-}
     env.getProcedureScheduler().wakeTableSharedLock(this, getTableName());
   }
 
   @Override
   protected boolean holdLock(MasterProcedureEnv env) {
-if(KnobRuntime.check(java.util.UUID.fromString("e848d4ee-5fda-308e-8fc2-09887cfaa8ea"))) {
-return true;
-}
     // In order to avoid enabling/disabling/modifying/deleting table during snapshot,
     // we don't release lock during suspend
     return true;
@@ -138,17 +131,6 @@ return true;
   @Override
   protected Flow executeFromState(MasterProcedureEnv env, SnapshotState state)
     throws ProcedureSuspendedException, ProcedureYieldException, InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("528b5121-2ba9-3e84-8012-961029d6fd8e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     LOG.info("{} execute state={}", this, state);
 
     try {
@@ -158,27 +140,10 @@ try {
           setNextState(SnapshotState.SNAPSHOT_PRE_OPERATION);
           return Flow.HAS_MORE_STATE;
         case SNAPSHOT_PRE_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("fcd3c79f-0eec-3730-90e4-454058b818d9"))) {
-throw new java.io.IOException("Injected exception");
-}
           preSnapshot(env);
           setNextState(SnapshotState.SNAPSHOT_WRITE_SNAPSHOT_INFO);
           return Flow.HAS_MORE_STATE;
         case SNAPSHOT_WRITE_SNAPSHOT_INFO:
-if(KnobRuntime.check(java.util.UUID.fromString("16ae2630-dbb7-3953-9402-c831db3b7c8c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3b19da39-08b2-37c3-a7e3-051f73fcb1b0"))) {
-throw new java.io.IOException("Injected exception");
-}
           SnapshotDescriptionUtils.writeSnapshotInfo(snapshot, workingDir, workingDirFS);
           TableState tableState =
             env.getMasterServices().getTableStateManager().getTableState(snapshotTable);
@@ -193,9 +158,6 @@ throw new java.io.IOException("Injected exception");
           setNextState(SnapshotState.SNAPSHOT_SNAPSHOT_SPLIT_REGIONS);
           return Flow.HAS_MORE_STATE;
         case SNAPSHOT_SNAPSHOT_SPLIT_REGIONS:
-if(KnobRuntime.check(java.util.UUID.fromString("4a79acb1-fc2e-314e-b294-b11c01ff1855"))) {
-throw new java.io.IOException("Injected exception");
-}
           snapshotSplitRegions(env);
           setNextState(SnapshotState.SNAPSHOT_SNAPSHOT_MOB_REGION);
           return Flow.HAS_MORE_STATE;
@@ -204,15 +166,12 @@ throw new java.io.IOException("Injected exception");
           setNextState(SnapshotState.SNAPSHOT_SNAPSHOT_MOB_REGION);
           return Flow.HAS_MORE_STATE;
         case SNAPSHOT_SNAPSHOT_MOB_REGION:
-if(KnobRuntime.check(java.util.UUID.fromString("5d3bdb7e-8973-3be6-804d-d93afb0906ce"))) {
-throw new java.io.IOException("Injected exception");
-}
           snapshotMobRegion(env);
           setNextState(SnapshotState.SNAPSHOT_CONSOLIDATE_SNAPSHOT);
           return Flow.HAS_MORE_STATE;
         case SNAPSHOT_CONSOLIDATE_SNAPSHOT:
           // flush the in-memory state, and write the single manifest
-          if (KnobRuntime.check(java.util.UUID.fromString("f7b62f00-9314-3371-abd4-b48a30d0b0f5"))) { status.setStatus(("Consolidate snapshot: ") + (snapshot.getTable())); } else { status.setStatus("Consolidate snapshot: " + snapshot.getName()); }
+          status.setStatus("Consolidate snapshot: " + snapshot.getName());
           snapshotManifest.consolidate();
           setNextState(SnapshotState.SNAPSHOT_VERIFIER_SNAPSHOT);
           return Flow.HAS_MORE_STATE;
@@ -281,17 +240,17 @@ throw new java.io.IOException("Injected exception");
   private void prepareSnapshot(MasterProcedureEnv env)
     throws ProcedureSuspendedException, IOException {
     if (isAnySplitOrMergeProcedureRunning(env)) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("83fa6abb-fe72-34b6-8288-0e7942f7295c"))) ? ((retryCounter) == (null)) : (retryCounter == null))) {
+      if (retryCounter == null) {
         retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
       }
       long backoff = retryCounter.getBackoffTimeAndIncrementAttempts();
-      if (KnobRuntime.check(java.util.UUID.fromString("3e385897-688d-3f99-9860-508b4148846a"))) { LOG.error("{} waits {} ms for Split/Merge procedure to finish", this, backoff); } else { LOG.warn("{} waits {} ms for Split/Merge procedure to finish", this, backoff); }
+      LOG.warn("{} waits {} ms for Split/Merge procedure to finish", this, backoff);
       setTimeout(Math.toIntExact(backoff));
       setState(ProcedureState.WAITING_TIMEOUT);
       skipPersistence();
       throw new ProcedureSuspendedException();
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("9c9e95ec-19e1-3d8c-a696-440ff97d8f79"))) { preSnapshot(env); } else { prepareSnapshotEnv(env); }
+    prepareSnapshotEnv(env);
   }
 
   private void prepareSnapshotEnv(MasterProcedureEnv env) throws IOException {
@@ -332,7 +291,7 @@ throw new java.io.IOException("Injected exception");
     if (htd == null) {
       throw new IOException("TableDescriptor missing for " + snapshotTable);
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("6730def1-3217-33c6-af52-81b9d61e025e"))) ? (((htd.getMaxFileSize()) == (-1)) && ((getProcId()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8e6bef3b-025a-3950-999d-3e9a0c8a2a05"))) ? (((htd.getMaxFileSize()) != (-1)) || ((this.snapshot.getMaxFileSize()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ff1605b0-6daf-3e17-bcbd-179e0fed693e"))) ? ((getProcId()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("f7cf5fd8-a13c-3513-875c-db7fd3f37d54"))) ? (((htd.getMaxFileSize()) == (-1)) && ((getProcId()) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("defa9a2b-9e83-383f-b5bf-8d56d4796b60"))) ? (((getProcId()) != (-1)) && ((this.snapshot.getMaxFileSize()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e6f4c4e4-7139-31c7-bb2a-2a55fc69033e"))) ? ((this.snapshot.getMaxFileSize()) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("387c5f0a-42ea-3242-9b4b-b7d1f3a3a7b8"))) ? ((getProcId()) >= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("e851b98e-6856-3ba8-bea7-6c749f8ed186"))) ? (((htd.getMaxFileSize()) != (-1)) && (this.snapshot.getMaxFileSize() > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("ac97eec1-916e-3b1a-8f90-595dc95dd62e"))) ? (((htd.getMaxFileSize()) == (-1)) || ((this.snapshot.getMaxFileSize()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("2486af4e-50c5-35c6-9891-71f15e306273"))) ? ((this.snapshot.getMaxFileSize()) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("84d1cf79-bd8e-3336-b445-cb92648ec31a"))) ? ((htd.getMaxFileSize() == -1) && ((this.snapshot.getMaxFileSize()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("3136caa3-2393-33dd-a484-d7748c060f2e"))) ? (((getProcId()) != (-1)) && ((this.snapshot.getMaxFileSize()) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("798be2c2-2023-3540-83fb-bd746ae46be0"))) ? (((getProcId()) != (-1)) && ((this.snapshot.getMaxFileSize()) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e1c7a247-c7de-31bd-a5f5-52b481cd9d03"))) ? ((getProcId()) != (-1)) : (htd.getMaxFileSize() == -1 && this.snapshot.getMaxFileSize() > 0))))))))))))))))))))))))))))) {
+    if (htd.getMaxFileSize() == -1 && this.snapshot.getMaxFileSize() > 0) {
       return TableDescriptorBuilder.newBuilder(htd).setValue(TableDescriptorBuilder.MAX_FILESIZE,
         Long.toString(this.snapshot.getMaxFileSize())).build();
     }
@@ -340,46 +299,10 @@ throw new java.io.IOException("Injected exception");
   }
 
   private void preSnapshot(MasterProcedureEnv env) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("2ef63fa0-3721-3777-8d20-6178b778aaa1"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("ac52d278-c2bd-3299-9e28-95b24cc611a6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3a77e6b8-90e5-341b-8c2b-d85585d462b8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     env.getMasterServices().getSnapshotManager().prepareWorkingDirectory(snapshot);
 
     MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("854ab5d4-0e5a-3312-a800-d67f86d915e6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cpHost.preSnapshot(ProtobufUtil.createSnapshotDesc(snapshot), htd, getUser());
     }
   }
@@ -392,17 +315,6 @@ try {
 
     MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("0c078169-8f7d-3a3d-98da-a0495c361195"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       cpHost.postSnapshot(ProtobufUtil.createSnapshotDesc(snapshot), htd, getUser());
     }
   }
@@ -435,7 +347,7 @@ try {
       env.getMasterCoprocessorHost()
         .postCompletedSnapshotAction(ProtobufUtil.createSnapshotDesc(snapshot), htd);
     }
-    if (KnobRuntime.check(java.util.UUID.fromString("34f30f68-5d19-3067-a83d-59255cd2d615"))) { status.setStatus("Snapshot "); } else { status.markComplete("Snapshot " + snapshot.getName() + "  completed"); }
+    status.markComplete("Snapshot " + snapshot.getName() + "  completed");
   }
 
   private void snapshotSplitRegions(MasterProcedureEnv env) throws IOException {

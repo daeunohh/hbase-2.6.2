@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
@@ -212,17 +211,6 @@ public class RegionStateNode implements Comparable<RegionStateNode> {
   }
 
   public void unsetProcedure(TransitRegionStateProcedure proc) {
-if(KnobRuntime.check(java.util.UUID.fromString("49df4fff-f204-3a20-9888-c4b800675118"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("forceNewPlan");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(proc);
-    _knob_field_.set(proc, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     assert this.procedure == proc;
     this.procedure = null;
     ritMap.remove(regionInfo, this);
@@ -276,17 +264,6 @@ try {
 
   @Override
   public int compareTo(final RegionStateNode other) {
-if(KnobRuntime.check(java.util.UUID.fromString("ba79a4d9-30dd-3804-bf1b-1f2a68979a4e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = other.getClass().getDeclaredField("openSeqNum");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(other));
-    _knob_field_.set(other, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // NOTE: RegionInfo sort by table first, so we are relying on that.
     // we have a TestRegionState#testOrderedByTable() that check for that.
     return RegionInfo.COMPARATOR.compare(getRegionInfo(), other.getRegionInfo());

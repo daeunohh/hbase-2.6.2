@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -204,7 +203,7 @@ public class SplitTableRegionProcedure
       env.getAssignmentManager().getRegionStates().getRegionStateNode(getParentRegion());
     IOException splittableCheckIOE = null;
     boolean splittable = false;
-    if (((KnobRuntime.check(java.util.UUID.fromString("ca05fb52-50d9-31c5-952e-d436f97728ce"))) ? ((node) != (null)) : (node != null))) {
+    if (node != null) {
       try {
         GetRegionInfoResponse response;
         if (!hasBestSplitRow()) {
@@ -221,7 +220,7 @@ public class SplitTableRegionProcedure
         }
         splittable = response.hasSplittable() && response.getSplittable();
         if (LOG.isDebugEnabled()) {
-          if (KnobRuntime.check(java.util.UUID.fromString("1361239f-044f-350c-a13d-13eb71ccf20d"))) { LOG.debug((" ") + (node.toShortString())); } else { LOG.debug("Splittable=" + splittable + " " + node.toShortString()); }
+          LOG.debug("Splittable=" + splittable + " " + node.toShortString());
         }
       } catch (IOException e) {
         splittableCheckIOE = e;
@@ -300,9 +299,6 @@ public class SplitTableRegionProcedure
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_CLOSE_PARENT_REGION);
           break;
         case SPLIT_TABLE_REGION_CLOSE_PARENT_REGION:
-if(KnobRuntime.check(java.util.UUID.fromString("12dd5fd5-b3e7-3e5a-8f0e-a0845303c51f"))) {
-throw new java.io.IOException("Injected exception");
-}
           addChildProcedure(createUnassignProcedures(env));
           // createUnassignProcedures() can throw out IOException. If this happens,
           // it wont reach state SPLIT_TABLE_REGIONS_CHECK_CLOSED_REGION and no parent regions
@@ -321,7 +317,7 @@ throw new java.io.IOException("Injected exception");
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_WRITE_MAX_SEQUENCE_ID_FILE);
           break;
         case SPLIT_TABLE_REGION_WRITE_MAX_SEQUENCE_ID_FILE:
-          if (KnobRuntime.check(java.util.UUID.fromString("21935eaa-a5c4-341d-a422-36c1c7b8718e"))) { removeNonDefaultReplicas(env); } else { writeMaxSequenceIdFile(env); }
+          writeMaxSequenceIdFile(env);
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_PRE_OPERATION_BEFORE_META);
           break;
         case SPLIT_TABLE_REGION_PRE_OPERATION_BEFORE_META:
@@ -329,7 +325,7 @@ throw new java.io.IOException("Injected exception");
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_UPDATE_META);
           break;
         case SPLIT_TABLE_REGION_UPDATE_META:
-          if (KnobRuntime.check(java.util.UUID.fromString("01b44b78-ffdc-318f-ab9b-6a7a8b66eecd"))) { checkClosedRegions(env); } else { updateMeta(env); }
+          updateMeta(env);
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_PRE_OPERATION_AFTER_META);
           break;
         case SPLIT_TABLE_REGION_PRE_OPERATION_AFTER_META:
@@ -341,7 +337,7 @@ throw new java.io.IOException("Injected exception");
           setNextState(SplitTableRegionState.SPLIT_TABLE_REGION_POST_OPERATION);
           break;
         case SPLIT_TABLE_REGION_POST_OPERATION:
-          if (KnobRuntime.check(java.util.UUID.fromString("42a92906-ef4e-3243-a358-8d771f4fa20d"))) { checkClosedRegions(env); } else { postSplitRegion(env); }
+          postSplitRegion(env);
           return Flow.NO_MORE_STATE;
         default:
           throw new UnsupportedOperationException(this + " unhandled state=" + state);
@@ -535,10 +531,10 @@ throw new java.io.IOException("Injected exception");
     // Protect against the case where concurrent SPLIT requests came in and succeeded
     // just before us.
     if (node.isInState(State.SPLIT)) {
-      if (KnobRuntime.check(java.util.UUID.fromString("b14d1b1b-7644-3a80-bd86-5fe5ab8a3e7d"))) { LOG.warn(("Split of ") + (parentHRI)); } else if (KnobRuntime.check(java.util.UUID.fromString("5f397b9a-f425-3457-8e9a-2b7ed7aa1a88"))) { LOG.debug(("Split of ") + (" skipped; state is already SPLIT")); } else if (KnobRuntime.check(java.util.UUID.fromString("e004fb17-07d0-39c3-931b-855779236985"))) { LOG.warn(("Split of " + parentHRI) + (" skipped; state is already SPLIT")); } else { LOG.info("Split of " + parentHRI + " skipped; state is already SPLIT"); }
+      LOG.info("Split of " + parentHRI + " skipped; state is already SPLIT");
       return false;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("4adca503-e4ed-328a-bc30-cc0d4c656561"))) ? ((hasBestSplitRow()) && (parentHRI.isOffline())) : (parentHRI.isSplit() || parentHRI.isOffline()))) {
+    if (parentHRI.isSplit() || parentHRI.isOffline()) {
       LOG.info("Split of " + parentHRI + " skipped because offline/split.");
       return false;
     }
@@ -659,18 +655,12 @@ throw new java.io.IOException("Injected exception");
 
     assertSplitResultFilesCount(fs, expectedReferences.getSecond().size(),
       regionFs.getSplitsDir(daughterTwoRI));
-if(KnobRuntime.check(java.util.UUID.fromString("dfdccaeb-d62f-3e96-aceb-c948ce6bc6b1"))) {
-throw new java.io.IOException("Injected exception");
-}
     regionFs.commitDaughterRegion(daughterTwoRI, expectedReferences.getSecond(), env);
     assertSplitResultFilesCount(fs, expectedReferences.getSecond().size(),
       new Path(tabledir, daughterTwoRI.getEncodedName()));
   }
 
   private void deleteDaughterRegions(final MasterProcedureEnv env) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("3e013778-99b1-3442-8a9c-2fa83f6856f0"))) {
-throw new java.io.IOException("Injected exception");
-}
     final MasterFileSystem mfs = env.getMasterServices().getMasterFileSystem();
     final Path tabledir = CommonFSUtils.getTableDir(mfs.getRootDir(), getTableName());
     HRegionFileSystem.deleteRegionFromFileSystem(env.getMasterConfiguration(), mfs.getFileSystem(),
@@ -701,11 +691,8 @@ throw new java.io.IOException("Injected exception");
       String family = cfd.getNameAsString();
       StoreFileTracker tracker =
         StoreFileTrackerFactory.create(env.getMasterConfiguration(), htd, cfd, regionFs);
-if(KnobRuntime.check(java.util.UUID.fromString("7037b861-4b3c-34fd-a955-fb99a34f33d9"))) {
-throw new java.io.IOException("Injected exception");
-}
       Collection<StoreFileInfo> sfis = tracker.load();
-      if (((KnobRuntime.check(java.util.UUID.fromString("9898220c-ebf2-33cb-85f2-644a69d6bf50"))) ? ((sfis) == (null)) : (sfis == null))) {
+      if (sfis == null) {
         continue;
       }
       Collection<StoreFileInfo> filteredSfis = null;
@@ -720,7 +707,7 @@ throw new java.io.IOException("Injected exception");
           LOG.info("Skipping split of " + sfi + "; presuming ready for archiving.");
           continue;
         }
-        if (((KnobRuntime.check(java.util.UUID.fromString("24bf2cbe-e5c9-3665-9987-15c140abd542"))) ? ((filteredSfis) != (null)) : (filteredSfis == null))) {
+        if (filteredSfis == null) {
           filteredSfis = new ArrayList<StoreFileInfo>(sfis.size());
           files.put(family, filteredSfis);
         }
@@ -749,7 +736,7 @@ throw new java.io.IOException("Injected exception");
       byte[] familyName = Bytes.toBytes(e.getKey());
       final ColumnFamilyDescriptor hcd = htd.getColumnFamily(familyName);
       final Collection<StoreFileInfo> storeFiles = e.getValue();
-      if (((KnobRuntime.check(java.util.UUID.fromString("b39536f0-2541-3052-8795-14f37cb2e1f8"))) ? (((storeFiles) != (null)) || ((storeFiles.size()) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("fdce6d05-94f7-37db-b045-2ad2cb8cb4f5"))) ? (((storeFiles) == (null)) || ((storeFiles.size()) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("454152c6-9a29-349a-9db5-b857c972b59d"))) ? (((storeFiles) != (null)) || ((storeFiles.size()) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a3e2b7a2-9b64-36a2-8e1e-a6972163cb01"))) ? (((storeFiles) != (null)) && (storeFiles.size() > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("06702f67-e3ff-3012-96a2-4b4352ba5967"))) ? ((storeFiles.size()) < (0)) : (((KnobRuntime.check(java.util.UUID.fromString("b3363a4a-390b-37a1-8e6a-716b4b31b113"))) ? ((storeFiles != null) && ((storeFiles.size()) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ab5a1e57-d8b7-38b9-8c17-7f5c5099507f"))) ? (((storeFiles) == (null)) || ((storeFiles.size()) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9d1d0437-7d87-3618-98d0-31c23c0bcb9a"))) ? ((storeFiles != null) || ((storeFiles.size()) > (0))) : (storeFiles != null && storeFiles.size() > 0))))))))))))))))) {
+      if (storeFiles != null && storeFiles.size() > 0) {
         final Configuration storeConfiguration =
           StoreUtils.createStoreConfiguration(env.getMasterConfiguration(), htd, hcd);
         for (StoreFileInfo storeFileInfo : storeFiles) {
@@ -779,9 +766,6 @@ throw new java.io.IOException("Injected exception");
         threadPool.shutdownNow();
         // wait for the thread to shutdown completely.
         while (!threadPool.isTerminated()) {
-if(KnobRuntime.check(java.util.UUID.fromString("8dd20afc-327c-3c28-bdfd-094ac85f9246"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
           Thread.sleep(50);
         }
         throw new IOException(
@@ -915,7 +899,7 @@ throw new java.lang.InterruptedException("Injected exception");
     throws IOException, InterruptedException {
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
     if (cpHost != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("ce194a54-b50a-39fc-bb5d-87014a50b11c"))) { cpHost.postRollBackSplitRegionAction(getUser()); } else { cpHost.preSplitAfterMETAAction(getUser()); }
+      cpHost.preSplitAfterMETAAction(getUser());
     }
   }
 
@@ -943,9 +927,6 @@ throw new java.lang.InterruptedException("Injected exception");
 
   private TransitRegionStateProcedure[] createAssignProcedures(MasterProcedureEnv env)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("647da8e5-1ad9-3726-b29d-61d31f0c724d"))) {
-throw new java.io.IOException("Injected exception");
-}
     List<RegionInfo> hris = new ArrayList<RegionInfo>(2);
     hris.add(daughterOneRI);
     hris.add(daughterTwoRI);
@@ -962,7 +943,7 @@ throw new java.io.IOException("Injected exception");
     MasterFileSystem fs = env.getMasterFileSystem();
     long maxSequenceId = WALSplitUtil.getMaxRegionSequenceId(env.getMasterConfiguration(),
       getParentRegion(), fs::getFileSystem, fs::getWALFileSystem);
-    if (((KnobRuntime.check(java.util.UUID.fromString("b099f492-ac84-3dee-b57c-267880d8897d"))) ? ((maxSequenceId) >= (0)) : (maxSequenceId > 0))) {
+    if (maxSequenceId > 0) {
       WALSplitUtil.writeRegionSequenceIdFile(fs.getWALFileSystem(),
         getWALRegionDir(env, daughterOneRI), maxSequenceId);
       WALSplitUtil.writeRegionSequenceIdFile(fs.getWALFileSystem(),

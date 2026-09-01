@@ -202,16 +202,8 @@ public abstract class RegionRemoteProcedureBase extends Procedure<MasterProcedur
   // should be called with RegionStateNode locked, to avoid race with the execute method below
   void reportTransition(MasterProcedureEnv env, RegionStateNode regionNode, ServerName serverName,
     TransitionCode transitionCode, long seqId) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("af3ccfcd-69c5-32c4-bfca-ca51609ac793"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = transitionCode.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(transitionCode));
-    _knob_field_.set(transitionCode, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
+if(KnobRuntime.check(java.util.UUID.fromString("11eeabea-5a64-3dfe-803e-67ba5616077d"))) {
+return;
 }
     if (state != RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH) {
       // should be a retry
@@ -233,17 +225,6 @@ try {
     // on a OpenRegionProcedure forever. See HBASE-22060 and HBASE-22074 for more details.
     boolean succ = false;
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("47bea634-0b03-36b5-8049-7e62a8330dc6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = regionNode.getClass().getDeclaredField("lastUpdate");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(regionNode));
-    _knob_field_.set(regionNode, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       persistAndWake(env, regionNode);
       succ = true;
     } finally {
@@ -319,17 +300,6 @@ try {
           // on the event.
           ProcedureEvent<?> event = regionNode.getProcedureEvent();
           try {
-if(KnobRuntime.check(java.util.UUID.fromString("cec272c6-8f43-385e-95b3-98d945de0951"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = targetServer.getClass().getDeclaredField("startCode");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(targetServer));
-    _knob_field_.set(targetServer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             env.getRemoteDispatcher().addOperationToNode(targetServer, this);
           } catch (FailedRemoteDispatchException e) {
             LOG.warn("Can not add remote operation {} for region {} to server {}, this usually "
@@ -343,7 +313,7 @@ try {
           throw new ProcedureSuspendedException();
         }
         case REGION_REMOTE_PROCEDURE_REPORT_SUCCEED:
-          if (KnobRuntime.check(java.util.UUID.fromString("73ad5672-43d5-39e1-97d2-6949b44623b3"))) { env.getAssignmentManager().regionClosedAbnormally(regionNode); } else { env.getAssignmentManager().persistToMeta(regionNode); }
+          env.getAssignmentManager().persistToMeta(regionNode);
           unattach(env);
           return null;
         case REGION_REMOTE_PROCEDURE_DISPATCH_FAIL:
@@ -351,14 +321,14 @@ try {
           unattach(env);
           return null;
         case REGION_REMOTE_PROCEDURE_SERVER_CRASH:
-          if (KnobRuntime.check(java.util.UUID.fromString("23080963-c3ab-3bf4-8f62-8182c200c181"))) { env.getAssignmentManager().persistToMeta(regionNode); } else { env.getAssignmentManager().regionClosedAbnormally(regionNode); }
+          env.getAssignmentManager().regionClosedAbnormally(regionNode);
           unattach(env);
           return null;
         default:
           throw new IllegalStateException("Unknown state: " + state);
       }
     } catch (IOException e) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("514e2270-311e-3f9f-a5bc-5636b7a3fc30"))) ? ((retryCounter) == (null)) : (retryCounter == null))) {
+      if (retryCounter == null) {
         retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
       }
       long backoff = retryCounter.getBackoffTimeAndIncrementAttempts();
@@ -390,17 +360,6 @@ try {
       RegionRemoteProcedureBaseStateData.newBuilder().setRegion(ProtobufUtil.toRegionInfo(region))
         .setTargetServer(ProtobufUtil.toServerName(targetServer)).setState(state);
     if (transitionCode != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("c48c7933-c09b-3a1b-82e9-65cc6d7f4a5b"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = transitionCode.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(transitionCode));
-    _knob_field_.set(transitionCode, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       builder.setTransitionCode(transitionCode);
       builder.setSeqId(seqId);
     }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -127,32 +126,9 @@ class MasterRegionFlusherAndCompactor implements Closeable {
   // inject our flush related configurations
   static void setupConf(Configuration conf, long flushSize, long flushPerChanges,
     long flushIntervalMs) {
-if(KnobRuntime.check(java.util.UUID.fromString("29a4a5d1-9815-3cc5-998d-7f2dc1384531"))) {
-flushSize += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("13c1ee96-f482-331e-9974-8e36cd7070f9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     conf.setLong(HConstants.HREGION_MEMSTORE_FLUSH_SIZE, flushSize);
     conf.setLong(HRegion.MEMSTORE_FLUSH_PER_CHANGES, flushPerChanges);
     conf.setLong(HRegion.MEMSTORE_PERIODIC_FLUSH_INTERVAL, flushIntervalMs);
-if(KnobRuntime.check(java.util.UUID.fromString("ed634bd9-894a-3600-aec9-de45a3b1cffa"))) {
-flushSize = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b04d8be4-d472-3f16-b716-7e9843efc8ba"))) {
-flushPerChanges = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e98011b4-48ac-3e23-be9a-bdf6c39284c6"))) {
-flushSize -= 1;
-}
     LOG.info("Injected flushSize={}, flushPerChanges={}, flushIntervalMs={}", flushSize,
       flushPerChanges, flushIntervalMs);
   }
@@ -211,9 +187,6 @@ flushSize -= 1;
   }
 
   private void flushLoop() {
-if(KnobRuntime.check(java.util.UUID.fromString("6554e399-5a5c-308b-87d9-8d7f687f7144"))) {
-return;
-}
     recordLastFlushTime();
     while (!closed) {
       flushLock.lock();
@@ -270,7 +243,7 @@ return;
     long heapSize = region.getMemStoreHeapSize();
     long offHeapSize = region.getMemStoreOffHeapSize();
     boolean flush = heapSize + offHeapSize >= flushSize || changes > flushPerChanges;
-    if (((KnobRuntime.check(java.util.UUID.fromString("f50dfc18-c2de-338c-a5e5-46ba36ae5efa"))) ? ((!flush) || (LOG.isTraceEnabled())) : (((KnobRuntime.check(java.util.UUID.fromString("4d921d96-f1f7-38e7-b69d-3612ba1a25bb"))) ? (!flush) : (((KnobRuntime.check(java.util.UUID.fromString("d46a0570-d7bb-3bd1-b29d-4ec1891c6d6e"))) ? ((!flush) && (LOG.isTraceEnabled())) : (flush && LOG.isTraceEnabled()))))))) {
+    if (flush && LOG.isTraceEnabled()) {
       LOG.trace("shouldFlush totalMemStoreSize={}, flushSize={}, changes={}, flushPerChanges={}",
         heapSize + offHeapSize, flushSize, changes, flushPerChanges);
     }
@@ -309,6 +282,6 @@ return;
   public void close() {
     closed = true;
     flushThread.interrupt();
-    if (KnobRuntime.check(java.util.UUID.fromString("8e84b8a9-5476-3301-9837-6b7cdab0165c"))) { resetChangesAfterLastFlush(); } else { compactExecutor.shutdown(); }
+    compactExecutor.shutdown();
   }
 }

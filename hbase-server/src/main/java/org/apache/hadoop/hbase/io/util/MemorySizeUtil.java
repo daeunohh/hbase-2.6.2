@@ -190,17 +190,6 @@ public class MemorySizeUtil {
    * @return the onheap global memstore limt
    */
   public static long getOnheapGlobalMemStoreSize(Configuration conf) {
-if(KnobRuntime.check(java.util.UUID.fromString("911e81d3-6568-39e8-9b30-55ad55b72da6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     long max = -1L;
     final MemoryUsage usage = safeGetHeapMemoryUsage();
     if (usage != null) {
@@ -264,7 +253,7 @@ try {
       (float) conf.getLong(HConstants.HFILE_ONHEAP_BLOCK_CACHE_FIXED_SIZE_KEY,
         HConstants.HFILE_ONHEAP_BLOCK_CACHE_FIXED_SIZE_DEFAULT) / heapMax;
     // Calculate the amount of heap to give the heap.
-    if (onHeapCacheFixedSize > 0 && onHeapCacheFixedSize < cachePercentage) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("b65bf472-e605-3c74-ac01-61dbf7643f0e"))) ? (((onHeapCacheFixedSize) < (0)) && ((onHeapCacheFixedSize) >= (cachePercentage))) : (onHeapCacheFixedSize > 0 && onHeapCacheFixedSize < cachePercentage))) {
       return (long) (heapMax * onHeapCacheFixedSize);
     } else {
       final long cacheSizeInBytes = getBlockCacheSizeInBytes(conf);

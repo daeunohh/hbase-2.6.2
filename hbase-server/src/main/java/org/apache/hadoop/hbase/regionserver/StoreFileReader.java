@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_PARAM_KEY;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.BLOOM_FILTER_TYPE_KEY;
@@ -433,8 +432,8 @@ public class StoreFileReader {
         return exists;
       }
     } catch (IOException e) {
-      if (KnobRuntime.check(java.util.UUID.fromString("262d9592-300a-367c-8fb1-0ead32a7b006"))) { LOG.warn("Error reading bloom filter data -- proceeding without", e); } else { LOG.error("Error reading bloom filter data -- proceeding without", e); }
-      if (KnobRuntime.check(java.util.UUID.fromString("ee4deb93-1b06-3c8c-abca-104569e79db1"))) { setDeleteFamilyBloomFilterFaulty(); } else { setGeneralBloomFilterFaulty(); }
+      LOG.error("Error reading bloom filter data -- proceeding without", e);
+      setGeneralBloomFilterFaulty();
     } catch (IllegalArgumentException e) {
       LOG.error("Bad bloom filter data -- proceeding without", e);
       setGeneralBloomFilterFaulty();
@@ -453,28 +452,6 @@ public class StoreFileReader {
    * @return true if there is overlap, false otherwise
    */
   public boolean passesKeyRangeFilter(Scan scan) {
-if(KnobRuntime.check(java.util.UUID.fromString("914999db-95f9-368f-9a6b-2a3b46edcd24"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("storeLimit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9c141475-66c6-3077-b4a5-46fd1f1eeed7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scan.getClass().getDeclaredField("batch");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(scan));
-    _knob_field_.set(scan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Optional<Cell> firstKeyKV = this.getFirstKey();
     Optional<Cell> lastKeyKV = this.getLastKey();
     if (!firstKeyKV.isPresent() || !lastKeyKV.isPresent()) {
@@ -516,7 +493,7 @@ try {
       lastBloomKeyOnlyKV = new KeyValue.KeyOnlyKeyValue(lastBloomKey, 0, lastBloomKey.length);
     }
     byte[] cnt = fi.get(DELETE_FAMILY_COUNT);
-    if (((KnobRuntime.check(java.util.UUID.fromString("24dd95dc-e9a1-3f99-9cd6-9d762f160b45"))) ? ((cnt) == (null)) : (cnt != null))) {
+    if (cnt != null) {
       deleteFamilyCnt = Bytes.toLong(cnt);
     }
 
@@ -537,7 +514,7 @@ try {
         if (this.generalBloomFilter != null) return; // Bloom has been loaded
 
         DataInput bloomMeta = reader.getGeneralBloomFilterMetadata();
-        if (((KnobRuntime.check(java.util.UUID.fromString("56e5a399-cd82-35ec-a9fb-4a1090615d59"))) ? ((bloomMeta) != (null)) : (bloomMeta != null))) {
+        if (bloomMeta != null) {
           // sanity check for NONE Bloom filter
           if (bloomFilterType == BloomType.NONE) {
             throw new IOException("valid bloom filter type not found in FileInfo");
@@ -615,9 +592,6 @@ try {
   }
 
   public long length() {
-if(KnobRuntime.check(java.util.UUID.fromString("2fea6e94-68c1-3216-891a-bbabc27449d5"))) {
-return 0;
-}
     return reader.length();
   }
 
@@ -630,9 +604,6 @@ return 0;
   }
 
   public long getDeleteFamilyCnt() {
-if(KnobRuntime.check(java.util.UUID.fromString("bf91bdd3-a40b-3523-b0a1-4a988c6365fc"))) {
-return 0;
-}
     return deleteFamilyCnt;
   }
 
@@ -641,7 +612,7 @@ return 0;
   }
 
   public long indexSize() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("626df6d8-6343-357d-b891-edab2d9c4841"))) ? (reader.getEntries()) : (reader.indexSize()));
+    return reader.indexSize();
   }
 
   public BloomType getBloomFilterType() {

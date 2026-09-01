@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,17 +70,6 @@ public class EnableTableProcedure extends AbstractStateMachineTableProcedure<Ena
   @Override
   protected Flow executeFromState(final MasterProcedureEnv env, final EnableTableState state)
     throws InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("be196731-199d-394c-8ae8-28df3b329521"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     LOG.trace("{} execute state={}", this, state);
 
     try {
@@ -115,7 +103,7 @@ try {
           // How many replicas do we currently have? Check regions returned from
           // in-memory state.
           int currentMaxReplica = getMaxReplicaId(regionsOfTable);
-          if (((KnobRuntime.check(java.util.UUID.fromString("56d60757-197e-3d0c-ab3d-a0aa47405737"))) ? ((currentMaxReplica) != (1)) : (((KnobRuntime.check(java.util.UUID.fromString("d96a50ae-8b95-3d8a-aca0-e72f163e821f"))) ? ((currentMaxReplica) == ((configuredReplicaCount) - (1))) : (currentMaxReplica == configuredReplicaCount - 1))))) {
+          if (currentMaxReplica == configuredReplicaCount - 1) {
             LOG.debug(
               "No change in number of region replicas (configuredReplicaCount={});" + " assigning.",
               configuredReplicaCount);
@@ -151,32 +139,10 @@ try {
           setNextState(EnableTableState.ENABLE_TABLE_SET_ENABLED_TABLE_STATE);
           break;
         case ENABLE_TABLE_SET_ENABLED_TABLE_STATE:
-if(KnobRuntime.check(java.util.UUID.fromString("886d5997-02a7-3060-a92d-5fc8ffc79a3f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           setTableStateToEnabled(env, tableName);
           setNextState(EnableTableState.ENABLE_TABLE_POST_OPERATION);
           break;
         case ENABLE_TABLE_POST_OPERATION:
-if(KnobRuntime.check(java.util.UUID.fromString("b3e6e2d3-e59f-359c-8f7b-f713748ff2f6"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           postEnable(env, state);
           return Flow.NO_MORE_STATE;
         default:
@@ -214,20 +180,6 @@ try {
 
   @Override
   protected boolean isRollbackSupported(final EnableTableState state) {
-if(KnobRuntime.check(java.util.UUID.fromString("dade1ebf-d7fe-367c-aadb-587d5aa79d8e"))) {
-return true;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c08d9bdb-3834-3672-9c46-d44f027d6043"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     switch (state) {
       case ENABLE_TABLE_PREPARE:
       case ENABLE_TABLE_PRE_OPERATION:
@@ -244,28 +196,11 @@ try {
 
   @Override
   protected int getStateId(final EnableTableState state) {
-if(KnobRuntime.check(java.util.UUID.fromString("fbee5dec-5537-305e-afcc-1cecb793bf56"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3d6669e2-b65e-36df-9631-437a9cd79b3f"))) {
-return 0;
-}
     return state.getNumber();
   }
 
   @Override
   protected EnableTableState getInitialState() {
-if(KnobRuntime.check(java.util.UUID.fromString("0e17ee85-bb4f-39d0-9df6-7ed11fa25273"))) {
-return null;
-}
     return EnableTableState.ENABLE_TABLE_PREPARE;
   }
 
@@ -280,9 +215,6 @@ return null;
         .setUserInfo(MasterProcedureUtil.toProtoUserInfo(getUser()))
         .setTableName(ProtobufUtil.toProtoTableName(tableName)).setSkipTableStateCheck(false);
 
-if(KnobRuntime.check(java.util.UUID.fromString("56b92f65-7766-36a1-9990-2cc269a634ad"))) {
-throw new java.io.IOException("Injected exception");
-}
     serializer.serialize(enableTableMsg.build());
   }
 
@@ -329,17 +261,6 @@ throw new java.io.IOException("Injected exception");
       // was implemented. With table lock, there is no need to set the state here (it will
       // set the state later on). A quick state check should be enough for us to move forward.
       TableStateManager tsm = env.getMasterServices().getTableStateManager();
-if(KnobRuntime.check(java.util.UUID.fromString("f75df9bb-8d8f-339c-8303-214394b93b9c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       TableState ts = tsm.getTableState(tableName);
       if (!ts.isDisabled()) {
         LOG.info("Not DISABLED tableState={}; skipping enable; {}", ts.getState(), this);
@@ -361,9 +282,6 @@ try {
    */
   private void preEnable(final MasterProcedureEnv env, final EnableTableState state)
     throws IOException, InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("853edcf7-5abc-3cda-a754-dc65e7e9e660"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
     runCoprocessorAction(env, state);
   }
 
@@ -375,7 +293,7 @@ throw new java.lang.InterruptedException("Injected exception");
   protected static void setTableStateToEnabling(final MasterProcedureEnv env,
     final TableName tableName) throws IOException {
     // Set table disabling flag up in zk.
-    if (KnobRuntime.check(java.util.UUID.fromString("d85b0266-073f-33c6-a745-f317ccafd8d8"))) { LOG.info(("Attempting to enable the table ") + (tableName)); } else { LOG.info("Attempting to enable the table " + tableName); }
+    LOG.info("Attempting to enable the table " + tableName);
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.ENABLING);
   }
@@ -387,20 +305,9 @@ throw new java.lang.InterruptedException("Injected exception");
   protected static void setTableStateToEnabled(final MasterProcedureEnv env,
     final TableName tableName) throws IOException {
     // Flip the table to Enabled
-if(KnobRuntime.check(java.util.UUID.fromString("3bd21dcd-900b-394c-8f76-2cbe8ebf1084"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     env.getMasterServices().getTableStateManager().setTableState(tableName,
       TableState.State.ENABLED);
-    if (KnobRuntime.check(java.util.UUID.fromString("2a7883f4-a1f4-3687-a63d-da48dba28546"))) { LOG.info("Table '" + tableName); } else if (KnobRuntime.check(java.util.UUID.fromString("b58fc562-ca00-3351-982f-8656df634ddc"))) { LOG.info("Table '"); } else { LOG.info("Table '" + tableName + "' was successfully enabled."); }
+    LOG.info("Table '" + tableName + "' was successfully enabled.");
   }
 
   /**
@@ -420,22 +327,8 @@ try {
    */
   private void runCoprocessorAction(final MasterProcedureEnv env, final EnableTableState state)
     throws IOException, InterruptedException {
-if(KnobRuntime.check(java.util.UUID.fromString("e6801957-b4d3-3de4-8ec2-d82c14ec484f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = state.getClass().getDeclaredField("value");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(state));
-    _knob_field_.set(state, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("9e8853e6-2ede-3296-8ba4-64eec59df1b8"))) {
-throw new java.io.IOException("Injected exception");
-}
     final MasterCoprocessorHost cpHost = env.getMasterCoprocessorHost();
-    if (((KnobRuntime.check(java.util.UUID.fromString("06bb060d-51de-3ea1-b509-f133ebe71274"))) ? ((cpHost) != (null)) : (cpHost != null))) {
+    if (cpHost != null) {
       switch (state) {
         case ENABLE_TABLE_PRE_OPERATION:
           cpHost.preEnableTableAction(getTableName(), getUser());
@@ -451,9 +344,6 @@ throw new java.io.IOException("Injected exception");
 
   /** Returns Maximum region replica id found in passed list of regions. */
   private static int getMaxReplicaId(List<RegionInfo> regions) {
-if(KnobRuntime.check(java.util.UUID.fromString("040c3840-1d1d-3a0e-9a86-954563ca034f"))) {
-return 0;
-}
     int max = 0;
     for (RegionInfo regionInfo : regions) {
       if (regionInfo.getReplicaId() > max) {

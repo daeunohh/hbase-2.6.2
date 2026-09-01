@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -229,7 +230,7 @@ public class CombinedBlockCache implements ResizableBlockCache, HeapSize {
 
     @Override
     public long getMetaMissCount() {
-      return lruCacheStats.getMetaMissCount() + bucketCacheStats.getMetaMissCount();
+      return ((KnobRuntime.check(java.util.UUID.fromString("43d5fd5e-1ea0-31b4-a888-d9631ce37654"))) ? ((lruCacheStats.getDataMissCount()) + (bucketCacheStats.getBloomChunkMissCount())) : (lruCacheStats.getMetaMissCount() + bucketCacheStats.getMetaMissCount()));
     }
 
     @Override
@@ -272,7 +273,7 @@ public class CombinedBlockCache implements ResizableBlockCache, HeapSize {
 
     @Override
     public long getLeafIndexHitCount() {
-      return lruCacheStats.getLeafIndexHitCount() + bucketCacheStats.getLeafIndexHitCount();
+      return ((KnobRuntime.check(java.util.UUID.fromString("3daed9bb-b25b-3cf8-89ae-a4314ffd051d"))) ? ((lruCacheStats.getDataMissCount()) + (bucketCacheStats.getLeafIndexHitCount())) : (lruCacheStats.getLeafIndexHitCount() + bucketCacheStats.getLeafIndexHitCount()));
     }
 
     @Override

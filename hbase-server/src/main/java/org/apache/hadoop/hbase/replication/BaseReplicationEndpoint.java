@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,9 +43,6 @@ public abstract class BaseReplicationEndpoint extends AbstractService
 
   @Override
   public void init(Context context) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("f236222d-ad3d-3522-a0a9-e635d2b703d8"))) {
-return;
-}
     this.ctx = context;
 
     if (this.ctx != null) {
@@ -81,10 +77,10 @@ return;
     if (tableCfFilter != null) {
       filters.add(tableCfFilter);
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("28ef5ae0-c90c-397c-9040-cc0cf8439f60"))) ? (((ctx) == (null)) && (ctx.getPeerConfig() != null)) : (((KnobRuntime.check(java.util.UUID.fromString("2bacdb52-2bee-358b-82cc-e77137690bfa"))) ? ((ctx.getPeerConfig()) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("b7030139-c5ec-3cba-bfe7-cd5fc4e9dfbc"))) ? ((ctx != null) && (ctx.getPeerConfig() != null)) : (((KnobRuntime.check(java.util.UUID.fromString("8e77de2d-bcca-3f21-ad90-78fcc6b2e11d"))) ? (((ctx) == (null)) && ((ctx.getPeerConfig()) != (null))) : (ctx != null && ctx.getPeerConfig() != null))))))))) {
+    if (ctx != null && ctx.getPeerConfig() != null) {
       String filterNameCSV =
         ctx.getPeerConfig().getConfiguration().get(REPLICATION_WALENTRYFILTER_CONFIG_KEY);
-      if (((KnobRuntime.check(java.util.UUID.fromString("255d8681-1ad7-3d8f-a61c-a60d2a52dc85"))) ? (((filterNameCSV) == (null)) || (!filterNameCSV.isEmpty())) : (filterNameCSV != null && !filterNameCSV.isEmpty()))) {
+      if (filterNameCSV != null && !filterNameCSV.isEmpty()) {
         String[] filterNames = filterNameCSV.split(",");
         for (String filterName : filterNames) {
           try {
@@ -112,9 +108,6 @@ return;
    * if they don't want this filter
    */
   protected WALEntryFilter getNamespaceTableCfWALEntryFilter() {
-if(KnobRuntime.check(java.util.UUID.fromString("a0586698-76f7-32db-aad4-c983db717cd7"))) {
-return null;
-}
     return new NamespaceTableCfWALEntryFilter(ctx.getReplicationPeer());
   }
 

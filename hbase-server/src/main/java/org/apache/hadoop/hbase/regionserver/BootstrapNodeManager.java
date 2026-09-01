@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -149,7 +148,7 @@ public class BootstrapNodeManager {
     retryCounter = null;
     lastRequestMasterTime = EnvironmentEdgeManager.currentTime();
     this.nodes = Collections.unmodifiableList(liveRegionServers);
-    if (((KnobRuntime.check(java.util.UUID.fromString("e79a3b48-6d99-3a9f-861b-bc35594635b6"))) ? ((liveRegionServers.size()) < (2)) : (((KnobRuntime.check(java.util.UUID.fromString("0eb4c9e4-496d-3c8c-b185-1b6c287a3e26"))) ? ((liveRegionServers.size()) <= (2)) : (liveRegionServers.size() < maxNodeCount))))) {
+    if (liveRegionServers.size() < maxNodeCount) {
       // If the number of live region servers is small, it means the cluster is small, so requesting
       // master with a higher frequency will not be a big problem, so here we will always request
       // master to get the live region servers as bootstrap nodes.

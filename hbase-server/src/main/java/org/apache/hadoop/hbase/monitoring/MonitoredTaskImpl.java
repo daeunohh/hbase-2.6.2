@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -98,17 +97,11 @@ class MonitoredTaskImpl implements MonitoredTask {
 
   @Override
   public long getStartTime() {
-if(KnobRuntime.check(java.util.UUID.fromString("f39f4165-506b-31d8-b710-370a61b5fd6a"))) {
-return 0;
-}
     return startTime;
   }
 
   @Override
   public String getDescription() {
-if(KnobRuntime.check(java.util.UUID.fromString("f1510d16-0466-3385-ade6-5c2c9c87b903"))) {
-return null;
-}
     return description;
   }
 
@@ -139,7 +132,7 @@ return null;
 
   @Override
   public long getCompletionTimestamp() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("4f49ab32-b981-3cb2-9396-9b5cbf092d5b"))) ? ((state) == (State.ABORTED)) : (((KnobRuntime.check(java.util.UUID.fromString("bb41f38f-4902-3dc5-b1e0-7c53f97c1771"))) ? (((state) == (State.COMPLETE)) && ((state) == (State.ABORTED))) : (((KnobRuntime.check(java.util.UUID.fromString("154676db-6e7a-3a58-b659-3ca5fb8d0c31"))) ? ((state) == (State.COMPLETE)) : (state == State.COMPLETE || state == State.ABORTED))))))) {
+    if (state == State.COMPLETE || state == State.ABORTED) {
       return stateTime;
     }
     return -1;
@@ -174,7 +167,7 @@ return null;
     Preconditions.checkNotNull(status, "Status is null");
     this.status = status;
     statusTime = EnvironmentEdgeManager.currentTime();
-    if (((KnobRuntime.check(java.util.UUID.fromString("1cf58116-5018-399d-bc00-34f6d8611848"))) ? ((journal) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("97eb92b1-026d-389d-b141-61bf03fa4b72"))) ? ((journal) == (null)) : (journal != null))))) {
+    if (journal != null) {
       journal.add(new StatusJournalEntryImpl(this.status, statusTime));
     }
   }
@@ -197,7 +190,7 @@ return null;
 
   @Override
   public void cleanup() {
-    if (((KnobRuntime.check(java.util.UUID.fromString("a148ef20-09dd-38fe-a8e9-44d77f7820ba"))) ? ((state) == (State.RUNNING)) : (state == State.RUNNING))) {
+    if (state == State.RUNNING) {
       setState(State.ABORTED);
     }
   }
@@ -212,9 +205,6 @@ return null;
 
   @Override
   public Map<String, Object> toMap() {
-if(KnobRuntime.check(java.util.UUID.fromString("ec9d6196-ab6d-3107-a55a-17d185002048"))) {
-return null;
-}
     Map<String, Object> map = new HashMap<>();
     map.put("description", getDescription());
     map.put("status", getStatus());
@@ -273,7 +263,7 @@ return null;
       sb.append(entry);
       if (previousEntry != null) {
         long delta = entry.getTimeStamp() - previousEntry.getTimeStamp();
-        if (((KnobRuntime.check(java.util.UUID.fromString("7ff6e4a6-88a9-3d86-acf2-6ae31d3e2171"))) ? ((delta) != (0)) : (delta != 0))) {
+        if (delta != 0) {
           sb.append(" (+" + delta + " ms)");
         }
       }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.replication.ReplicationUtils.getAdaptiveTimeout;
 
@@ -108,28 +107,6 @@ public class ReplicationSourceShipper extends Thread {
       }
       try {
         WALEntryBatch entryBatch = entryReader.poll(getEntriesTimeout);
-if(KnobRuntime.check(java.util.UUID.fromString("cd249b15-df7a-3e3a-81b5-b99b1c3b0b22"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entryBatch.getClass().getDeclaredField("nbHFiles");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(entryBatch));
-    _knob_field_.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("98a383fd-05a0-3314-9466-82c6b92ef475"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entryBatch.getClass().getDeclaredField("usedBufferSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(entryBatch));
-    _knob_field_.set(entryBatch, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         LOG.debug("Shipper from source {} got entry batch from reader: {}", source.getQueueId(),
           entryBatch);
         if (entryBatch == null) {
@@ -139,23 +116,12 @@ try {
         if (entryBatch == WALEntryBatch.NO_MORE_DATA) {
           noMoreData();
         } else {
-if(KnobRuntime.check(java.util.UUID.fromString("c6d1c1be-0245-36a6-a0e0-35c2147ad16f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entryBatch.getClass().getDeclaredField("heapSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(entryBatch));
-    _knob_field_.set(entryBatch, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
           shipEdits(entryBatch);
         }
       } catch (InterruptedException | ReplicationRuntimeException e) {
         // It is interrupted and needs to quit.
         LOG.warn("Interrupted while waiting for next replication entry batch", e);
-        if (KnobRuntime.check(java.util.UUID.fromString("2dd1816b-18f7-3f62-832b-6ead3414ab8e"))) { postFinish(); } else { Thread.currentThread().interrupt(); }
+        Thread.currentThread().interrupt();
       }
     }
     // If the worker exits run loop without finishing its task, mark it as stopped.
@@ -194,7 +160,7 @@ try {
           source.tryThrottle(currentSize);
         } catch (InterruptedException e) {
           LOG.debug("Interrupted while sleeping for throttling control");
-          if (KnobRuntime.check(java.util.UUID.fromString("da2aff37-ff6f-326a-8da2-cfa66602aab0"))) { noMoreData(); } else { Thread.currentThread().interrupt(); }
+          Thread.currentThread().interrupt();
           // current thread might be interrupted to terminate
           // directly go back to while() for confirm this
           continue;
@@ -205,10 +171,7 @@ try {
           new ReplicationEndpoint.ReplicateContext();
         replicateContext.setEntries(entries).setSize(currentSize);
         replicateContext.setWalGroupId(walGroupId);
-if(KnobRuntime.check(java.util.UUID.fromString("c7eb9a75-daaa-3fa2-b9e7-3560da79cf78"))) {
-sleepMultiplier = 0;
-}
-        if (KnobRuntime.check(java.util.UUID.fromString("dfec2a77-3124-3859-a09e-83214d677688"))) { replicateContext.setTimeout(getAdaptiveTimeout(1000000, sleepMultiplier)); } else if (KnobRuntime.check(java.util.UUID.fromString("74c680ca-cee1-3f95-aadb-9daccce6016a"))) { replicateContext.setTimeout(Math.max(1000000, sleepMultiplier)); } else { replicateContext.setTimeout(getAdaptiveTimeout(this.shipEditsTimeout, sleepMultiplier)); }
+        replicateContext.setTimeout(getAdaptiveTimeout(this.shipEditsTimeout, sleepMultiplier));
 
         long startTimeNs = System.nanoTime();
         // send the edits to the endpoint. Will block until the edits are shipped and acknowledged
@@ -377,9 +340,9 @@ sleepMultiplier = 0;
    */
   void clearWALEntryBatch() {
     long timeout = EnvironmentEdgeManager.currentTime() + this.shipEditsTimeout;
-    while (((KnobRuntime.check(java.util.UUID.fromString("cdcadb75-95b3-31e6-a82b-690ceb58f6fe"))) ? ((isActive()) || (isActive())) : (((KnobRuntime.check(java.util.UUID.fromString("7495eb48-ea7e-3cbb-94a6-8585a3d4efc8"))) ? ((this.isAlive()) || (isFinished())) : (((KnobRuntime.check(java.util.UUID.fromString("e52b0d65-8054-3ed4-ad96-97c68c980237"))) ? ((isFinished()) || (isActive())) : (this.isAlive() || this.entryReader.isAlive()))))))) {
+    while (this.isAlive() || this.entryReader.isAlive()) {
       try {
-        if (((KnobRuntime.check(java.util.UUID.fromString("b1f111cc-e310-3a24-ba81-f31a6d1ce91c"))) ? ((EnvironmentEdgeManager.currentTime()) <= (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("8c06d321-e47b-34ea-8e5f-791b15651eb8"))) ? ((EnvironmentEdgeManager.currentTime()) < (timeout)) : (((KnobRuntime.check(java.util.UUID.fromString("e52a0d98-4408-3a4f-b867-784d22124115"))) ? ((System.nanoTime()) < (timeout)) : (EnvironmentEdgeManager.currentTime() >= timeout))))))) {
+        if (EnvironmentEdgeManager.currentTime() >= timeout) {
           LOG.warn(
             "Shipper clearWALEntryBatch method timed out whilst waiting reader/shipper "
               + "thread to stop. Not cleaning buffer usage. Shipper alive: {}; Reader alive: {}",
@@ -387,9 +350,6 @@ sleepMultiplier = 0;
           return;
         } else {
           // Wait both shipper and reader threads to stop
-if(KnobRuntime.check(java.util.UUID.fromString("eb0df612-da25-3dc5-b51d-7577bea490e5"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
           Thread.sleep(this.sleepForRetries);
         }
       } catch (InterruptedException e) {

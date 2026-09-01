@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -98,9 +97,6 @@ public class EncryptionTest {
    */
   public static void testEncryption(final Configuration conf, final String cipher, byte[] key)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("5e05a8e3-996a-3cbf-83f6-b40446c84021"))) {
-throw new java.io.IOException("Injected exception");
-}
     if (cipher == null) {
       return;
     }

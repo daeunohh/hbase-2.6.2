@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.DataOutput;
 import java.io.IOException;
@@ -40,17 +39,6 @@ public class HFileIndexBlockEncoderImpl implements HFileIndexBlockEncoder {
   }
 
   public static HFileIndexBlockEncoder createFromFileInfo(HFileInfo fileInfo) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("8c78520f-b1ea-31c7-858a-b67cff39e7f1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = fileInfo.getClass().getDeclaredField("avgValueLen");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(fileInfo));
-    _knob_field_.set(fileInfo, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     IndexBlockEncoding encoding = IndexBlockEncoding.NONE;
     byte[] dataBlockEncodingType = fileInfo.get(INDEX_BLOCK_ENCODING);
     if (dataBlockEncodingType != null) {
@@ -63,7 +51,7 @@ try {
       }
     }
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("8c229446-1118-3860-a411-f2ace2748e18"))) ? ((encoding) != (IndexBlockEncoding.NONE)) : (encoding == IndexBlockEncoding.NONE))) {
+    if (encoding == IndexBlockEncoding.NONE) {
       return NoOpIndexBlockEncoder.INSTANCE;
     }
     return new HFileIndexBlockEncoderImpl(encoding);

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -51,12 +50,6 @@ public class MetricsSnapshot {
    * @param time time that the snapshot clone took
    */
   public void addSnapshotClone(long time) {
-if(KnobRuntime.check(java.util.UUID.fromString("99180247-e13b-3a3d-9357-a2769a083ef8"))) {
-time -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("c8f75eac-5ed6-376f-949e-d6a8411415d2"))) {
-return;
-}
     source.updateSnapshotCloneTime(time);
   }
 }

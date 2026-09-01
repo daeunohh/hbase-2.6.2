@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -69,9 +68,6 @@ public class ChecksumUtil {
     DataChecksum checksum =
       DataChecksum.newDataChecksum(checksumType.getDataChecksumType(), bytesPerChecksum);
 
-if(KnobRuntime.check(java.util.UUID.fromString("dae534d6-d4e9-393e-848c-5a3d5f21dc81"))) {
-startOffset -= 1;
-}
     checksum.calculateChunkedSums(ByteBuffer.wrap(indata, startOffset, endOffset - startOffset),
       ByteBuffer.wrap(outdata, outOffset, outdata.length - outOffset));
   }
@@ -180,12 +176,6 @@ startOffset -= 1;
     assert dataChecksum != null;
     int onDiskDataSizeWithHeader =
       buf.getInt(HFileBlock.Header.ON_DISK_DATA_SIZE_WITH_HEADER_INDEX);
-if(KnobRuntime.check(java.util.UUID.fromString("f1ab556c-e468-3071-a05e-51c6d25e6e73"))) {
-onDiskDataSizeWithHeader *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("76c33d64-6176-3f18-9f0b-7bb50e600084"))) {
-hdrSize -= 1;
-}
     LOG.trace(
       "dataLength={}, sizeWithHeader={}, checksumType={}, file={}, "
         + "offset={}, headerSize={}, bytesPerChecksum={}",
@@ -203,9 +193,6 @@ hdrSize -= 1;
    * @return The number of bytes needed to store the checksum values
    */
   static long numBytes(long datasize, int bytesPerChecksum) {
-if(KnobRuntime.check(java.util.UUID.fromString("0b84887f-7701-3a9e-8641-8f639e79ed0b"))) {
-bytesPerChecksum = 0;
-}
     return numChunks(datasize, bytesPerChecksum) * HFileBlock.CHECKSUM_SIZE;
   }
 
@@ -217,7 +204,7 @@ bytesPerChecksum = 0;
    */
   static long numChunks(long datasize, int bytesPerChecksum) {
     long numChunks = datasize / bytesPerChecksum;
-    if (((KnobRuntime.check(java.util.UUID.fromString("d1bb7520-a2b1-3f48-812b-06e5df22012e"))) ? ((datasize % bytesPerChecksum) != (0)) : (datasize % bytesPerChecksum != 0))) {
+    if (datasize % bytesPerChecksum != 0) {
       numChunks++;
     }
     return numChunks;

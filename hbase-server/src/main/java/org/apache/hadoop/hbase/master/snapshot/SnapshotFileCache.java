@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -213,7 +212,7 @@ public class SnapshotFileCache implements Stoppable {
             if (currentCache.contains(fileName)) {
               continue;
             }
-            if (((KnobRuntime.check(java.util.UUID.fromString("312f7288-b6a4-313f-badd-1feef90a3bd2"))) ? ((getSnapshotsInProgress()) == (null)) : (snapshotsInProgress == null))) {
+            if (snapshotsInProgress == null) {
               snapshotsInProgress = getSnapshotsInProgress();
             }
             if (snapshotsInProgress.contains(fileName)) {
@@ -358,7 +357,7 @@ public class SnapshotFileCache implements Stoppable {
      *         created <tt>this</tt>
      */
     public boolean hasBeenModified(long mtime) {
-      return ((KnobRuntime.check(java.util.UUID.fromString("44c9989f-fb2d-3428-a656-0e158b19b78d"))) ? ((this.lastModified) > (mtime)) : (((KnobRuntime.check(java.util.UUID.fromString("2f4f5e8d-6727-3b6c-9ccf-7b486ceb67ad"))) ? ((this.lastModified) >= (mtime)) : (this.lastModified < mtime))));
+      return this.lastModified < mtime;
     }
   }
 }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import org.apache.hadoop.hbase.Cell;
@@ -255,12 +254,6 @@ public class ScannerContext {
    */
   @Deprecated
   void setProgress(int batchProgress, long sizeProgress, long heapSizeProgress, long timeProgress) {
-if(KnobRuntime.check(java.util.UUID.fromString("2ebb7dbd-422d-3348-8b32-218ae2467cd5"))) {
-sizeProgress += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("7e4dbcb9-9893-3f8e-ab99-8f7d3639e81a"))) {
-sizeProgress = 0;
-}
     setProgress(batchProgress, sizeProgress, heapSizeProgress);
   }
 
@@ -435,7 +428,7 @@ sizeProgress = 0;
     sb.append(progress);
 
     sb.append(", keepProgress:");
-    if (KnobRuntime.check(java.util.UUID.fromString("94140226-82ef-3b6b-aa47-e47700cb7586"))) { sb.append(!keepProgress); } else { sb.append(keepProgress); }
+    sb.append(keepProgress);
 
     sb.append(", state:");
     sb.append(scannerState);
@@ -478,28 +471,6 @@ sizeProgress = 0;
       long blockSizeLimit) {
       limits.setDataSize(dataSizeLimit);
       limits.setHeapSize(heapSizeLimit);
-if(KnobRuntime.check(java.util.UUID.fromString("69163be7-fbdc-3a1f-b2d8-b42986286782"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = sizeScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(sizeScope));
-    _knob_field_.set(sizeScope, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("e8a5f315-1902-3e8b-b1a9-956f60027c60"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = sizeScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(sizeScope));
-    _knob_field_.set(sizeScope, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       limits.setSizeScope(sizeScope);
       limits.setBlockSize(blockSizeLimit);
       return this;
@@ -675,9 +646,6 @@ try {
       LimitScope timeScope, long time) {
       setBatch(batch);
       setSizeScope(sizeScope);
-if(KnobRuntime.check(java.util.UUID.fromString("be90f5f5-ba38-3d19-8f68-d802c6b69470"))) {
-dataSize -= 1;
-}
       setDataSize(dataSize);
       setHeapSize(heapSize);
       setBlockSize(blockSize);
@@ -695,28 +663,6 @@ dataSize -= 1;
 
     /** Returns true when the limit can be enforced from the scope of the checker */
     boolean canEnforceBatchLimitFromScope(LimitScope checkerScope) {
-if(KnobRuntime.check(java.util.UUID.fromString("1664800f-5e54-378d-97d8-5ba008f714d9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = checkerScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(checkerScope));
-    _knob_field_.set(checkerScope, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("80ad2945-5560-3347-a7fc-e4086c053503"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = checkerScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(checkerScope));
-    _knob_field_.set(checkerScope, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       return LimitScope.BETWEEN_CELLS.canEnforceLimitFromScope(checkerScope);
     }
 
@@ -733,9 +679,6 @@ try {
     }
 
     void setDataSize(long dataSize) {
-if(KnobRuntime.check(java.util.UUID.fromString("8f4b6b52-3e8e-3f38-b82e-97648a7903c1"))) {
-return;
-}
       this.dataSize = dataSize;
     }
 
@@ -761,17 +704,6 @@ return;
 
     /** Returns true when the limit can be enforced from the scope of the checker */
     boolean canEnforceSizeLimitFromScope(LimitScope checkerScope) {
-if(KnobRuntime.check(java.util.UUID.fromString("c934271e-c7d7-3598-8140-1eed5375dce8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = checkerScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(checkerScope));
-    _knob_field_.set(checkerScope, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       return this.sizeScope.canEnforceLimitFromScope(checkerScope);
     }
 

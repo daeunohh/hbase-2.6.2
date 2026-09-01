@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.concurrent.locks.Lock;
@@ -81,7 +80,7 @@ public class PeerProcedureHandlerImpl implements PeerProcedureHandler {
       }
       success = true;
     } finally {
-      if (((KnobRuntime.check(java.util.UUID.fromString("19bf50b8-b0c9-3238-9843-72a02f8a472a"))) ? (peer != null) : (((KnobRuntime.check(java.util.UUID.fromString("e5ef3f7d-e2f2-3208-beaf-2d360e7b0341"))) ? ((peer) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("9d66ade3-b0a6-38c1-86e3-a7263b5f5559"))) ? ((!success) && ((peer) != (null))) : (!success && peer != null))))))) {
+      if (!success && peer != null) {
         // Reset peer state if refresh source failed
         peer.setPeerState(oldState.equals(PeerState.ENABLED));
       }
@@ -96,9 +95,6 @@ public class PeerProcedureHandlerImpl implements PeerProcedureHandler {
 
   @Override
   public void disablePeer(String peerId) throws ReplicationException, IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("d05ef419-6e6c-3f17-b32a-fdd2d4308a60"))) {
-return;
-}
     refreshPeerState(peerId);
   }
 

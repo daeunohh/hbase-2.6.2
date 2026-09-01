@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -72,19 +71,8 @@ public class ProtobufWALStreamReader extends AbstractProtobufWALReader
     if (entry == null) {
       entry = new Entry();
     }
-if(KnobRuntime.check(java.util.UUID.fromString("03261f4c-c7be-3b13-b6be-2e22b5b48629"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = walKey.getClass().getDeclaredField("followingKvCount_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(walKey));
-    _knob_field_.set(walKey, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     entry.getKey().readFieldsFromPb(walKey, byteStringUncompressor);
-    if (((KnobRuntime.check(java.util.UUID.fromString("12c72d4f-3bde-3a3e-af17-582f227cc316"))) ? ((!walKey.hasFollowingKvCount()) && ((walKey.getFollowingKvCount()) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ff299c31-b69c-32d9-b50c-9758aafe9da0"))) ? ((!walKey.hasFollowingKvCount()) && (walKey.getFollowingKvCount() == 0)) : (!walKey.hasFollowingKvCount() || walKey.getFollowingKvCount() == 0))))) {
+    if (!walKey.hasFollowingKvCount() || walKey.getFollowingKvCount() == 0) {
       LOG.trace("WALKey has no KVs that follow it; trying the next one. current offset={}",
         inputStream.getPos());
       return entry;
@@ -111,7 +99,7 @@ try {
         + "; started reading at " + posBefore + " and read up to " + getPositionQuietly());
     }
     long posAfter = this.inputStream.getPos();
-    if (((KnobRuntime.check(java.util.UUID.fromString("d1f8eede-80ab-3fcc-bfef-b71ef99a8f03"))) ? ((trailerPresent) || (posAfter > this.walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("3a1e30a4-c5bd-33e7-a540-dd2ec95df6d7"))) ? ((trailerPresent) && (posAfter > this.walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("3e4d2c1a-53fb-39d2-a834-4093a1b22a12"))) ? ((!trailerPresent) && ((posAfter) >= (this.walEditsStopOffset))) : (((KnobRuntime.check(java.util.UUID.fromString("4edab150-ac66-35bd-aa0b-5f9b72f02ab6"))) ? ((posAfter) != (this.walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("efae4025-8267-3626-acde-0b61f630ffbb"))) ? ((!trailerPresent) || (posAfter > this.walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("3727fe08-8b1f-33cd-bbe1-2b2baecb364b"))) ? ((posAfter) < (this.walEditsStopOffset)) : (((KnobRuntime.check(java.util.UUID.fromString("1cbad10b-1302-3d9b-aea7-06bde03339a0"))) ? ((!trailerPresent) || ((posAfter) > (this.walEditsStopOffset))) : (trailerPresent && posAfter > this.walEditsStopOffset))))))))))))))) {
+    if (trailerPresent && posAfter > this.walEditsStopOffset) {
       LOG.error("Read WALTrailer while reading WALEdits. wal: {}, inputStream.getPos(): {},"
         + " walEditsStopOffset: {}", path, posAfter, walEditsStopOffset);
       throw new EOFException("Read WALTrailer while reading WALEdits; started reading at "

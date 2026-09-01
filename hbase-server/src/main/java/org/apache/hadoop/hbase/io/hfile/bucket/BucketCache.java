@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile.bucket;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.hfile.CacheConfig.BUCKETCACHE_PERSIST_INTERVAL_KEY;
 
@@ -771,6 +772,17 @@ public class BucketCache implements BlockCache, HeapSize {
         if (backingMap.remove(cacheKey, bucketEntryToUse)) {
           LOG.debug("removed key {} from back map with offset lock {} in the evict process",
             cacheKey, bucketEntryToUse.offset());
+if(KnobRuntime.check(java.util.UUID.fromString("c6c983e7-1722-3cb8-9736-36283d3dd4dd"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = bucketEntryToUse.getClass().getDeclaredField("length");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(bucketEntryToUse));
+    _knob_field_.set(bucketEntryToUse, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
           blockEvicted(cacheKey, bucketEntryToUse, !existedInRamCache, evictedByEvictionProcess);
           return true;
         }
@@ -1527,6 +1539,9 @@ public class BucketCache implements BlockCache, HeapSize {
 
   private void parsePB(BucketCacheProtos.BucketCacheEntry firstChunk,
     List<BucketCacheProtos.BackingMap> chunks) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("337b6429-16d2-3573-8e6f-4b02ff041346"))) {
+throw new java.io.IOException("Injected exception");
+}
     fullyCachedFiles.clear();
     Pair<ConcurrentHashMap<BlockCacheKey, BucketEntry>, NavigableSet<BlockCacheKey>> pair =
       BucketProtoUtils.fromPB(firstChunk.getDeserializersMap(), firstChunk.getBackingMap(),
@@ -2216,6 +2231,9 @@ public class BucketCache implements BlockCache, HeapSize {
           notifyFileCachingCompleted(fileName, totalBlockCount, dataBlockCount, size);
         } else
           if ((getAllCacheKeysForFile(fileName.getName()).size() - metaCount) == dataBlockCount) {
+if(KnobRuntime.check(java.util.UUID.fromString("9e6170e0-818c-3caa-84e7-23e2c2958e21"))) {
+dataBlockCount -= 1;
+}
             LOG.debug("We counted {} data blocks, expected was {}, there was no more pending in "
               + "the cache write queue but we now found that total cached blocks for file {} "
               + "is equal to data block count.", count, dataBlockCount, fileName.getName());

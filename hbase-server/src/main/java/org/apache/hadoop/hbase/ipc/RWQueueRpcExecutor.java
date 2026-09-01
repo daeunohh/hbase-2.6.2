@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -149,22 +148,11 @@ public class RWQueueRpcExecutor extends RpcExecutor {
     } else if (toScanQueue) {
       queueIndex = numWriteQueues + numReadQueues + scanBalancer.getNextQueue(callTask);
     } else {
-if(KnobRuntime.check(java.util.UUID.fromString("ded45a42-7ec6-38c2-b6a5-eddc7edefb6f"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = callTask.getClass().getDeclaredField("successful");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(callTask);
-    _knob_field_.set(callTask, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       queueIndex = numWriteQueues + readBalancer.getNextQueue(callTask);
     }
 
     Queue<CallRunner> queue = queues.get(queueIndex);
-    if (((KnobRuntime.check(java.util.UUID.fromString("afdcc2bd-5028-3a4f-96ce-583c8a34c9d6"))) ? ((queue.size()) >= (currentQueueLimit)) : (queue.size() >= currentQueueLimit))) {
+    if (queue.size() >= currentQueueLimit) {
       return false;
     }
     return queue.offer(callTask);
@@ -220,17 +208,6 @@ try {
   }
 
   protected boolean isWriteRequest(final RequestHeader header, final Message param) {
-if(KnobRuntime.check(java.util.UUID.fromString("51968c79-b747-35c2-a7ed-d16656e336bb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("priority_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(header));
-    _knob_field_.set(header, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // TODO: Is there a better way to do this?
     if (param instanceof MultiRequest) {
       MultiRequest multi = (MultiRequest) param;

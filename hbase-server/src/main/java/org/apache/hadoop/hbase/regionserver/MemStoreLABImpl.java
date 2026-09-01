@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.nio.ByteBuffer;
@@ -162,10 +161,7 @@ public class MemStoreLABImpl implements MemStoreLAB {
       // and so the current thread has to try again to make its chunk or grab the chunk
       // that the other thread created
       // Try to allocate from this chunk
-      if (((KnobRuntime.check(java.util.UUID.fromString("524cdd98-fdd7-3e35-9b3d-63b2a67d61d7"))) ? ((c) != (null)) : (c != null))) {
-if(KnobRuntime.check(java.util.UUID.fromString("4c09029d-d503-302a-afad-b6f18dbcfbdc"))) {
-size += 1;
-}
+      if (c != null) {
         allocOffset = c.alloc(size);
         if (allocOffset != -1) {
           // We succeeded - this is the common case - small alloc
@@ -201,9 +197,6 @@ size += 1;
       // that the other thread created
       // Try to allocate from this chunk
       if (c != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("259408cf-ca35-3e70-813b-cd7745e7b410"))) {
-size += 1;
-}
         allocOffset = c.alloc(size);
         if (allocOffset != -1) {
           // We succeeded - this is the common case - small alloc
@@ -245,15 +238,6 @@ size += 1;
     int len) {
     int tagsLen = cell.getTagsLength();
     cell.write(buf, offset);
-if(KnobRuntime.check(java.util.UUID.fromString("15cbbfaa-3036-3316-a133-2b598e0e0129"))) {
-tagsLen += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b43bcf13-77cb-32b1-b66f-de2e6583255b"))) {
-tagsLen /= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("42033720-ada6-3372-a240-6f8a500a548c"))) {
-len = -1;
-}
     return createChunkCell(buf, offset, len, tagsLen, cell.getSequenceId());
   }
 
@@ -345,7 +329,7 @@ len = -1;
       try {
         // once again check inside the lock
         c = currChunk.get();
-        if (((KnobRuntime.check(java.util.UUID.fromString("8b309ccb-8ff3-3e0c-bc72-5a35c03c09ca"))) ? ((c) == (null)) : (c != null))) {
+        if (c != null) {
           return c;
         }
         c = this.chunkCreator.getChunk();

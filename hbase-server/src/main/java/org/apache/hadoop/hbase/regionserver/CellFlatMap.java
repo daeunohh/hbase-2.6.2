@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -328,6 +329,9 @@ public abstract class CellFlatMap implements NavigableMap<Cell, Cell> {
 
   @Override
   public Entry<Cell, Cell> firstEntry() {
+if(KnobRuntime.check(java.util.UUID.fromString("f94c1ed0-e0be-3724-9933-9c9dc2eb9aa4"))) {
+return null;
+}
     Cell cell = firstKey();
     if (cell == null) {
       return null;

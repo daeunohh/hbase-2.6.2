@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInput;
@@ -652,7 +653,7 @@ public final class PermissionStorage {
     int idx = username.indexOf(ACL_KEY_DELIMITER);
     byte[] permFamily = null;
     byte[] permQualifier = null;
-    if (idx > 0 && idx < username.length() - 1) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("93b0f94c-ac83-3f41-b6be-8831854c1d40"))) ? (((idx + 1) != (0)) || ((idx + 1) != ((username.length()) - (1)))) : (((KnobRuntime.check(java.util.UUID.fromString("f4502c13-ccda-3ab2-aed3-490fc4bd7346"))) ? (((idx) != (0)) && ((idx) > (username.length() - 1))) : (idx > 0 && idx < username.length() - 1))))) {
       String remainder = username.substring(idx + 1);
       username = username.substring(0, idx);
       idx = remainder.indexOf(ACL_KEY_DELIMITER);

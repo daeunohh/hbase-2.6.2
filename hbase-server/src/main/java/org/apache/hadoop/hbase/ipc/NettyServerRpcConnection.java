@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -103,9 +102,6 @@ class NettyServerRpcConnection extends ServerRpcConnection {
 
   @Override
   public boolean isConnectionOpen() {
-if(KnobRuntime.check(java.util.UUID.fromString("fc5939eb-fb93-3926-97c5-73ee897f36c7"))) {
-return true;
-}
     return channel.isOpen();
   }
 
@@ -113,31 +109,6 @@ return true;
   public NettyServerCall createCall(int id, final BlockingService service,
     final MethodDescriptor md, RequestHeader header, Message param, CellScanner cellScanner,
     long size, final InetAddress remoteAddress, int timeout, CallCleanup reqCleanup) {
-if(KnobRuntime.check(java.util.UUID.fromString("5ecae141-27d6-39af-9470-68c21f561cfb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = header.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(header));
-    _knob_field_.set(header, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("befed876-df09-39d4-8105-a045a4199c56"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = md.getClass().getDeclaredField("index");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(md));
-    _knob_field_.set(md, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("095a6597-7501-3e81-b3e9-a6f43feecd60"))) {
-return null;
-}
     return new NettyServerCall(id, service, md, header, param, cellScanner, this, size,
       remoteAddress, EnvironmentEdgeManager.currentTime(), timeout, this.rpcServer.bbAllocator,
       this.rpcServer.cellBlockBuilder, reqCleanup);

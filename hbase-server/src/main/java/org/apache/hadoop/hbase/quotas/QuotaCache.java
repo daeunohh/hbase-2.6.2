@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.ConcurrentMapUtils.computeIfAbsent;
 
@@ -476,6 +477,17 @@ public class QuotaCache implements Stoppable {
             if (regionSize == 0) {
               factor = 0;
             } else {
+if(KnobRuntime.check(java.util.UUID.fromString("f8b77d7f-4c5c-3c36-b49f-be4868902c79"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
               int localRegionSize = rsServices.getRegions(tableName).size();
               factor = 1.0 * localRegionSize / regionSize;
             }

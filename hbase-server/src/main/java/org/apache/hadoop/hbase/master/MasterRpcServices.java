@@ -502,9 +502,6 @@ public class MasterRpcServices extends RSRpcServices
           master.loadBalancerStateStore.set(newValue);
         }
       } else {
-if(KnobRuntime.check(java.util.UUID.fromString("e6844ef9-5b98-3f81-b4a0-a4157c63ad4d"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-newValue = true;
-}
         master.loadBalancerStateStore.set(newValue);
       }
       LOG.info(master.getClientIdAuditPrefix() + " set balanceSwitch=" + newValue);
@@ -545,9 +542,6 @@ newValue = true;
   @QosPriority(priority = HConstants.ADMIN_QOS)
   public GetLastFlushedSequenceIdResponse getLastFlushedSequenceId(RpcController controller,
     GetLastFlushedSequenceIdRequest request) throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("829f5fe7-c790-3643-9430-535cbf3aac66"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return null;
-}
     try {
       master.checkServiceStarted();
     } catch (IOException ioe) {
@@ -601,7 +595,7 @@ return null;
       int versionNumber = 0;
       String version = "0.0.0";
       VersionInfo versionInfo = VersionInfoUtil.getCurrentClientVersionInfo();
-      if (((KnobRuntime.check(java.util.UUID.fromString("b2077f9f-f241-364e-b2ee-5942041d1a64"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((versionInfo) == (null)) : (versionInfo != null))) {
+      if (versionInfo != null) {
         version = versionInfo.getVersion();
         versionNumber = VersionInfoUtil.getVersionNumber(versionInfo);
       }
@@ -642,13 +636,10 @@ return null;
       long procId = master.addColumn(ProtobufUtil.toTableName(req.getTableName()),
         ProtobufUtil.toColumnFamilyDescriptor(req.getColumnFamilies()), req.getNonceGroup(),
         req.getNonce());
-      if (((KnobRuntime.check(java.util.UUID.fromString("1654333b-3e5f-3327-9bf5-33dcb589a9c9"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((procId) != (-1)) : (procId == -1))) {
+      if (procId == -1) {
         // This mean operation was not performed in server, so do not set any procId
         return AddColumnResponse.newBuilder().build();
       } else {
-if(KnobRuntime.check(java.util.UUID.fromString("a95dd60b-efe2-3773-9652-7954282795cd"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-procId += 1;
-}
         return AddColumnResponse.newBuilder().setProcId(procId).build();
       }
     } catch (IOException ioe) {
@@ -659,17 +650,6 @@ procId += 1;
   @Override
   public AssignRegionResponse assignRegion(RpcController controller, AssignRegionRequest req)
     throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("08db7c60-4a7e-3be7-aac5-b894eef4ad95"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = req.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(req));
-    _knob_field_.set(req, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
       master.checkInitialized();
 
@@ -692,7 +672,7 @@ try {
       LOG.info(master.getClientIdAuditPrefix() + " assign " + regionInfo.getRegionNameAsString());
       master.getAssignmentManager().assign(regionInfo);
       if (master.cpHost != null) {
-        if (KnobRuntime.check(java.util.UUID.fromString("98f059c7-8e91-361a-ae5a-f94a4c59e58c"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) { master.cpHost.preAssign(regionInfo); } else { master.cpHost.postAssign(regionInfo); }
+        master.cpHost.postAssign(regionInfo);
       }
       return arr;
     } catch (IOException ioe) {
@@ -703,40 +683,7 @@ try {
   @Override
   public BalanceResponse balance(RpcController controller, BalanceRequest request)
     throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("14097bd9-dab3-3225-a3e8-4ad7a0d219d3"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1427d843-5d24-3e50-b931-ffadf5e02d03"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
-if(KnobRuntime.check(java.util.UUID.fromString("16933168-eda0-32d9-9c3e-2054a76576b4"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       return ProtobufUtil.toBalanceResponse(master.balance(ProtobufUtil.toBalanceRequest(request)));
     } catch (IOException ex) {
       throw new ServiceException(ex);
@@ -829,9 +776,6 @@ try {
     try {
       long procId = master.deleteTable(ProtobufUtil.toTableName(request.getTableName()),
         request.getNonceGroup(), request.getNonce());
-if(KnobRuntime.check(java.util.UUID.fromString("da2697ab-7362-3f72-95b4-54d70a9c07f1"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-procId += 1;
-}
       return DeleteTableResponse.newBuilder().setProcId(procId).build();
     } catch (IOException ioe) {
       throw new ServiceException(ioe);
@@ -899,30 +843,8 @@ procId += 1;
   @Override
   public MergeTableRegionsResponse mergeTableRegions(RpcController c,
     MergeTableRegionsRequest request) throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("1a67a6a1-3579-37b1-80a4-94c319daaf01"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("nonce_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("361d628c-8d2d-3fee-9992-00a2aa96f8fa"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
-      if (KnobRuntime.check(java.util.UUID.fromString("3191fe5a-f4e4-3d2e-b673-f25a7c35fcf9"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) { master.checkServiceStarted(); } else { master.checkInitialized(); }
+      master.checkInitialized();
     } catch (IOException ioe) {
       throw new ServiceException(ioe);
     }
@@ -932,15 +854,6 @@ try {
     RegionInfo[] regionsToMerge = new RegionInfo[request.getRegionCount()];
     for (int i = 0; i < request.getRegionCount(); i++) {
       final byte[] encodedNameOfRegion = request.getRegion(i).getValue().toByteArray();
-if(KnobRuntime.check(java.util.UUID.fromString("48680b98-e819-311c-8c68-e8e612df0c5d"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-i = 0;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b234cb69-1ddc-3599-904d-5fb552d1b5a8"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-i -= 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("899b4d24-29e7-3bd8-8a5b-cbbdf8da788d"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-i *= 2;
-}
       if (request.getRegion(i).getType() != RegionSpecifierType.ENCODED_REGION_NAME) {
         LOG.warn("MergeRegions specifier type: expected: " + RegionSpecifierType.ENCODED_REGION_NAME
           + " actual: region " + i + " =" + request.getRegion(i).getType());
@@ -965,17 +878,6 @@ i *= 2;
   @Override
   public SplitTableRegionResponse splitRegion(final RpcController controller,
     final SplitTableRegionRequest request) throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("533071fe-f9b3-3388-8a43-8119151a28e7"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
       long procId = master.splitRegion(ProtobufUtil.toRegionInfo(request.getRegionInfo()),
         request.hasSplitRow() ? request.getSplitRow().toByteArray() : null, request.getNonceGroup(),
@@ -1059,7 +961,7 @@ try {
         throw new ServiceException(
           new DoNotRetryIOException("The procedure is not registered: " + desc.getSignature()));
       }
-      if (KnobRuntime.check(java.util.UUID.fromString("3b662825-52b4-31cc-8a4c-ee08c93f9b02"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) { LOG.warn((master.getClientIdAuditPrefix() + " procedure request for: ") + (desc.getSignature())); } else { LOG.info(master.getClientIdAuditPrefix() + " procedure request for: " + desc.getSignature()); }
+      LOG.info(master.getClientIdAuditPrefix() + " procedure request for: " + desc.getSignature());
       mpm.checkPermissions(desc, getAccessChecker(), RpcServer.getRequestUser().orElse(null));
       mpm.execProcedure(desc);
       // send back the max amount of time the client should wait for the procedure
@@ -1496,17 +1398,6 @@ try {
   @Override
   public ListTableDescriptorsByNamespaceResponse listTableDescriptorsByNamespace(RpcController c,
     ListTableDescriptorsByNamespaceRequest request) throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("200bd7e0-e28f-352e-8220-23b7de2bc1b8"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = request.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(request));
-    _knob_field_.set(request, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
       ListTableDescriptorsByNamespaceResponse.Builder b =
         ListTableDescriptorsByNamespaceResponse.newBuilder();
@@ -1903,17 +1794,6 @@ try {
   @Override
   public ReportRegionStateTransitionResponse reportRegionStateTransition(RpcController c,
     ReportRegionStateTransitionRequest req) throws ServiceException {
-if(KnobRuntime.check(java.util.UUID.fromString("d6155e08-a2e1-3e50-a400-e10259671dd5"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = req.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(req));
-    _knob_field_.set(req, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     try {
       master.checkServiceStarted();
       for (RegionServerStatusProtos.RegionStateTransition transition : req.getTransitionList()) {
@@ -1925,17 +1805,6 @@ try {
           : -1;
         throwOnOldMaster(procId, initiatingMasterActiveTime);
       }
-if(KnobRuntime.check(java.util.UUID.fromString("e537d79f-6ca8-3203-992b-213f11ff3411"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = req.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(req));
-    _knob_field_.set(req, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       return master.getAssignmentManager().reportRegionStateTransition(req);
     } catch (IOException ioe) {
       throw new ServiceException(ioe);
@@ -2018,10 +1887,7 @@ try {
    * @throws IOException throw IOException
    */
   private void checkHFileFormatVersionForMob() throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("865caacf-e59e-3656-bd9a-e293e45a1f36"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-throw new java.io.IOException("Injected exception");
-}
-    if (((KnobRuntime.check(java.util.UUID.fromString("6c1edf16-f0a6-3442-8ff4-7e6bebcf22dd"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((HFile.getFormatVersion(master.getConfiguration())) == (HFile.MIN_FORMAT_VERSION_WITH_TAGS)) : (((KnobRuntime.check(java.util.UUID.fromString("6b2ac94d-1760-3347-9ef8-6213b30cde85"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((HFile.getFormatVersion(master.getConfiguration())) != (HFile.MIN_FORMAT_VERSION_WITH_TAGS)) : (HFile.getFormatVersion(master.getConfiguration()) < HFile.MIN_FORMAT_VERSION_WITH_TAGS))))) {
+    if (HFile.getFormatVersion(master.getConfiguration()) < HFile.MIN_FORMAT_VERSION_WITH_TAGS) {
       LOG.error("A minimum HFile version of " + HFile.MIN_FORMAT_VERSION_WITH_TAGS
         + " is required for MOB compaction. Compaction will not run.");
       throw new IOException("A minimum HFile version of " + HFile.MIN_FORMAT_VERSION_WITH_TAGS
@@ -2152,6 +2018,9 @@ throw new java.io.IOException("Injected exception");
   @Override
   public IsNormalizerEnabledResponse isNormalizerEnabled(RpcController controller,
     IsNormalizerEnabledRequest request) {
+if(KnobRuntime.check(java.util.UUID.fromString("4763d5b8-5d2c-3a88-93bc-74d3060d9f59"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
+return null;
+}
     IsNormalizerEnabledResponse.Builder response = IsNormalizerEnabledResponse.newBuilder();
     response.setEnabled(master.isNormalizerOn());
     return response.build();
@@ -2352,12 +2221,6 @@ throw new java.io.IOException("Injected exception");
     try {
       master.checkInitialized();
       boolean prevValue = master.replicationPeerModificationSwitch(request.getOn());
-if(KnobRuntime.check(java.util.UUID.fromString("76ab6f60-819e-3755-bea0-a812f895073e"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-prevValue = false;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4741d1fe-6d03-3ea2-ae30-491643af2cae"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-prevValue = true;
-}
       return ReplicationPeerModificationSwitchResponse.newBuilder().setPreviousValue(prevValue)
         .build();
     } catch (IOException ioe) {
@@ -2437,7 +2300,7 @@ prevValue = true;
         master.cpHost.preDecommissionRegionServers(servers, offload);
       }
       master.decommissionRegionServers(servers, offload);
-      if (((KnobRuntime.check(java.util.UUID.fromString("73b8a310-92f2-360f-9346-fc6437ac36a3"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) ? ((master.cpHost) == (null)) : (master.cpHost != null))) {
+      if (master.cpHost != null) {
         master.cpHost.postDecommissionRegionServers(servers, offload);
       }
     } catch (IOException io) {
@@ -2754,17 +2617,6 @@ prevValue = true;
       TableState newState = TableState.convert(tn, request.getTableState());
       LOG.info("{} set table={} state from {} to {}", master.getClientIdAuditPrefix(), tn,
         prevState.getState(), newState.getState());
-if(KnobRuntime.check(java.util.UUID.fromString("c87ca49d-d4a7-357e-81eb-13e62e366e91"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-try {
-    java.lang.reflect.Field _knob_field_ = tn.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tn));
-    _knob_field_.set(tn, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       this.master.getTableStateManager().setTableState(tn, newState.getState());
       return GetTableStateResponse.newBuilder().setTableState(prevState.convert()).build();
     } catch (Exception e) {

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.replication.master.ReplicationSinkTrackerTableCreator.OFFSET_COLUMN;
 import static org.apache.hadoop.hbase.replication.master.ReplicationSinkTrackerTableCreator.REPLICATION_SINK_TRACKER_ENABLED_DEFAULT;
@@ -281,47 +280,14 @@ public class ReplicationSink {
               if (rsServerHost != null) {
                 rsServerHost.preReplicationSinkBatchMutate(entry, mutation);
                 mutationsToWalEntriesPairs.getFirst().add(mutation);
-if(KnobRuntime.check(java.util.UUID.fromString("939dc742-baae-352d-a54f-c2850b2a69f2"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entry.getClass().getDeclaredField("associatedCellCount_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(entry));
-    _knob_field_.set(entry, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0384ca89-e1d3-325a-a179-72b5d2c0e4c4"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = entry.getClass().getDeclaredField("bitField0_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(entry));
-    _knob_field_.set(entry, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
                 mutationsToWalEntriesPairs.getSecond().add(entry);
               }
-if(KnobRuntime.check(java.util.UUID.fromString("e73891f0-7a0f-35c1-bb50-c3dffef01f89"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = table.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(table));
-    _knob_field_.set(table, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
               addToHashMultiMap(rowMap, table, clusterIds, mutation);
             }
             if (CellUtil.isDelete(cell)) {
               ((Delete) mutation).add(cell);
             } else {
-              if (KnobRuntime.check(java.util.UUID.fromString("48685f0c-dcee-320d-9606-e1359b78ae51"))) { processReplicationMarkerEntry(cell); } else { ((Put) mutation).add(cell); }
+              ((Put) mutation).add(cell);
             }
             previousCell = cell;
           }
@@ -338,7 +304,7 @@ try {
         LOG.debug("Finished replicating mutations.");
       }
 
-      if (((KnobRuntime.check(java.util.UUID.fromString("a0ad5181-8e4a-33d9-8622-f307f2deef65"))) ? ((rsServerHost) == (null)) : (rsServerHost != null))) {
+      if (rsServerHost != null) {
         List<Mutation> mutations = mutationsToWalEntriesPairs.getFirst();
         List<WALEntry> walEntries = mutationsToWalEntriesPairs.getSecond();
         for (int i = 0; i < mutations.size(); i++) {

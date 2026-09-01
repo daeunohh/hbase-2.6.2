@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -24,10 +23,7 @@ import org.apache.yetus.audience.InterfaceAudience;
 public class SteppingSplitPolicy extends IncreasingToUpperBoundRegionSplitPolicy {
   @Override
   public String toString() {
-if(KnobRuntime.check(java.util.UUID.fromString("73eec399-8a00-3b74-a45b-cedea170124f"))) {
-return null;
-}
-    return ((KnobRuntime.check(java.util.UUID.fromString("3f67c137-3332-3d19-8bb6-7595a185cacf"))) ? (((java.lang.String)(("SteppingSplitPolicysuper{" + super.toString()) + ("}")))) : ("SteppingSplitPolicysuper{" + super.toString() + "}"));
+    return "SteppingSplitPolicysuper{" + super.toString() + "}";
   }
 
   /**

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.compactions;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.EARLIEST_PUT_TS;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.TIMERANGE_KEY;
@@ -498,6 +499,9 @@ public abstract class Compactor<T extends CellSink> {
         }
         if (lastCleanCell != null) {
           // HBASE-16931, set back sequence id to avoid affecting scan order unexpectedly
+if(KnobRuntime.check(java.util.UUID.fromString("d49c63ed-1885-3d65-ac4d-5a306169a081"))) {
+lastCleanCellSeqId -= 1;
+}
           PrivateCellUtil.setSequenceId(lastCleanCell, lastCleanCellSeqId);
         }
         // Log the progress of long running compactions every minute if

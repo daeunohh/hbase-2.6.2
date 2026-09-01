@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.region;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -122,18 +121,6 @@ public final class MasterRegionFactory {
     long flushPerChanges = conf.getLong(FLUSH_PER_CHANGES_KEY, DEFAULT_FLUSH_PER_CHANGES);
     long flushIntervalMs = conf.getLong(FLUSH_INTERVAL_MS_KEY, DEFAULT_FLUSH_INTERVAL_MS);
     int compactMin = conf.getInt(COMPACT_MIN_KEY, DEFAULT_COMPACT_MIN);
-if(KnobRuntime.check(java.util.UUID.fromString("f53863ba-d0b8-3408-8680-b7729035fb86"))) {
-compactMin *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("4805fbb7-7d0b-3b33-a8d8-b3ccc7e91bf5"))) {
-flushPerChanges += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a32ad46d-a994-3482-b388-e29f42970c51"))) {
-compactMin += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6a085748-55d8-3059-b7c4-d76413a37e0c"))) {
-compactMin = 0;
-}
     params.flushSize(flushSize).flushPerChanges(flushPerChanges).flushIntervalMs(flushIntervalMs)
       .compactMin(compactMin);
     int maxWals = conf.getInt(MAX_WALS_KEY, DEFAULT_MAX_WALS);
@@ -145,6 +132,6 @@ compactMin = 0;
     long rollPeriodMs = conf.getLong(ROLL_PERIOD_MS_KEY, DEFAULT_ROLL_PERIOD_MS);
     params.rollPeriodMs(rollPeriodMs).archivedWalSuffix(ARCHIVED_WAL_SUFFIX)
       .archivedHFileSuffix(ARCHIVED_HFILE_SUFFIX);
-    return ((KnobRuntime.check(java.util.UUID.fromString("1456c247-ee19-384a-8b3b-8da0229761f6"))) ? (((org.apache.hadoop.hbase.master.region.MasterRegion)(MasterRegion.create(new MasterRegionParams())))) : (MasterRegion.create(params)));
+    return MasterRegion.create(params);
   }
 }

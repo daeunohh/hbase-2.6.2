@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -68,9 +67,6 @@ public class InitMetaProcedure extends AbstractStateMachineTableProcedure<InitMe
 
   @Override
   public TableOperationType getTableOperationType() {
-if(KnobRuntime.check(java.util.UUID.fromString("e39a88e0-57f7-3bae-a323-5383a130d738"))) {
-return null;
-}
     return TableOperationType.CREATE;
   }
 
@@ -116,14 +112,11 @@ return null;
           throw new UnsupportedOperationException("unhandled state=" + state);
       }
     } catch (IOException e) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("5c8ec073-14ec-3902-a944-2bb8303250a5"))) ? ((retryCounter) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("aebea0d9-1118-38bc-adc3-cefdcb75dadf"))) ? ((retryCounter) == (null)) : (retryCounter == null))))) {
+      if (retryCounter == null) {
         retryCounter = ProcedureUtil.createRetryCounter(env.getMasterConfiguration());
       }
       long backoff = retryCounter.getBackoffTimeAndIncrementAttempts();
       LOG.warn("Failed to init meta, suspend {}secs", backoff, e);
-if(KnobRuntime.check(java.util.UUID.fromString("102e34b1-66c3-34c2-8ea1-040fdabf2824"))) {
-backoff += 1;
-}
       setTimeout(Math.toIntExact(backoff));
       setState(ProcedureProtos.ProcedureState.WAITING_TIMEOUT);
       skipPersistence();

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.security.access;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -432,6 +433,9 @@ public class SnapshotScannerHDFSAclController implements MasterCoprocessor, Mast
               TableName tableName = tPerm.getTableName();
               UserPermission userTablePerm = getUserTablePermission(conf, userName, tableName);
               if (userTablePerm == null || !hdfsAclHelper.containReadAction(userTablePerm)) {
+if(KnobRuntime.check(java.util.UUID.fromString("d38c3b4a-c8b0-37b9-9127-8dd778bfdb60"))) {
+throw new java.io.IOException("Injected exception");
+}
                 removeUserTableHdfsAcl(aclTable, userName, tableName, userPermission);
               }
             }

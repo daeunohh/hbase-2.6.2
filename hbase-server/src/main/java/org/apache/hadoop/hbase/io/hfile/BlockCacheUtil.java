@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -189,7 +190,7 @@ public class BlockCacheUtil {
   public static int validateBlockAddition(Cacheable existing, Cacheable newBlock,
     BlockCacheKey cacheKey) {
     int comparison = compareCacheBlock(existing, newBlock, false);
-    if (comparison != 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("f4c58ecb-c0ea-3a05-95a1-506ad6263f95"))) ? ((comparison) == (0)) : (comparison != 0))) {
       throw new RuntimeException(
         "Cached block contents differ, which should not have happened." + "cacheKey:" + cacheKey);
     }

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.namespace;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import org.apache.hadoop.hbase.HBaseIOException;
@@ -77,6 +78,17 @@ public class NamespaceAuditor {
    * @throws IOException Signals that an I/O exception has occurred.
    */
   public void checkQuotaToUpdateRegion(TableName tName, int regions) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("e3cb67bd-a8f3-300b-a567-bba055a12408"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tName));
+    _knob_field_.set(tName, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     if (stateManager.isInitialized()) {
       stateManager.checkAndUpdateNamespaceRegionCount(tName, regions);
     } else {

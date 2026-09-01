@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -254,17 +253,6 @@ public abstract class ZKProcedureUtil extends ZKListener implements Closeable {
     // If the coordinator was shutdown mid-procedure, then we are going to lose
     // an procedure that was previously started by cleaning out all the previous state. Its much
     // harder to figure out how to keep an procedure going and the subject of HBASE-5487.
-if(KnobRuntime.check(java.util.UUID.fromString("f0a859dc-5276-3a26-bb18-1ecc3c2b3c89"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = watcher.getClass().getDeclaredField("zkSyncTimeout");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(watcher));
-    _knob_field_.set(watcher, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     ZKUtil.deleteChildrenRecursivelyMultiOrSequential(watcher, true, acquiredZnode, reachedZnode,
       abortZnode);
 

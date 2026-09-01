@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.MetricsMaster.convertToProcedureMetrics;
 
@@ -113,15 +112,6 @@ public class MetricsAssignmentManager {
   }
 
   public void updateHoles(int holes) {
-if(KnobRuntime.check(java.util.UUID.fromString("34a7785b-3c15-387e-a177-c2c131da481e"))) {
-return;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("b7d4f363-d014-3d10-a4ee-7ac352682475"))) {
-holes *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("6e309edd-a42a-34d7-87a1-90b3f07a84f1"))) {
-holes /= 2;
-}
     assignmentManagerSource.setHoles(holes);
   }
 
@@ -130,35 +120,20 @@ holes /= 2;
   }
 
   public void updateUnknownServerRegions(int unknownServerRegions) {
-if(KnobRuntime.check(java.util.UUID.fromString("75b33f74-d289-39e0-a8ab-181616c8abb2"))) {
-unknownServerRegions /= 2;
-}
     assignmentManagerSource.setUnknownServerRegions(unknownServerRegions);
   }
 
   public void updateEmptyRegionInfoRegions(int emptyRegionInfoRegions) {
-if(KnobRuntime.check(java.util.UUID.fromString("3b981fa1-be1f-3d17-86b3-7d9f8aee2c26"))) {
-emptyRegionInfoRegions *= 2;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("214ce768-2911-3919-8c3e-dc8ddaff1bbc"))) {
-emptyRegionInfoRegions = 0;
-}
     assignmentManagerSource.setEmptyRegionInfoRegions(emptyRegionInfoRegions);
   }
 
   /** Returns Set of common metrics for assign procedure */
   public ProcedureMetrics getAssignProcMetrics() {
-if(KnobRuntime.check(java.util.UUID.fromString("e9a36078-16e5-3fc3-90e6-3ec272dfbea9"))) {
-return null;
-}
     return assignProcMetrics;
   }
 
   /** Returns Set of common metrics for unassign procedure */
   public ProcedureMetrics getUnassignProcMetrics() {
-if(KnobRuntime.check(java.util.UUID.fromString("dff79e8a-1c33-3d9d-947a-94281cc0921e"))) {
-return null;
-}
     return unassignProcMetrics;
   }
 

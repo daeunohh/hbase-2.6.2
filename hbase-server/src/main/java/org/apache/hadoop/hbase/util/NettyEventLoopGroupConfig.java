@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.ThreadFactory;
 import org.apache.hadoop.conf.Configuration;
@@ -70,7 +69,7 @@ public class NettyEventLoopGroupConfig {
       conf.getInt("hbase.netty.eventloop.rpcserver.thread.count", DEFAULT_NETTY_WORKER_COUNT));
     ThreadFactory eventLoopThreadFactory =
       new DefaultThreadFactory(threadPoolName, true, Thread.MAX_PRIORITY);
-    if (((KnobRuntime.check(java.util.UUID.fromString("20670115-b979-3926-88ef-f9af1506d63b"))) ? (!useEpoll) : (useEpoll))) {
+    if (useEpoll) {
       group = new EpollEventLoopGroup(workerCount, eventLoopThreadFactory);
       serverChannelClass = EpollServerSocketChannel.class;
       clientChannelClass = EpollSocketChannel.class;

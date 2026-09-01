@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
@@ -88,7 +87,7 @@ public class JvmPauseMonitor {
     shouldRun = false;
     monitorThread.interrupt();
     try {
-      if (KnobRuntime.check(java.util.UUID.fromString("d4e807d5-46f3-3aab-b324-d21b573808f3"))) { monitorThread.start(); } else { monitorThread.join(); }
+      monitorThread.join();
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
@@ -154,7 +153,7 @@ public class JvmPauseMonitor {
         long extraSleepTime = sw.elapsed(TimeUnit.MILLISECONDS) - SLEEP_INTERVAL_MS;
         Map<String, GcTimes> gcTimesAfterSleep = getGcTimes();
 
-        if (((KnobRuntime.check(java.util.UUID.fromString("baf3bd16-f3d2-36b2-a835-1f3972b6c099"))) ? ((extraSleepTime) >= (infoThresholdMs)) : (extraSleepTime > infoThresholdMs))) {
+        if (extraSleepTime > infoThresholdMs) {
           Set<String> gcBeanNames =
             Sets.intersection(gcTimesAfterSleep.keySet(), gcTimesBeforeSleep.keySet());
           List<String> gcDiffs = Lists.newArrayList();

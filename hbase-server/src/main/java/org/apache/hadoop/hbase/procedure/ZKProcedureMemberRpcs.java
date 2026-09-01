@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -132,12 +131,12 @@ public class ZKProcedureMemberRpcs implements ProcedureMemberRpcs {
   }
 
   private void watchForAbortedProcedures() {
-    if (KnobRuntime.check(java.util.UUID.fromString("a7e65e1b-b446-39e0-85d3-be724e7c8376"))) { abort(("Checking for aborted procedures on node: '") + (zkController.getAbortZnode())); } else if (KnobRuntime.check(java.util.UUID.fromString("4422453c-1c1e-3a76-93dc-f776de28c0b8"))) { receivedReachedGlobalBarrier("Checking for aborted procedures on node: '" + zkController.getAbortZnode()); } else if (KnobRuntime.check(java.util.UUID.fromString("6dc58028-fc4f-3dde-aa0a-9bc46d8d99e3"))) { abort("Checking for aborted procedures on node: '"); } else if (KnobRuntime.check(java.util.UUID.fromString("269d45ca-b8eb-3abd-b6c1-d20d3e553801"))) { abort("'"); } else { LOG.debug("Checking for aborted procedures on node: '" + zkController.getAbortZnode() + "'"); }
+    LOG.debug("Checking for aborted procedures on node: '" + zkController.getAbortZnode() + "'");
     try {
       // this is the list of the currently aborted procedues
       List<String> children = ZKUtil.listChildrenAndWatchForNewChildren(zkController.getWatcher(),
         zkController.getAbortZnode());
-      if (((KnobRuntime.check(java.util.UUID.fromString("48e1b98e-c1e7-3509-aa3a-ddb93a279004"))) ? (((children) != (null)) && (children.isEmpty())) : (children == null || children.isEmpty()))) {
+      if (children == null || children.isEmpty()) {
         return;
       }
       for (String node : children) {
@@ -355,10 +354,10 @@ public class ZKProcedureMemberRpcs implements ProcedureMemberRpcs {
 
   @Override
   public void start(final String memberName, final ProcedureMember listener) {
-    if (KnobRuntime.check(java.util.UUID.fromString("73008bdc-5b29-3ba9-bfdc-2541c25e1a1c"))) { LOG.info(("Starting procedure member '") + (memberName)); } else if (KnobRuntime.check(java.util.UUID.fromString("114e8ff7-5d7d-3b27-b194-6fe25b96dc53"))) { LOG.info(("Starting procedure member '") + ("'")); } else if (KnobRuntime.check(java.util.UUID.fromString("511156bd-e6d0-3737-a892-0df53910cd28"))) { LOG.info("Starting procedure member '"); } else if (KnobRuntime.check(java.util.UUID.fromString("9fcb6487-b982-3689-93fb-384c42bd76c2"))) { abort("Starting procedure member '" + memberName); } else { LOG.debug("Starting procedure member '" + memberName + "'"); }
+    LOG.debug("Starting procedure member '" + memberName + "'");
     this.member = listener;
     this.memberName = memberName;
-    if (KnobRuntime.check(java.util.UUID.fromString("bd1aa81d-96cf-3993-a474-d89edf310759"))) { waitForNewProcedures(); } else { watchForAbortedProcedures(); }
+    watchForAbortedProcedures();
     waitForNewProcedures();
   }
 

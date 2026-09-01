@@ -433,6 +433,17 @@ public class MasterCoprocessorHost
   }
 
   public void postTruncateTable(final TableName tableName) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("ca0a5eee-3f9e-3777-820f-fff2c5a2fb83"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(tableName));
+    _knob_field_.set(tableName, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {
@@ -464,17 +475,6 @@ public class MasterCoprocessorHost
   public TableDescriptor preModifyTable(final TableName tableName,
     final TableDescriptor currentDescriptor, final TableDescriptor newDescriptor)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("b4251eff-5b7a-3999-ae04-896687edc9b3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (coprocEnvironments.isEmpty()) {
       return newDescriptor;
     }
@@ -1176,6 +1176,17 @@ try {
 
   public void preCloneSnapshot(final SnapshotDescription snapshot,
     final TableDescriptor hTableDescriptor) throws IOException {
+if(KnobRuntime.check(java.util.UUID.fromString("0cac3bae-cace-3591-b480-ad1b9a33fa73"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(snapshot));
+    _knob_field_.set(snapshot, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     execOperation(coprocEnvironments.isEmpty() ? null : new MasterObserverOperation() {
       @Override
       public void call(MasterObserver observer) throws IOException {

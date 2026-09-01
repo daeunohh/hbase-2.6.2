@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static java.util.Objects.requireNonNull;
 
@@ -373,17 +372,6 @@ public class LruBlockCache implements FirstLevelBlockCache {
     if (buf instanceof HFileBlock) {
       HFileBlock blk = ((HFileBlock) buf);
       if (blk.isSharedMem()) {
-if(KnobRuntime.check(java.util.UUID.fromString("c78f7e51-94b6-3f7a-b7bb-f25fa0fe5001"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = blk.getClass().getDeclaredField("onDiskSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(blk));
-    _knob_field_.set(blk, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         return HFileBlock.deepCloneOnHeap(blk);
       }
     }
@@ -417,13 +405,13 @@ try {
     }
 
     LruCachedBlock cb = map.get(cacheKey);
-    if (((KnobRuntime.check(java.util.UUID.fromString("131526b5-0e08-3d03-b64c-10c938c13f42"))) ? (!BlockCacheUtil.shouldReplaceExistingCacheBlock(this, cacheKey, buf)) : (cb != null && !BlockCacheUtil.shouldReplaceExistingCacheBlock(this, cacheKey, buf)))) {
+    if (cb != null && !BlockCacheUtil.shouldReplaceExistingCacheBlock(this, cacheKey, buf)) {
       return;
     }
     long currentSize = size.get();
     long currentAcceptableSize = acceptableSize();
     long hardLimitSize = (long) (hardCapacityLimitFactor * currentAcceptableSize);
-    if (((KnobRuntime.check(java.util.UUID.fromString("4d30d826-ddf4-36a7-b33d-3a83f1fa2c27"))) ? ((currentSize) >= (hardLimitSize)) : (currentSize >= hardLimitSize))) {
+    if (currentSize >= hardLimitSize) {
       stats.failInsert();
       if (LOG.isTraceEnabled()) {
         LOG.trace("LruBlockCache current size " + StringUtils.byteDesc(currentSize)
@@ -445,7 +433,7 @@ try {
     if (buf.getBlockType().isBloom()) {
       bloomBlockElements.increment();
     } else if (buf.getBlockType().isIndex()) {
-      if (KnobRuntime.check(java.util.UUID.fromString("96bc61da-c957-3aab-bbe8-9bb6ea766062"))) { runEviction(); } else { indexBlockElements.increment(); }
+      indexBlockElements.increment();
     } else if (buf.getBlockType().isData()) {
       dataBlockElements.increment();
     }
@@ -503,7 +491,7 @@ try {
       heapsize *= -1;
     }
     if (bt != null) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("ac34cd31-89b7-3880-8b00-737a5f232939"))) ? (bt.isData()) : (bt.isBloom()))) {
+      if (bt.isBloom()) {
         bloomBlockSize.add(heapsize);
       } else if (bt.isIndex()) {
         indexBlockSize.add(heapsize);
@@ -574,7 +562,7 @@ try {
   @Override
   public boolean evictBlock(BlockCacheKey cacheKey) {
     LruCachedBlock cb = map.get(cacheKey);
-    return ((KnobRuntime.check(java.util.UUID.fromString("1b3399a9-f5c7-3cdd-9590-ee70ad3ab5c1"))) ? ((cb != null) && ((updateSizeMetrics(cb, false)) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("3f1e58ec-dabf-31e3-a2d8-78a03391c88b"))) ? (((cb) != (null)) || ((evictBlock(cb, false)) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("452ccd2b-21ed-3c6a-9da2-1d4159186660"))) ? ((cb != null) || (evictBlock(cb, false) > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("c43f4258-4746-38e3-92eb-1372a2eab68f"))) ? ((cb != null) || ((updateSizeMetrics(cb, false)) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("5ebe6098-6d62-3d36-b13b-2f78352ba2d6"))) ? (((cb) != (null)) || ((updateSizeMetrics(cb, false)) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("eab8e918-ca51-386f-aba0-5be4143708d6"))) ? ((cb != null) && ((updateSizeMetrics(cb, false)) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("0b4ca773-bfd5-3e0b-ab74-06e7f7ac3215"))) ? (((cb) == (null)) || (evictBlock(cb, false) > 0)) : (((KnobRuntime.check(java.util.UUID.fromString("4f1fb0ea-e845-3c89-b6d3-588bfc94894b"))) ? (((cb) == (null)) && ((evictBlock(cb, false)) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8623dd4a-06ee-3782-a43a-9cd000bd3871"))) ? (((cb) == (null)) || ((evictBlock(cb, false)) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("b607e591-7204-3126-8776-63a0f97ab15a"))) ? (((cb) == (null)) && ((updateSizeMetrics(cb, false)) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("6c1b24e7-426a-3641-b03b-4c2e147aa6cd"))) ? ((evictBlock(cb, false)) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("0491da06-e9c2-39bb-9962-67f6ab913799"))) ? (((cb) != (null)) || ((evictBlock(cb, false)) != (0))) : (cb != null && evictBlock(cb, false) > 0))))))))))))))))))))))));
+    return cb != null && evictBlock(cb, false) > 0;
   }
 
   /**

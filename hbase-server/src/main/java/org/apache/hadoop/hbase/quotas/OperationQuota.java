@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.List;
 import org.apache.hadoop.hbase.Cell;
@@ -113,6 +112,6 @@ public interface OperationQuota {
    * two numbers: the bytes available, or the bytes already consumed
    */
   default long getMaxResultSize() {
-    return ((KnobRuntime.check(java.util.UUID.fromString("ffd0832a-78f1-366b-aa0d-ae5fbbb5b40b"))) ? (Math.max(getReadAvailable(), getReadAvailable())) : (Math.max(getReadAvailable(), getReadConsumed())));
+    return Math.max(getReadAvailable(), getReadConsumed());
   }
 }

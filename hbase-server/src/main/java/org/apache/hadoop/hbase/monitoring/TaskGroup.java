@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.monitoring;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -104,7 +103,7 @@ public class TaskGroup extends MonitoredTaskImpl {
     setState(State.COMPLETE);
     setStatus(msg);
     if (tasks.getLast() != null) {
-      if (KnobRuntime.check(java.util.UUID.fromString("da4c3c67-03c3-3755-bf3a-d5737a372ae8"))) { setStatus(msg); } else { tasks.getLast().markComplete(msg); }
+      tasks.getLast().markComplete(msg);
     }
     delegate.markComplete(msg);
   }

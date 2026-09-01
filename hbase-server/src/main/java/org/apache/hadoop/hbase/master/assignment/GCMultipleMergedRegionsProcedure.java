@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.List;
@@ -102,7 +103,7 @@ public class GCMultipleMergedRegionsProcedure
           // region. We can skip duplicate GCMultipleMergedRegionsProcedure while previous finished
           List<RegionInfo> parents =
             MetaTableAccessor.getMergeRegions(env.getMasterServices().getConnection(), mergedChild);
-          if (parents == null || parents.isEmpty()) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("af16cbd0-2b2b-3929-9b03-b2a2f84b679e"))) ? (((parents) != (null)) && (parents.isEmpty())) : (parents == null || parents.isEmpty()))) {
             LOG.info("{} mergeXXX qualifiers have ALL been deleted",
               mergedChild.getShortNameToLog());
             return Flow.NO_MORE_STATE;

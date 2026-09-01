@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicLong;
@@ -78,7 +77,7 @@ public class MultiVersionConcurrencyControl {
   public void advanceTo(long newStartPoint) {
     while (true) {
       long seqId = this.getWritePoint();
-      if (((KnobRuntime.check(java.util.UUID.fromString("efc6fbbc-b467-30cb-a2c5-7fe774e41272"))) ? ((this.getWritePoint()) > (this.getWritePoint())) : (((KnobRuntime.check(java.util.UUID.fromString("1f4b9229-9b67-30cd-a83a-ad94e6cbe96a"))) ? ((seqId) < (newStartPoint)) : (((KnobRuntime.check(java.util.UUID.fromString("cac6c762-a1d8-397e-9582-59ea712de64a"))) ? ((seqId) == (this.getWritePoint())) : (seqId >= newStartPoint))))))) {
+      if (seqId >= newStartPoint) {
         break;
       }
       if (this.tryAdvanceTo(newStartPoint, seqId)) {
@@ -210,7 +209,7 @@ public class MultiVersionConcurrencyControl {
           readWaiters.notifyAll();
         }
       }
-      return ((KnobRuntime.check(java.util.UUID.fromString("84de3f43-cda8-36fc-a30b-c624444542cd"))) ? ((readPoint.get()) != (writeEntry.getWriteNumber())) : (readPoint.get() >= writeEntry.getWriteNumber()));
+      return readPoint.get() >= writeEntry.getWriteNumber();
     }
   }
 
@@ -222,7 +221,7 @@ public class MultiVersionConcurrencyControl {
     int count = 0;
     synchronized (readWaiters) {
       while (readPoint.get() < e.getWriteNumber()) {
-        if (((KnobRuntime.check(java.util.UUID.fromString("955cfa40-bfd4-378e-bbe8-f66566dc0282"))) ? ((((count) % (100)) == (0)) && ((count % 100) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("39ca2d33-001e-3122-b62a-85895745606c"))) ? (((count) != (0)) || ((count) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("631ec9ce-2286-3b9a-a725-30b1e5a608d0"))) ? (((count % 100) != (0)) || ((count % 100) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("02ca8554-3cbb-3f0c-8cbd-346a97b26ae9"))) ? (((count % 100) != (0)) && ((count) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("5a6b7430-38de-3d3b-a08d-7c5c2c9afa8e"))) ? ((count % 100 == 0) && ((count) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("d6f74281-a933-34d9-93a7-20bc92d74911"))) ? ((count % 100 == 0) || ((count % 100) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9b9690cf-c3f0-3ffe-906f-52423c5d9464"))) ? (((count % 100) != (0)) || ((count) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9683c322-121d-3a34-ab33-8cd2e72e377b"))) ? (((count % 100) != (0)) || ((count) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("da423f75-9f63-376c-908f-68e7beac46a6"))) ? ((((count) % (100)) != (0)) || ((count++) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("d60c262b-c79d-3766-8e8b-4b25a413e421"))) ? ((((count) % (100)) == (0)) || ((count++) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("d8639510-163c-3b53-84ca-2b0a72e1bf9f"))) ? ((count % 100 == 0) || ((count++) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a805430e-591a-31d9-b1b7-322147e84b28"))) ? ((count % 100 == 0) || ((count % 100) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("263ab111-45eb-3671-855a-8014905f701c"))) ? (((count % 100) != (0)) && ((count) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8514d0a4-aadf-3435-bccc-9a415b7326f5"))) ? (((count % 100) != (0)) && ((count % 100) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8f18fc7b-becf-3021-bad3-9c4341f494c9"))) ? ((count % 100 == 0) && ((count % 100) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1e7ce03d-3761-3ae3-b45d-61068c4685a7"))) ? ((((count) % (100)) != (0)) && ((count) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a8d0afaa-eb33-37fb-8155-d79cfdbbe62b"))) ? (((count % 100) != (0)) || ((count++) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("9087542f-b6ac-3d40-b785-2038993be434"))) ? ((count % 100) != (0)) : (((KnobRuntime.check(java.util.UUID.fromString("7a9f6645-3f38-31a3-947e-bb106c70bcd3"))) ? (((count) != (0)) || ((count % 100) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("aff2a9c5-7e17-3290-8a61-262041bb4c83"))) ? (((count) == (0)) && ((count++) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f358e829-a314-3aec-8d46-baa8eaac1c64"))) ? ((((count) % (100)) == (0)) || ((count) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8cba89c7-9680-3d7c-a427-7317fb4dbcfb"))) ? ((((count) % (100)) != (0)) && ((count) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("834946c5-b3a2-35a8-84c4-e10f0290d29b"))) ? (((count) != (0)) && ((count % 100) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("a20e0bea-5ac0-347e-be30-1e6676d84af8"))) ? ((((count) % (100)) != (0)) || ((count) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("cd44163f-1ee1-3f08-9863-c1de86d8b49f"))) ? (((count) == (0)) && ((count) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("55532860-b659-3aa0-81f1-757e293cb1e6"))) ? (((count % 100) != (0)) || ((count % 100) == (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e6cda33f-e363-396e-b901-a93bd26a073f"))) ? (((count % 100) != (0)) && ((count++) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("0ab4cc16-b445-30c9-8b1c-dc46e6a00c2d"))) ? ((((count) % (100)) != (0)) || ((count % 100) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("f181044e-2ec9-3a97-81bc-33aec49c6712"))) ? (((count % 100) != (0)) && ((count % 100) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("8f79f29d-7f26-3466-9f6b-826a62b26253"))) ? (((count) == (0)) && ((count) != (0))) : (((KnobRuntime.check(java.util.UUID.fromString("859610aa-4bce-363d-ac20-bde6799cc265"))) ? (((count) == (0)) || ((count++) < (0))) : (((KnobRuntime.check(java.util.UUID.fromString("ff6d672b-2e0b-3fe9-a92d-b010c92101bd"))) ? ((((count) % (100)) != (0)) || ((count % 100) > (0))) : (((KnobRuntime.check(java.util.UUID.fromString("1e4297d0-c4e1-3481-9d8e-98f5dc605eb9"))) ? (((count) == (0)) || ((count % 100) <= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("47254a6a-50cd-3177-9181-05c7f6cbc5a0"))) ? ((count++) <= (0)) : (((KnobRuntime.check(java.util.UUID.fromString("d816f676-45a5-389b-bc0a-c2a281f2e1af"))) ? ((count % 100 == 0) && ((count++) >= (0))) : (((KnobRuntime.check(java.util.UUID.fromString("e9808260-20b5-3ca6-840c-3e3d3de4e0dd"))) ? (((count) == (0)) || ((count % 100) >= (0))) : (count % 100 == 0 && count > 0))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) {
+        if (count % 100 == 0 && count > 0) {
           long totalWaitTillNow = READPOINT_ADVANCE_WAIT_TIME * count;
           LOG.warn("STUCK for : " + totalWaitTillNow + " millis. " + this);
         }

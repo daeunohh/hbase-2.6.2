@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -58,9 +57,6 @@ class ClusterSchemaServiceImpl extends AbstractService implements ClusterSchemaS
 
   @Override
   protected synchronized void doStart() {
-if(KnobRuntime.check(java.util.UUID.fromString("2b76448c-7785-33cb-aff9-323303b78cde"))) {
-return;
-}
     try {
       notifyStarted();
       this.tableNamespaceManager.start();

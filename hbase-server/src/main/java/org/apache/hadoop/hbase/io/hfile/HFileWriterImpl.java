@@ -222,31 +222,6 @@ public class HFileWriterImpl implements HFile.Writer {
    */
   protected final void writeFileInfo(FixedFileTrailer trailer, DataOutputStream out)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("22870d95-1207-334d-a3a3-314639776e01"))) {
-throw new java.io.IOException("Injected exception");
-}
-if(KnobRuntime.check(java.util.UUID.fromString("1f69b51e-3055-3d80-a72f-596f24d974cc"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("totalUncompressedBytes");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("a9dbf574-e7d6-3388-b2b0-a0aa1af710a5"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("minorVersion");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     trailer.setFileInfoOffset(outputStream.getPos());
     finishFileInfo();
     long startTime = EnvironmentEdgeManager.currentTime();
@@ -274,7 +249,7 @@ try {
     if (lastCell != null) {
       int keyComp = PrivateCellUtil.compareKeyIgnoresMvcc(this.hFileContext.getCellComparator(),
         lastCell, cell);
-      if (((KnobRuntime.check(java.util.UUID.fromString("e8aa8f12-1d77-343c-8c34-a95c167878dd"))) ? ((keyComp) >= (0)) : (keyComp > 0))) {
+      if (keyComp > 0) {
         String message = getLexicalErrorMessage(cell);
         throw new IOException(message);
       } else if (keyComp == 0) {
@@ -365,7 +340,7 @@ try {
         || blockWriter.blockSizeWritten() >= hFileContext.getBlocksize();
     }
     shouldFinishBlock &= blockWriter.checkBoundariesWithPredicate();
-    if (((KnobRuntime.check(java.util.UUID.fromString("adf033b7-f83c-3497-aa00-45d8c4dd81f6"))) ? (false) : (((KnobRuntime.check(java.util.UUID.fromString("03ab9647-5aa1-3df6-ae5c-a7dfb73b2642"))) ? (!shouldFinishBlock) : (shouldFinishBlock))))) {
+    if (shouldFinishBlock) {
       finishBlock();
       writeInlineBlocks(false);
       newBlock();
@@ -388,9 +363,6 @@ try {
     int onDiskSize = blockWriter.getOnDiskSizeWithHeader();
     Cell indexEntry =
       getMidpoint(this.hFileContext.getCellComparator(), lastCellOfPreviousBlock, firstCellInBlock);
-if(KnobRuntime.check(java.util.UUID.fromString("c53d073a-3d32-3479-834a-487e30227108"))) {
-onDiskSize = -1;
-}
     dataBlockIndexWriter.addEntry(PrivateCellUtil.getCellKeySerializedAsKeyValueKey(indexEntry),
       lastDataBlockOffset, onDiskSize);
     totalUncompressedBytes += blockWriter.getUncompressedSizeWithHeader();
@@ -411,7 +383,7 @@ onDiskSize = -1;
     if (right == null) {
       throw new IllegalArgumentException("right cell can not be null");
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("d327cf27-1edd-3f0c-bb0c-68ec579e7d1a"))) ? ((left) != (null)) : (left == null))) {
+    if (left == null) {
       return right;
     }
     // If Cells from meta table, don't mess around. meta table Cells have schema
@@ -477,7 +449,7 @@ onDiskSize = -1;
     final int leftLength, final byte[] rightArray, final int rightOffset, final int rightLength) {
     int minLength = leftLength < rightLength ? leftLength : rightLength;
     int diffIdx = 0;
-    for (; diffIdx < minLength; diffIdx++) {
+    for (; ((KnobRuntime.check(java.util.UUID.fromString("7fcd528b-5012-3984-a720-193082372d6f"))) ? ((diffIdx) != (0xff)) : (diffIdx < minLength)); diffIdx++) {
       byte leftByte = leftArray[leftOffset + diffIdx];
       byte rightByte = rightArray[rightOffset + diffIdx];
       if ((leftByte & 0xff) > (rightByte & 0xff)) {
@@ -583,96 +555,8 @@ onDiskSize = -1;
    */
   private void doCacheOnWrite(long offset) {
     cacheConf.getBlockCache().ifPresent(cache -> {
-if(KnobRuntime.check(java.util.UUID.fromString("b8bf6935-2a8b-3243-9421-6a5ed2c0adbb"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheDataOnRead");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(cacheConf);
-    _knob_field_.set(cacheConf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bbb88179-ea83-37f1-a0dd-60608fd41466"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheConf.getClass().getDeclaredField("cacheCompactedDataOnWrite");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(cacheConf);
-    _knob_field_.set(cacheConf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       HFileBlock cacheFormatBlock = blockWriter.getBlockForCaching(cacheConf);
       try {
-if(KnobRuntime.check(java.util.UUID.fromString("ec9e31ef-871c-3930-96a4-97dff91d7f58"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("dfb68acf-3459-30c5-88e2-76ec455ecfea"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("026a05a1-d939-3602-a552-8a97fa96c8f7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("190c81c4-9236-3c76-aeda-3a25f2dc75ac"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("uncompressedSizeWithoutHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("bb275e8b-fc71-34fb-ad30-b544ad9a5afe"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("22605670-dd46-3165-827a-bfc2cbd3034d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = cacheFormatBlock.getClass().getDeclaredField("totalChecksumBytes");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(cacheFormatBlock));
-    _knob_field_.set(cacheFormatBlock, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         cache.cacheBlock(new BlockCacheKey(name, offset, true, cacheFormatBlock.getBlockType()),
           cacheFormatBlock, cacheConf.isInMemory(), true);
       } finally {
@@ -728,10 +612,7 @@ try {
     // Write out the end of the data blocks, then write meta data blocks.
     // followed by fileinfo, data block index and meta block index.
 
-if(KnobRuntime.check(java.util.UUID.fromString("55d87efd-102b-3f48-9f18-117923dbf936"))) {
-throw new java.io.IOException("Injected exception");
-}
-    if (KnobRuntime.check(java.util.UUID.fromString("765e3f40-404d-37a6-b044-d903b1b20cfe"))) { newBlock(); } else { finishBlock(); }
+    finishBlock();
     writeInlineBlocks(true);
 
     FixedFileTrailer trailer = new FixedFileTrailer(getMajorVersion(), getMinorVersion());
@@ -817,12 +698,12 @@ throw new java.io.IOException("Injected exception");
   }
 
   private void addBloomFilter(final BloomFilterWriter bfw, final BlockType blockType) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("8122f6e6-fcf6-3142-80e9-ea5e17860304"))) ? ((EnvironmentEdgeManager.currentTime()) == (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3baa84b4-84c3-334d-ad70-777726483533"))) ? ((EnvironmentEdgeManager.currentTime()) > (0)) : (bfw.getKeyCount() <= 0))))) {
+    if (bfw.getKeyCount() <= 0) {
       return;
     }
 
     if (
-      ((KnobRuntime.check(java.util.UUID.fromString("92715346-61c1-3c58-aa34-f5e85f1702e3"))) ? (((blockType) != (BlockType.GENERAL_BLOOM_META)) && (blockType != BlockType.DELETE_FAMILY_BLOOM_META)) : (((KnobRuntime.check(java.util.UUID.fromString("3bce3e11-a48b-3c86-8068-46b3d7f99ea9"))) ? (((blockType) == (BlockType.GENERAL_BLOOM_META)) && ((blockType) != (BlockType.DELETE_FAMILY_BLOOM_META))) : (((KnobRuntime.check(java.util.UUID.fromString("2c0dd94d-8fc1-33fc-b6a1-8ce67ba8d5a8"))) ? (((blockType) != (BlockType.GENERAL_BLOOM_META)) || ((blockType) == (BlockType.DELETE_FAMILY_BLOOM_META))) : (blockType != BlockType.GENERAL_BLOOM_META && blockType != BlockType.DELETE_FAMILY_BLOOM_META))))))
+      blockType != BlockType.GENERAL_BLOOM_META && blockType != BlockType.DELETE_FAMILY_BLOOM_META
     ) {
       throw new RuntimeException("Block Type: " + blockType.toString() + "is not supported");
     }
@@ -868,7 +749,7 @@ throw new java.io.IOException("Injected exception");
 
     totalKeyLength += PrivateCellUtil.estimatedSerializedSizeOfKey(cell);
     totalValueLength += cell.getValueLength();
-    if (((KnobRuntime.check(java.util.UUID.fromString("1bf77d3f-5f91-3839-a248-57c87fc476f6"))) ? ((lenOfBiggestCell) >= (PrivateCellUtil.estimatedSerializedSizeOfKey(cell))) : (lenOfBiggestCell < PrivateCellUtil.estimatedSerializedSizeOf(cell)))) {
+    if (lenOfBiggestCell < PrivateCellUtil.estimatedSerializedSizeOf(cell)) {
       lenOfBiggestCell = PrivateCellUtil.estimatedSerializedSizeOf(cell);
       keyOfBiggestCell = PrivateCellUtil.getCellKeySerializedAsKeyValueKey(cell);
     }
@@ -954,69 +835,11 @@ throw new java.io.IOException("Injected exception");
   }
 
   protected void finishClose(FixedFileTrailer trailer) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("85dec71f-0f60-3bf4-8ff0-bc78ddf410a9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("metaIndexCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("8d2e6439-d531-34a1-8d73-844c1e17f853"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("majorVersion");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("84fd3789-4579-3915-adb1-619855c8b0b7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("firstDataBlockOffset");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("48d9c090-23ee-329c-876e-7ab84cf7e127"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("metaIndexCount");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0157959c-8a07-3ae9-9932-59ac0b29f29d"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = trailer.getClass().getDeclaredField("entryCount");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(trailer));
-    _knob_field_.set(trailer, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     // Write out encryption metadata before finalizing if we have a valid crypto context
     Encryption.Context cryptoContext = hFileContext.getEncryptionContext();
     if (cryptoContext != Encryption.Context.NONE) {
       // Wrap the context's key and write it as the encryption metadata, the wrapper includes
       // all information needed for decryption
-if(KnobRuntime.check(java.util.UUID.fromString("d5b13b40-2b1b-3db2-9607-d0b358408f65"))) {
-throw new java.io.IOException("Injected exception");
-}
       trailer.setEncryptionKey(EncryptionUtil.wrapKey(
         cryptoContext.getConf(), cryptoContext.getConf()
           .get(HConstants.CRYPTO_MASTERKEY_NAME_CONF_KEY, User.getCurrent().getShortName()),
@@ -1029,11 +852,8 @@ throw new java.io.IOException("Injected exception");
     trailer.setCompressionCodec(hFileContext.getCompression());
 
     long startTime = EnvironmentEdgeManager.currentTime();
-if(KnobRuntime.check(java.util.UUID.fromString("637c9b17-c238-3a60-9a5d-7431a6f0216f"))) {
-throw new java.io.IOException("Injected exception");
-}
     trailer.serialize(outputStream);
-    if (KnobRuntime.check(java.util.UUID.fromString("18a1793c-e793-3d9c-b9c4-77d580e8ebda"))) { HFile.updateWriteLatency(EnvironmentEdgeManager.currentTime()); } else { HFile.updateWriteLatency(EnvironmentEdgeManager.currentTime() - startTime); }
+    HFile.updateWriteLatency(EnvironmentEdgeManager.currentTime() - startTime);
 
     if (closeOutputStream) {
       outputStream.close();

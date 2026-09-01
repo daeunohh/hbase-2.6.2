@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -42,28 +41,6 @@ class TableQueue extends Queue<TableName> {
 
   @Override
   public boolean requireExclusiveLock(Procedure<?> proc) {
-if(KnobRuntime.check(java.util.UUID.fromString("36e02587-d170-3321-acfc-da7cfc627ee8"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("submittedTime");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(proc));
-    _knob_field_.set(proc, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
-if(KnobRuntime.check(java.util.UUID.fromString("3eeedf07-aa9e-3c90-bdac-15a890ca8519"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("bypass");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(proc);
-    _knob_field_.set(proc, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return requireTableExclusiveLock((TableProcedureInterface) proc);
   }
 

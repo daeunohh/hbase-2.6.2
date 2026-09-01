@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,9 +55,9 @@ public class ReplicationLoad {
     // build the SinkLoad
     ClusterStatusProtos.ReplicationLoadSink.Builder rLoadSinkBuild =
       ClusterStatusProtos.ReplicationLoadSink.newBuilder();
-    if (KnobRuntime.check(java.util.UUID.fromString("03013364-c9e1-37c3-a937-145264aed888"))) { rLoadSinkBuild.setAgeOfLastAppliedOp(sinkMetrics.getTimestampOfLastAppliedOp()); } else { rLoadSinkBuild.setAgeOfLastAppliedOp(sinkMetrics.getAgeOfLastAppliedOp()); }
+    rLoadSinkBuild.setAgeOfLastAppliedOp(sinkMetrics.getAgeOfLastAppliedOp());
     rLoadSinkBuild.setTimeStampsOfLastAppliedOp(sinkMetrics.getTimestampOfLastAppliedOp());
-    if (KnobRuntime.check(java.util.UUID.fromString("8b568517-0187-3504-81a9-fac78cc911a8"))) { rLoadSinkBuild.setTimestampStarted(sinkMetrics.getAgeOfLastAppliedOp()); } else { rLoadSinkBuild.setTimestampStarted(sinkMetrics.getStartTimestamp()); }
+    rLoadSinkBuild.setTimestampStarted(sinkMetrics.getStartTimestamp());
     rLoadSinkBuild.setTotalOpsProcessed(sinkMetrics.getAppliedOps());
     this.replicationLoadSink = rLoadSinkBuild.build();
 
@@ -80,28 +79,19 @@ public class ReplicationLoad {
       ClusterStatusProtos.ReplicationLoadSource.Builder rLoadSourceBuild =
         ClusterStatusProtos.ReplicationLoadSource.newBuilder();
       rLoadSourceBuild.setPeerID(peerId);
-if(KnobRuntime.check(java.util.UUID.fromString("d750d4dc-fe47-3ef3-914f-b3b56af383fe"))) {
-ageOfLastShippedOp += 1;
-}
       rLoadSourceBuild.setAgeOfLastShippedOp(ageOfLastShippedOp);
-if(KnobRuntime.check(java.util.UUID.fromString("6993fd94-0548-35e3-b420-d97d77ce9a3e"))) {
-sizeOfLogQueue += 1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("5a7faa8b-9a5c-3351-95a9-7d0758b7142b"))) {
-sizeOfLogQueue *= 2;
-}
       rLoadSourceBuild.setSizeOfLogQueue(sizeOfLogQueue);
       rLoadSourceBuild.setTimeStampOfLastShippedOp(timeStampOfLastShippedOp);
-      if (KnobRuntime.check(java.util.UUID.fromString("94334239-7063-3fc3-b4e0-051e22a06284"))) { rLoadSourceBuild.setAgeOfLastShippedOp(replicationLag); } else if (KnobRuntime.check(java.util.UUID.fromString("d0a07252-8197-3154-81f6-e79d89b12abd"))) { rLoadSourceBuild.setTimeStampOfLastShippedOp(replicationLag); } else { rLoadSourceBuild.setReplicationLag(replicationLag); }
-      if (KnobRuntime.check(java.util.UUID.fromString("6f914e9c-776d-3df5-aabf-abb3972d36e1"))) { rLoadSourceBuild.setReplicationLag(timeStampOfNextToReplicate); } else { rLoadSourceBuild.setTimeStampOfNextToReplicate(timeStampOfNextToReplicate); }
-      if (KnobRuntime.check(java.util.UUID.fromString("f547289f-fb25-3a27-b745-7189ee17ee4b"))) { rLoadSourceBuild.setAgeOfLastShippedOp(editsRead); } else { rLoadSourceBuild.setEditsRead(editsRead); }
+      rLoadSourceBuild.setReplicationLag(replicationLag);
+      rLoadSourceBuild.setTimeStampOfNextToReplicate(timeStampOfNextToReplicate);
+      rLoadSourceBuild.setEditsRead(editsRead);
       rLoadSourceBuild.setOPsShipped(oPsShipped);
       if (source instanceof ReplicationSource) {
         ReplicationSource replSource = (ReplicationSource) source;
         rLoadSourceBuild.setRecovered(replSource.getReplicationQueueInfo().isQueueRecovered());
         rLoadSourceBuild.setQueueId(replSource.getReplicationQueueInfo().getQueueId());
         rLoadSourceBuild.setRunning(replSource.isWorkerRunning());
-        if (KnobRuntime.check(java.util.UUID.fromString("f7a7f77a-96c6-3ba0-b233-f4f9754b7a92"))) { rLoadSourceBuild.setEditsSinceRestart((timeStampOfNextToReplicate) <= (0)); } else { rLoadSourceBuild.setEditsSinceRestart(timeStampOfNextToReplicate > 0); }
+        rLoadSourceBuild.setEditsSinceRestart(timeStampOfNextToReplicate > 0);
       }
 
       this.replicationLoadSourceEntries.add(rLoadSourceBuild.build());

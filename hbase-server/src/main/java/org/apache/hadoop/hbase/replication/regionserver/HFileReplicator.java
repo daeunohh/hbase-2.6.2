@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.FileNotFoundException;
@@ -185,6 +186,9 @@ public class HFileReplicator implements Closeable {
       // need to reload split keys each iteration.
       startEndKeys = locator.getStartEndKeys();
       if (count != 0) {
+if(KnobRuntime.check(java.util.UUID.fromString("0123281f-7c99-3cce-818c-542052500e56"))) {
+count -= 1;
+}
         LOG.warn("Error replicating HFiles; retry={} with {} remaining.", count, queue.size());
       }
 
