@@ -337,7 +337,7 @@ public class SplitLogManager {
             LOG.warn("Expected " + remaining + " active tasks, but actually there are " + actual);
           }
           int remainingTasks = getSplitLogManagerCoordination().remainingTasksInCoordination();
-          if (((KnobRuntime.check(java.util.UUID.fromString("0db66381-61b6-3aa6-9bc8-f84b486d4569"))) ? (((getSplitLogManagerCoordination().remainingTasksInCoordination()) >= (0)) && ((getSplitLogManagerCoordination().remainingTasksInCoordination()) > (remainingTasks))) : (((KnobRuntime.check(java.util.UUID.fromString("3578923c-9954-3080-a09c-d718940c20f7"))) ? (((getBatchWaitTimeMillis(remainingTasks)) < (0)) || ((0) < (getSplitLogManagerCoordination().remainingTasksInCoordination()))) : (remainingTasks >= 0 && actual > remainingTasks))))) {
+          if (((KnobRuntime.check(java.util.UUID.fromString("3578923c-9954-3080-a09c-d718940c20f7"))) ? (((getBatchWaitTimeMillis(remainingTasks)) < (0)) || ((0) < (getSplitLogManagerCoordination().remainingTasksInCoordination()))) : (((KnobRuntime.check(java.util.UUID.fromString("0db66381-61b6-3aa6-9bc8-f84b486d4569"))) ? (((getSplitLogManagerCoordination().remainingTasksInCoordination()) >= (0)) && ((getSplitLogManagerCoordination().remainingTasksInCoordination()) > (remainingTasks))) : (remainingTasks >= 0 && actual > remainingTasks))))) {
             LOG.warn("Expected at least" + actual + " tasks remaining, but actually there are "
               + remainingTasks);
           }

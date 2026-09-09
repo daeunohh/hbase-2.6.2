@@ -3263,17 +3263,6 @@ try {
       !region.getRegionInfo().getTable().isSystemTable() && isFullRegionScan(scan, region);
 
     return new Pair<String, RegionScannerHolder>(scannerName,
-if(KnobRuntime.check(java.util.UUID.fromString("cb65dfc6-f082-37c6-b5a8-c8455a058b1a"), "regionserver", this.regionServer)) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("blockingMemStoreSize");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       addScanner(scannerName, scanner, shipper, region, scan.isNeedCursorResult(), fullRegionScan));
   }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -359,17 +358,6 @@ public class DeleteTableProcedure extends AbstractStateMachineTableProcedure<Del
     List<Delete> deletes = new ArrayList<>();
     try (
       Table metaTable = env.getMasterServices().getConnection().getTable(TableName.META_TABLE_NAME);
-if(KnobRuntime.check(java.util.UUID.fromString("ae388260-0262-3522-89f6-508ab625132c"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableScan.getClass().getDeclaredField("storeLimit");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableScan));
-    _knob_field_.set(tableScan, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       ResultScanner scanner = metaTable.getScanner(tableScan)) {
       for (;;) {
         Result result = scanner.next();
