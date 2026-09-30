@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.InterruptedIOException;
@@ -1086,7 +1085,7 @@ public class StoreScanner extends NonReversedNonLazyKeyValueScanner
   protected void checkScanOrder(Cell prevKV, Cell kv, CellComparator comparator)
     throws IOException {
     // Check that the heap gives us KVs in an increasing order.
-    assert ((KnobRuntime.check(java.util.UUID.fromString("04742f23-2b21-325c-8550-8103364a63a6"))) ? (((prevKV == null) || ((comparator) != (null))) || ((comparator.compare(prevKV, kv)) <= (0))) : (prevKV == null || comparator == null || comparator.compare(prevKV, kv) <= 0))
+    assert prevKV == null || comparator == null || comparator.compare(prevKV, kv) <= 0
       : "Key " + prevKV + " followed by a smaller key " + kv + " in cf " + store;
   }
 

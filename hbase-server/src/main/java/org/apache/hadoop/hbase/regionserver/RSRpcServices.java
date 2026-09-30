@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.FileNotFoundException;
@@ -2826,17 +2825,6 @@ public class RSRpcServices implements HBaseRPCErrorHandler, AdminService.Blockin
       responseBuilder.addRegionActionResult(regionActionResultBuilder.build());
       ClientProtos.RegionLoadStats regionLoadStats = region.getLoadStatistics();
       if (regionLoadStats != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("c505d4a9-b6fd-3865-b8d5-cfd368cc7048"), "regionserver", this.regionServer)) {
-try {
-    java.lang.reflect.Field _knob_field_ = regionSpecifier.getClass().getDeclaredField("type_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(regionSpecifier));
-    _knob_field_.set(regionSpecifier, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         responseBuilder.setRegionStatistics(MultiRegionLoadStats.newBuilder()
           .addRegion(regionSpecifier).addStat(regionLoadStats).build());
       }
@@ -3582,17 +3570,6 @@ try {
       region.getMetrics().updateScanTime(end - before);
       final MetricsRegionServer metricsRegionServer = regionServer.getMetrics();
       if (metricsRegionServer != null) {
-if(KnobRuntime.check(java.util.UUID.fromString("ed1536e3-e8fa-3faf-9255-45fd8f8643f1"), "regionserver", this.regionServer)) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("rowLockWaitDuration");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         metricsRegionServer.updateScan(region, end - before, responseCellSize, blockBytesScanned);
         metricsRegionServer.updateReadQueryMeter(region, numOfNextRawCalls);
       }

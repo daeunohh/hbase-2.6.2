@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.wal.WALActionsListener.RollRequestReason.ERROR;
 import static org.apache.hadoop.hbase.regionserver.wal.WALActionsListener.RollRequestReason.LOW_REPLICATION;
@@ -398,7 +397,7 @@ public abstract class AbstractFSWAL<W extends WriterBase> implements WAL {
     int preallocatedEventCount = this.conf.getInt(RING_BUFFER_SLOT_COUNT, 1024 * 16);
     checkArgument(preallocatedEventCount >= 0, RING_BUFFER_SLOT_COUNT + " must > 0");
     int floor = Integer.highestOneBit(preallocatedEventCount);
-    if (((KnobRuntime.check(java.util.UUID.fromString("f1a4498c-0aa1-340f-b9b8-c4dcdb826eef"))) ? ((floor << 1) != (1 << 29)) : (floor == preallocatedEventCount))) {
+    if (floor == preallocatedEventCount) {
       return floor;
     }
     // max capacity is 1 << 30
@@ -687,7 +686,7 @@ public abstract class AbstractFSWAL<W extends WriterBase> implements WAL {
   /** Returns the number of log files in use */
   public int getNumLogFiles() {
     // +1 for current use log
-    return ((KnobRuntime.check(java.util.UUID.fromString("a723d155-d4bf-3f77-86f3-0cb5554062c0"))) ? ((getNumRolledLogFiles()) + (1)) : (getNumRolledLogFiles() + 1));
+    return getNumRolledLogFiles() + 1;
   }
 
   /**
@@ -699,7 +698,7 @@ public abstract class AbstractFSWAL<W extends WriterBase> implements WAL {
   Map<byte[], List<byte[]>> findRegionsToForceFlush() throws IOException {
     Map<byte[], List<byte[]>> regions = null;
     int logCount = getNumRolledLogFiles();
-    if (((KnobRuntime.check(java.util.UUID.fromString("63fd8e4c-2c88-3023-bbcc-a72829fce9d9"))) ? (((getNumRolledLogFiles()) != (this.maxLogs)) || (logCount > 0)) : (logCount > this.maxLogs && logCount > 0))) {
+    if (logCount > this.maxLogs && logCount > 0) {
       Map.Entry<Path, WALProps> firstWALEntry = this.walFile2Props.firstEntry();
       regions =
         this.sequenceIdAccounting.findLower(firstWALEntry.getValue().encodedName2HighestSequenceId);

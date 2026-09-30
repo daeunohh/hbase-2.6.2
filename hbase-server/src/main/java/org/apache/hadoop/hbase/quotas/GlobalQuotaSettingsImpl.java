@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -310,7 +309,7 @@ public class GlobalQuotaSettingsImpl extends GlobalQuotaSettings {
       bypassGlobals = ((QuotaGlobalsSettingsBypass) other).getBypass();
     }
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("2305ccc7-019f-30be-927e-ba7a7b9c4657"))) ? ((((throttleBuilder) != (null)) || (!removeSpaceBuilder)) || ((bypassGlobals) != (null))) : (throttleBuilder == null && removeSpaceBuilder && bypassGlobals == null))) {
+    if (throttleBuilder == null && removeSpaceBuilder && bypassGlobals == null) {
       return null;
     }
 

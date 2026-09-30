@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -291,7 +290,7 @@ public class StoreFileScanner implements KeyValueScanner {
       boolean hasNext = hfs.next();
       setCurrentCell(hfs.getCell());
       if (
-        ((KnobRuntime.check(java.util.UUID.fromString("272665d4-ccdc-3b12-8222-6ba51a1d01bf"))) ? (((true) && (true)) && (getComparator().compareRows(cur, startKV) > 0)) : (hasNext && this.stopSkippingKVsIfNextRow && getComparator().compareRows(cur, startKV) > 0))
+        hasNext && this.stopSkippingKVsIfNextRow && getComparator().compareRows(cur, startKV) > 0
       ) {
         return false;
       }

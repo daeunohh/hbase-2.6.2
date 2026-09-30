@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -149,7 +148,7 @@ public abstract class TimeRangeTracker {
 
     long curMaxTimestamp = getMax();
 
-    if (((KnobRuntime.check(java.util.UUID.fromString("f4c317db-5fa1-3375-811a-a32d858138c3"))) ? ((timestamp) == (curMaxTimestamp)) : (timestamp > curMaxTimestamp))) {
+    if (timestamp > curMaxTimestamp) {
       while (timestamp > curMaxTimestamp) {
         if (!compareAndSetMax(curMaxTimestamp, timestamp)) {
           curMaxTimestamp = getMax();

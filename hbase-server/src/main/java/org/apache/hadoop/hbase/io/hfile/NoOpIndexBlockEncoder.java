@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.hfile.HFileBlockIndex.MID_KEY_METADATA_SIZE;
 
@@ -332,7 +331,7 @@ public class NoOpIndexBlockEncoder implements HFileIndexBlockEncoder {
             BlockType expectedBlockType;
             if (lookupLevel < searchTreeLevel - 1) {
               expectedBlockType = BlockType.INTERMEDIATE_INDEX;
-            } else if (((KnobRuntime.check(java.util.UUID.fromString("f7171f04-acc7-3640-b590-952d07f65b9b"))) ? ((lookupLevel) != (1)) : (lookupLevel == searchTreeLevel - 1))) {
+            } else if (lookupLevel == searchTreeLevel - 1) {
               expectedBlockType = BlockType.LEAF_INDEX;
             } else {
               // this also accounts for ENCODED_DATA

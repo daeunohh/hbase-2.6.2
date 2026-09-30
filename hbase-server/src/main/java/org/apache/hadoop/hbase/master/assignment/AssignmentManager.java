@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import java.io.IOException;
@@ -295,7 +294,7 @@ public class AssignmentManager {
     // remove extra mirror locations
     for (String znode : zk.getMetaReplicaNodes()) {
       int replicaId = zk.getZNodePaths().getMetaReplicaIdFromZNode(znode);
-      if (((KnobRuntime.check(java.util.UUID.fromString("8851e79f-0f68-37cf-a5ae-7d3f343dffde"))) ? ((replicaId) <= (replicaCount)) : (replicaId >= replicaCount))) {
+      if (replicaId >= replicaCount) {
         MetaTableLocator.deleteMetaLocation(zk, replicaId);
       }
     }

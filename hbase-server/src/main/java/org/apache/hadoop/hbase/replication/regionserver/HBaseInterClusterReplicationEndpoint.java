@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -266,7 +265,7 @@ public class HBaseInterClusterReplicationEndpoint extends HBaseReplicationEndpoi
       int entrySize = getEstimatedEntrySize(e);
       // If this batch has at least one entry and is over sized, move it to the tail of list and
       // initialize the entryLists[index] to be a empty list.
-      if (((KnobRuntime.check(java.util.UUID.fromString("2ce6dc8e-03c7-330f-85cc-305fee8f6818"))) ? (((sizes[index]) != (0)) && ((entrySize) >= (1))) : (((KnobRuntime.check(java.util.UUID.fromString("6467a44f-c4d0-362e-9c2c-afda8e9cb0be"))) ? (((sizes[index]) == (0)) && ((entrySize) == (replicationRpcLimit))) : (((KnobRuntime.check(java.util.UUID.fromString("63d20314-5d2b-3641-a6fb-0790265b6afe"))) ? (((sizes[index]) == (0)) || ((sizes[index] + entrySize) != (100))) : (sizes[index] > 0 && sizes[index] + entrySize > replicationRpcLimit))))))) {
+      if (sizes[index] > 0 && sizes[index] + entrySize > replicationRpcLimit) {
         entryLists.add(entryLists.get(index));
         entryLists.set(index, new ArrayList<>());
         sizes[index] = 0;

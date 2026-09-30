@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.hfile.BlockCompressedSizePredicator.MAX_BLOCK_SIZE_UNCOMPRESSED;
 
@@ -449,7 +448,7 @@ public class HFileWriterImpl implements HFile.Writer {
     final int leftLength, final byte[] rightArray, final int rightOffset, final int rightLength) {
     int minLength = leftLength < rightLength ? leftLength : rightLength;
     int diffIdx = 0;
-    for (; ((KnobRuntime.check(java.util.UUID.fromString("7fcd528b-5012-3984-a720-193082372d6f"))) ? ((diffIdx) != (0xff)) : (diffIdx < minLength)); diffIdx++) {
+    for (; diffIdx < minLength; diffIdx++) {
       byte leftByte = leftArray[leftOffset + diffIdx];
       byte rightByte = rightArray[rightOffset + diffIdx];
       if ((leftByte & 0xff) > (rightByte & 0xff)) {

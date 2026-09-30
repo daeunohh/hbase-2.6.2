@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.REPLICATION_SCOPE_LOCAL;
 import static org.apache.hadoop.hbase.regionserver.HStoreFile.MAJOR_COMPACTION_KEY;
@@ -2884,17 +2883,6 @@ public class HRegion implements HeapSize, PropagatingConfigurationObserver, Regi
       FlushDescriptor desc = ProtobufUtil.toFlushDescriptor(FlushAction.CANNOT_FLUSH,
         getRegionInfo(), -1, new TreeMap<>(Bytes.BYTES_COMPARATOR));
       try {
-if(KnobRuntime.check(java.util.UUID.fromString("bd31b615-db21-3f39-8ae1-1c763d408c95"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = desc.getClass().getDeclaredField("flushSequenceNumber_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(desc));
-    _knob_field_.set(desc, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         WALUtil.writeFlushMarker(wal, this.getReplicationScope(), getRegionInfo(), desc, true,
           mvcc);
         return true;
@@ -3642,17 +3630,6 @@ try {
 
     private void
       doFinishHotnessProtector(final MiniBatchOperationInProgress<Mutation> miniBatchOp) {
-if(KnobRuntime.check(java.util.UUID.fromString("c093513c-ee9d-3ab2-bbc6-665452d411a9"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = miniBatchOp.getClass().getDeclaredField("numOfIncrements");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(miniBatchOp));
-    _knob_field_.set(miniBatchOp, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       // check and return if the protector is not enabled
       if (!region.storeHotnessProtector.isEnable()) {
         return;

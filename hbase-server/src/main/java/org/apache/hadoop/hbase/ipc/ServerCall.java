@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.ipc;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import io.opentelemetry.api.trace.Span;
@@ -402,7 +401,7 @@ public abstract class ServerCall<T extends ServerRpcConnection> implements RpcCa
       + Bytes.SIZEOF_INT;
     // Only if the last buffer has enough space for header use it. Else allocate
     // a new buffer. Assume they are all flipped
-    if (((KnobRuntime.check(java.util.UUID.fromString("5bb3da82-8411-3350-9787-be89a90494df"))) ? (((possiblePBBuf) == (null)) || ((totalPBSize) > (possiblePBBuf.capacity()))) : (possiblePBBuf != null && possiblePBBuf.limit() + totalPBSize <= possiblePBBuf.capacity()))) {
+    if (possiblePBBuf != null && possiblePBBuf.limit() + totalPBSize <= possiblePBBuf.capacity()) {
       // duplicate the buffer. This is where the header is going to be written
       ByteBuffer pbBuf = possiblePBBuf.duplicate();
       // get the current limit

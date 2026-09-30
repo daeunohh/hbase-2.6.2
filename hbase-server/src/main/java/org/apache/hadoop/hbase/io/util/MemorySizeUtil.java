@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryType;
@@ -253,7 +252,7 @@ public class MemorySizeUtil {
       (float) conf.getLong(HConstants.HFILE_ONHEAP_BLOCK_CACHE_FIXED_SIZE_KEY,
         HConstants.HFILE_ONHEAP_BLOCK_CACHE_FIXED_SIZE_DEFAULT) / heapMax;
     // Calculate the amount of heap to give the heap.
-    if (((KnobRuntime.check(java.util.UUID.fromString("b65bf472-e605-3c74-ac01-61dbf7643f0e"))) ? (((onHeapCacheFixedSize) < (0)) && ((onHeapCacheFixedSize) >= (cachePercentage))) : (onHeapCacheFixedSize > 0 && onHeapCacheFixedSize < cachePercentage))) {
+    if (onHeapCacheFixedSize > 0 && onHeapCacheFixedSize < cachePercentage) {
       return (long) (heapMax * onHeapCacheFixedSize);
     } else {
       final long cacheSizeInBytes = getBlockCacheSizeInBytes(conf);

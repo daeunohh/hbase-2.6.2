@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.AbstractList;
@@ -247,17 +246,6 @@ class RegionScannerImpl implements RegionScanner, Shipper, RpcCallback {
   @Override
   public synchronized boolean next(List<Cell> outResults, ScannerContext scannerContext)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("93df3a97-c73f-30ce-93bc-cc5d6fed4daf"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = scannerContext.getClass().getDeclaredField("skippingRow");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(scannerContext);
-    _knob_field_.set(scannerContext, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (this.filterClosed) {
       throw new UnknownScannerException("Scanner was closed (timed out?) "
         + "after we renewed it. Could be caused by a very slow scanner "
@@ -576,17 +564,6 @@ try {
           if (!shouldStop) {
             // Read nothing as the cells was filtered, but still need to check time limit.
             // We also check size limit because we might have read blocks in getting to this point.
-if(KnobRuntime.check(java.util.UUID.fromString("3d24a56a-fe29-3c7a-b63c-d3414d86988e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = limitScope.getClass().getDeclaredField("depth");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(limitScope));
-    _knob_field_.set(limitScope, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
             if (scannerContext.checkAnyLimitReached(limitScope)) {
               return true;
             }

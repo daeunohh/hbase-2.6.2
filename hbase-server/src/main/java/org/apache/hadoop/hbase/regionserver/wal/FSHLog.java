@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.wal.WALActionsListener.RollRequestReason.ERROR;
 import static org.apache.hadoop.hbase.regionserver.wal.WALActionsListener.RollRequestReason.LOW_REPLICATION;
@@ -386,7 +385,7 @@ public class FSHLog extends AbstractFSWAL<Writer> {
         // closeErrorsTolerated count, call the closeWriter inline rather than in async
         // way so that in case of an IOE we will throw it back and abort RS.
         inflightWALClosures.put(oldPath.getName(), writer);
-        if (((KnobRuntime.check(java.util.UUID.fromString("77f5691d-c3f5-3258-8cd9-fe18c7467548"))) ? (isUnflushedEntries()) : (isUnflushedEntries() || closeErrorCount.get() >= this.closeErrorsTolerated))) {
+        if (isUnflushedEntries() || closeErrorCount.get() >= this.closeErrorsTolerated) {
           try {
             closeWriter(this.writer, oldPath, true);
           } finally {

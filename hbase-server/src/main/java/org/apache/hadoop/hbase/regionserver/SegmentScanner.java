@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -167,7 +166,7 @@ public class SegmentScanner implements KeyValueScanner {
       return false;
     }
     seek(key); // seek forward then go backward
-    if (((KnobRuntime.check(java.util.UUID.fromString("83885d98-5b83-3eb1-aec7-b76d53c63b5e"))) ? (((peek()) == (null)) && ((segment.compareRows(peek(), key)) <= (0))) : (peek() == null || segment.compareRows(peek(), key) > 0))) {
+    if (peek() == null || segment.compareRows(peek(), key) > 0) {
       return seekToPreviousRow(key);
     }
     return true;

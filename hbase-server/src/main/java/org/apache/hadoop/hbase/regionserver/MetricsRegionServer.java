@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.CompatibilitySingletonFactory;
@@ -139,17 +138,6 @@ public class MetricsRegionServer {
   }
 
   public void updateCheckAndDelete(HRegion region, long t) {
-if(KnobRuntime.check(java.util.UUID.fromString("81c87cf1-db7f-3d3b-9931-f295d1335049"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = region.getClass().getDeclaredField("openSeqNum");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(region));
-    _knob_field_.set(region, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (region.getMetricsTableRequests() != null) {
       region.getMetricsTableRequests().updateCheckAndDelete(t);
     }

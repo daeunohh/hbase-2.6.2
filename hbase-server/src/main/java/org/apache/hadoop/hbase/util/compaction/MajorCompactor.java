@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util.compaction;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -207,7 +206,7 @@ public class MajorCompactor extends Configured implements Tool {
   }
 
   private Collection<ServerName> getServersToCompact(Set<ServerName> snSet) {
-    if (((KnobRuntime.check(java.util.UUID.fromString("90dece44-f469-3703-a136-819aa549a53b"))) ? (((numServers) != (0)) && ((snSet.size()) >= (0))) : (numServers < 0 || snSet.size() <= numServers))) {
+    if (numServers < 0 || snSet.size() <= numServers) {
       return snSet;
 
     } else {

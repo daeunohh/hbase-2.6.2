@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.ByteBuffAllocator.HEAP;
 import static org.apache.hadoop.hbase.io.hfile.BlockCompressedSizePredicator.BLOCK_COMPRESSED_SIZE_PREDICATOR;
@@ -337,7 +338,7 @@ public class HFileBlock implements Cacheable {
     this.fileContext = fileContext;
     this.allocator = allocator;
     this.bufWithoutChecksum = buf;
-    if (fillHeader) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("fc86c821-1033-3b78-9c22-f1a2baf2d8c3"))) ? (!fillHeader) : (fillHeader))) {
       overwriteHeader();
     }
     this.bufWithoutChecksum.rewind();
@@ -370,6 +371,9 @@ public class HFileBlock implements Cacheable {
       int bytesPerChecksum = buf.getInt(Header.BYTES_PER_CHECKSUM_INDEX);
       onDiskDataSizeWithHeader = buf.getInt(Header.ON_DISK_DATA_SIZE_WITH_HEADER_INDEX);
       // Use the checksum type and bytes per checksum from header, not from fileContext.
+if(KnobRuntime.check(java.util.UUID.fromString("299b1cf1-d33e-3d5c-8cf7-3ca0fcf23a1b"))) {
+checksumType = 0;
+}
       fileContextBuilder.withChecksumType(ChecksumType.codeToType(checksumType));
       fileContextBuilder.withBytesPerCheckSum(bytesPerChecksum);
     } else {
@@ -380,6 +384,31 @@ public class HFileBlock implements Cacheable {
     }
     fileContext = fileContextBuilder.build();
     assert usesHBaseChecksum == fileContext.isUseHBaseChecksum();
+if(KnobRuntime.check(java.util.UUID.fromString("03c23dfe-5305-359d-92bd-3d07d79c9745"))) {
+onDiskDataSizeWithHeader += 1;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f1bb7407-4977-3269-84a9-6c71925b82bf"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = allocator.getClass().getDeclaredField("bufSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(allocator));
+    _knob_field_.set(allocator, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("c3a26cba-3271-3e11-a7be-4f5f32abf780"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = allocator.getClass().getDeclaredField("bufSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(allocator));
+    _knob_field_.set(allocator, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     return new HFileBlockBuilder().withBlockType(blockType)
       .withOnDiskSizeWithoutHeader(onDiskSizeWithoutHeader)
       .withUncompressedSizeWithoutHeader(uncompressedSizeWithoutHeader)
@@ -879,6 +908,9 @@ public class HFileBlock implements Cacheable {
       blockType = newBlockType;
 
       baosInMemory.reset();
+if(KnobRuntime.check(java.util.UUID.fromString("6a4fd7c1-a9be-3bbb-9a6e-bb9a28d639e0"))) {
+throw new java.io.IOException("Injected exception");
+}
       baosInMemory.write(HConstants.HFILEBLOCK_DUMMY_HEADER);
 
       state = State.WRITING;
@@ -915,6 +947,12 @@ public class HFileBlock implements Cacheable {
     }
 
     public boolean checkBoundariesWithPredicate() {
+if(KnobRuntime.check(java.util.UUID.fromString("b5aa13db-429a-3f7b-a5be-a6a7fc01cdbb"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("d881e8a0-ba68-3578-a0b5-3103bfb6b5fa"))) {
+return true;
+}
       int rawBlockSize = encodedBlockSizeWritten();
       if (rawBlockSize >= maxSizeUnCompressed) {
         return true;
@@ -934,6 +972,9 @@ public class HFileBlock implements Cacheable {
           baosInMemory.getBuffer(), blockType);
         blockType = dataBlockEncodingCtx.getBlockType();
       }
+if(KnobRuntime.check(java.util.UUID.fromString("d59bd65f-b227-338c-a1e4-435374ac9a41"))) {
+throw new java.io.IOException("Injected exception");
+}
       userDataStream.flush();
       prevOffset = prevOffsetByType[blockType.getId()];
 

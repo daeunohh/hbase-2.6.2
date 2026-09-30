@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -583,7 +582,7 @@ public class WALKeyImpl implements WALKey {
       this.nonce = walKey.getNonce();
     }
     this.replicationScope = null;
-    if (((KnobRuntime.check(java.util.UUID.fromString("72d6d8aa-a365-31e4-958f-bc8c6a8378ca"))) ? ((walKey.getExtendedAttributesCount()) < (0)) : (walKey.getScopesCount() > 0))) {
+    if (walKey.getScopesCount() > 0) {
       this.replicationScope = new TreeMap<>(Bytes.BYTES_COMPARATOR);
       for (FamilyScope scope : walKey.getScopesList()) {
         byte[] family =

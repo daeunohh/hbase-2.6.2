@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.replication.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.wal.AbstractFSWALProvider.findArchivedLog;
 
@@ -801,9 +800,6 @@ public class ReplicationSource implements ReplicationSourceInterface {
   // offsets totalBufferUsed by deducting shipped batchSize.
   public void postShipEdits(List<Entry> entries, long batchSize) {
     if (throttler.isEnabled()) {
-if(KnobRuntime.check(java.util.UUID.fromString("873542d6-a764-33d1-87a8-a33b21db94ae"))) {
-batchSize -= 1;
-}
       throttler.addPushSize(batchSize);
     }
     totalReplicatedEdits.addAndGet(entries.size());

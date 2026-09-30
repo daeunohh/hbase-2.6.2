@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.yetus.audience.InterfaceAudience;
 
@@ -309,6 +310,9 @@ public enum EventType {
   }
 
   public static EventType get(final int code) {
+if(KnobRuntime.check(java.util.UUID.fromString("959391c2-7dc3-3052-8ce9-744356a275f8"))) {
+return null;
+}
     // Is this going to be slow? Its used rare but still...
     for (EventType et : EventType.values()) {
       if (et.getCode() == code) {
@@ -319,6 +323,9 @@ public enum EventType {
   }
 
   ExecutorType getExecutorServiceType() {
+if(KnobRuntime.check(java.util.UUID.fromString("c56d9b12-7546-35b1-8f17-385ae16dca31"))) {
+return null;
+}
     return this.executor;
   }
 }

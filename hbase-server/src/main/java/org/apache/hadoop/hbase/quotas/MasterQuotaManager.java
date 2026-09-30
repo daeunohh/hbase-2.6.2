@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.quotas;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -235,17 +234,6 @@ public class MasterQuotaManager implements RegionStateListener {
 
       @Override
       public void postApply(GlobalQuotaSettingsImpl quotaPojo) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("13219429-652b-377f-a43f-f12c484d3309"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = table.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(table));
-    _knob_field_.set(table, oldValue / 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         masterServices.getMasterCoprocessorHost().postSetUserQuota(userName, table, quotaPojo);
       }
     });
@@ -530,17 +518,6 @@ try {
   }
 
   public void checkAndUpdateNamespaceRegionQuota(TableName tName, int regions) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("4e87f906-d15b-324c-bad6-b335a1737cb0"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tName));
-    _knob_field_.set(tName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     if (initialized) {
       namespaceQuotaManager.checkQuotaToUpdateRegion(tName, regions);
     }

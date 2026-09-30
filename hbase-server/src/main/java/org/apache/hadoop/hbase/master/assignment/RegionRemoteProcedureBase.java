@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.assignment;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -202,9 +201,6 @@ public abstract class RegionRemoteProcedureBase extends Procedure<MasterProcedur
   // should be called with RegionStateNode locked, to avoid race with the execute method below
   void reportTransition(MasterProcedureEnv env, RegionStateNode regionNode, ServerName serverName,
     TransitionCode transitionCode, long seqId) throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("11eeabea-5a64-3dfe-803e-67ba5616077d"))) {
-return;
-}
     if (state != RegionRemoteProcedureBaseState.REGION_REMOTE_PROCEDURE_DISPATCH) {
       // should be a retry
       return;

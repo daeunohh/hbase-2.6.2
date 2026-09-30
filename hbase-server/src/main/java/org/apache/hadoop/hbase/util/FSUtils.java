@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.util;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction.SAFEMODE_GET;
@@ -271,9 +270,6 @@ public final class FSUtils {
       return ((DistributedFileSystem) dfs).setSafeMode(SAFEMODE_GET, true);
     } else {
       try {
-if(KnobRuntime.check(java.util.UUID.fromString("5aa77a26-8b2d-37ac-894b-6d5e3df8190c"))) {
-throw new java.lang.NoSuchMethodException("Injected exception");
-}
         Object ret = dfs.getClass()
           .getMethod("setSafeMode", new Class[] { safeModeActionClazz, Boolean.class })
           .invoke(dfs, safeModeGet, true);

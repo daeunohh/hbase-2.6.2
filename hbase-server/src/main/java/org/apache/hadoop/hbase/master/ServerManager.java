@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.ConcurrentMapUtils.computeIfAbsent;
 
@@ -879,7 +878,7 @@ public class ServerManager implements ConfigurationObserver {
         && ((lastCountChange + interval) > now || timeout > slept || count < minToStart)
     ) {
       // Log some info at every interval time or if there is a change
-      if (((KnobRuntime.check(java.util.UUID.fromString("eba9263b-c5c2-37a1-ad34-13315e201977"))) ? (((1500) == (getMinToStart())) || ((lastLogTime + interval) == (now))) : (((KnobRuntime.check(java.util.UUID.fromString("9024bd58-551a-371a-8a10-f11bc099606a"))) ? (((oldCount) != (1500)) && (((lastLogTime) + (interval)) > (now))) : (oldCount != count || lastLogTime + interval < now))))) {
+      if (oldCount != count || lastLogTime + interval < now) {
         lastLogTime = now;
         String msg =
           "Waiting on regionserver count=" + count + "; waited=" + slept + "ms, expecting min="

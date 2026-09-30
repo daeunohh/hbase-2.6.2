@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile.bucket;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -167,9 +166,6 @@ public class BucketEntry implements HBaseReferenceCounted {
   }
 
   public BlockPriority getPriority() {
-if(KnobRuntime.check(java.util.UUID.fromString("2f87f35c-1015-370b-adb5-c804c9ca7349"))) {
-return null;
-}
     return this.priority;
   }
 

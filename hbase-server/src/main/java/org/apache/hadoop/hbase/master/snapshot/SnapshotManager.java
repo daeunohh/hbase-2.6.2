@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -260,7 +259,7 @@ public class SnapshotManager extends MasterProcedureManager implements Stoppable
     List<SnapshotDescription> snapshotDescs = new ArrayList<>();
     // first create the snapshot root path and check to see if it exists
     FileSystem fs = master.getMasterFileSystem().getFileSystem();
-    if (((KnobRuntime.check(java.util.UUID.fromString("85529957-69a0-3ee9-b390-74fdcc5a525d"))) ? ((snapshotDir) == (null)) : (snapshotDir == null))) snapshotDir = SnapshotDescriptionUtils.getSnapshotsDir(rootDir);
+    if (snapshotDir == null) snapshotDir = SnapshotDescriptionUtils.getSnapshotsDir(rootDir);
 
     // if there are no snapshots, return an empty list
     if (!fs.exists(snapshotDir)) {
@@ -1104,17 +1103,6 @@ public class SnapshotManager extends MasterProcedureManager implements Stoppable
    * @return <tt>true</tt> if there is a restore in progress of the specified table.
    */
   private synchronized boolean isRestoringTable(final TableName tableName) {
-if(KnobRuntime.check(java.util.UUID.fromString("48535815-5abd-3edd-9659-3d8eb8a556a7"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = tableName.getClass().getDeclaredField("hashCode");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(tableName));
-    _knob_field_.set(tableName, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Long procId = this.restoreTableToProcIdMap.get(tableName);
     if (procId == null) {
       return false;

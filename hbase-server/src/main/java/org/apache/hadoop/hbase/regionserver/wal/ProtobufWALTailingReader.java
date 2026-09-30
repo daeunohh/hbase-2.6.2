@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -117,7 +116,7 @@ public class ProtobufWALTailingReader extends AbstractProtobufWALReader
       LOG.warn("Failed to get available bytes", e);
       return KEY_ERROR_AND_RESET;
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("7b77f375-521c-3518-8e09-c38f7fe65967"))) ? ((available) <= (size)) : (((KnobRuntime.check(java.util.UUID.fromString("346ff769-df80-3b27-a977-ffd16b099e8b"))) ? (((available) < (0)) || ((-1) > (0))) : (available > 0 && available < size))))) {
+    if (available > 0 && available < size) {
       LOG.info("Available stream not enough for edit, available={}, entry size={} at offset={}",
         available, size, getPositionQuietly());
       return KEY_EOF_AND_RESET;

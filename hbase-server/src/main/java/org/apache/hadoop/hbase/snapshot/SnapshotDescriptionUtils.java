@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.snapshot;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.net.URI;
@@ -194,17 +193,6 @@ public final class SnapshotDescriptionUtils {
    */
   public static Path getCompletedSnapshotDir(final SnapshotDescription snapshot,
     final Path rootDir) {
-if(KnobRuntime.check(java.util.UUID.fromString("3384da20-2dca-3683-9f3b-f9f5b686b6b1"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("maxFileSize_");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return getCompletedSnapshotDir(snapshot.getName(), rootDir);
   }
 

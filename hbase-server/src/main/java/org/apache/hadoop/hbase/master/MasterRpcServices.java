@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.master.MasterWalManager.META_FILTER;
 
@@ -2018,9 +2017,6 @@ public class MasterRpcServices extends RSRpcServices
   @Override
   public IsNormalizerEnabledResponse isNormalizerEnabled(RpcController controller,
     IsNormalizerEnabledRequest request) {
-if(KnobRuntime.check(java.util.UUID.fromString("4763d5b8-5d2c-3a88-93bc-74d3060d9f59"), "master", this.master, this.master.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-return null;
-}
     IsNormalizerEnabledResponse.Builder response = IsNormalizerEnabledResponse.newBuilder();
     response.setEnabled(master.isNormalizerOn());
     return response.build();

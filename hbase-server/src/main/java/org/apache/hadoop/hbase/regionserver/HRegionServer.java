@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.ChoreService.CHORE_SERVICE_INITIAL_POOL_SIZE;
 import static org.apache.hadoop.hbase.ChoreService.DEFAULT_CHORE_SERVICE_INITIAL_POOL_SIZE;
@@ -2714,7 +2713,7 @@ public class HRegionServer extends Thread
         }
         // Log if we had to retry else don't log unless TRACE. We want to
         // know if were successful after an attempt showed in logs as failed.
-        if (((KnobRuntime.check(java.util.UUID.fromString("85fab519-ec66-3aff-a5bc-116043f49ffb"), "regionserver", this)) ? (((tries) >= (0)) || (canCreateBaseZNode())) : (tries > 0 || LOG.isTraceEnabled()))) {
+        if (tries > 0 || LOG.isTraceEnabled()) {
           LOG.info("TRANSITION REPORTED " + request);
         }
         // NOTE: Return mid-method!!!

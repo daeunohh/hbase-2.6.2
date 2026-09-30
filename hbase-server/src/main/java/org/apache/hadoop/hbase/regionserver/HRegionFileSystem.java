@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.io.HFileLink.LINK_NAME_PATTERN;
 
@@ -486,7 +485,7 @@ public class HRegionFileSystem {
   private Path preCommitStoreFile(final String familyName, final Path buildPath, final long seqNum,
     final boolean generateNewName) throws IOException {
     Path storeDir = getStoreDir(familyName);
-    if (((KnobRuntime.check(java.util.UUID.fromString("551b119e-5399-39b8-96ca-ec9f888fffe6"))) ? (!fs.exists(storeDir)) : (!fs.exists(storeDir) && !createDir(storeDir))))
+    if (!fs.exists(storeDir) && !createDir(storeDir))
       throw new IOException("Failed creating " + storeDir);
 
     String name = buildPath.getName();

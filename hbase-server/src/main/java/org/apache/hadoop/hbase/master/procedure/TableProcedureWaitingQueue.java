@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayDeque;
 import java.util.Optional;
@@ -87,17 +86,6 @@ class TableProcedureWaitingQueue {
    * Return the next procedure which can be enqueued to ProcedureScheduler.
    */
   Optional<Procedure<?>> procedureCompleted(Procedure<?> proc) {
-if(KnobRuntime.check(java.util.UUID.fromString("181f270a-09a7-35fa-810d-b8cee8e1acd3"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = proc.getClass().getDeclaredField("timeout");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(proc));
-    _knob_field_.set(proc, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     Preconditions.checkState(enqueuedProc != null, "enqueued procedure should not be null");
     if (enqueuedProc == proc) {
       if (!queue.isEmpty()) {

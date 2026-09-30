@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.regionserver.CompactSplit.HBASE_REGION_SERVER_ENABLE_COMPACTION;
 import static org.apache.hadoop.hbase.trace.HBaseSemanticAttributes.BLOCK_CACHE_KEY_KEY;
@@ -717,17 +716,6 @@ public abstract class HFileReaderImpl implements HFile.Reader, Configurable {
         // TODO shortcut: seek forward in this block to the last key of the
         // block.
       }
-if(KnobRuntime.check(java.util.UUID.fromString("b5406813-4cf4-3687-8100-7be84d9b879e"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = seekToBlock.getClass().getDeclaredField("onDiskDataSizeWithHeader");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(seekToBlock));
-    _knob_field_.set(seekToBlock, oldValue * 2);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       loadBlockAndSeekToKey(seekToBlock, firstKey, true, key, true);
       return true;
     }

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver.wal;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -375,7 +374,7 @@ public class WALCellCodec implements Codec {
     }
 
     private static void checkLength(int len, int max) throws IOException {
-      if (((KnobRuntime.check(java.util.UUID.fromString("020715dd-91ea-3532-9dee-d55f0d4e6fee"))) ? (((len) >= (0)) || ((0) >= (max))) : (len < 0 || len > max))) {
+      if (len < 0 || len > max) {
         throw new IOException("Invalid length for compresesed portion of keyvalue: " + len);
       }
     }

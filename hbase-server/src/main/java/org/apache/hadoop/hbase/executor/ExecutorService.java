@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -84,6 +85,75 @@ public class ExecutorService {
    * @param config Configuration to use for the executor.
    */
   public void startExecutorService(final ExecutorConfig config) {
+if(KnobRuntime.check(java.util.UUID.fromString("457ac041-38ab-3067-b662-53464422df36"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ee3669c8-e2bc-393b-aafc-9f2e75f595e5"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("keepAliveTimeMillis");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f28943fd-42ed-33f2-9415-e0efff9b6e16"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("corePoolSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1973a898-92f6-3361-a83a-35c78529a1f7"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("corePoolSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2c651a13-969e-3092-8c02-5944d8f35748"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("allowCoreThreadTimeout");
+    _knob_field_.setAccessible(true);
+    boolean oldValue = (boolean)_knob_field_.get(config);
+    _knob_field_.set(config, !oldValue);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("649006d3-c4c2-3f9f-89a6-98c955843d51"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("corePoolSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("bb529a47-665a-3ba2-878a-c046266ec3db"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = config.getClass().getDeclaredField("corePoolSize");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(config));
+    _knob_field_.set(config, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     final String name = config.getName();
     Executor hbes = this.executorMap.compute(name, (key, value) -> {
       if (value != null) {
@@ -102,6 +172,9 @@ public class ExecutorService {
   }
 
   public void shutdown() {
+if(KnobRuntime.check(java.util.UUID.fromString("c4e860fe-6201-3ec4-897b-7cff4da5d19c"))) {
+return;
+}
     this.delayedSubmitTimer.shutdownNow();
     for (Entry<String, Executor> entry : this.executorMap.entrySet()) {
       List<Runnable> wasRunning = entry.getValue().threadPoolExecutor.shutdownNow();
@@ -113,10 +186,16 @@ public class ExecutorService {
   }
 
   Executor getExecutor(final ExecutorType type) {
+if(KnobRuntime.check(java.util.UUID.fromString("5b9fe12a-6d63-3fdf-ac21-3b03d42c0765"))) {
+return null;
+}
     return getExecutor(type.getExecutorName(this.servername));
   }
 
   Executor getExecutor(String name) {
+if(KnobRuntime.check(java.util.UUID.fromString("21ac8ae0-e0a4-3348-84fe-43862ae274de"))) {
+return null;
+}
     return this.executorMap.get(name);
   }
 
@@ -135,15 +214,128 @@ public class ExecutorService {
   }
 
   public void submit(final EventHandler eh) {
+if(KnobRuntime.check(java.util.UUID.fromString("bda68817-28e6-37b7-8104-dedf78e7736f"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("1dd165a0-3fd9-3ffe-ae18-06ce4c4202b9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3a284795-12bd-3389-95d5-35501e43e03a"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e5e956c9-ea43-368b-b6ff-533383f5a08b"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("f185f1cd-01e6-3f78-8b55-254bca496459"))) {
+return;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4706a002-c3f1-3701-bd15-d771157d84f9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("seqid");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
     Executor executor = getExecutor(eh.getEventType().getExecutorServiceType());
-    if (executor == null) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("44688b34-c8ec-37c8-8aa4-5d456c40ccfc"))) ? ((executor) == (null)) : (((KnobRuntime.check(java.util.UUID.fromString("58c03c29-c5de-3f59-8ff5-3953e82e2dc9"))) ? ((executor) != (null)) : (executor == null))))) {
       // This happens only when events are submitted after shutdown() was
       // called, so dropping them should be "ok" since it means we're
       // shutting down.
       LOG.error("Cannot submit [" + eh + "] because the executor is missing."
         + " Is this process shutting down?");
     } else {
-      executor.submit(eh);
+if(KnobRuntime.check(java.util.UUID.fromString("4be21cd8-dd07-3746-9cc8-4e4d45a76e0e"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("2f8cc954-ed3b-39dc-891a-6933d24add93"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("0a78492d-26b7-3482-85eb-9ab5e63888d3"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ef3c441b-d0b0-3ae0-b1f0-6403ba566782"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4b6b10c0-578c-3137-b60c-d239091955f9"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = eh.getClass().getDeclaredField("seqid");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(eh));
+    _knob_field_.set(eh, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+      if (KnobRuntime.check(java.util.UUID.fromString("a07001f5-bb5e-3584-9169-861468df7b34"))) { submit(eh); } else { executor.submit(eh); }
     }
   }
 
@@ -181,25 +373,43 @@ public class ExecutorService {
     private ExecutorType executorType;
 
     public ExecutorConfig setExecutorType(ExecutorType type) {
+if(KnobRuntime.check(java.util.UUID.fromString("d2ca9bad-ac8c-3920-9203-13f8336ab73a"))) {
+return null;
+}
       this.executorType = type;
       return this;
     }
 
     private ExecutorType getExecutorType() {
+if(KnobRuntime.check(java.util.UUID.fromString("4f6686b0-6fb0-3de1-a09a-7e6b76bc6e61"))) {
+return null;
+}
       return Preconditions.checkNotNull(executorType, "ExecutorType not set.");
     }
 
     public int getCorePoolSize() {
+if(KnobRuntime.check(java.util.UUID.fromString("5118240a-8cf3-3def-aaec-07e909a5232b"))) {
+return 0;
+}
       return corePoolSize;
     }
 
     public ExecutorConfig setCorePoolSize(int corePoolSize) {
+if(KnobRuntime.check(java.util.UUID.fromString("1c67f0fc-79f1-3937-817c-588d95b51949"))) {
+return null;
+}
       this.corePoolSize = corePoolSize;
       return this;
     }
 
     public boolean allowCoreThreadTimeout() {
-      return allowCoreThreadTimeout;
+if(KnobRuntime.check(java.util.UUID.fromString("f8c45b77-1d4f-32b2-b17c-ecd169eefc34"))) {
+return false;
+}
+if(KnobRuntime.check(java.util.UUID.fromString("23e9c9ca-d6e4-3f69-8c2e-249ef2db0412"))) {
+return true;
+}
+      return ((KnobRuntime.check(java.util.UUID.fromString("d23d4dfc-950a-382f-935b-04ef70edc330"))) ? (!allowCoreThreadTimeout) : (allowCoreThreadTimeout));
     }
 
     /**
@@ -208,6 +418,9 @@ public class ExecutorService {
      * additional details.
      */
     public ExecutorConfig setAllowCoreThreadTimeout(boolean allowCoreThreadTimeout) {
+if(KnobRuntime.check(java.util.UUID.fromString("f42a6603-7542-32cb-888b-106a31aa2c2f"))) {
+return null;
+}
       this.allowCoreThreadTimeout = allowCoreThreadTimeout;
       return this;
     }
@@ -216,10 +429,16 @@ public class ExecutorService {
      * Returns the executor name inferred from the type and the servername on which this is running.
      */
     public String getName() {
-      return getExecutorType().getExecutorName(servername);
+if(KnobRuntime.check(java.util.UUID.fromString("eb15244a-5349-39ee-8261-1956abdcd511"))) {
+return null;
+}
+      return ((KnobRuntime.check(java.util.UUID.fromString("06c535a6-9d30-38e6-8580-939cc89b645f"))) ? (((java.lang.String)(getExecutorType().getExecutorName(getExecutorType().getExecutorName(servername))))) : (getExecutorType().getExecutorName(servername)));
     }
 
     public long getKeepAliveTimeMillis() {
+if(KnobRuntime.check(java.util.UUID.fromString("8168c27b-5fd4-37ec-a3c7-de28fd9d54ef"))) {
+return 0;
+}
       return keepAliveTimeMillis;
     }
 
@@ -252,7 +471,7 @@ public class ExecutorService {
       this.threadPoolExecutor.allowCoreThreadTimeOut(config.allowCoreThreadTimeout());
       // name the threads for this threadpool
       ThreadFactoryBuilder tfb = new ThreadFactoryBuilder();
-      tfb.setNameFormat(this.name + "-%d");
+      if (KnobRuntime.check(java.util.UUID.fromString("12edfcaf-b7f1-33c6-9d80-d5bdc9ab6e1d"))) { tfb.setNameFormat((this.name) + ("-%d")); } else if (KnobRuntime.check(java.util.UUID.fromString("0511385e-59e6-3311-8ee3-4c2ad20fc4cb"))) { tfb.setNameFormat((this.name + "-%d") + ("-%d")); } else { tfb.setNameFormat(this.name + "-%d"); }
       tfb.setDaemon(true);
       tfb.setUncaughtExceptionHandler(Threads.LOGGING_EXCEPTION_HANDLER);
       this.threadPoolExecutor.setThreadFactory(tfb.build());
@@ -264,6 +483,72 @@ public class ExecutorService {
     void submit(final EventHandler event) {
       // If there is a listener for this type, make sure we call the before
       // and after process methods.
+if(KnobRuntime.check(java.util.UUID.fromString("e398903f-5ba3-3031-aae8-16f7fbb57e42"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("seqid");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("3aa4aa32-f16e-3bd2-9f33-a292d1c80b07"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("4637287f-e015-3266-927e-ec3d85bd1046"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue / 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("ac2b7553-debf-3115-a35c-935149ed2767"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue * 2);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("e0e6df48-e959-3295-9f6b-6ee8683cd270"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("seqid");
+    _knob_field_.setAccessible(true);
+    long oldValue = ((long)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue + 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
+if(KnobRuntime.check(java.util.UUID.fromString("9c93a02b-52ab-3eff-8829-5e7daff1e257"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       this.threadPoolExecutor.execute(event);
     }
 
@@ -314,14 +599,20 @@ public class ExecutorService {
 
     @Override
     protected void afterExecute(Runnable r, Throwable t) {
+if(KnobRuntime.check(java.util.UUID.fromString("5718b97e-b1c3-32db-b535-0728232c3e48"))) {
+return;
+}
       super.afterExecute(r, t);
       running.remove(Thread.currentThread());
     }
 
     @Override
     protected void beforeExecute(Thread t, Runnable r) {
+if(KnobRuntime.check(java.util.UUID.fromString("aba28a56-4bde-3368-94a5-b385ea7a82cd"))) {
+return;
+}
       Runnable oldPut = running.put(t, r);
-      assert oldPut == null : "inconsistency for thread " + t;
+      assert ((KnobRuntime.check(java.util.UUID.fromString("fa418d34-0468-3ab1-a9e9-9193996bb4ae"))) ? ((oldPut) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("681c65d2-4911-3450-8ed3-9a38baef68ed"))) ? ((oldPut) == (null)) : (oldPut == null)))) : "inconsistency for thread " + t;
       super.beforeExecute(t, r);
     }
 

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master.procedure;
-import org.knobinjection.runtime.KnobRuntime;
 
 import com.google.errorprone.annotations.RestrictedApi;
 import java.io.IOException;
@@ -420,17 +419,6 @@ public class RestoreSnapshotProcedure
       regionsToAdd = metaChanges.getRegionsToAdd();
       parentsToChildrenPairMap = metaChanges.getParentToChildrenPairMap();
     } catch (IOException e) {
-if(KnobRuntime.check(java.util.UUID.fromString("f1d6cb5a-0e49-361c-8674-b4beebb5d9cc"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = snapshot.getClass().getDeclaredField("version_");
-    _knob_field_.setAccessible(true);
-    int oldValue = ((int)_knob_field_.get(snapshot));
-    _knob_field_.set(snapshot, oldValue - 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
       String msg = "restore snapshot=" + ClientSnapshotDescriptionUtils.toString(snapshot)
         + " failed in on-disk restore. Try re-running the restore command.";
       LOG.error(msg, e);

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.regionserver;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -815,17 +814,6 @@ class MetricsRegionServerWrapperImpl implements MetricsRegionServerWrapper {
         avgAgeNumerator += storeFileStats.avgAgeNumerator;
 
         HDFSBlocksDistribution distro = r.getHDFSBlocksDistribution();
-if(KnobRuntime.check(java.util.UUID.fromString("edecf935-5e2d-31ee-91c8-1de1fce07b14"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = distro.getClass().getDeclaredField("uniqueBlocksTotalWeight");
-    _knob_field_.setAccessible(true);
-    long oldValue = ((long)_knob_field_.get(distro));
-    _knob_field_.set(distro, oldValue + 1);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
         hdfsBlocksDistribution.add(distro);
         if (r.getRegionInfo().getReplicaId() == HRegionInfo.DEFAULT_REPLICA_ID) {
           hdfsBlocksDistributionPrimaryRegions.add(distro);

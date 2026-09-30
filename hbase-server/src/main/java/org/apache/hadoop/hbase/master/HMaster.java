@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.master;
-import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.HConstants.DEFAULT_HBASE_SPLIT_COORDINATED_BY_ZK;
 import static org.apache.hadoop.hbase.HConstants.HBASE_MASTER_LOGCLEANER_PLUGINS;
@@ -3939,9 +3938,6 @@ public class HMaster extends HRegionServer implements MasterServices {
 
   @Override
   public long removeReplicationPeer(String peerId) throws ReplicationException, IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("fffa68cf-b579-385b-8034-0c869a413e0b"), "master", this, this.isActiveMaster() ? "ACTIVE" : "BACKUP")) {
-throw new java.io.IOException("Injected exception");
-}
     LOG.info(getClientIdAuditPrefix() + " removing replication peer, id=" + peerId);
     return executePeerProcedure(new RemovePeerProcedure(peerId));
   }
