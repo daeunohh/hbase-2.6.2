@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.Cell;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -40,16 +39,10 @@ public class BlockWithScanInfo {
   }
 
   public HFileBlock getHFileBlock() {
-if(KnobRuntime.check(java.util.UUID.fromString("95a74211-2058-3283-babb-ebe6c3bc020c"))) {
-return null;
-}
     return hFileBlock;
   }
 
   public Cell getNextIndexedKey() {
-if(KnobRuntime.check(java.util.UUID.fromString("8a2da4f8-f9c2-3606-8bab-8bb355577973"))) {
-return null;
-}
     return nextIndexedKey;
   }
 }

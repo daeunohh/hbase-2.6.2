@@ -129,7 +129,7 @@ public class RSSnapshotVerifier {
     CacheLoader<SnapshotDescription, Pair<FileSystem, Map<String, SnapshotRegionManifest>>> {
     private final Configuration conf;
 
-    private SnapshotManifestCacheLoader(Configuration conf) {
+    SnapshotManifestCacheLoader(Configuration conf) {
       this.conf = conf;
     }
 

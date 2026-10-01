@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.security.PrivilegedExceptionAction;
@@ -381,9 +380,6 @@ public class LocalHBaseCluster {
       for (Thread t : this.regionThreads) {
         if (t.isAlive()) {
           try {
-if(KnobRuntime.check(java.util.UUID.fromString("289c089b-3d4a-3e96-bad0-1a9a3d390886"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
             Threads.threadDumpingIsAlive(t);
           } catch (InterruptedException e) {
             LOG.debug("Interrupted", e);
@@ -391,13 +387,10 @@ throw new java.lang.InterruptedException("Injected exception");
         }
       }
     }
-    if (((KnobRuntime.check(java.util.UUID.fromString("a611a144-89af-3ca5-9703-27895bb9cc81"))) ? ((this.masterThreads) != (null)) : (((KnobRuntime.check(java.util.UUID.fromString("43ce8964-0dd9-33ad-bbab-b00ecb0fa1fa"))) ? ((this.masterThreads) == (null)) : (this.masterThreads != null))))) {
+    if (this.masterThreads != null) {
       for (Thread t : this.masterThreads) {
         if (t.isAlive()) {
           try {
-if(KnobRuntime.check(java.util.UUID.fromString("0ebb6672-424e-3ba4-88b5-29417420e6ba"))) {
-throw new java.lang.InterruptedException("Injected exception");
-}
             Threads.threadDumpingIsAlive(t);
           } catch (InterruptedException e) {
             LOG.debug("Interrupted", e);

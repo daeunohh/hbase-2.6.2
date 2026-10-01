@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.concurrent.atomic.LongAdder;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -47,17 +46,11 @@ public class BloomFilterMetrics {
 
   /** Returns Current value for bloom requests count */
   public long getRequestsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("eca43e96-e44e-33e0-993a-98c7b67f640a"))) {
-return 0;
-}
     return requests.sum();
   }
 
   /** Returns Current value for bloom negative results count */
   public long getNegativeResultsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("cf92c448-e995-38e7-b49d-3896aa2e1611"))) {
-return 0;
-}
     return negativeResults.sum();
   }
 
@@ -66,9 +59,6 @@ return 0;
    * loaded.
    */
   public long getEligibleRequestsCount() {
-if(KnobRuntime.check(java.util.UUID.fromString("9b12b27c-8877-35f4-9362-2b4a133dcf4a"))) {
-return 0;
-}
     return eligibleRequests.sum();
   }
 

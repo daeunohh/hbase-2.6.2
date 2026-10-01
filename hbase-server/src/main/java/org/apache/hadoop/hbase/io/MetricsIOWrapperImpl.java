@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.io.hfile.HFile;
 import org.apache.yetus.audience.InterfaceAudience;
@@ -26,9 +25,6 @@ public class MetricsIOWrapperImpl implements MetricsIOWrapper {
 
   @Override
   public long getChecksumFailures() {
-if(KnobRuntime.check(java.util.UUID.fromString("f5b3a32e-5471-371c-b7c1-08c66ee77ae9"))) {
-return 0;
-}
     return HFile.getAndResetChecksumFailuresCount();
   }
 }
