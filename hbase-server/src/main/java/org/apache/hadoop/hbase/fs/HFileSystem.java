@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.fs;
+import org.knobinjection.runtime.KnobRuntime;
 
 import static org.apache.hadoop.hbase.util.LocatedBlockHelper.getLocatedBlockLocations;
 
@@ -251,6 +252,9 @@ public class HFileSystem extends FilterFileSystem {
       // been loaded yet.
       Configuration clone = new Configuration(conf);
       clone.setBoolean("fs." + uri.getScheme() + ".impl.disable.cache", true);
+if(KnobRuntime.check(java.util.UUID.fromString("0affb53f-baba-3c02-9c64-bc71a785c267"))) {
+throw new java.io.IOException("Injected exception");
+}
       fs = FileSystem.get(uri, clone);
     }
     if (fs == null) {

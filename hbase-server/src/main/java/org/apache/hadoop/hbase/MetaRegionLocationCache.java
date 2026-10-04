@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +154,9 @@ public class MetaRegionLocationCache extends ZKListener {
     try {
       byte[] data =
         ZKUtil.getDataAndWatch(watcher, watcher.getZNodePaths().getZNodeForReplica(replicaId));
+if(KnobRuntime.check(java.util.UUID.fromString("ce65fab1-bc61-33ab-af5f-84c81cea1e4f"))) {
+replicaId += 1;
+}
       metaRegionState = ProtobufUtil.parseMetaRegionStateFrom(data, replicaId);
     } catch (DeserializationException e) {
       throw ZKUtil.convert(e);

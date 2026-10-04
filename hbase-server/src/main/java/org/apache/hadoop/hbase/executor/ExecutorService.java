@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.executor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -264,6 +265,17 @@ public class ExecutorService {
     void submit(final EventHandler event) {
       // If there is a listener for this type, make sure we call the before
       // and after process methods.
+if(KnobRuntime.check(java.util.UUID.fromString("9c93a02b-52ab-3eff-8829-5e7daff1e257"))) {
+try {
+    java.lang.reflect.Field _knob_field_ = event.getClass().getDeclaredField("waitingTimeForEvents");
+    _knob_field_.setAccessible(true);
+    int oldValue = ((int)_knob_field_.get(event));
+    _knob_field_.set(event, oldValue - 1);
+} catch (java.lang.Exception _e_) {
+    // Reflection access failed
+    _e_.printStackTrace();
+}
+}
       this.threadPoolExecutor.execute(event);
     }
 

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.coprocessor;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Optional;
 import org.apache.hadoop.hbase.Coprocessor;
@@ -28,6 +29,9 @@ import org.apache.yetus.audience.InterfaceStability;
 public interface RegionCoprocessor extends Coprocessor {
 
   default Optional<RegionObserver> getRegionObserver() {
+if(KnobRuntime.check(java.util.UUID.fromString("a77a8f39-4698-303b-92fc-0e2c4b2ac1ea"))) {
+return null;
+}
     return Optional.empty();
   }
 

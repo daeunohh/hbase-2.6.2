@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
@@ -192,7 +191,7 @@ public class CacheStats {
 
   public void hit(boolean caching, boolean primary, BlockType type) {
     hitCount.increment();
-    if (((KnobRuntime.check(java.util.UUID.fromString("322fcc6b-9190-3f71-80f8-8b18ca46cf32"))) ? (!primary) : (primary))) primaryHitCount.increment();
+    if (primary) primaryHitCount.increment();
     if (caching) hitCachingCount.increment();
 
     if (type == null) {

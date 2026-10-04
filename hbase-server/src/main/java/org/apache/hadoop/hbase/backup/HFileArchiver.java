@@ -249,9 +249,6 @@ if(KnobRuntime.check(java.util.UUID.fromString("0b57449e-5e0a-369c-bb3a-d3077544
 return;
 }
     Path familyDir = new Path(tableDir, new Path(parent.getEncodedName(), Bytes.toString(family)));
-if(KnobRuntime.check(java.util.UUID.fromString("3800976c-e7bb-3531-a64f-10bd24cc2a4b"))) {
-throw new java.io.IOException("Injected exception");
-}
     archiveFamilyByFamilyDir(fs, conf, parent, familyDir, family);
   }
 
@@ -497,9 +494,6 @@ throw new java.io.IOException("Injected exception");
     if (fs.exists(archiveFile)) {
       if (!fs.exists(currentFile.getPath())) {
         // If the file already exists in the archive, and there is no current file to archive, then
-if(KnobRuntime.check(java.util.UUID.fromString("1b9e8a56-fc7e-369f-af2f-9533deeef8fa"))) {
-throw new java.io.IOException("Injected exception");
-}
         // assume that the file in archive is correct. This is an unexpected situation, suggesting a
         // race condition or split brain.
         // In HBASE-26718 this was found when compaction incorrectly happened during warmupRegion.
@@ -522,12 +516,6 @@ throw new java.io.IOException("Injected exception");
       long curMtime = curStatus.getModificationTime();
       long archiveMtime = archiveStatus.getModificationTime();
       if (curLen != archiveLen) {
-if(KnobRuntime.check(java.util.UUID.fromString("3566d75a-1c42-36ef-ae6e-2848202c3944"))) {
-archiveMtime = -1;
-}
-if(KnobRuntime.check(java.util.UUID.fromString("0fd2b786-d101-3c05-a295-b05a562f8c83"))) {
-archiveMtime = 0;
-}
         LOG.error(
           "{} already exists in archive with different size than current {}."
             + " archiveLen: {} currentLen: {} archiveMtime: {} currentMtime: {}",
@@ -562,7 +550,7 @@ archiveMtime = 0;
     // at this point, we should have a free spot for the archive file
     boolean success = false;
     for (int i = 0; !success && i < DEFAULT_RETRIES_NUMBER; ++i) {
-      if (((KnobRuntime.check(java.util.UUID.fromString("2287bdcd-9442-32e0-88f9-a97cfabcbf66"))) ? ((++i) > (0)) : (((KnobRuntime.check(java.util.UUID.fromString("3c86b19d-e9e8-326c-baf6-eaeec9392172"))) ? ((i) >= (0)) : (i > 0))))) {
+      if (i > 0) {
         // Ensure that the archive directory exists.
         // The previous "move to archive" operation has failed probably because
         // the cleaner has removed our archive directory (HBASE-7643).

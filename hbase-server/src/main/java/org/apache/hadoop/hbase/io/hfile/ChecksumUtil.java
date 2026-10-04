@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io.hfile;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -204,7 +205,7 @@ public class ChecksumUtil {
    */
   static long numChunks(long datasize, int bytesPerChecksum) {
     long numChunks = datasize / bytesPerChecksum;
-    if (datasize % bytesPerChecksum != 0) {
+    if (((KnobRuntime.check(java.util.UUID.fromString("d1bb7520-a2b1-3f48-812b-06e5df22012e"))) ? ((datasize % bytesPerChecksum) != (0)) : (datasize % bytesPerChecksum != 0))) {
       numChunks++;
     }
     return numChunks;

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.security.PrivilegedExceptionAction;
@@ -391,6 +392,9 @@ public class LocalHBaseCluster {
       for (Thread t : this.masterThreads) {
         if (t.isAlive()) {
           try {
+if(KnobRuntime.check(java.util.UUID.fromString("0ebb6672-424e-3ba4-88b5-29417420e6ba"))) {
+throw new java.lang.InterruptedException("Injected exception");
+}
             Threads.threadDumpingIsAlive(t);
           } catch (InterruptedException e) {
             LOG.debug("Interrupted", e);

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.client;
+import org.knobinjection.runtime.KnobRuntime;
 
 import org.apache.hadoop.hbase.ipc.RpcCallContext;
 import org.apache.hadoop.hbase.ipc.RpcServer;
@@ -110,6 +111,9 @@ public final class VersionInfoUtil {
    * @return the version number as int. (e.g. 0x0103004 is 1.3.4)
    */
   private static int buildVersionNumber(int major, int minor, int patch) {
+if(KnobRuntime.check(java.util.UUID.fromString("2f39bac9-11a2-3d0c-b2a8-f8c67cdf490b"))) {
+return 0;
+}
     return (major << 20) | (minor << 12) | patch;
   }
 

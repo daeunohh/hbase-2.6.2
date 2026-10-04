@@ -138,7 +138,7 @@ public class FileLink {
       } catch (FileNotFoundException e) {
         n = tryOpen().read(b, off, len);
       }
-      if (n > 0) {
+      if (((KnobRuntime.check(java.util.UUID.fromString("e33829ef-3e10-33fb-8363-5372825b102f"))) ? ((n) > (0)) : (n > 0))) {
         pos += n;
       }
       assert (in.getPos() == pos);
@@ -444,7 +444,7 @@ public class FileLink {
    * locations for the link.
    */
   protected void setLocations(Path originPath, Path... alternativePaths) {
-    assert ((KnobRuntime.check(java.util.UUID.fromString("127203fa-51b9-31cc-a031-dd0b4f80c55f"))) ? ((new Path[0]) != (null)) : (this.locations == null)) : "Link locations already set";
+    assert this.locations == null : "Link locations already set";
 
     List<Path> paths = new ArrayList<>(alternativePaths.length + 1);
     if (originPath != null) {

@@ -16,7 +16,6 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
-import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -111,17 +110,6 @@ public class HFileLink extends FileLink {
    */
   public static final HFileLink buildFromHFileLinkPattern(Configuration conf, Path hFileLinkPattern)
     throws IOException {
-if(KnobRuntime.check(java.util.UUID.fromString("28d3a979-9793-34cd-8b7f-beeb2e20e786"))) {
-try {
-    java.lang.reflect.Field _knob_field_ = conf.getClass().getDeclaredField("loadDefaults");
-    _knob_field_.setAccessible(true);
-    boolean oldValue = (boolean)_knob_field_.get(conf);
-    _knob_field_.set(conf, !oldValue);
-} catch (java.lang.Exception _e_) {
-    // Reflection access failed
-    _e_.printStackTrace();
-}
-}
     return buildFromHFileLinkPattern(CommonFSUtils.getRootDir(conf),
       HFileArchiveUtil.getArchivePath(conf), hFileLinkPattern);
   }

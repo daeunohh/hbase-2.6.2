@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.apache.hadoop.hbase.io;
+import org.knobinjection.runtime.KnobRuntime;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -106,7 +107,7 @@ public class FSDataInputStreamWrapper implements Closeable {
 
   private FSDataInputStreamWrapper(FileSystem fs, FileLink link, Path path, boolean dropBehind,
     long readahead) throws IOException {
-    assert (path == null) != (link == null);
+    assert ((KnobRuntime.check(java.util.UUID.fromString("38671353-ebc8-31d3-9ed2-74c3799bc065"))) ? ((path == null)) : ((path == null) != (link == null)));
     this.path = path;
     this.link = link;
     this.doCloseStreams = true;
